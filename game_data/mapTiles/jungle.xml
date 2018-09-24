@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MapTile>
+	<xPos></xPos>
+	<yPos></yPos>
+	<type>1</type>
+	<name>Jungle</name><!--resources are represented by % while 100% is the max for each one-->
+	<resources>
+		<gold></gold>
+		<food></food>
+		<wood></wood>
+		<stone></stone>
+		<metal></metal>
+		<manaStone></manaStone>
+	</resources>
+	<building>
+		<xPos></xPos>
+		<yPos></yPos>
+		<name></name>
+		<buildableOn></buildableOn>
+	</building>	
+</MapTile>
