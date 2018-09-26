@@ -35,6 +35,7 @@ public class MapImage extends BufferedImage implements ImageObserver{
 	
 	private static final int IMAGE_TYPE = TYPE_INT_ARGB;
 	private static Graphics2D g2d;
+	@SuppressWarnings("unused")
 	private static BufferedImage effectLayer; // draw click event and other stuff
 	private static BufferedImage topLayer; // Draw the grid
 	private static BufferedImage middleLayer; // draw Units and Buildings
@@ -81,6 +82,7 @@ public class MapImage extends BufferedImage implements ImageObserver{
 		}
 	}
 	private void drawMiddleLayer() {
+		@SuppressWarnings("unused")
 		Graphics g = middleLayer.getGraphics();
 		for( int xRow = 0; xRow < ObjectMap.getMap().length; xRow++) {
 			for(int yColumn = 0; yColumn < ObjectMap.getMap()[0].length; yColumn++) {

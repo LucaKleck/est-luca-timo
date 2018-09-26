@@ -8,8 +8,12 @@
 package core;
 
 import java.awt.Component;
+import java.awt.KeyEventDispatcher;
+import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.util.List;
 
 public class ControlInput {
 	public static ActionListener menuChanger = new ActionListener() {
@@ -29,16 +33,28 @@ public class ControlInput {
 		}
 	
 	};
-	public static ActionListener tileClicked = new ActionListener() {
-		
-		@Override
-		public void actionPerformed(ActionEvent e) {
-			// Maybe change to mouse event then calc reverse math!
-		}
-	};
 	
+	private class KeyDispatcher implements KeyEventDispatcher {
+		boolean[] keyPressedList = new boolean[128];
+        @Override
+        public boolean dispatchKeyEvent(KeyEvent e) {
+            if (e.getID() == KeyEvent.KEY_PRESSED) {
+            	System.out.println(e.getKeyCode()+" key:"+e.getKeyChar());
+                
+            } else if (e.getID() == KeyEvent.KEY_RELEASED) {
+            	
+            } else if (e.getID() == KeyEvent.KEY_TYPED) {
+                
+            }
+            return false;
+        }
+    }
 	public ControlInput() {
 		
+		KeyDispatcher keyDispatcher = new KeyDispatcher();
+		KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+		kfm.addKeyEventDispatcher(keyDispatcher);
+		System.out.println(keyDispatcher.toString());
 	}
 
 }

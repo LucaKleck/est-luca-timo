@@ -15,7 +15,6 @@ public class CoreController {
 	
 	public CoreController() {
 		CoreController.controlInput = new ControlInput();
-		
 		CoreController.mainJFrame = new MainJFrame();
 		// add CommandHandler
 		

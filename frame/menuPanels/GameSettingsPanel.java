@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import core.ControlInput;
-import frame.MainJFrame;
 import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
 

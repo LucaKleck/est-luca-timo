@@ -26,7 +26,7 @@ public class MainJFrame extends JFrame implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-//			redraw the map so it fits the size again
+			
 		}
 		
 	}
@@ -44,8 +44,11 @@ public class MainJFrame extends JFrame implements ComponentListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(!CoreController.mainJFrame.isValid()) {					
-					CoreController.mainJFrame.validate();
+				try {
+					if(!CoreController.mainJFrame.isValid()) {					
+						CoreController.mainJFrame.validate();
+					}
+				} catch (NullPointerException s) {
 				}
 			}
 
@@ -58,7 +61,6 @@ public class MainJFrame extends JFrame implements ComponentListener {
 		this.setMinimumSize(new Dimension(800,600));
 		
 		this.add(new MainMenuPanel());
-		
 		
 		Refresh r = new Refresh();
 		r.run();
