@@ -13,7 +13,6 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.List;
 
 public class ControlInput {
 	public static ActionListener menuChanger = new ActionListener() {
@@ -35,11 +34,11 @@ public class ControlInput {
 	};
 	
 	private class KeyDispatcher implements KeyEventDispatcher {
-		boolean[] keyPressedList = new boolean[128];
+//		boolean[] keyPressedList = new boolean[128];
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
             if (e.getID() == KeyEvent.KEY_PRESSED) {
-            	System.out.println(e.getKeyCode()+" key:"+e.getKeyChar());
+//            	System.out.println(e.getKeyCode()+" key:"+e.getKeyChar());
                 
             } else if (e.getID() == KeyEvent.KEY_RELEASED) {
             	
