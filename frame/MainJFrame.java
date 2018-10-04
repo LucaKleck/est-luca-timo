@@ -16,6 +16,7 @@ import java.awt.event.ComponentListener;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
+import core.ControlInput;
 import core.CoreController;
 import frame.menuPanels.MainMenuPanel;
 
@@ -61,6 +62,7 @@ public class MainJFrame extends JFrame implements ComponentListener {
 		this.setMinimumSize(new Dimension(800,600));
 		
 		this.add(new MainMenuPanel());
+		this.addMouseWheelListener(ControlInput.MWHL);
 		
 		Refresh r = new Refresh();
 		r.run();
