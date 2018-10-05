@@ -21,6 +21,8 @@ public class MapTile {
 	private String name;
 //	private Building building; // implement once building is there;
 	private MapTileResources mapTileResources;
+//	private BuildingEffect buildingEffect;
+//	private UnitEffect unitEffect;
 	
 	public MapTile(int xPos, int yPos, int type, String name/*, Building building*/) {
 		this.xPos = xPos;
@@ -30,8 +32,7 @@ public class MapTile {
 		//this.building = building();
 		this.mapTileResources = new MapTileResources(type);
 	}
-
-	// Getter
+	// TODO add constructors with UnitEffect &/or BuildingEffect
 	public int getXPos() {
 		return xPos;
 	}
@@ -52,4 +53,12 @@ public class MapTile {
 	public MapTileResources getMapTileResources() {
 		return mapTileResources;
 	}
+	/*
+	public BuildingEffect getBuildingEffect() {
+		return buildingEffect
+	}
+	public UnitEffect getUnitEffect() {
+		return unitEffect
+	}
+	 */
 }

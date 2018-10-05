@@ -16,11 +16,17 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import com.sun.accessibility.internal.resources.accessibility;
+
 import frame.gamePanels.MapPanel;
 
 public class ControlInput {
 	
 	public static MouseWheelListener MWHL = new MouseWheelListener() {
+		
 		@Override
 		public void mouseWheelMoved(MouseWheelEvent evt) {
 			if(evt.getWheelRotation() < 0) {
@@ -30,9 +36,14 @@ public class ControlInput {
 				MapPanel.addDisplacementMultiplier(0.1);
 			}
 		}
+		
 	};
-	
+	/**
+	 * This ActionListener uses a {@link ClassLoader} to generate and then add a {@link JPanel} to a {@link JFrame}.
+	 * @author Luca Kleck
+	 */
 	public static ActionListener menuChanger = new ActionListener() {
+		
 		@Override
 		public void actionPerformed(ActionEvent evt) {
 				try {
@@ -46,14 +57,20 @@ public class ControlInput {
 					e.printStackTrace();
 				}
 		}
+		
 	};
 	
-	private class KeyDispatcher implements KeyEventDispatcher {
-//		boolean[] keyPressedList = new boolean[128];
+	public ControlInput() {
+		KeyInputDispatcher keyInputDispatcher = new KeyInputDispatcher();
+		KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+		kfm.addKeyEventDispatcher(keyInputDispatcher);
+	}
+	
+	private class KeyInputDispatcher implements KeyEventDispatcher {
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
             if (e.getID() == KeyEvent.KEY_PRESSED) {
-            	System.out.println(e.getKeyCode()+" key on:"+e.getKeyChar());
+//            	System.out.println(e.getKeyCode()+" key on:"+e.getKeyChar());
             	// Up arrow = 38
             	if(e.getKeyCode() == 38) {
 	        		try {
@@ -82,19 +99,11 @@ public class ControlInput {
 	        		} catch (NullPointerException exeption3) {
 	        		}
 	        	}
-                
             } else if (e.getID() == KeyEvent.KEY_RELEASED) {
-            	System.out.println(e.getKeyCode()+" key off:"+e.getKeyChar());            	
-            } else if (e.getID() == KeyEvent.KEY_TYPED) {
-                
+//            	System.out.println(e.getKeyCode()+" key off:"+e.getKeyChar());            	
             }
             return false;
         }
     }
-	public ControlInput() {
-		KeyDispatcher keyDispatcher = new KeyDispatcher();
-		KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-		kfm.addKeyEventDispatcher(keyDispatcher);
-	}
-
+	
 }

@@ -25,7 +25,9 @@ public class GraphicsController {
 
 		}
 	}
+	
 	private Thread thread = new Thread(new Refresh());
+	
 	public GraphicsController() {
 		thread.run();
 		thread.start();

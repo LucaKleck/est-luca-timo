@@ -18,11 +18,23 @@ public class MapCreator {
 	private static final int FOREST = 1;
 //	private static final int MOUNTAIN = 2;
 //	private static final int LIQUID = 3;
-	
+	/**
+	 * 
+	 * @return MapTile[][] Returns an array of MapTiles that were processed to look like a map
+	 */
 	public static MapTile[][] createMap() {
 		MapTile[][] map = new MapTile[49][49];
 		createTiles(map);
 //		plantTrees(map);
+		/* Plant trees works like this:
+		 * 1. create a vector
+		 * 2. choose a random point on the map
+		 * 3. create a forest with a radius on each point of the vector's path
+		 * 4. reduce the vector's length by 1-2 for x or/and y,
+		 * 		maybe swap x and y or negate them to change direction
+		 * 		maybe split into another vector that will call a similar method with predefined point and vector
+		 * 5. use the end point of the last vector as start point and repeat from step 3 until vector is too small
+		 */
 //		letTimePass(map); // this makes the map more varied... certain tiles have a chance to change to different tiles
 		/*
 		 * the top of the map is cold
