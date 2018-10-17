@@ -15,7 +15,7 @@ public class ObjectMap {
 
 	public static int[][] selectedMapTile = new int[1][1];
 	private static MapTile[][] map;
-	private static Unit[][] unitMap;
+	private static Unit[][] unitMap = new Unit[49][49];
 
 	public ObjectMap() {
 		map = MapCreator.createMap();

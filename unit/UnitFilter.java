@@ -1,12 +1,13 @@
 package unit;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
-public class UnitFilter {
+public class UnitFilter implements Comparable{
 
 	private static Unit[][] unitMap;
-	private Unit[] sortingList;
-	private Unit[] sortedUnitList;
+	ArrayList<Unit> sortedUnitList = new ArrayList<>();
 
 	public UnitFilter(Unit[][] unitMap) {
 		this.unitMap = unitMap;
@@ -22,8 +23,7 @@ public class UnitFilter {
 
 	public void sort(int xPosition, int yPosition) {
 
-		sortedUnitList = null;
-		sortingList = null;
+		sortedUnitList.clear();
 		int distancePoints;
 		int healthPoints;
 		int deltaX;
@@ -33,33 +33,45 @@ public class UnitFilter {
 		for (int row = 0; row < unitMap.length; row++) {
 			for (int column = 0; column < unitMap[row].length; column++) {
 
-				if (unitMap[row][column].getClass() == Unit.class) {
+				try {
 
 					deltaX = calculateDifference(xPosition, row);
 					deltaY = calculateDifference(yPosition, column);
 
-					distancePoints = 100 / (deltaX + deltaY);
+					distancePoints = 100 / (deltaX + deltaY + 1);
 					healthPoints = 100 / unitMap[row][column].getHealth();
 
 					unitMap[row][column].setPriorityPoints(distancePoints + healthPoints);
-					sortingList[index] = unitMap[row][column];
+					sortedUnitList.add(unitMap[row][column]);
+					System.out.println(sortedUnitList.get(index).toString());
 					index++;
+					
+				} catch (java.lang.NullPointerException e) {
 
 				}
 
 			}
 
-		}
-
-		for (int i = 0; i < sortingList.length; i++) {
-			if (sortingList[i].getPriorityPoints() <= sortedUnitList[i].getPriorityPoints() || sortedUnitList[i] == null) {
-				sortedUnitList[i] = sortingList[i];
-			}
+		} 
+		
+		System.out.println();
+		
+		Collections.sort(sortedUnitList, new Comparator<Unit>() {
+		    @Override
+		    public int compare(Unit unit1, Unit unit2) {
+		    	
+		    	int value1 = unit1.getPriorityPoints();
+		    	int value2 = unit2.getPriorityPoints();
+		    	
+		        return Integer.compare(value1, value2);
+		    }
+		});
+		
+		for (int i = 0; i < sortedUnitList.size(); i++) {
+			System.out.println(sortedUnitList.get(i).toString());
 		}
 		
-		for (int i = 0; i < sortingList.length; i++) {
-			System.out.println(sortedUnitList[i].getPriorityPoints());
-		}
+		
 
 	}
 
@@ -74,6 +86,11 @@ public class UnitFilter {
 		}
 
 		return difference;
+	}
+
+	@Override
+	public int compareTo(Object o) {
+		return 0;
 	}
 
 }
