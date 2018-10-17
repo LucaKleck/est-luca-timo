@@ -1,44 +1,92 @@
-/**  
-* MainJFrame.java - The frame that is used to display all the content  
-* @author Luca Kleck
-* @version 0.1 
-* @see JFrame
-*/ 
 package frame;
 
 import java.awt.Dimension;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 
 import javax.swing.JFrame;
+import javax.swing.Timer;
 
+import core.ControlInput;
+import core.CoreController;
 import frame.menuPanels.MainMenuPanel;
 
-public class MainJFrame extends JFrame {
-	private static final long serialVersionUID = 111L;
+/**  
+* Frame that is used to display all the content  
+* @author Luca Kleck
+* @see JFrame
+*/ 
+public class MainJFrame extends JFrame implements ComponentListener {
+	private static final long serialVersionUID = 110L;
 	
-	/*private class Refresh implements Runnable {
+	private class resizeListener implements ActionListener {
 
 		@Override
-		public void run() {
-			Timer timer = new Timer(true);
-			timer.schedule(new RefreshTask(), 10000);
-		}
-		
-		private class RefreshTask extends TimerTask {
-
-			@Override
-			public void run() {
-				CoreController.mainJFrame.repaint();
-			}
+		public void actionPerformed(ActionEvent e) {
 			
 		}
 		
-	}*/// Test Ignore for now
+	}
+	
+	private class Refresh implements Runnable {
+		
+		@Override
+		public void run() {
+			Timer timer = new Timer(100, new RefreshTask());
+			timer.setRepeats(true);
+			timer.start();
+		}
+		
+		private class RefreshTask implements ActionListener {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if(!CoreController.mainJFrame.isValid()) {					
+						CoreController.mainJFrame.validate();
+					}
+				} catch (NullPointerException s) {
+				}
+			}
+
+		}
+	}
+	private Timer recalculateTimer = new Timer( 20, new resizeListener() );
 	
 	public MainJFrame() {
 		this.setDefaultCloseOperation(MainJFrame.EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(800,600));
+		
 		this.add(new MainMenuPanel());
+		this.addMouseWheelListener(ControlInput.mouseWheeListener);
+		
+		Refresh r = new Refresh();
+		r.run();
+
 		this.setVisible(true);
 	}
 
+	@Override
+	public void componentHidden(ComponentEvent e) {
+	}
+
+	@Override
+	public void componentMoved(ComponentEvent e) {	
+	}
+
+	@Override
+	public void componentResized(ComponentEvent e) {
+		if ( recalculateTimer.isRunning() ){
+		    recalculateTimer.restart();
+		  } else {
+		    recalculateTimer.start();
+		  }
+	}
+
+
+	@Override
+	public void componentShown(ComponentEvent e) {
+	}
 }

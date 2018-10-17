@@ -6,8 +6,13 @@ import javax.swing.JPanel;
 import core.ControlInput;
 import net.miginfocom.swing.MigLayout;
 
+/**  
+* User can make general settings
+* @author Luca Kleck 
+* @see frame.MainJFrame
+*/
 public class OptionMenuPanel extends JPanel {
-	private static final long serialVersionUID = 113L;
+	private static final long serialVersionUID = 112L;
 
 	// TODO add buttons & make them write into the settings.xml or something
 	public OptionMenuPanel() {

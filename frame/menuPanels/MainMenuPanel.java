@@ -8,8 +8,13 @@ import javax.swing.JPanel;
 import core.ControlInput;
 import net.miginfocom.swing.MigLayout;
 
+/**  
+* Here the user can go to the different menus
+* @author Luca Kleck
+* @see frame.MainJFrame
+*/
 public class MainMenuPanel extends JPanel {
-	private static final long serialVersionUID = 112L;
+	private static final long serialVersionUID = 111L;
 	
 	public MainMenuPanel() {
 		setBackground(SystemColor.desktop);
