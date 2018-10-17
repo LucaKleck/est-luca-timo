@@ -45,4 +45,10 @@ public class Unit {
 		this.priorityPoints = priorityPoints;
 	}
 
+	@Override
+	public String toString() {
+		return "Unit [name=" + name + ", damage=" + damage + ", health=" + health + ", priorityPoints=" + priorityPoints + "]";
+	}
+	
+
 }
