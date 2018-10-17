@@ -55,6 +55,8 @@ public class MapPanel extends JPanel implements ImageObserver {
 	public static void addDisplacementX(int displacementX) {
 		if( (MapPanel.displacementX+displacementX) < (self.getWidth()/(2+(displacementMultiplier/2-0.5))) && (MapPanel.displacementX+displacementX) > -(self.getWidth()/(2+(displacementMultiplier/2-0.5))) ) {			
 			MapPanel.displacementX += displacementX;
+		} else {
+			MapPanel.displacementX-= (int) (displacementX*0.2); //FIXME this can bug out if you change the direction while in a corner
 		}
 		System.out.println("-------------------");
 		System.out.println(self.getWidth()/2);
@@ -65,6 +67,8 @@ public class MapPanel extends JPanel implements ImageObserver {
 	public static void addDisplacementY(int displacementY) {
 		if( (MapPanel.displacementY+displacementY) < (self.getWidth()/5.25*displacementMultiplier) && (MapPanel.displacementY+displacementY) > -(self.getWidth()/(2+(displacementMultiplier/2-0.5))) ) {
 			MapPanel.displacementY += displacementY;
+		} else {
+			MapPanel.displacementY-= (int) (displacementY*0.2);
 		}
 		System.out.println("-------------------");
 		System.out.println(self.getWidth()/5.25*displacementMultiplier);

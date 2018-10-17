@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class UnitFilter implements Comparable{
+@SuppressWarnings("rawtypes")
+public class UnitFilter implements Comparable {
 
 	private static Unit[][] unitMap;
 	ArrayList<Unit> sortedUnitList = new ArrayList<>();
 
 	public UnitFilter(Unit[][] unitMap) {
-		this.unitMap = unitMap;
+		UnitFilter.unitMap = unitMap;
 	}
 
 	public static Unit[][] getUnitMap() {

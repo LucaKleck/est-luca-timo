@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.util.ArrayList;
 
 import frame.gamePanels.MapPanel;
 
@@ -26,10 +27,10 @@ public class ControlInput {
 		@Override
 		public void mouseWheelMoved(MouseWheelEvent evt) {
 			if(evt.getWheelRotation() < 0) {
-				MapPanel.addDisplacementMultiplier(-0.1);
+				MapPanel.addDisplacementMultiplier(0.1);
 			}
 			if(evt.getWheelRotation() > 0) {
-				MapPanel.addDisplacementMultiplier(0.1);
+				MapPanel.addDisplacementMultiplier(-0.1);
 			}
 		}
 		
@@ -63,48 +64,68 @@ public class ControlInput {
 	}
 	
 	private class KeyInputDispatcher implements KeyEventDispatcher {
+		ArrayList<Integer> keyCodeList = new ArrayList<>();
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
             if (e.getID() == KeyEvent.KEY_PRESSED) {
-//            	System.out.println(e.getKeyCode()+" key on:"+e.getKeyChar());
-            	// Up arrow = 38
-            	if(e.getKeyCode() == 38) {
-	        		try {
-	        			MapPanel.addDisplacementY(5);
-	        		} catch (NullPointerException exeption) {
-	        		}
-	        	}
-            	// Down arrow = 40
-            	if(e.getKeyCode() == 40) {
-            		try {
-            			MapPanel.addDisplacementY(-5);
-            		} catch (NullPointerException exeption1) {
-            		}
+            	if(!keyCodeList.contains(e.getKeyCode())) {
+            		keyCodeList.add(e.getKeyCode());
             	}
-            	// Right arrow = 39
-            	if(e.getKeyCode() == 39) {
-	        		try {
-	        			MapPanel.addDisplacementX(-5);
-	        		} catch (NullPointerException exeption2) {
-	        		}
-	        	}
-            	if(e.getKeyCode() == 37 ) {
-	        		try {
-	        			MapPanel.addDisplacementX(5);
-	        		} catch (NullPointerException exeption3) {
-	        		}
+            	System.out.println("pressed: "+keyCodeList.toString());
+            	for(int i = 0; i < keyCodeList.size(); i++) {
+                	// Up arrow = 38
+            		if(keyCodeList.get(i) == 38) {
+    	        		try {
+    	        			MapPanel.addDisplacementY(5);
+    	        		} catch (NullPointerException exeption) {
+    	        		}
+    	        	}
+                	// Down arrow = 40
+                	if(keyCodeList.get(i) == 40) {
+                		try {
+                			MapPanel.addDisplacementY(-5);
+                		} catch (NullPointerException exeption1) {
+                		}
+                	}
+                	// Right arrow = 39
+                	if(keyCodeList.get(i) == 39) {
+    	        		try {
+    	        			MapPanel.addDisplacementX(-5);
+    	        		} catch (NullPointerException exeption2) {
+    	        		}
+    	        	}
+                	//Left arrow
+                	if(keyCodeList.get(i) == 37 ) {
+    	        		try {
+    	        			MapPanel.addDisplacementX(5);
+    	        		} catch (NullPointerException exeption3) {
+    	        		}
+                	}
+    	        	// Backspace
+                	if(keyCodeList.get(i) == KeyEvent.VK_BACK_SPACE) {
+                		try {
+                			MapPanel.reset();
+                		} catch (NullPointerException exeption4) {
+                		}
+                	}
             	}
-	        	// Backspace
-            	if(e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
-            		try {
-            			MapPanel.reset();
-            		} catch (NullPointerException exeption4) {
-            		}
-            	}	
+            		
             } else if (e.getID() == KeyEvent.KEY_RELEASED) {
-//            	System.out.println(e.getKeyCode()+" key off:"+e.getKeyChar());            	
+            	System.out.println("------------");
+            	System.out.println("released"+keyCodeList.toString());
+            	for(int i = 0; i < keyCodeList.size(); i++) {
+            		keyCodeList.remove(extractKeyCode(e, i));
+            	}
             }
             return false;
         }
+		private Integer extractKeyCode(KeyEvent e, int i) {
+			if(keyCodeList.get(i).intValue() == e.getKeyCode()) {
+				return keyCodeList.get(i);
+			}
+			else {
+				return null;
+			}
+		}
 	}
 }
