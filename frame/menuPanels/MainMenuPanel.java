@@ -1,10 +1,3 @@
-/**  
-* MainMenuPanel.java - Here the user can go to the different menus
-* @author Luca Kleck
-* @version 0.01
-* @since 0.01
-* @see MainJFrame
-*/
 package frame.menuPanels;
 
 import java.awt.SystemColor;
@@ -15,6 +8,11 @@ import javax.swing.JPanel;
 import core.ControlInput;
 import net.miginfocom.swing.MigLayout;
 
+/**  
+* Here the user can go to the different menus
+* @author Luca Kleck
+* @see frame.MainJFrame
+*/
 public class MainMenuPanel extends JPanel {
 	private static final long serialVersionUID = 111L;
 	

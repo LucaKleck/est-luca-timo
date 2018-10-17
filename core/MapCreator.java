@@ -1,13 +1,11 @@
-/**  
-* MapCreator.java - Contains all the methods used to create a new map  
-* @author Luca Kleck
-* @version 0.01 
-* @since 0.01
-*/
 package core;
 
 import map.MapTile;
 
+/**  
+* MapCreator.java - Contains all the methods used to create a new map  
+* @author Luca Kleck
+*/
 public class MapCreator {
 
 	// map building constants
@@ -19,7 +17,6 @@ public class MapCreator {
 //	private static final int MOUNTAIN = 2;
 //	private static final int LIQUID = 3;
 	/**
-	 * 
 	 * @return MapTile[][] Returns an array of MapTiles that were processed to look like a map
 	 */
 	public static MapTile[][] createMap() {

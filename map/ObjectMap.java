@@ -13,6 +13,7 @@ public class ObjectMap {
 	public static int[][] selectedMapTile = new int[1][1];
 	private static MapTile[][] map;
 //	private static Unit[][] unitMap;
+	//unitMap[2][2] = new Unit(name,class,health,penis,cook);
 	
 	public ObjectMap() {
 		map = MapCreator.createMap();

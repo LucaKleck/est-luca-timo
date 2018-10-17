@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.Timer;
 
+/**
+ * @author Luca Kleck
+ */
 public class GraphicsController {
 	
 	private class Refresh implements Runnable {

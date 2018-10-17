@@ -1,10 +1,3 @@
-/**  
-* MapPanel.java
-* @author Luca Kleck
-* @version 0.01 
-* @since 0.01
-* @see MainGamePanel
-*/
 package frame.gamePanels;
 
 import java.awt.Color;
@@ -18,6 +11,11 @@ import javax.swing.Timer;
 
 import map.MapImage;
 
+/**  
+ * Contains and draws the MapImage, takes care of the displacement
+ * @author Luca Kleck 
+ * @see MainGamePanel
+ */
 public class MapPanel extends JPanel implements ImageObserver {
 	private static final long serialVersionUID = 121L;
 	
@@ -26,7 +24,6 @@ public class MapPanel extends JPanel implements ImageObserver {
 	private static double displacementMultiplier = 1;
 	private static int displacementX;
 	private static int displacementY;
-	private boolean startDisplacement = false;
 	Refresh refresh = new Refresh();
 	
 	public MapPanel() {
@@ -45,27 +42,34 @@ public class MapPanel extends JPanel implements ImageObserver {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
-		// displacement
-		if (startDisplacement == false) {
-			displacementX = -(this.getWidth() / 2);
-			displacementY = -(this.getHeight() / 2);
-			startDisplacement = true;
-		}
-
 		// draw map image with displacement & multiplier
 		g.drawImage(mapImage,
-				(int) ((this.getWidth() / 2) + displacementX),
-				(int) ((this.getHeight() / 2) + displacementY),
+				(int) (displacementX),
+				(int) (displacementY),
 				(int) (this.getWidth() * displacementMultiplier),
 				(int) (this.getWidth() * displacementMultiplier), this);
+		g.setColor(Color.RED);
+		g.fillOval((int) (displacementX-4+(this.getWidth()/2)), (int) (displacementY-4+(this.getWidth()/2)), 8, 8);
 	}
 	
 	public static void addDisplacementX(int displacementX) {
-		MapPanel.displacementX += displacementX;
+		if( (MapPanel.displacementX+displacementX) < (self.getWidth()/(2+(displacementMultiplier/2-0.5))) && (MapPanel.displacementX+displacementX) > -(self.getWidth()/(2+(displacementMultiplier/2-0.5))) ) {			
+			MapPanel.displacementX += displacementX;
+		}
+		System.out.println("-------------------");
+		System.out.println(self.getWidth()/2);
+		System.out.println("&");
+		System.out.println(MapPanel.displacementX);
 	}
 	
 	public static void addDisplacementY(int displacementY) {
-		MapPanel.displacementY += displacementY;
+		if( (MapPanel.displacementY+displacementY) < (self.getWidth()/5.25*displacementMultiplier) && (MapPanel.displacementY+displacementY) > -(self.getWidth()/(2+(displacementMultiplier/2-0.5))) ) {
+			MapPanel.displacementY += displacementY;
+		}
+		System.out.println("-------------------");
+		System.out.println(self.getWidth()/5.25*displacementMultiplier);
+		System.out.println("&");
+		System.out.println(MapPanel.displacementY);
 	}
 	
 	public static void addDisplacementMultiplier(double displacementMultiplier) {
@@ -75,9 +79,8 @@ public class MapPanel extends JPanel implements ImageObserver {
 	}
 
 	/**
-	 * Refresh - Inner class that periodically repaints the map so displacement changes feel responsive
+	 * Inner class that periodically repaints the map so displacement changes feel responsive
 	 * @author Luca Kleck
-	 *
 	 */
 	private class Refresh implements Runnable {
 		
@@ -101,4 +104,9 @@ public class MapPanel extends JPanel implements ImageObserver {
 		}
 	}
 	
+	public static void reset() {
+		MapPanel.displacementMultiplier = 1;
+		MapPanel.displacementX = 0;
+		MapPanel.displacementY = 0;
+	}
 }

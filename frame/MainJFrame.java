@@ -1,10 +1,3 @@
-/**  
-* MainJFrame.java - The frame that is used to display all the content  
-* @author Luca Kleck
-* @version 0.01
-* @since 0.01 
-* @see JFrame
-*/ 
 package frame;
 
 import java.awt.Dimension;
@@ -20,6 +13,11 @@ import core.ControlInput;
 import core.CoreController;
 import frame.menuPanels.MainMenuPanel;
 
+/**  
+* Frame that is used to display all the content  
+* @author Luca Kleck
+* @see JFrame
+*/ 
 public class MainJFrame extends JFrame implements ComponentListener {
 	private static final long serialVersionUID = 110L;
 	
@@ -62,7 +60,7 @@ public class MainJFrame extends JFrame implements ComponentListener {
 		this.setMinimumSize(new Dimension(800,600));
 		
 		this.add(new MainMenuPanel());
-		this.addMouseWheelListener(ControlInput.MWHL);
+		this.addMouseWheelListener(ControlInput.mouseWheeListener);
 		
 		Refresh r = new Refresh();
 		r.run();
@@ -74,11 +72,9 @@ public class MainJFrame extends JFrame implements ComponentListener {
 	public void componentHidden(ComponentEvent e) {
 	}
 
-
 	@Override
 	public void componentMoved(ComponentEvent e) {	
 	}
-
 
 	@Override
 	public void componentResized(ComponentEvent e) {

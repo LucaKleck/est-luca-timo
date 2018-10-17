@@ -1,10 +1,3 @@
-/**  
-* MainGamePanel.java
-* @author Luca Kleck
-* @version 0.01
-* @since 0.01
-* @see MainJFrame
-*/
 package frame.gamePanels;
 
 import javax.swing.JPanel;
@@ -12,7 +5,11 @@ import javax.swing.JPanel;
 import frame.MainJFrame;
 import net.miginfocom.swing.MigLayout;
 
-@SuppressWarnings("unused")
+/**  
+* Contains all JPanels that are used for the game
+* @author Luca Kleck 
+* @see MainJFrame
+*/
 public class MainGamePanel extends JPanel {
 	private static final long serialVersionUID = 120L;
 

@@ -1,13 +1,11 @@
-/**  
-* CoreController.java
-* @author Luca Kleck
-* @version 0.01
-* @since 0.01
-*/
 package core;
 
 import frame.MainJFrame;
 
+/**  
+* This holds all the main components that make up the game
+* @author Luca Kleck
+*/
 public class CoreController {
 
 	public static MainJFrame mainJFrame;

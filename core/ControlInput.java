@@ -1,10 +1,3 @@
-/**  
-* ControllerInput.java - Here all the events for mouse/keyboard input will be handled
-* @author Luca Kleck
-* @version 0.01 
-* @since 0.01
-* @see CoreController
-*/
 package core;
 
 import java.awt.Component;
@@ -16,16 +9,19 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import com.sun.accessibility.internal.resources.accessibility;
-
 import frame.gamePanels.MapPanel;
 
+/**  
+* Contains all the events for mouse/keyboard input.
+* @author Luca Kleck
+* @see CoreController
+*/
 public class ControlInput {
-	
-	public static MouseWheelListener MWHL = new MouseWheelListener() {
+	/**
+	 * Listens to the mouse wheel and changes the MapImage size multiplier
+	 * @author Luca Kleck
+	 */
+	public static MouseWheelListener mouseWheeListener = new MouseWheelListener() {
 		
 		@Override
 		public void mouseWheelMoved(MouseWheelEvent evt) {
@@ -39,7 +35,7 @@ public class ControlInput {
 		
 	};
 	/**
-	 * This ActionListener uses a {@link ClassLoader} to generate and then add a {@link JPanel} to a {@link JFrame}.
+	 * This ActionListener uses a ClassLoader to instantiate and then add a JPanel to a JFrame.
 	 * @author Luca Kleck
 	 */
 	public static ActionListener menuChanger = new ActionListener() {
@@ -92,18 +88,23 @@ public class ControlInput {
 	        		} catch (NullPointerException exeption2) {
 	        		}
 	        	}
-            	// Left arrow = 37
-            	if(e.getKeyCode() == 37) {
+            	if(e.getKeyCode() == 37 ) {
 	        		try {
 	        			MapPanel.addDisplacementX(5);
 	        		} catch (NullPointerException exeption3) {
 	        		}
-	        	}
+            	}
+	        	// Backspace
+            	if(e.getKeyChar() == KeyEvent.VK_BACK_SPACE) {
+            		try {
+            			MapPanel.reset();
+            		} catch (NullPointerException exeption4) {
+            		}
+            	}	
             } else if (e.getID() == KeyEvent.KEY_RELEASED) {
 //            	System.out.println(e.getKeyCode()+" key off:"+e.getKeyChar());            	
             }
             return false;
         }
-    }
-	
+	}
 }

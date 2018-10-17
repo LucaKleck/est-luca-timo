@@ -1,10 +1,3 @@
-/**  
-* GameSettingsPanel.java - Here the user can change the settings of the game and enter the name of the save
-* @author Luca Kleck
-* @version 0.01
-* @since 0.01 
-* @see MainJFrame
-*/
 package frame.menuPanels;
 
 import java.awt.Color;
@@ -20,6 +13,11 @@ import core.ControlInput;
 import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
 
+/**  
+ * Here the user can change the settings of the game and enter the name of the save
+ * @author Luca Kleck 
+ * @see frame.MainJFrame
+ */
 public class GameSettingsPanel extends JPanel {
 	private static final long serialVersionUID = 113L;
 	private JTextField txtNewGame;
