@@ -4,34 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 
-import javax.swing.Timer;
-
 public class MapImage extends BufferedImage implements ImageObserver {
-	private class RedrawMap implements Runnable {
-
-		@Override
-		public void run() {
-			RedrawEvent event = new RedrawEvent();
-			Timer t = new Timer(1000, event);
-			t.setRepeats(true);
-			t.start();
-		}
-
-		private class RedrawEvent implements ActionListener {
-
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-
-			}
-
-		}
-
-	}
 
 	private static final int IMAGE_TYPE = TYPE_INT_ARGB;
 	private static Graphics2D g2d;
@@ -40,22 +16,17 @@ public class MapImage extends BufferedImage implements ImageObserver {
 	private static BufferedImage topLayer; // Draw the grid
 	private static BufferedImage middleLayer; // draw Units and Buildings
 	private static BufferedImage bottomLayer; // draw map tiles
-	private static int width;
-	private static int height;
 	private static int mapTileSize;
-
-	private Thread thread = new Thread(new RedrawMap());
+	private int imageWidth;
+	private int imageHeight;
 
 	public MapImage(int width, int height) {
 		super(width, height, IMAGE_TYPE);
 		effectLayer = new BufferedImage(width, height, IMAGE_TYPE);
-		topLayer = new BufferedImage(width, height, IMAGE_TYPE);
-		middleLayer = new BufferedImage(width, height, IMAGE_TYPE);
-		bottomLayer = new BufferedImage(width, height, IMAGE_TYPE);
 
 		MapImage.g2d = createGraphics();
-		MapImage.width = width;
-		MapImage.height = height;
+		this.imageWidth = width;
+		this.imageHeight = height;
 		mapTileSize = (int) (width / ObjectMap.getMap().length);
 
 		drawTopLayer();
@@ -63,19 +34,21 @@ public class MapImage extends BufferedImage implements ImageObserver {
 		drawBottomLayer();
 
 		combineLayers();
-
-		thread.run();
-		thread.start();
+		
+		
 	}
 
 	private void combineLayers() {
-		g2d.drawImage(bottomLayer, 0, 0, width, height, this);
-		g2d.drawImage(middleLayer, 0, 0, width, height, this);
-		g2d.drawImage(topLayer, 0, 0, width, height, this);
+		g2d.drawImage(bottomLayer, 0, 0, imageWidth, imageHeight, this);
+		g2d.drawImage(middleLayer, 0, 0, imageWidth, imageHeight, this);
+		g2d.drawImage(topLayer, 0, 0, imageWidth, imageHeight, this);
 	}
 
 	private void drawTopLayer() {
-		Graphics g = topLayer.getGraphics();
+		topLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
+		Graphics2D g = topLayer.createGraphics();
+		g.setColor(new Color(100,0,0,30));
+		g.fillRect(ObjectMap.getSelectedMapTile()[0] * mapTileSize, ObjectMap.getSelectedMapTile()[1] * mapTileSize, mapTileSize, mapTileSize);
 		for (int xRow = 0; xRow < ObjectMap.getMap().length; xRow++) {
 			for (int yColumn = 0; yColumn < ObjectMap.getMap()[0].length; yColumn++) {
 				g.setColor(new Color(0, 0, 0, 120));
@@ -85,11 +58,11 @@ public class MapImage extends BufferedImage implements ImageObserver {
 	}
 
 	private void drawMiddleLayer() {
+		middleLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
 		@SuppressWarnings("unused")
-		Graphics g = middleLayer.getGraphics();
+		Graphics2D g = middleLayer.createGraphics();
 		for (int xRow = 0; xRow < ObjectMap.getMap().length; xRow++) {
 			for (int yColumn = 0; yColumn < ObjectMap.getMap()[0].length; yColumn++) {
-				// if(ObjectMap.getMap()[xRow][yColumn].getBuilding != null) {
 			}
 		}
 	}
@@ -98,7 +71,8 @@ public class MapImage extends BufferedImage implements ImageObserver {
 		// this will only happen once, after that we need something to check for changes
 		// then only change those
 		// may be subject to change
-		Graphics g = bottomLayer.getGraphics();
+		bottomLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
+		Graphics2D g = bottomLayer.createGraphics();
 		for (int xRow = 0; xRow < ObjectMap.getMap().length; xRow++) {
 			for (int yColumn = 0; yColumn < ObjectMap.getMap()[0].length; yColumn++) {
 				g.setColor(getColorForTile(xRow, yColumn));
@@ -107,6 +81,13 @@ public class MapImage extends BufferedImage implements ImageObserver {
 		}
 	}
 
+	public void redraw() {
+		drawTopLayer();
+		drawMiddleLayer();
+		drawBottomLayer();
+
+		combineLayers();
+	}
 	private Color getColorForTile(int x, int y) {
 		Color color = Color.BLACK;
 		if (ObjectMap.getMap()[x][y].getName() == "Plain") {
@@ -121,8 +102,21 @@ public class MapImage extends BufferedImage implements ImageObserver {
 		return color;
 	}
 
+	public double getMapTileSize() {
+		return mapTileSize;
+	}
+	
+	public int getImageWidth() {
+		return imageWidth;
+	}
+
+	public int getImageHeight() {
+		return imageHeight;
+	}
+	
 	@Override
 	public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		return false;
 	}
+
 }

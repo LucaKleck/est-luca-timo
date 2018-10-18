@@ -13,7 +13,9 @@ import unit.Warrior;
 
 public class ObjectMap {
 
-	public static int[][] selectedMapTile = new int[1][1];
+	// 0 = X; 1 = Y
+	public static int[] selectedMapTile = new int[2];
+
 	private static MapTile[][] map;
 	private static Unit[][] unitMap = new Unit[49][49];
 
@@ -26,7 +28,7 @@ public class ObjectMap {
 		unitMap[8][6] = new Warrior("Dieter", 5, 80, 3);
 		unitMap[5][7] = new Unit("Franz", 45, 60, 4);
 		
-		new UnitFilter(unitMap).sort(20, 10);
+		new UnitFilter(unitMap);
 
 		// TODO CreateMap.java that loads the info of each map tile that is created from
 		// XML files placed in a game_data folder
@@ -38,6 +40,10 @@ public class ObjectMap {
 
 	public static Unit[][] getUnitMap() {
 		return unitMap;
+	}
+	
+	public static int[] getSelectedMapTile() {
+		return selectedMapTile;
 	}
 
 }

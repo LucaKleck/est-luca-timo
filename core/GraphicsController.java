@@ -3,36 +3,21 @@ package core;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.Timer;
-
 /**
  * @author Luca Kleck
  */
 public class GraphicsController {
-	
-	private class GraphicThread implements Runnable {
+
+	public GraphicsController() {
+		
+	}
+
+	public class GraphicsControllerEvent implements ActionListener {
 
 		@Override
-		public void run() {
-			Timer timer = new Timer(1000, new RefreshTask());
-			timer.setRepeats(true);
-			timer.start();
+		public void actionPerformed(ActionEvent e) {
+			
 		}
 		
-		private class RefreshTask implements ActionListener {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-//				This will refresh all the graphics as needed by checking for changes
-			}
-
-		}
 	}
-	
-	private GraphicThread GT = new GraphicThread();
-	
-	public GraphicsController() {
-		GT.run();
-	}
-
 }

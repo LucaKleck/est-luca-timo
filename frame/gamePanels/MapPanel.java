@@ -12,13 +12,14 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import map.MapImage;
+import map.ObjectMap;
 
 /**  
  * Contains and draws the MapImage, takes care of the displacement
  * @author Luca Kleck 
  * @see MainGamePanel
  */
-public class MapPanel extends JPanel implements ImageObserver, MouseListener {
+public class MapPanel extends JPanel implements ImageObserver {
 	private static final long serialVersionUID = 121L;
 	
 	private static MapImage mapImage;
@@ -34,6 +35,7 @@ public class MapPanel extends JPanel implements ImageObserver, MouseListener {
 		mapImage = new MapImage(500, 500);
 		setBackground(new Color(0, 0, 0, 0));
 		refresh.run();
+		this.addMouseListener(new MouseEventHandler());
 	}
 	
 	@Override
@@ -114,24 +116,39 @@ public class MapPanel extends JPanel implements ImageObserver, MouseListener {
 		MapPanel.displacementY = 0;
 	}
 
-	@Override
-	public void mouseClicked(MouseEvent e) {
+	private void mouseEventHandler(MouseEvent e) {
+		// X 
+		double factorX = (double) self.getWidth() / (double) mapImage.getImageWidth();
+		ObjectMap.getSelectedMapTile()[0] = (int) ( ((e.getX()-displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize() );
+		// Y
+		double factorY = (double) self.getWidth() / (double) mapImage.getImageHeight();
+		ObjectMap.getSelectedMapTile()[1] = (int) ( ((e.getY()-displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize() );
+		// 
+		mapImage.redraw();
 	}
+	
+	private class MouseEventHandler implements MouseListener {
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-	}
+		@Override
+		public void mouseClicked(MouseEvent e) {
+		}
 
-	@Override
-	public void mouseReleased(MouseEvent e) {
-//		ControlInput.mouseEventHandler(e);
-	}
+		@Override
+		public void mousePressed(MouseEvent e) {
+		}
 
-	@Override
-	public void mouseEntered(MouseEvent e) {
-	}
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			mouseEventHandler(e);
+		}
 
-	@Override
-	public void mouseExited(MouseEvent e) {
+		@Override
+		public void mouseEntered(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+		}
+		
 	}
 }
