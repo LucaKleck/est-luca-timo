@@ -66,21 +66,27 @@ public class ControlInput {
 		
 		
 	}
-	
+	/**
+	 * This private class contains multiple private classes within, such as the KeyChecker which runs in it's own thread.
+	 * @author Luca Kleck
+	 *
+	 */
 	private class KeyInputDispatcher implements KeyEventDispatcher {
 		ArrayList<Integer> keyCodeList = new ArrayList<>();
 		
-		private class RunnableKeyChecker implements Runnable {
-
+		private class KeyChecker implements Runnable {
+			
+			Timer timer = new Timer(5, new KeyInputHandler());
+			
 			@Override
 			public void run() {
-				Timer timer = new Timer(5, new KeyInput());
-				timer.setRepeats(true);
-				timer.start();
-				System.out.println("Timer Started");
+				if(!timer.isRunning()) {
+					timer.setRepeats(true);
+					timer.start();	
+				}
 			}
 			
-			private class KeyInput implements ActionListener {
+			private class KeyInputHandler implements ActionListener {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
@@ -121,36 +127,29 @@ public class ControlInput {
 	                		}
 	                	}
 	            	}
+					// action end
 				}
-
 			}
 		}
 		
-		private Thread KeyCheckThread = new Thread(new RunnableKeyChecker());
-
+		private KeyChecker keyChecker = new KeyChecker();
+		
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
-            if (e.getID() == KeyEvent.KEY_PRESSED) {
-            	if(!KeyCheckThread.isAlive()) {
-            		try {            			
-            			KeyCheckThread.start();
-            			KeyCheckThread.run();
-            		} catch (IllegalThreadStateException ex1) {
-            		}
-            	}
+        	keyChecker.run();
+        	if (e.getID() == KeyEvent.KEY_PRESSED) {
+            	
             	if(!keyCodeList.contains(e.getKeyCode())) {
             		keyCodeList.add(e.getKeyCode());
             	}
-            	System.out.println("pressed: "+keyCodeList.toString());
             } else if (e.getID() == KeyEvent.KEY_RELEASED) {
-            	System.out.println("------------");
-            	System.out.println("released"+keyCodeList.toString());
             	for(int i = 0; i < keyCodeList.size(); i++) {
             		keyCodeList.remove(extractKeyCode(e, i));
             	}
             }
             return false;
         }
+        
 		private Integer extractKeyCode(KeyEvent e, int i) {
 			if(keyCodeList.get(i).intValue() == e.getKeyCode()) {
 				return keyCodeList.get(i);
