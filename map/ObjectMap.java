@@ -20,11 +20,11 @@ public class ObjectMap {
 	public ObjectMap() {
 		map = MapCreator.createMap();
 
-		unitMap[2][3] = new Warrior("Hans", 30, 30);
-		unitMap[3][4] = new Warrior("Holger", 20, 5);
-		unitMap[1][5] = new Unit("Florenz", 10, 100);
-		unitMap[8][6] = new Warrior("Dieter", 5, 80);
-		unitMap[5][7] = new Unit("Franz", 45, 60);
+		unitMap[2][3] = new Warrior("Hans", 30, 30, 5);
+		unitMap[3][4] = new Warrior("Holger", 20, 5, 6);
+		unitMap[1][5] = new Unit("Florenz", 10, 100, 4);
+		unitMap[8][6] = new Warrior("Dieter", 5, 80, 3);
+		unitMap[5][7] = new Unit("Franz", 45, 60, 4);
 		
 		new UnitFilter(unitMap).sort(20, 10);
 

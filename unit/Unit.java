@@ -6,11 +6,13 @@ public class Unit {
 	private int damage;
 	private int health;
 	private int priorityPoints;
+	private int range;
 
-	public Unit(String name, int damage, int health) {
+	public Unit(String name, int damage, int health, int range) {
 		this.name = name;
 		this.damage = damage;
 		this.health = health;
+		this.range = range;
 	}
 
 	public String getName() {
@@ -45,9 +47,18 @@ public class Unit {
 		this.priorityPoints = priorityPoints;
 	}
 
+	public int getRange() {
+		return range;
+	}
+
+	public void setRange(int range) {
+		this.range = range;
+	}
+
 	@Override
 	public String toString() {
-		return "Unit [name=" + name + ", damage=" + damage + ", health=" + health + ", priorityPoints=" + priorityPoints + "]";
+		return "Unit [name=" + name + ", damage=" + damage + ", health=" + health + ", priorityPoints=" + priorityPoints
+				+ ", range=" + range + "]";
 	}
 	
 
