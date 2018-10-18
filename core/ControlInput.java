@@ -67,13 +67,44 @@ public class ControlInput {
 		
 	}
 	/**
-	 * This private class contains multiple private classes within, such as the KeyChecker which runs in it's own thread.
+	 * This inner class handles Keyboard Inputs
 	 * @author Luca Kleck
 	 *
 	 */
 	private class KeyInputDispatcher implements KeyEventDispatcher {
+		
 		ArrayList<Integer> keyCodeList = new ArrayList<>();
 		
+		private KeyChecker keyChecker = new KeyChecker();
+		
+		
+        @Override
+        public boolean dispatchKeyEvent(KeyEvent e) {
+        	if (e.getID() == KeyEvent.KEY_PRESSED) {
+        		keyChecker.run();
+            	if(!keyCodeList.contains(e.getKeyCode())) {
+            		keyCodeList.add(e.getKeyCode());
+            	}
+            	
+            } else if (e.getID() == KeyEvent.KEY_RELEASED) {
+            	
+            	for(int i = 0; i < keyCodeList.size(); i++) {
+            		keyCodeList.remove(extractKeyCode(e, i));
+            	}
+            	
+            }
+            return false;
+        }
+        
+		private Integer extractKeyCode(KeyEvent e, int i) {
+			if(keyCodeList.get(i).intValue() == e.getKeyCode()) {
+				return keyCodeList.get(i);
+			}
+			else {
+				return null;
+			}
+		}
+
 		private class KeyChecker implements Runnable {
 			
 			Timer timer = new Timer(5, new KeyInputHandler());
@@ -131,32 +162,6 @@ public class ControlInput {
 				}
 			}
 		}
-		
-		private KeyChecker keyChecker = new KeyChecker();
-		
-        @Override
-        public boolean dispatchKeyEvent(KeyEvent e) {
-        	keyChecker.run();
-        	if (e.getID() == KeyEvent.KEY_PRESSED) {
-            	
-            	if(!keyCodeList.contains(e.getKeyCode())) {
-            		keyCodeList.add(e.getKeyCode());
-            	}
-            } else if (e.getID() == KeyEvent.KEY_RELEASED) {
-            	for(int i = 0; i < keyCodeList.size(); i++) {
-            		keyCodeList.remove(extractKeyCode(e, i));
-            	}
-            }
-            return false;
-        }
-        
-		private Integer extractKeyCode(KeyEvent e, int i) {
-			if(keyCodeList.get(i).intValue() == e.getKeyCode()) {
-				return keyCodeList.get(i);
-			}
-			else {
-				return null;
-			}
-		}
+	// inner Class end
 	}
 }

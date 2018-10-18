@@ -1,5 +1,7 @@
 package core;
 
+import java.util.Set;
+
 import frame.MainJFrame;
 
 /**  
@@ -15,6 +17,9 @@ public class CoreController {
 		CoreController.controlInput = new ControlInput();
 		CoreController.mainJFrame = new MainJFrame();
 		// add CommandHandler
+//		Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
+		
+//		System.out.println(threadSet.toString());
 	}
 
 }

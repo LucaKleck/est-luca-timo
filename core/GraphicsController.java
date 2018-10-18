@@ -10,7 +10,7 @@ import javax.swing.Timer;
  */
 public class GraphicsController {
 	
-	private class Refresh implements Runnable {
+	private class GraphicThread implements Runnable {
 
 		@Override
 		public void run() {
@@ -29,11 +29,10 @@ public class GraphicsController {
 		}
 	}
 	
-	private Thread thread = new Thread(new Refresh());
+	private GraphicThread GT = new GraphicThread();
 	
 	public GraphicsController() {
-		thread.run();
-		thread.start();
+		GT.run();
 	}
 
 }
