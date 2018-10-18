@@ -10,6 +10,8 @@ import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 
+import javax.swing.Timer;
+
 import frame.gamePanels.MapPanel;
 
 /**  
@@ -61,55 +63,85 @@ public class ControlInput {
 		KeyInputDispatcher keyInputDispatcher = new KeyInputDispatcher();
 		KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		kfm.addKeyEventDispatcher(keyInputDispatcher);
+		
+		
 	}
 	
 	private class KeyInputDispatcher implements KeyEventDispatcher {
 		ArrayList<Integer> keyCodeList = new ArrayList<>();
+		
+		private class RunnableKeyChecker implements Runnable {
+
+			@Override
+			public void run() {
+				Timer timer = new Timer(5, new KeyInput());
+				timer.setRepeats(true);
+				timer.start();
+				System.out.println("Timer Started");
+			}
+			
+			private class KeyInput implements ActionListener {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					for(int i = 0; i < keyCodeList.size(); i++) {
+	                	// Up arrow = 38
+	            		if(keyCodeList.get(i) == 38) {
+	    	        		try {
+	    	        			MapPanel.addDisplacementY(1);
+	    	        		} catch (NullPointerException exeption) {
+	    	        		}
+	    	        	}
+	                	// Down arrow = 40
+	                	if(keyCodeList.get(i) == 40) {
+	                		try {
+	                			MapPanel.addDisplacementY(-1);
+	                		} catch (NullPointerException exeption1) {
+	                		}
+	                	}
+	                	// Right arrow = 39
+	                	if(keyCodeList.get(i) == 39) {
+	    	        		try {
+	    	        			MapPanel.addDisplacementX(-1);
+	    	        		} catch (NullPointerException exeption2) {
+	    	        		}
+	    	        	}
+	                	//Left arrow
+	                	if(keyCodeList.get(i) == 37 ) {
+	    	        		try {
+	    	        			MapPanel.addDisplacementX(1);
+	    	        		} catch (NullPointerException exeption3) {
+	    	        		}
+	                	}
+	    	        	// Backspace
+	                	if(keyCodeList.get(i) == KeyEvent.VK_BACK_SPACE) {
+	                		try {
+	                			MapPanel.reset();
+	                		} catch (NullPointerException exeption4) {
+	                		}
+	                	}
+	            	}
+				}
+
+			}
+		}
+		
+		private Thread KeyCheckThread = new Thread(new RunnableKeyChecker());
+
         @Override
         public boolean dispatchKeyEvent(KeyEvent e) {
             if (e.getID() == KeyEvent.KEY_PRESSED) {
+            	if(!KeyCheckThread.isAlive()) {
+            		try {            			
+            			KeyCheckThread.start();
+            			KeyCheckThread.run();
+            		} catch (IllegalThreadStateException ex1) {
+            		}
+            	}
             	if(!keyCodeList.contains(e.getKeyCode())) {
             		keyCodeList.add(e.getKeyCode());
             	}
             	System.out.println("pressed: "+keyCodeList.toString());
-            	for(int i = 0; i < keyCodeList.size(); i++) {
-                	// Up arrow = 38
-            		if(keyCodeList.get(i) == 38) {
-    	        		try {
-    	        			MapPanel.addDisplacementY(5);
-    	        		} catch (NullPointerException exeption) {
-    	        		}
-    	        	}
-                	// Down arrow = 40
-                	if(keyCodeList.get(i) == 40) {
-                		try {
-                			MapPanel.addDisplacementY(-5);
-                		} catch (NullPointerException exeption1) {
-                		}
-                	}
-                	// Right arrow = 39
-                	if(keyCodeList.get(i) == 39) {
-    	        		try {
-    	        			MapPanel.addDisplacementX(-5);
-    	        		} catch (NullPointerException exeption2) {
-    	        		}
-    	        	}
-                	//Left arrow
-                	if(keyCodeList.get(i) == 37 ) {
-    	        		try {
-    	        			MapPanel.addDisplacementX(5);
-    	        		} catch (NullPointerException exeption3) {
-    	        		}
-                	}
-    	        	// Backspace
-                	if(keyCodeList.get(i) == KeyEvent.VK_BACK_SPACE) {
-                		try {
-                			MapPanel.reset();
-                		} catch (NullPointerException exeption4) {
-                		}
-                	}
-            	}
-            		
             } else if (e.getID() == KeyEvent.KEY_RELEASED) {
             	System.out.println("------------");
             	System.out.println("released"+keyCodeList.toString());
