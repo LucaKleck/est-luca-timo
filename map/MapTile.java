@@ -19,17 +19,15 @@ public class MapTile {
 	 * 3 = bodies of water
 	 */
 	private String name;
-//	private Building building; // implement once building is there;
 	private MapTileResources mapTileResources;
 //	private BuildingEffect buildingEffect;
 //	private UnitEffect unitEffect;
 	
-	public MapTile(int xPos, int yPos, int type, String name/*, Building building*/) {
+	public MapTile(int xPos, int yPos, int type, String name) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.type = type;
 		this.name = name;
-		//this.building = building();
 		this.mapTileResources = new MapTileResources(type);
 	}
 	// TODO add constructors with UnitEffect &/or BuildingEffect
@@ -45,11 +43,6 @@ public class MapTile {
 	public String getName() {
 		return name;
 	}
-	/*
-	 public Building getBuilding() {
-	 	return building;
-	 }
-	 */
 	public MapTileResources getMapTileResources() {
 		return mapTileResources;
 	}
