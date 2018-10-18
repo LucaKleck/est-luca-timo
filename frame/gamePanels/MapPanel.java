@@ -11,7 +11,6 @@ import java.awt.image.ImageObserver;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import core.ControlInput;
 import map.MapImage;
 
 /**  
@@ -125,7 +124,7 @@ public class MapPanel extends JPanel implements ImageObserver, MouseListener {
 
 	@Override
 	public void mouseReleased(MouseEvent e) {
-		ControlInput.mouseEventHandler(e);
+//		ControlInput.mouseEventHandler(e);
 	}
 
 	@Override
