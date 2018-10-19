@@ -29,9 +29,6 @@ public class ObjectMap {
 		unitMap[5][7] = new Unit("Franz", 45, 60, 4);
 		
 		new UnitFilter(unitMap);
-
-		// TODO CreateMap.java that loads the info of each map tile that is created from
-		// XML files placed in a game_data folder
 	}
 
 	public static MapTile[][] getMap() {

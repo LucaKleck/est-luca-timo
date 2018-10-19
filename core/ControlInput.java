@@ -63,8 +63,6 @@ public class ControlInput {
 		KeyInputDispatcher keyInputDispatcher = new KeyInputDispatcher();
 		KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
 		kfm.addKeyEventDispatcher(keyInputDispatcher);
-		
-		
 	}
 	/**
 	 * This inner class handles Keyboard Inputs

@@ -20,18 +20,18 @@ import frame.menuPanels.MainMenuPanel;
 */ 
 public class MainJFrame extends JFrame implements ComponentListener {
 	private static final long serialVersionUID = 110L;
+	private static MainJFrame self;
 	
 	private class resizeListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+			self.repaint();
 		}
 		
 	}
 	
 	private class Refresh implements Runnable {
-		
 		@Override
 		public void run() {
 			Timer timer = new Timer(100, new RefreshTask());
@@ -53,9 +53,11 @@ public class MainJFrame extends JFrame implements ComponentListener {
 
 		}
 	}
+	
 	private Timer recalculateTimer = new Timer( 20, new resizeListener() );
 	
 	public MainJFrame() {
+		self = this;
 		this.setDefaultCloseOperation(MainJFrame.EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(800,600));
 		

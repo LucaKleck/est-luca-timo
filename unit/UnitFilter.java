@@ -14,6 +14,27 @@ public class UnitFilter implements Comparable {
 		UnitFilter.unitMap = unitMap;
 	}
 
+	public int[] getBestUnitTarget(int xPos, int yPos) {
+
+		int[] bestUnitPos = { 0, 0 };
+
+		try {
+
+			for (int row = 0; row < 5; row++) {
+				for (int column = 0; column < 5; column++) {
+
+					// calulate
+
+				}
+			}
+
+		} catch (IndexOutOfBoundsException e) {
+
+		}
+
+		return bestUnitPos;
+	}
+
 	public static Unit[][] getUnitMap() {
 		return unitMap;
 	}
@@ -46,33 +67,31 @@ public class UnitFilter implements Comparable {
 					sortedUnitList.add(unitMap[row][column]);
 					System.out.println(sortedUnitList.get(index).toString());
 					index++;
-					
+
 				} catch (java.lang.NullPointerException e) {
 
 				}
 
 			}
 
-		} 
-		
+		}
+
 		System.out.println();
-		
+
 		Collections.sort(sortedUnitList, new Comparator<Unit>() {
-		    @Override
-		    public int compare(Unit unit1, Unit unit2) {
-		    	
-		    	int value1 = unit1.getPriorityPoints();
-		    	int value2 = unit2.getPriorityPoints();
-		    	
-		        return Integer.compare(value1, value2);
-		    }
+			@Override
+			public int compare(Unit unit1, Unit unit2) {
+
+				int value1 = unit1.getPriorityPoints();
+				int value2 = unit2.getPriorityPoints();
+
+				return Integer.compare(value1, value2);
+			}
 		});
-		
+
 		for (int i = 0; i < sortedUnitList.size(); i++) {
 			System.out.println(sortedUnitList.get(i).toString());
 		}
-		
-		
 
 	}
 

@@ -1,7 +1,5 @@
 package core;
 
-import java.util.Set;
-
 import frame.MainJFrame;
 
 /**  

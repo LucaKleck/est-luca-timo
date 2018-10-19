@@ -27,12 +27,12 @@ public class MapPanel extends JPanel implements ImageObserver {
 	private static double displacementMultiplier = 1;
 	private static int displacementX;
 	private static int displacementY;
-	Refresh refresh = new Refresh();
+	private Refresh refresh = new Refresh();
 	
 	public MapPanel() {
 		this.setName("MapPanel");
 		self = this;
-		mapImage = new MapImage(500, 500);
+		mapImage = new MapImage(735, 735);
 		setBackground(new Color(0, 0, 0, 0));
 		refresh.run();
 		this.addMouseListener(new MouseEventHandler());
@@ -118,10 +118,10 @@ public class MapPanel extends JPanel implements ImageObserver {
 
 	private void mouseEventHandler(MouseEvent e) {
 		// X 
-		double factorX = (double) self.getWidth() / (double) mapImage.getImageWidth();
+		double factorX = (double) self.getWidth() / (double) MapImage.getImageWidth();
 		ObjectMap.getSelectedMapTile()[0] = (int) ( ((e.getX()-displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize() );
 		// Y
-		double factorY = (double) self.getWidth() / (double) mapImage.getImageHeight();
+		double factorY = (double) self.getWidth() / (double) MapImage.getImageHeight();
 		ObjectMap.getSelectedMapTile()[1] = (int) ( ((e.getY()-displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize() );
 		// 
 		mapImage.redraw();
