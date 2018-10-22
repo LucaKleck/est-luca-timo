@@ -7,9 +7,9 @@
 package map;
 
 import core.MapCreator;
-import unit.Unit;
-import unit.UnitFilter;
-import unit.Warrior;
+import entity.unit.Unit;
+import entity.unit.UnitFilter;
+import entity.unit.Warrior;
 
 public class ObjectMap {
 

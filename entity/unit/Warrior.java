@@ -1,4 +1,4 @@
-package unit;
+package entity.unit;
 
 public class Warrior extends Unit {
 
