@@ -71,7 +71,10 @@ public class MapImage extends BufferedImage implements ImageObserver {
 		topLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
 		Graphics2D g = topLayer.createGraphics();
 		g.setColor(new Color(100,0,0,30));
-		g.fillRect(ObjectMap.getSelectedMapTile()[0] * mapTileSize, ObjectMap.getSelectedMapTile()[1] * mapTileSize, mapTileSize, mapTileSize);
+		try {
+			g.fillRect(ObjectMap.getSelected().getSelectedMapTile().getXPos() * mapTileSize, ObjectMap.getSelected().getSelectedMapTile().getYPos() * mapTileSize, mapTileSize, mapTileSize);
+		} catch (NullPointerException e) {
+		}
 		for (int xRow = 0; xRow < ObjectMap.getMap().length; xRow++) {
 			for (int yColumn = 0; yColumn < ObjectMap.getMap()[0].length; yColumn++) {
 				g.setColor(new Color(0, 0, 0, 60));

@@ -1,34 +1,17 @@
 package entity.unit;
 
-public class Unit {
+import entity.Entity;
 
-	private String name;
+public class Unit extends Entity {
+
 	private int damage;
-	private int health;
 	private int priorityPoints;
 	private int movementRange;
 
-	public Unit(String name, int damage, int health, int movementRange) {
-		this.name = name;
+	public Unit(String name, int damage, int health, int movementRange, int xPos, int yPos) {
+		super(name,health,xPos,yPos);
 		this.damage = damage;
-		this.health = health;
 		this.movementRange = movementRange;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public int getHealth() {
-		return health;
-	}
-
-	public void setHealth(int health) {
-		this.health = health;
 	}
 
 	public int getDamage() {
@@ -57,7 +40,7 @@ public class Unit {
 
 	@Override
 	public String toString() {
-		return "Unit [name=" + name + ", damage=" + damage + ", health=" + health + ", priorityPoints=" + priorityPoints
+		return "Unit [name=" + getName() + ", damage=" + damage + ", health=" + getHealth() + ", priorityPoints=" + priorityPoints
 				+ ", movementRange=" + movementRange + "]";
 	}
 	

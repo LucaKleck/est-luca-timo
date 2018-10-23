@@ -119,11 +119,13 @@ public class MapPanel extends JPanel implements ImageObserver {
 	private void mouseEventHandler(MouseEvent e) {
 		// X 
 		double factorX = (double) self.getWidth() / (double) MapImage.getImageWidth();
-		ObjectMap.getSelectedMapTile()[0] = (int) ( ((e.getX()-displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize() );
+		int x = (int) ( ((e.getX()-displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize() );
 		// Y
 		double factorY = (double) self.getWidth() / (double) MapImage.getImageHeight();
-		ObjectMap.getSelectedMapTile()[1] = (int) ( ((e.getY()-displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize() );
+		int y = (int) ( ((e.getY()-displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize() );
 		// 
+		ObjectMap.getSelected().resetSelected(x, y);
+		
 		mapImage.redraw();
 	}
 	

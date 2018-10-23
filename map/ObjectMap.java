@@ -7,28 +7,29 @@
 package map;
 
 import core.MapCreator;
+import entity.Entity;
 import entity.unit.Unit;
-import entity.unit.UnitFilter;
 import entity.unit.Warrior;
 
 public class ObjectMap {
 
 	// 0 = X; 1 = Y
-	public static int[] selectedMapTile = new int[2];
-
+	private static Selected selected = new Selected();
 	private static MapTile[][] map;
-	private static Unit[][] unitMap = new Unit[49][49];
+	private static Entity entityMap[][][] = new Entity[49][49][10];
+	private static Unit[][] unitMap = new Unit[49][49]; //TODO Make depth as 3rd dimension
 
 	public ObjectMap() {
 		map = MapCreator.createMap();
-
-		unitMap[2][3] = new Warrior("Hans", 30, 30, 5);
-		unitMap[3][4] = new Warrior("Holger", 20, 5, 6);
-		unitMap[1][5] = new Unit("Florenz", 10, 100, 4);
-		unitMap[8][6] = new Warrior("Dieter", 5, 80, 3);
-		unitMap[5][7] = new Unit("Franz", 45, 60, 4);
 		
-		new UnitFilter(unitMap);
+		entityMap[0][0][0] = new Warrior("lass", 22, 109, 3, 0, 0);
+
+		unitMap[2][3] = new Warrior("Hans", 30, 30, 5, 0, 0);
+		unitMap[3][4]= new Warrior("Holger", 20, 5, 6, 0, 0);
+		unitMap[1][5] = new Unit("Florenz", 10, 100, 4, 0, 0);
+		unitMap[8][6] = new Warrior("Dieter", 5, 80, 3, 0, 0);
+		unitMap[5][7] = new Unit("Franz", 45, 60, 4, 0, 0);
+		
 	}
 
 	public static MapTile[][] getMap() {
@@ -38,9 +39,13 @@ public class ObjectMap {
 	public static Unit[][] getUnitMap() {
 		return unitMap;
 	}
+
+	public static Selected getSelected() {
+		return selected;
+	}
 	
-	public static int[] getSelectedMapTile() {
-		return selectedMapTile;
+	public static Entity[][][] getEntityMap() {
+		return entityMap;
 	}
 
 }
