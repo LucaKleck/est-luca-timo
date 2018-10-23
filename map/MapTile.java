@@ -8,20 +8,18 @@
 package map;
 
 public class MapTile {
+	public static final int PLAINS 			= 0;
+	public static final int FORESTS 		= 1;
+	public static final int MOUNTAINS 		= 2;
+	public static final int BODIES_OF_WATER = 3;
 	private int xPos;
 	private int yPos;
 	private int type;
-	/*
-	 * Types:
-	 * 0 = plains
-	 * 1 = forests
-	 * 2 = mountains
-	 * 3 = bodies of water
-	 */
+
 	private String name;
 	private MapTileResources mapTileResources;
-//	private BuildingEffect buildingEffect;
-//	private UnitEffect unitEffect;
+//	private BuildingEffect buildingEffect = null;
+//	private UnitEffect unitEffect = null;
 	
 	public MapTile(int xPos, int yPos, int type, String name) {
 		this.xPos = xPos;

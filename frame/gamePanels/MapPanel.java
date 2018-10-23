@@ -24,7 +24,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 	
 	private static MapImage mapImage;
 	private static MapPanel self;
-	private static double displacementMultiplier = 1;
+	private static double displacementMultiplier = 0.8;
 	private static int displacementX;
 	private static int displacementY;
 	private Refresh refresh = new Refresh();
@@ -79,7 +79,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 	}
 	
 	public static void addDisplacementMultiplier(double displacementMultiplier) {
-		if(MapPanel.displacementMultiplier+displacementMultiplier >= 1 && MapPanel.displacementMultiplier+displacementMultiplier < 2) {
+		if(MapPanel.displacementMultiplier+displacementMultiplier >= 0.8 && MapPanel.displacementMultiplier+displacementMultiplier < 2) {
 			MapPanel.displacementMultiplier += displacementMultiplier;		
 		}
 	}
