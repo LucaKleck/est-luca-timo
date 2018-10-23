@@ -20,6 +20,12 @@ import frame.gamePanels.MapPanel;
 * @see CoreController
 */
 public class ControlInput {
+	
+	public ControlInput() {
+		KeyInputDispatcher keyInputDispatcher = new KeyInputDispatcher();
+		KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
+		kfm.addKeyEventDispatcher(keyInputDispatcher);
+	}
 	/**
 	 * Listens to the mouse wheel and changes the MapImage size multiplier
 	 * @author Luca Kleck
@@ -58,12 +64,6 @@ public class ControlInput {
 		}
 		
 	};
-	
-	public ControlInput() {
-		KeyInputDispatcher keyInputDispatcher = new KeyInputDispatcher();
-		KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
-		kfm.addKeyEventDispatcher(keyInputDispatcher);
-	}
 	/**
 	 * This inner class handles Keyboard Inputs
 	 * @author Luca Kleck
@@ -74,6 +74,7 @@ public class ControlInput {
 		ArrayList<Integer> keyCodeList = new ArrayList<>();
 		
 		private KeyChecker keyChecker = new KeyChecker();
+		private boolean shiftPressed = false;
 		
 		
         @Override
@@ -83,7 +84,6 @@ public class ControlInput {
             	if(!keyCodeList.contains(e.getKeyCode())) {
             		keyCodeList.add(e.getKeyCode());
             	}
-            	
             } else if (e.getID() == KeyEvent.KEY_RELEASED) {
             	
             	for(int i = 0; i < keyCodeList.size(); i++) {
@@ -119,32 +119,50 @@ public class ControlInput {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					shiftPressed = checkForShift();
 					for(int i = 0; i < keyCodeList.size(); i++) {
-	                	// Up arrow = 38
-	            		if(keyCodeList.get(i) == 38) {
+//						System.out.println(keyCodeList.toString());
+						// Up arrow = 38 && w = 87
+	            		if(keyCodeList.get(i) == 38 || keyCodeList.get(i) == 87) {
 	    	        		try {
-	    	        			MapPanel.addDisplacementY(1);
+	    	        			if(shiftPressed) {
+	    	        				MapPanel.addDisplacementY(3);
+	    	        			} else {
+	    	        				MapPanel.addDisplacementY(1);
+	    	        			}
 	    	        		} catch (NullPointerException exeption) {
 	    	        		}
 	    	        	}
-	                	// Down arrow = 40
-	                	if(keyCodeList.get(i) == 40) {
+	                	// Down arrow = 40 | 83 = s
+	                	if(keyCodeList.get(i) == 40 || keyCodeList.get(i) == 83) {
 	                		try {
-	                			MapPanel.addDisplacementY(-1);
+	                			if(shiftPressed) {
+	                				MapPanel.addDisplacementY(-3);
+	    	        			} else {
+	    	        				MapPanel.addDisplacementY(-1);
+	    	        			}
 	                		} catch (NullPointerException exeption1) {
 	                		}
 	                	}
-	                	// Right arrow = 39
-	                	if(keyCodeList.get(i) == 39) {
+	                	// Right arrow = 39 | 68 = d
+	                	if(keyCodeList.get(i) == 39 || keyCodeList.get(i) == 68) {
 	    	        		try {
-	    	        			MapPanel.addDisplacementX(-1);
+	    	        			if(shiftPressed) {
+	    	        				MapPanel.addDisplacementX(-3);
+	    	        			} else {
+	    	        				MapPanel.addDisplacementX(-1);
+	    	        			}
 	    	        		} catch (NullPointerException exeption2) {
 	    	        		}
 	    	        	}
-	                	//Left arrow
-	                	if(keyCodeList.get(i) == 37 ) {
+	                	//Left arrow = 37 | 65 = a
+	                	if(keyCodeList.get(i) == 37 || keyCodeList.get(i) == 65) {
 	    	        		try {
-	    	        			MapPanel.addDisplacementX(1);
+	    	        			if(shiftPressed) {
+	    	        				MapPanel.addDisplacementX(3);
+	    	        			} else {
+	    	        				MapPanel.addDisplacementX(1);
+	    	        			}
 	    	        		} catch (NullPointerException exeption3) {
 	    	        		}
 	                	}
@@ -157,6 +175,16 @@ public class ControlInput {
 	                	}
 	            	}
 					// action end
+				}
+
+				private boolean checkForShift() {
+					boolean localShiftPressed = false;
+					for(int i = 0; i < keyCodeList.size(); i++) {
+						if(keyCodeList.get(i) == 16) {
+							localShiftPressed = true;
+						}
+					}
+					return localShiftPressed;
 				}
 			}
 		}

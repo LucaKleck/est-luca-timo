@@ -1,8 +1,6 @@
 /**  
 * MapTileResources.java - Decides what are in the MapTile and the Efficiency at which they can be collected
 * @author Luca Kleck
-* @version 0.01
-* @since 0.01 
 * @see MapTile
 */
 package map;

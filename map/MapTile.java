@@ -1,17 +1,15 @@
 /**  
 * MapTile.java - Represents one tile of the map
 * @author Luca Kleck
-* @version 0.01
-* @since 0.01 
 * @see ObjectMap
 */
 package map;
 
 public class MapTile {
-	public static final int PLAINS 			= 0;
-	public static final int FORESTS 		= 1;
-	public static final int MOUNTAINS 		= 2;
-	public static final int BODIES_OF_WATER = 3;
+	public static final int PLAIN 			= 0;
+	public static final int FOREST 			= 1;
+	public static final int MOUNTAIN 		= 2;
+	public static final int LIQUID 			= 3;
 	private int xPos;
 	private int yPos;
 	private int type;

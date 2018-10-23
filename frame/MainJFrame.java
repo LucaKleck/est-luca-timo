@@ -60,7 +60,6 @@ public class MainJFrame extends JFrame implements ComponentListener {
 		self = this;
 		this.setDefaultCloseOperation(MainJFrame.EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(800,600));
-		
 		this.add(new MainMenuPanel());
 		this.addMouseWheelListener(ControlInput.mouseWheeListener);
 		

@@ -1,8 +1,6 @@
 /**
  * ObjectMap.java - This keeps all the information of the map in itself, that means: unit array && mapTile array.
  * @author Luca Kleck
- * @version 0.01
- * @since 0.01
  */
 package map;
 
@@ -17,7 +15,7 @@ public class ObjectMap {
 	private static Entity entityMap[][][] = new Entity[49][49][10];
 
 	public ObjectMap() {
-		map = MapCreator.createMap();
+		map = MapCreator.createMap(3,5);
 		
 		entityMap[0][0][0] = new Warrior("lass", 22, 109, 3, 0, 0);
 		entityMap[0][0][1] = new Warrior("Lego", 22, 109, 3, 0, 0);

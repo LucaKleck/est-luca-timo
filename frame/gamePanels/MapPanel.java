@@ -92,7 +92,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 		
 		@Override
 		public void run() {
-			Timer timer = new Timer(100, new RefreshTask());
+			Timer timer = new Timer(50, new RefreshTask());
 			timer.setRepeats(true);
 			timer.start();
 		}
