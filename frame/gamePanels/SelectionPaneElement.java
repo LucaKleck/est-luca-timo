@@ -1,7 +1,9 @@
 package frame.gamePanels;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -21,8 +23,18 @@ public class SelectionPaneElement extends JPanel implements ActionListener {
 		this.jBtn.addActionListener(this);
 		setLayout(new MigLayout("", "[20%,fill]", "[20%,fill]"));
 		this.add(jBtn, "cell 0 0,alignx left,aligny top");
+		
+		this.setBackground(getColorFromName());
 	}
 	
+	private Color getColorFromName() {
+		Color c = Color.darkGray;
+		if(entity.getName() == "2") {
+			c = new Color(200, 200, 100);
+		}
+		return c;
+	}
+
 	public Entity getEntity() {
 		return entity;
 	}
