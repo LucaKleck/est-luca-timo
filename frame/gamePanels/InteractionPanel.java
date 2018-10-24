@@ -63,6 +63,7 @@ public class InteractionPanel extends JPanel {
 
 	public static void staticValidate() {
 		if(self != null) {
+			self.removeAll();
 			self.validate();
 			self.repaint();
 		}

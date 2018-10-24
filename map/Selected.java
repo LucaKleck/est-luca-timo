@@ -9,7 +9,7 @@ public class Selected {
 	private Entity selectedEntity = null;
 
 	public void resetSelected(int x, int y) {
-		try {			
+		try {
 			this.selectedMapTile = ObjectMap.getMap()[x][y];
 		} catch(IndexOutOfBoundsException e) {
 			this.selectedMapTile = null;
