@@ -11,9 +11,9 @@ import map.MapTile;
 public class MapCreator {
 
 	// map building constants
-	private static int forestCount = 24;
+	private static int forestCount = 25;
 	private static int riverCount = 3;
-	private static final int COMMON_RADIUS = 5; // this is the radius that most methods will use to determine the sizes
+	private static final int COMMON_RADIUS = 7; // this is the radius that most methods will use to determine the sizes
 	private static final Random rand = new Random();
 	/*
 	 * Plant trees works like this:
@@ -56,34 +56,50 @@ public class MapCreator {
 	}
 	private static void plantTrees(MapTile[][] map) {
 		for(int forests = 1; forests < MapCreator.forestCount; forests++) {
-			vectorHandler(map, rand.nextInt(map.length), rand.nextInt(map.length));
+			vectorHandlerForest(map, rand.nextInt(map.length), rand.nextInt(map.length));
 		}
 	}
-	private static void vectorHandler(MapTile[][] map, int xPos, int yPos) {
+	private static void vectorHandlerForest(MapTile[][] map, int xPos, int yPos) {
 		int[] vector = new int[2];
 		vector[0] = rand.nextInt(30)+COMMON_RADIUS;
 		vector[1] = rand.nextInt(30)+COMMON_RADIUS;
 		createSqarePatch(xPos-vector[0], yPos-vector[1], MapTile.FOREST, "Forest", map);
-		System.out.println("-----------------");
+//		System.out.println("-----------------");
 		while(Math.sqrt( (Math.pow(vector[0], 2)+Math.pow(vector[1], 2)) ) > 1.43) {
-			System.out.println(Math.sqrt( (Math.pow(vector[0], 2)+Math.pow(vector[1], 2))) );
-			System.out.println("v1: " + vector[0]);
-			System.out.println("v2: " + vector[1]);
+//			System.out.println(Math.sqrt( (Math.pow(vector[0], 2)+Math.pow(vector[1], 2))) );
+//			System.out.println("v1: " + vector[0]);
+//			System.out.println("v2: " + vector[1]);
 			if( (vector[0]-1) > 0 ) {
 				vector[0] -= 1;
+			} else {
+				return;
 			}
 			if( (vector[1]-1) > 0 ) {
 				vector[1] -= 1;	
+			} else {
+				return;
 			}
 			createSqarePatch(xPos+vector[0], yPos+vector[1], MapTile.FOREST, "Forest", map);
 		}
 	}
 	private static void createSqarePatch(int xPos, int yPos, int type, String name, MapTile[][] map) {
 		for(int x = 0; x < COMMON_RADIUS; x++) {
+			int xFinal;
+			if(rand.nextBoolean()) {
+				xFinal = x+xPos;
+			} else {
+				xFinal = x-xPos;
+			}
 			for(int y = 0; y < COMMON_RADIUS; y++) {
-				if( isInBounds(x+xPos, y+yPos, map.length, map[0].length) ) {
-					if(rand.nextInt(100)+1 < 25) {
-						map[x+xPos][y+yPos] = createForest(x+xPos, y+yPos);
+				int yFinal;
+				if(rand.nextBoolean()) {
+					yFinal = y+yPos;
+				} else {
+					yFinal = y-yPos;
+				}
+				if( isInBounds(xFinal, yFinal, map.length, map[0].length) ) {
+					if(rand.nextInt(100)+1 < 65) {
+						map[xFinal][yFinal] = createForest(xFinal, yFinal);
 					}
 				}
 			}

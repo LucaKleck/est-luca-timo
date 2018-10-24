@@ -2,8 +2,15 @@ package frame.gamePanels;
 
 import javax.swing.JPanel;
 
+import core.ControlInput;
 import frame.MainJFrame;
+import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
+
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 
 /**  
 * Contains all JPanels that are used for the game
@@ -28,6 +35,18 @@ public class MainGamePanel extends JPanel {
 		InteractionPanel interactionPanel = new InteractionPanel();
 		add(interactionPanel, "cell 1 1, grow");
 		
+		JButton btnRemakeMap = new JButton("Remake Map");
+		interactionPanel.add(btnRemakeMap);
+		btnRemakeMap.setActionCommand("frame.gamePanels.MainGamePanel");
+		btnRemakeMap.addActionListener(ControlInput.menuChanger);
+		btnRemakeMap.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				@SuppressWarnings("unused")
+				ObjectMap objectMap = new ObjectMap();
+			}
+		});
 		InfoPanel infoPanel = new InfoPanel();
 		add(infoPanel, "cell 1 2, grow");
 	}
