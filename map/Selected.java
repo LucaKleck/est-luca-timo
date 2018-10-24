@@ -21,7 +21,7 @@ public class Selected {
 			InteractionPanel.setSelectionPane(null);
 			InteractionPanel.staticValidate();
 		}
-		System.out.println("selection pane: " + InteractionPanel.getSelectionPane());
+//		System.out.println("selection pane: " + InteractionPanel.getSelectionPane());
 		try {
 			System.out.println("selected unit name: " + selectedEntity.getName());
 		} catch (NullPointerException ex) {

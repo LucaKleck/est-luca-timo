@@ -14,10 +14,8 @@ import java.util.ArrayList;
 
 import javax.swing.Timer;
 
-import entity.Entity;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.MapPanel;
-import map.ObjectMap;
 
 /**  
 * Contains all the events for mouse/keyboard input.
@@ -79,7 +77,6 @@ public class ControlInput {
 				if(InteractionPanel.getSelectionPane() == null) {
 				} else {
 					InteractionPanel.setSelectionPane(null);
-					System.out.println(InteractionPanel.getSelectionPane());
 				}
 			}
 		}

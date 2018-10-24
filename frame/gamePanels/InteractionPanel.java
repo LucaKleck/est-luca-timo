@@ -47,14 +47,14 @@ public class InteractionPanel extends JPanel {
 //				} catch(NullPointerException ex) {
 //				}
 				if(selectionPane != null) {
-					removeAll();
-					add(selectionPane, "cell 0 0");
-					validate();
-					repaint();
+					self.removeAll();
+					self.add(selectionPane, "cell 0 0");
+					self.validate();
+					self.repaint();
 				}
 				if(!isValid()) {
-					validate();
-					repaint();
+					self.validate();
+					self.repaint();
 				}
 			}
 

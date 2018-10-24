@@ -43,7 +43,7 @@ public class MainGamePanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new ObjectMap();
+				ObjectMap.remakeMap();
 			}
 			
 		});

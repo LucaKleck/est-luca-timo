@@ -49,4 +49,7 @@ public class ObjectMap {
 		return entityMap;
 	}
 
+	public static void remakeMap() {
+		map = MapCreator.createMap();
+	}
 }
