@@ -41,9 +41,9 @@ public class GameSettingsPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
-				@SuppressWarnings("unused")
-				ObjectMap objectMap = new ObjectMap();
+				new ObjectMap();
 			}
+			
 		});
 		// TODO add another action listener that creates the save/makes the map and so on
 		add(btnStartGame, "cell 0 1");

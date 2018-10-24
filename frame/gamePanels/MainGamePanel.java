@@ -43,9 +43,9 @@ public class MainGamePanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				@SuppressWarnings("unused")
-				ObjectMap objectMap = new ObjectMap();
+				new ObjectMap();
 			}
+			
 		});
 		InfoPanel infoPanel = new InfoPanel();
 		add(infoPanel, "cell 1 2, grow");

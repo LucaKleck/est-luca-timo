@@ -6,13 +6,18 @@ import java.awt.KeyboardFocusManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.util.ArrayList;
 
 import javax.swing.Timer;
 
+import entity.Entity;
+import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.MapPanel;
+import map.ObjectMap;
 
 /**  
 * Contains all the events for mouse/keyboard input.
@@ -64,10 +69,44 @@ public class ControlInput {
 		}
 		
 	};
+	
+	public static MouseListener mouseListener = new MouseListener() {
+		
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			//right mouse = 3
+			if(e.getButton() == 3) {
+				if(InteractionPanel.getSelectionPane() == null) {
+				} else {
+					InteractionPanel.setSelectionPane(null);
+					System.out.println(InteractionPanel.getSelectionPane());
+				}
+			}
+		}
+		
+		@Override
+		public void mousePressed(MouseEvent e) {
+			
+		}
+		
+		@Override
+		public void mouseExited(MouseEvent e) {
+			
+		}
+		
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			
+		}
+		
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			
+		}
+	};
 	/**
 	 * This inner class handles Keyboard Inputs
 	 * @author Luca Kleck
-	 *
 	 */
 	private class KeyInputDispatcher implements KeyEventDispatcher {
 		

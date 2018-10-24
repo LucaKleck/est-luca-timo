@@ -12,6 +12,7 @@ public class MapCreator {
 
 	// map building constants
 	private static int forestCount = 25;
+	@SuppressWarnings("unused")
 	private static int riverCount = 3;
 	private static final int COMMON_RADIUS = 7; // this is the radius that most methods will use to determine the sizes
 	private static final Random rand = new Random();

@@ -1,11 +1,12 @@
 package map;
 
 import entity.Entity;
+import frame.gamePanels.InteractionPanel;
+import frame.gamePanels.SelectionPanel;
 
 public class Selected {
 	private MapTile selectedMapTile = null;
 	private Entity selectedEntity = null;
-	private int z = 0;
 
 	public void resetSelected(int x, int y) {
 		try {			
@@ -13,20 +14,21 @@ public class Selected {
 		} catch(IndexOutOfBoundsException e) {
 			this.selectedMapTile = null;
 		}
-		
-		if(selectedEntity != null && ObjectMap.getEntityMap()[x][y][z+1] != null && x == selectedEntity.getxPos() && y == selectedEntity.getyPos()) {
-			z++;
+		if(isntEmpty(x, y)) {
+			InteractionPanel.setSelectionPane(new SelectionPanel(x,y));
 		} else {
-			z=0;
+			InteractionPanel.setSelectionPane(null);
+			InteractionPanel.staticValidate();
 		}
-		
+		System.out.println(InteractionPanel.getSelectionPane());
 		try {
-			this.selectedEntity = ObjectMap.getEntityMap()[x][y][z];
-		} catch(IndexOutOfBoundsException e) {
-			this.selectedEntity = null;
+			System.out.println(selectedEntity.getName());
+		} catch (NullPointerException ex) {
 		}
 	}
-	
+	public void setSelectedEntity(Entity toBeSelected) {
+		this.selectedEntity = toBeSelected;
+	}
 	public MapTile getSelectedMapTile() {
 		return selectedMapTile;
 	}
@@ -34,9 +36,13 @@ public class Selected {
 	public Entity getSelectedEntity() {
 		return selectedEntity;
 	}
-	
-	public int getZ() {
-		return z;
+	private boolean isntEmpty(int x, int y) {
+		boolean test = false;
+		for(int i = 0; i < ObjectMap.getEntityMap()[x][y].length; i++) {
+			if(ObjectMap.getEntityMap()[x][y][i] != null) {
+				test = true;
+			}
+		}
+		return test;
 	}
-	
 }
