@@ -3,6 +3,7 @@ package entity;
 public class Entity {
 
 	private String name;
+	private int maxRange = 5; // Will be calculated via the abilities in the future
 	private int health;
 	private int xPos;
 	private int yPos;
@@ -32,6 +33,10 @@ public class Entity {
 
 	public int getHealth() {
 		return health;
+	}
+
+	public int getMaxRange() {
+		return maxRange;
 	}
 
 	public void setHealth(int health) {

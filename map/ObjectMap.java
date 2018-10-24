@@ -6,6 +6,7 @@ package map;
 
 import core.MapCreator;
 import entity.Entity;
+import entity.EntityFilter;
 import entity.unit.Warrior;
 
 public class ObjectMap {
@@ -17,15 +18,18 @@ public class ObjectMap {
 	public ObjectMap() {
 		map = MapCreator.createMap();
 		
-		entityMap[0][0][0] = new Warrior("lass", 22, 109, 3, 0, 0);
-		entityMap[0][0][1] = new Warrior("Lego", 22, 109, 3, 0, 0);
-		entityMap[0][0][2] = new Warrior("Lego", 22, 109, 3, 0, 0);
-		entityMap[0][0][3] = new Warrior("Lego", 22, 109, 3, 0, 0);
+		entityMap[0][0][0] = new Warrior("1", 22, 109, 3, 0, 0);
+		entityMap[0][0][1] = new Warrior("2", 22, 109, 3, 0, 0);
+		entityMap[0][0][2] = new Warrior("3", 22, 109, 3, 0, 0);
+		entityMap[0][0][3] = new Warrior("4", 22, 109, 3, 0, 0);
 		
-		entityMap[1][1][0] = new Warrior("Gimli", 22, 109, 3, 1, 1);
-		entityMap[1][1][1] = new Warrior("Gimli", 22, 109, 3, 1, 1);
-		entityMap[1][1][2] = new Warrior("Gimli", 22, 109, 3, 1, 1);
-		entityMap[1][1][3] = new Warrior("Gimli", 22, 109, 3, 1, 1);
+		entityMap[1][1][0] = new Warrior("5", 22, 109, 3, 1, 1);
+		entityMap[1][1][1] = new Warrior("6", 22, 109, 3, 1, 1);
+		entityMap[1][1][2] = new Warrior("7", 22, 109, 3, 1, 1);
+		entityMap[1][1][3] = new Warrior("8", 22, 109, 3, 1, 1);
+		
+		Entity bestTarget = new EntityFilter(entityMap).getBestEntityTarget(entityMap[0][0][0]);
+		System.out.println(bestTarget.getName());
 		
 	}
 
