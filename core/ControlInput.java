@@ -122,57 +122,11 @@ public class ControlInput {
 					shiftPressed = checkForShift();
 					for(int i = 0; i < keyCodeList.size(); i++) {
 //						System.out.println(keyCodeList.toString());
-						// Up arrow = 38 && w = 87
-	            		if(keyCodeList.get(i) == 38 || keyCodeList.get(i) == 87) {
-	    	        		try {
-	    	        			if(shiftPressed) {
-	    	        				MapPanel.addDisplacementY(3);
-	    	        			} else {
-	    	        				MapPanel.addDisplacementY(1);
-	    	        			}
-	    	        		} catch (NullPointerException exeption) {
-	    	        		}
-	    	        	}
-	                	// Down arrow = 40 | 83 = s
-	                	if(keyCodeList.get(i) == 40 || keyCodeList.get(i) == 83) {
-	                		try {
-	                			if(shiftPressed) {
-	                				MapPanel.addDisplacementY(-3);
-	    	        			} else {
-	    	        				MapPanel.addDisplacementY(-1);
-	    	        			}
-	                		} catch (NullPointerException exeption1) {
-	                		}
-	                	}
-	                	// Right arrow = 39 | 68 = d
-	                	if(keyCodeList.get(i) == 39 || keyCodeList.get(i) == 68) {
-	    	        		try {
-	    	        			if(shiftPressed) {
-	    	        				MapPanel.addDisplacementX(-3);
-	    	        			} else {
-	    	        				MapPanel.addDisplacementX(-1);
-	    	        			}
-	    	        		} catch (NullPointerException exeption2) {
-	    	        		}
-	    	        	}
-	                	//Left arrow = 37 | 65 = a
-	                	if(keyCodeList.get(i) == 37 || keyCodeList.get(i) == 65) {
-	    	        		try {
-	    	        			if(shiftPressed) {
-	    	        				MapPanel.addDisplacementX(3);
-	    	        			} else {
-	    	        				MapPanel.addDisplacementX(1);
-	    	        			}
-	    	        		} catch (NullPointerException exeption3) {
-	    	        		}
-	                	}
-	    	        	// Backspace
-	                	if(keyCodeList.get(i) == KeyEvent.VK_BACK_SPACE) {
-	                		try {
-	                			MapPanel.reset();
-	                		} catch (NullPointerException exeption4) {
-	                		}
-	                	}
+						checkForUp(i);
+	                	checkForDown(i);
+	                	checkForRight(i);
+	                	checkForLeft(i);
+	    	        	checkForBackspace(i);
 	            	}
 					// action end
 				}
@@ -186,6 +140,72 @@ public class ControlInput {
 					}
 					return localShiftPressed;
 				}
+			}
+
+			public void checkForUp(int i) {
+				// Up arrow = 38 && w = 87
+        		if(keyCodeList.get(i) == 38 || keyCodeList.get(i) == 87) {
+	        		try {
+	        			if(shiftPressed) {
+	        				MapPanel.addDisplacementY(3);
+	        			} else {
+	        				MapPanel.addDisplacementY(1);
+	        			}
+	        		} catch (NullPointerException exeption) {
+	        		}
+	        	}				
+			}
+
+			public void checkForBackspace(int i) {
+				// Backspace
+            	if(keyCodeList.get(i) == KeyEvent.VK_BACK_SPACE) {
+            		try {
+            			MapPanel.reset();
+            		} catch (NullPointerException exeption4) {
+            		}
+            	}				
+			}
+
+			public void checkForRight(int i) {
+				// Right arrow = 39 | 68 = d
+            	if(keyCodeList.get(i) == 39 || keyCodeList.get(i) == 68) {
+	        		try {
+	        			if(shiftPressed) {
+	        				MapPanel.addDisplacementX(-3);
+	        			} else {
+	        				MapPanel.addDisplacementX(-1);
+	        			}
+	        		} catch (NullPointerException exeption2) {
+	        		}
+	        	}				
+			}
+
+			public void checkForDown(int i) {
+				// Down arrow = 40 | 83 = s
+            	if(keyCodeList.get(i) == 40 || keyCodeList.get(i) == 83) {
+            		try {
+            			if(shiftPressed) {
+            				MapPanel.addDisplacementY(-3);
+	        			} else {
+	        				MapPanel.addDisplacementY(-1);
+	        			}
+            		} catch (NullPointerException exeption1) {
+            		}
+            	}				
+			}
+
+			public void checkForLeft(int i) {
+				//Left arrow = 37 | 65 = a
+            	if(keyCodeList.get(i) == 37 || keyCodeList.get(i) == 65) {
+	        		try {
+	        			if(shiftPressed) {
+	        				MapPanel.addDisplacementX(3);
+	        			} else {
+	        				MapPanel.addDisplacementX(1);
+	        			}
+	        		} catch (NullPointerException exeption3) {
+	        		}
+            	}				
 			}
 		}
 	// inner Class end

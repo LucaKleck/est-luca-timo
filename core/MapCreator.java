@@ -11,17 +11,18 @@ import map.MapTile;
 public class MapCreator {
 
 	// map building constants
-		private static int forestCount = 3;
-		private static int riverCount = 3;
-	//	private static final int COMMON_RADIUS = 5; // this is the radius that most methods will use to determine the sizes
+	private static int forestCount = 24;
+	private static int riverCount = 3;
+	private static final int COMMON_RADIUS = 5; // this is the radius that most methods will use to determine the sizes
+	private static final Random rand = new Random();
 	/*
 	 * Plant trees works like this:
 	 *	1. create a vector
 	 *	2. choose a random point on the map
 	 *	3. create a forest with a radius on each point of the vector's path
 	 *	4. reduce the vector's length by 1-2 for x or/and y,
-	 *		maybe swap x and y or negate them to change direction
-	 *		maybe split into another vector that will call a similar method with predefined point and vector
+	 *		 maybe swap x and y or negate them to change direction
+	 *		 maybe split into another vector that will call a similar method with predefined point and vector
 	 *	5. use the end point of the last vector as start point and repeat from step 3 until vector is too small
 	 *
 	 * the top of the map is cold
@@ -43,7 +44,7 @@ public class MapCreator {
 	 * @param riverCount The amount of rivers that will be generated
 	 * @param forestCount The amount of forests that will be generated
 	 */
-	public static MapTile[][] createMap(int riverCount, int forestCount) {
+	public static MapTile[][] createMap() {
 		MapTile[][] map = new MapTile[49][49];
 		createTiles(map);
 		plantTrees(map);
@@ -54,12 +55,47 @@ public class MapCreator {
 		return map;
 	}
 	private static void plantTrees(MapTile[][] map) {
-		Random r = new Random();
-		int[] vector = new int[2];
 		for(int forests = 1; forests < MapCreator.forestCount; forests++) {
-			vector[0] = r.nextInt(map.length);
-			vector[1] = r.nextInt(map.length);
+			vectorHandler(map, rand.nextInt(map.length), rand.nextInt(map.length));
 		}
+	}
+	private static void vectorHandler(MapTile[][] map, int xPos, int yPos) {
+		int[] vector = new int[2];
+		vector[0] = rand.nextInt(30)+COMMON_RADIUS;
+		vector[1] = rand.nextInt(30)+COMMON_RADIUS;
+		createSqarePatch(xPos-vector[0], yPos-vector[1], MapTile.FOREST, "Forest", map);
+		System.out.println("-----------------");
+		while(Math.sqrt( (Math.pow(vector[0], 2)+Math.pow(vector[1], 2)) ) > 1.43) {
+			System.out.println(Math.sqrt( (Math.pow(vector[0], 2)+Math.pow(vector[1], 2))) );
+			System.out.println("v1: " + vector[0]);
+			System.out.println("v2: " + vector[1]);
+			if( (vector[0]-1) > 0 ) {
+				vector[0] -= 1;
+			}
+			if( (vector[1]-1) > 0 ) {
+				vector[1] -= 1;	
+			}
+			createSqarePatch(xPos+vector[0], yPos+vector[1], MapTile.FOREST, "Forest", map);
+		}
+	}
+	private static void createSqarePatch(int xPos, int yPos, int type, String name, MapTile[][] map) {
+		for(int x = 0; x < COMMON_RADIUS; x++) {
+			for(int y = 0; y < COMMON_RADIUS; y++) {
+				if( isInBounds(x+xPos, y+yPos, map.length, map[0].length) ) {
+					if(rand.nextInt(100)+1 < 25) {
+						map[x+xPos][y+yPos] = createForest(x+xPos, y+yPos);
+					}
+				}
+			}
+		}
+	}
+	private static boolean isInBounds(int x, int y, int xMax, int yMax) {
+		boolean isInBounds = false;
+		if(x < xMax && y < yMax && x >= 0 && y >= 0) {
+			isInBounds = true;
+		}
+		
+		return isInBounds;
 	}
 	private static void createTiles(MapTile[][] map) {
 		for( int xRow = 0; xRow < map.length; xRow++) {
@@ -68,17 +104,19 @@ public class MapCreator {
 			}
 		}
 	}
-	@SuppressWarnings("unused")
-	private static void createSqarePatch(int xPos, int yPos, int type, String name) {
-		// let it be created close to the edge of the array, just check each time for: isInBounds(int xpos, int yPos);
-		
-	}
 	private static MapTile createPlane(int xPos, int yPos) {
 		MapTile plane = new MapTile(xPos, yPos, MapTile.PLAIN, "Plain");
 		return plane;
 	}
+	@SuppressWarnings("unused")
 	private static MapTile createForest(int xPos, int yPos) {
 		MapTile forest = new MapTile(xPos, yPos, MapTile.FOREST, "Forest"); 
 		return forest;
+	}
+	public static void setForestCount(int count) {
+		MapCreator.forestCount = count;
+	}
+	public static void setRiverCount(int count) {
+		MapCreator.riverCount = count;
 	}
 }

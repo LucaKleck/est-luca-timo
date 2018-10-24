@@ -15,7 +15,7 @@ public class ObjectMap {
 	private static Entity entityMap[][][] = new Entity[49][49][10];
 
 	public ObjectMap() {
-		map = MapCreator.createMap(3,5);
+		map = MapCreator.createMap();
 		
 		entityMap[0][0][0] = new Warrior("lass", 22, 109, 3, 0, 0);
 		entityMap[0][0][1] = new Warrior("Lego", 22, 109, 3, 0, 0);
