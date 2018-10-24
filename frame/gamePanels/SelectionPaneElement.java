@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import entity.Entity;
 import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.JLabel;
 
 public class SelectionPaneElement extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 128L;
@@ -18,12 +19,22 @@ public class SelectionPaneElement extends JPanel implements ActionListener {
 	
 	public SelectionPaneElement(Entity entity) {
 		this.entity = entity;
-		this.jBtn = new JButton(entity.getName());
+		setLayout(new MigLayout("", "[100px:20%,fill][315px:n,fill]", "[5%,fill][5%,fill][5%,fill][5%]"));
+		this.jBtn = new JButton("Select");
 		this.jBtn.addActionListener(this);
-		setLayout(new MigLayout("", "[20%,fill]", "[20%,fill]"));
-		this.add(jBtn, "cell 0 0,alignx left,aligny top");
+		
+		this.add(jBtn, "flowx,cell 0 0,grow");
 		
 		this.setBackground(getColorFromName());
+		
+		JLabel lblName = new JLabel(entity.getName());
+		add(lblName, "cell 0 1 2 1,alignx left,aligny center");
+		
+		JLabel lblDamage = new JLabel("Range: " + entity.getMaxRange());
+		add(lblDamage, "cell 0 2,alignx left,aligny center");
+		
+		JLabel lblHealth = new JLabel("Health: " + entity.getHealth());
+		add(lblHealth, "cell 0 3,alignx left,aligny center");
 	}
 	
 	private Color getColorFromName() {
