@@ -2,13 +2,13 @@ package frame.gamePanels;
 
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import entity.Entity;
 import map.ObjectMap;
-import javax.swing.JPanel;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JScrollBar;
 
 public class SelectionPanel extends JScrollPane {
 	private static final long serialVersionUID = 126L;
@@ -17,9 +17,18 @@ public class SelectionPanel extends JScrollPane {
 	
 	public SelectionPanel(int x, int y) {
 		
+		setFocusTraversalKeysEnabled(false);
+
+		JPanel headerPanel = new JPanel();
+		setColumnHeaderView(headerPanel);
+		
+		JLabel lblSelectMenu = new JLabel("Select Menu");
+		
 		JPanel viewportPanel = new JPanel();
 		setViewportView(viewportPanel);
 		viewportPanel.setLayout(new MigLayout("", "[]", "[]"));
+		
+		
 		for(int i = 0; i < ObjectMap.getEntityMap()[x][y].length; i++) {
 			if(ObjectMap.getEntityMap()[x][y][i] != null) {
 				selectedEntityList.add(ObjectMap.getEntityMap()[x][y][i]);
@@ -28,16 +37,16 @@ public class SelectionPanel extends JScrollPane {
 		for(int i = 0; i < selectedEntityList.size(); i++) {
 			selectedEntityElementList.add(createEntityPane(selectedEntityList.get(i)));
 		}
-		String layoutDepth = "";
-		for(int i = 0; i < selectedEntityElementList.size(); i++) {
-			layoutDepth+="[]";
+		String columns = "";
+		for(int i = 0; i < selectedEntityList.size(); i++) {
+			
+			columns += "[fill]";
+						
 		}
-		viewportPanel.setLayout(new MigLayout("", "[]", layoutDepth));
-		
-		JScrollBar scrollBar = new JScrollBar();
-		setRowHeaderView(scrollBar);
+		viewportPanel.setLayout(new MigLayout("", "[fill]", columns));
+		headerPanel.add(lblSelectMenu);
 		for(int i = 0; i < selectedEntityElementList.size(); i++) {
-			viewportPanel.add(selectedEntityElementList.get(i));
+			viewportPanel.add(selectedEntityElementList.get(i), ("cell 0 "+i+", grow"));
 		}
 	}
 	
@@ -53,6 +62,4 @@ public class SelectionPanel extends JScrollPane {
 	public String toString() {
 		return selectedEntityList.toString();
 	}
-	
-	
 }

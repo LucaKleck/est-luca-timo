@@ -17,13 +17,15 @@ public class Selected {
 		if(isntEmpty(x, y)) {
 			InteractionPanel.setSelectionPane(new SelectionPanel(x,y));
 		} else {
+			this.selectedEntity = null;
 			InteractionPanel.setSelectionPane(null);
 			InteractionPanel.staticValidate();
 		}
-		System.out.println(InteractionPanel.getSelectionPane());
+		System.out.println("selection pane: " + InteractionPanel.getSelectionPane());
 		try {
-			System.out.println(selectedEntity.getName());
+			System.out.println("selected unit name: " + selectedEntity.getName());
 		} catch (NullPointerException ex) {
+			System.out.println("nothing selected");
 		}
 	}
 	public void setSelectedEntity(Entity toBeSelected) {

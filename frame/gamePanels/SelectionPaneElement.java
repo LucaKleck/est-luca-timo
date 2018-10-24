@@ -19,7 +19,7 @@ public class SelectionPaneElement extends JPanel implements ActionListener {
 		this.entity = entity;
 		this.jBtn = new JButton(entity.getName());
 		this.jBtn.addActionListener(this);
-		setLayout(new MigLayout("", "[87px]", "[23px]"));
+		setLayout(new MigLayout("", "[20%,fill]", "[20%,fill]"));
 		this.add(jBtn, "cell 0 0,alignx left,aligny top");
 	}
 	
@@ -29,6 +29,7 @@ public class SelectionPaneElement extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		System.out.println(entity.getName());
 		ObjectMap.getSelected().setSelectedEntity(entity);
 		InteractionPanel.setSelectionPane(null);
 	}

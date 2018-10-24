@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import net.miginfocom.swing.MigLayout;
 
 public class InteractionPanel extends JPanel {
 	private static final long serialVersionUID = 124L;
@@ -15,6 +16,7 @@ public class InteractionPanel extends JPanel {
 	
 	public InteractionPanel() {
 		self = this;
+		setLayout(new MigLayout("", "[100%,fill]", "[100%,fill]"));
 		if(refresh == null) {
 			refresh = new Refresh();
 			refresh.run();
@@ -46,7 +48,7 @@ public class InteractionPanel extends JPanel {
 //				}
 				if(selectionPane != null) {
 					removeAll();
-					add(selectionPane);
+					add(selectionPane, "cell 0 0");
 					validate();
 					repaint();
 				}
