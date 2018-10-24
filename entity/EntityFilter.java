@@ -28,11 +28,11 @@ public class EntityFilter implements Comparable {
 					for (int z = 0; z < entityMap[0][1].length; z++) {
 
 						try {
-							if(x > 0 && y > 0) {
+							if (x > 0 && y > 0) {
 
 								distancePoints = 100 / (calculateDifference(entity.getxPos(), x)
 										+ calculateDifference(entity.getyPos(), y) + 1);
-								healthPoints = 100 / entityMap[x][y][z].getHealth();
+								healthPoints = 500 / entityMap[x][y][z].getHealth();
 								priorityPoints = distancePoints + healthPoints;
 
 								if (priorityPoints > bestEntityPriorityPoints && x != entity.getxPos()
@@ -65,6 +65,8 @@ public class EntityFilter implements Comparable {
 		EntityFilter.entityMap = entityMap;
 	}
 	/*
+	 * Old Sorting Algorithm - Saving for future if needed
+	 * 
 	 * public void sort(int xPosition, int yPosition) {
 	 * 
 	 * sortedUnitList.clear(); int distancePoints; int healthPoints; int deltaX; int
