@@ -1,6 +1,7 @@
 package frame.gamePanels;
 
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.AdjustmentEvent;
 import java.awt.event.AdjustmentListener;
@@ -22,7 +23,7 @@ public class LogPanel extends JScrollPane {
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		setAutoscrolls(true);
-		
+		log.setFont(new Font("MS PGothic", Font.BOLD, 13));
 		setViewportView(log);
 		
 		setOpaque(false);
@@ -51,7 +52,11 @@ public class LogPanel extends JScrollPane {
 		return log;
 	}
 	public static void appendNewLine(String line) {
-		LogPanel.getLog().append(System.lineSeparator()+line); 
+		try {
+			LogPanel.getLog().append(System.lineSeparator()+line);
+			MainJFrame.staticRepaint();
+		} catch (NullPointerException nl) {
+		}
 	}
 	
 }

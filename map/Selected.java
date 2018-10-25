@@ -41,10 +41,13 @@ public class Selected {
 	}
 	private boolean isntEmpty(int x, int y) {
 		boolean test = false;
-		for(int i = 0; i < ObjectMap.getEntityMap()[x][y].length; i++) {
-			if(ObjectMap.getEntityMap()[x][y][i] != null) {
-				test = true;
+		try {
+			for(int i = 0; i < ObjectMap.getEntityMap()[x][y].length; i++) {
+				if(ObjectMap.getEntityMap()[x][y][i] != null) {
+					test = true;
+				}
 			}
+		} catch (ArrayIndexOutOfBoundsException ex) {
 		}
 		return test;
 	}

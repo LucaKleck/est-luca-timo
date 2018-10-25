@@ -1,10 +1,9 @@
 package frame.gamePanels;
 
-import java.awt.Color;
+import java.awt.BorderLayout;
 
 import javax.swing.JButton;
 import javax.swing.JLayeredPane;
-import javax.swing.JPanel;
 
 import frame.MainJFrame;
 import net.miginfocom.swing.MigLayout;
@@ -18,24 +17,26 @@ public class MainGamePanel extends JLayeredPane {
 	private static final long serialVersionUID = 120L;
 	private static LogPanel logPanel = new LogPanel();
 	
-	public MainGamePanel() {
-		setLayout(new MigLayout("insets 0 0 0 0, gap 0px 0px", "[75%,grow][25%]", "[25px:n,fill][75%][20%,fill][]"));
+	public MainGamePanel() {									//  x				// y
+		// 															0	 	1 			0		  1 	 2 	 	  3
+		setLayout(new MigLayout("insets 0 0 0 0, gap 0px 0px", "[75%,grow][25%,grow]", "[25px:n,fill][75%][20%,fill][grow,fill]"));
 		this.setDoubleBuffered(true);
 		
 		GameMenuPanel menuPanel = new GameMenuPanel();
 		setLayer(menuPanel, 3);
 		add(menuPanel, "cell 0 0 2 1,grow");
 		
+		LogBackgroundPanel logBackgroundPanel = new LogBackgroundPanel();
+		setLayer(logBackgroundPanel, 1);
+		add(logBackgroundPanel, "flowx,cell 0 2,grow");
+		
+		logBackgroundPanel.setLayout(new BorderLayout(0, 0));
+		logBackgroundPanel.add(logPanel);
+		
 		MapPanel mapPanel = new MapPanel();
 		setLayer(mapPanel, 0);
 		add(mapPanel, "cell 0 1 1 2,grow");
 		
-		JPanel logBackgroundPanel = new JPanel();
-		logBackgroundPanel.setBackground(new Color(0,0,0,120));
-		setLayer(logBackgroundPanel, 1);
-		
-		setLayer(logPanel, 2);
-		add(logPanel, "cell 0 2,grow");
 		
 		InfoPanel infoPanel = new InfoPanel();
 		setLayer(infoPanel, 2);
