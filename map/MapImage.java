@@ -5,9 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -205,7 +203,7 @@ public class MapImage extends BufferedImage implements ImageObserver {
 		//
 		for(int xCount = 0; xCount < xDiff; xCount++) {
 			for(int yCount = 0; yCount < yDiff; yCount++) {
-				drawTopInside();
+				drawTopLayer();
 				drawBottomInside(xCount, yCount);
 			}
 		}

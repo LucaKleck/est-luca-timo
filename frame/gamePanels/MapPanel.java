@@ -144,7 +144,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 		//
 		ObjectMap.getSelected().reselect(x, y);
 
-		MapImage.staticRepaint();
+		MapImage.getMapImage().redrawArea(x, x, y, y);
 		MapPanel.refresh.run();
 	}
 
