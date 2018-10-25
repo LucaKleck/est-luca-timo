@@ -28,14 +28,14 @@ public class MapImage extends BufferedImage implements ImageObserver {
 		imageWidth = width;
 		imageHeight = height;
 		mapTileSize = (int) (width / ObjectMap.getMap().length);
-		
+
 		drawTopLayer();
 		drawMiddleLayer();
 		drawBottomLayer();
 		drawEffectLayer();
 
 		combineLayers();
-		
+
 	}
 
 	private void combineLayers() {
@@ -44,7 +44,7 @@ public class MapImage extends BufferedImage implements ImageObserver {
 		g2d.drawImage(topLayer, 0, 0, imageWidth, imageHeight, this);
 		g2d.drawImage(effectLayer, 0, 0, imageWidth, imageHeight, this);
 	}
-	
+
 	private void drawBottomLayer() {
 		// this will only happen once, after that we need something to check for changes
 		// then only change those
@@ -58,7 +58,7 @@ public class MapImage extends BufferedImage implements ImageObserver {
 			}
 		}
 	}
-	
+
 	private void drawMiddleLayer() {
 		middleLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
 		@SuppressWarnings("unused")
@@ -72,9 +72,10 @@ public class MapImage extends BufferedImage implements ImageObserver {
 	private void drawTopLayer() {
 		topLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
 		Graphics2D g = topLayer.createGraphics();
-		g.setColor(new Color(255,0,0,120));
+		g.setColor(new Color(255, 0, 0, 120));
 		try {
-			g.fillRect(ObjectMap.getSelected().getSelectedMapTile().getXPos() * mapTileSize, ObjectMap.getSelected().getSelectedMapTile().getYPos() * mapTileSize, mapTileSize, mapTileSize);
+			g.fillRect(ObjectMap.getSelected().getSelectedMapTile().getXPos() * mapTileSize,
+					ObjectMap.getSelected().getSelectedMapTile().getYPos() * mapTileSize, mapTileSize, mapTileSize);
 		} catch (NullPointerException e) {
 		}
 		for (int xRow = 0; xRow < ObjectMap.getMap().length; xRow++) {
@@ -89,12 +90,12 @@ public class MapImage extends BufferedImage implements ImageObserver {
 		effectLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
 		@SuppressWarnings("unused")
 		Graphics2D g = effectLayer.createGraphics();
-		for(int i = 0; i < effectList.size(); i++) {
+		for (int i = 0; i < effectList.size(); i++) {
 			// draw each effect
 			// effectList needs to be cleared after the round
 		}
 	}
-	
+
 	private Color getColorForTile(int x, int y) {
 		Color color = Color.BLACK;
 		if (ObjectMap.getMap()[x][y].getName() == "Plain") {
@@ -108,7 +109,7 @@ public class MapImage extends BufferedImage implements ImageObserver {
 		}
 		return color;
 	}
-	
+
 	public static int getImageHeight() {
 		return imageHeight;
 	}
@@ -116,7 +117,7 @@ public class MapImage extends BufferedImage implements ImageObserver {
 	public static int getImageWidth() {
 		return imageWidth;
 	}
-	
+
 	public double getMapTileSize() {
 		return mapTileSize;
 	}
@@ -125,7 +126,7 @@ public class MapImage extends BufferedImage implements ImageObserver {
 	public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		return false;
 	}
-	
+
 	public void redraw() {
 		drawTopLayer();
 		drawMiddleLayer();

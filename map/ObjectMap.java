@@ -8,6 +8,7 @@ import core.MapCreator;
 import entity.Entity;
 import entity.EntityFilter;
 import entity.unit.Warrior;
+import frame.gamePanels.MapPanel;
 
 public class ObjectMap {
 
@@ -17,7 +18,7 @@ public class ObjectMap {
 
 	public ObjectMap() {
 		map = MapCreator.createMap();
-		
+
 		entityMap[0][0][0] = new Warrior("Onsssssssssssssssssssssssse", 22, 2, 3, 0, 0);
 		entityMap[0][0][1] = new Warrior("2", 22, 3, 3, 0, 0);
 		entityMap[0][0][2] = new Warrior("3", 22, 4, 3, 0, 0);
@@ -27,14 +28,15 @@ public class ObjectMap {
 		entityMap[0][0][6] = new Warrior("7", 22, 3, 3, 0, 0);
 		entityMap[0][0][7] = new Warrior("8", 22, 3, 3, 0, 0);
 		entityMap[0][0][8] = new Warrior("9", 22, 3, 3, 0, 0);
-		
+
 		entityMap[1][1][0] = new Warrior("10", 22, 4, 3, 1, 1);
 		entityMap[1][1][1] = new Warrior("11", 22, 3, 3, 1, 1);
 		entityMap[1][1][2] = new Warrior("12", 22, 2, 3, 1, 1);
 		entityMap[1][1][3] = new Warrior("13", 22, 4, 3, 1, 1);
-		
-		System.out.println("best target = " + new EntityFilter(entityMap).getBestEntityTarget(entityMap[0][0][0]).getName());
-		
+
+		System.out.println(
+				"best target = " + new EntityFilter(entityMap).getBestEntityTarget(entityMap[0][0][0]).getName());
+
 	}
 
 	public static MapTile[][] getMap() {
@@ -44,7 +46,7 @@ public class ObjectMap {
 	public static Selected getSelected() {
 		return selected;
 	}
-	
+
 	public static Entity[][][] getEntityMap() {
 		return entityMap;
 	}
@@ -53,6 +55,7 @@ public class ObjectMap {
 		map = MapCreator.createMap();
 		try {
 			MapImage.staticRepaint();
+			MapPanel.refresh.run();
 		} catch (NullPointerException nl) {
 		}
 	}

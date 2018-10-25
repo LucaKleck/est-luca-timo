@@ -1,7 +1,8 @@
 package core;
 
-/**  
+/**
  * Starts the game
+ * 
  * @author Luca Kleck
  * @version 0.01
  */

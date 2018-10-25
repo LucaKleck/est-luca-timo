@@ -7,14 +7,14 @@ public class Entity {
 	private int health;
 	private int xPos;
 	private int yPos;
-	
+
 	public Entity(String name, int health, int xPos, int yPos) {
 		this.name = name;
 		this.health = health;
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}
-	
+
 	public int getxPos() {
 		return xPos;
 	}
@@ -42,5 +42,5 @@ public class Entity {
 	public void setHealth(int health) {
 		this.health = health;
 	}
-	
+
 }

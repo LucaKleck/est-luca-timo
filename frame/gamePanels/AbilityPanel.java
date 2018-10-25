@@ -10,6 +10,8 @@ public class AbilityPanel extends JPanel {
 	public AbilityPanel() {
 		setLayout(new MigLayout("insets 0 0 0 0, gap 0px 0px", "[]", "[]"));
 	}
-	
-	// TODO add runnable thingy that then adds the abilities of the selected entity to this panel, then if statement in runnable that makes new layout to fit in all the buttons.
+
+	// TODO add runnable thingy that then adds the abilities of the selected entity
+	// to this panel, then if statement in runnable that makes new layout to fit in
+	// all the buttons.
 }

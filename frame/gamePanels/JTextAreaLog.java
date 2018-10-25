@@ -19,9 +19,9 @@ public class JTextAreaLog extends JTextArea {
 		setEditable(false);
 		setText(" This is the log, keeping track of all important events");
 	}
-	
+
 	@Override
-    public void paint(Graphics g) {
-        super.paint(g);
-    }
+	public void paint(Graphics g) {
+		super.paint(g);
+	}
 }

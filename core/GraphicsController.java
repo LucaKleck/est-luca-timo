@@ -9,15 +9,15 @@ import java.awt.event.ActionListener;
 public class GraphicsController {
 
 	public GraphicsController() {
-		
+
 	}
 
 	public class GraphicsControllerEvent implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			
+
 		}
-		
+
 	}
 }
