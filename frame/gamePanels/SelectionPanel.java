@@ -19,7 +19,8 @@ public class SelectionPanel extends JScrollPane {
 	public SelectionPanel(int x, int y) {
 		setFocusTraversalKeysEnabled(false);
 		this.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
+		this.getVerticalScrollBar().setUnitIncrement(16);
+		this.getHorizontalScrollBar().setUnitIncrement(16);
 		JPanel headerPanel = new JPanel();
 		setColumnHeaderView(headerPanel);
 

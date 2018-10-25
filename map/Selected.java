@@ -7,6 +7,7 @@ import frame.gamePanels.SelectionPanel;
 public class Selected {
 	private MapTile selectedMapTile = null;
 	private Entity selectedEntity = null;
+	private Entity target = null;
 
 	public void resetSelected(int x, int y) {
 		try {
@@ -46,5 +47,11 @@ public class Selected {
 			}
 		}
 		return test;
+	}
+	public Entity getTarget() {
+		return target;
+	}
+	public void setTarget(Entity target) {
+		this.target = target;
 	}
 }

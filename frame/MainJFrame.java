@@ -38,7 +38,9 @@ public class MainJFrame extends JFrame implements ComponentListener {
 
 		this.setVisible(true);
 	}
-
+	public static void staticRepaint() {
+		self.repaint();
+	}
 	@Override
 	public void componentHidden(ComponentEvent e) {
 	}
@@ -64,15 +66,15 @@ public class MainJFrame extends JFrame implements ComponentListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			self.repaint();
+			staticRepaint();
 		}
 		
 	}
 	
 	private class Refresh implements Runnable {
+		private Timer timer = new Timer(100, new RefreshTask());
 		@Override
 		public void run() {
-			Timer timer = new Timer(100, new RefreshTask());
 			timer.setRepeats(true);
 			timer.start();
 		}

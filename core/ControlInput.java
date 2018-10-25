@@ -147,6 +147,8 @@ public class ControlInput {
 				if(!timer.isRunning()) {
 					timer.setRepeats(true);
 					timer.start();	
+				} else {
+					timer.restart();
 				}
 			}
 			

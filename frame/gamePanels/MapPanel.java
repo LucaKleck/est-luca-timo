@@ -27,14 +27,20 @@ public class MapPanel extends JPanel implements ImageObserver {
 	private static double displacementMultiplier = 1;
 	private static int displacementX;
 	private static int displacementY;
-	private Refresh refresh = new Refresh();
+	public static Refresh refresh;
 	
 	public MapPanel() {
 		this.setName("MapPanel");
+		this.setDoubleBuffered(true);
+		this.setOpaque(false);
 		self = this;
+		
 		mapImage = new MapImage(735, 735);
 		setBackground(new Color(0, 0, 0, 0));
+		
+		refresh = new Refresh();
 		refresh.run();
+		
 		this.addMouseListener(new MouseEventHandler());
 	}
 	
@@ -64,6 +70,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 				MapPanel.displacementX = (int) -(self.getWidth()/2*displacementMultiplier*1.25);
 			}
 		}
+		MapPanel.refresh.run();
 	}
 	
 	public static void addDisplacementY(int displacementY) {
@@ -76,25 +83,31 @@ public class MapPanel extends JPanel implements ImageObserver {
 				MapPanel.displacementY = (int) -(self.getWidth()/2*displacementMultiplier*1.5);
 			}
 		}
+		MapPanel.refresh.run();
 	}
 	
 	public static void addDisplacementMultiplier(double displacementMultiplier) {
 		if(MapPanel.displacementMultiplier+displacementMultiplier >= 0.9 && MapPanel.displacementMultiplier+displacementMultiplier < 2) {
-			MapPanel.displacementMultiplier += displacementMultiplier;		
+			MapPanel.displacementMultiplier += displacementMultiplier;
+			MapPanel.refresh.run();
 		}
 	}
 
 	/**
-	 * Inner class that periodically repaints the map so displacement changes feel responsive
+	 * Inner class that repaints the map so displacement changes feel responsive
 	 * @author Luca Kleck
 	 */
-	private class Refresh implements Runnable {
+	public class Refresh implements Runnable {
+		private Timer repaintTimer = new Timer(1, new RefreshTask());
 		
 		@Override
 		public void run() {
-			Timer timer = new Timer(50, new RefreshTask());
-			timer.setRepeats(true);
-			timer.start();
+			if(!repaintTimer.isRunning()) {
+				repaintTimer.setRepeats(false);
+				repaintTimer.start();
+			} else {
+				repaintTimer.restart();
+			}
 		}
 		
 		private class RefreshTask implements ActionListener {
@@ -108,6 +121,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 			}
 
 		}
+		
 	}
 	
 	public static void reset() {
@@ -127,6 +141,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 		ObjectMap.getSelected().resetSelected(x, y);
 		
 		mapImage.redraw();
+		MapPanel.refresh.run();
 	}
 	
 	private class MouseEventHandler implements MouseListener {

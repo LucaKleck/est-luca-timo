@@ -36,6 +36,17 @@ public class GameMenuPanel extends JPanel {
 		JMenuItem mntmRemakeMap = new JMenuItem("Remake Map");
 		mnDev.add(mntmRemakeMap);
 		
+		JMenuItem mntmSendLogLine = new JMenuItem("Send log line");
+		mnDev.add(mntmSendLogLine);
+		
+		mntmSendLogLine.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				LogPanel.appendNewLine("dev line");
+			}
+		});
+		
 		mntmRemakeMap.addActionListener(new ActionListener() {
 			
 			@Override

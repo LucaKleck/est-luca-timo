@@ -1,37 +1,57 @@
 package frame.gamePanels;
 
-import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
+import frame.MainJFrame;
+
 public class LogPanel extends JScrollPane {
 	private static final long serialVersionUID = 123L;
-	private static JTextArea log = new JTextArea();
+	private static JTextArea log = new JTextAreaLog();
 	
 	public LogPanel() {
+		getVerticalScrollBar().setUnitIncrement(8);
 		
 		setDoubleBuffered(true);
-		setFocusTraversalKeysEnabled(false);
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		setAutoscrolls(true);
-		setBackground(new Color(0,0,0,0));
-		log.setSelectionColor(Color.DARK_GRAY);
-		log.setSelectedTextColor(Color.WHITE);
-		log.setForeground(Color.WHITE);
 		
-		log.setBackground(new Color(0,0,0,120));
-		log.setEditable(false);
-		log.setText("This is the log, keeping track of all important events");
-		log.setFont(new Font("MS PGothic", Font.PLAIN, 16));
 		setViewportView(log);
 		
+		setOpaque(false);
+		
+		this.getViewport().setOpaque(false);
+		
+		this.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+			@Override
+		    public void adjustmentValueChanged(final AdjustmentEvent e) {
+				MainJFrame.staticRepaint();
+		    }
+		});
+		
+	    this.getHorizontalScrollBar().addAdjustmentListener(new AdjustmentListener() {
+	        @Override
+	        public void adjustmentValueChanged(final AdjustmentEvent e) {
+	        	MainJFrame.staticRepaint();
+	        }
+	    });
 	}
+ 	@Override
+    public void paint(Graphics g) {
+        super.paint(g);
+    }
 	public static JTextArea getLog() {
 		return log;
 	}
+	public static void appendNewLine(String line) {
+		LogPanel.getLog().append(System.lineSeparator()+line); 
+	}
+	
 }
