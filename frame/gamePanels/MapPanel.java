@@ -36,7 +36,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 		this.setOpaque(false);
 		self = this;
 
-		mapImage = new MapImage(735, 735);
+		mapImage = new MapImage(1568, 1568);
 		setBackground(new Color(0, 0, 0, 0));
 
 		refresh = new Refresh();
@@ -132,6 +132,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 		MapPanel.displacementMultiplier = 1;
 		MapPanel.displacementX = 0;
 		MapPanel.displacementY = 0;
+		self.repaint();
 	}
 
 	private void mouseEventHandler(MouseEvent e) {
@@ -165,6 +166,9 @@ public class MapPanel extends JPanel implements ImageObserver {
 			}
 			if (e.getButton() == 3) {
 				InteractionPanel.removeSelectionPane();
+				ObjectMap.getSelected().removeSelected();
+				MapImage.getMapImage().redrawArea(0, 0, 0, 0);
+				MapPanel.refresh.run();
 			}
 		}
 

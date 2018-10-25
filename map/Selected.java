@@ -26,7 +26,7 @@ public class Selected {
 			InteractionPanel.staticValidate();
 		}
 //		System.out.println("selection pane: " + InteractionPanel.getSelectionPane());
-		System.out.println(selectedEntity);
+//		System.out.println(selectedEntity);
 		InfoPanel.refresh();
 	}
 
@@ -70,5 +70,11 @@ public class Selected {
 
 	public void setSelectedAbility(Ability selectedAbility) {
 		this.selectedAbility = selectedAbility;
+	}
+
+	public void removeSelected() {
+		this.selectedAbility = null;
+		this.selectedEntity = null;
+		this.selectedMapTile = null;
 	}
 }
