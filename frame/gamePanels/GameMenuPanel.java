@@ -60,7 +60,10 @@ public class GameMenuPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MainGamePanel.getLogPanel().setVisible(!MainGamePanel.getLogPanel().isVisible());
+				try {
+					MainGamePanel.getLogBackgroundPanel().setVisible(!MainGamePanel.getLogBackgroundPanel().isVisible());
+				} catch (NullPointerException nl) {
+				}
 			}
 		});
 	}

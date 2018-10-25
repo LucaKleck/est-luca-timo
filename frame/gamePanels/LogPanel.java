@@ -1,16 +1,11 @@
 package frame.gamePanels;
 
 import java.awt.Cursor;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
 
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
-
-import frame.MainJFrame;
 
 public class LogPanel extends JScrollPane {
 	private static final long serialVersionUID = 123L;
@@ -22,27 +17,12 @@ public class LogPanel extends JScrollPane {
 		setDoubleBuffered(true);
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-		setAutoscrolls(true);
-		log.setFont(new Font("MS PGothic", Font.BOLD, 13));
 		setViewportView(log);
 		
 		setOpaque(false);
 		
 		this.getViewport().setOpaque(false);
 		
-		this.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener() {
-			@Override
-		    public void adjustmentValueChanged(final AdjustmentEvent e) {
-				MainJFrame.staticRepaint();
-		    }
-		});
-		
-	    this.getHorizontalScrollBar().addAdjustmentListener(new AdjustmentListener() {
-	        @Override
-	        public void adjustmentValueChanged(final AdjustmentEvent e) {
-	        	MainJFrame.staticRepaint();
-	        }
-	    });
 	}
  	@Override
     public void paint(Graphics g) {
@@ -53,8 +33,7 @@ public class LogPanel extends JScrollPane {
 	}
 	public static void appendNewLine(String line) {
 		try {
-			LogPanel.getLog().append(System.lineSeparator()+line);
-			MainJFrame.staticRepaint();
+			LogPanel.getLog().append(System.lineSeparator()+" "+line);
 		} catch (NullPointerException nl) {
 		}
 	}

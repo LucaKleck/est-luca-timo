@@ -116,6 +116,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					self.repaint();
+//					System.out.println("Height["+getHeight()+"] Width["+getWidth()+"]");
 				} catch (NullPointerException s) {
 				}
 			}

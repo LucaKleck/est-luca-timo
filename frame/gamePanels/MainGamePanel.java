@@ -15,28 +15,27 @@ import net.miginfocom.swing.MigLayout;
 */
 public class MainGamePanel extends JLayeredPane {
 	private static final long serialVersionUID = 120L;
-	private static LogPanel logPanel = new LogPanel();
+	private static LogBackgroundPanel logBackgroundPanel = new LogBackgroundPanel();
 	
 	public MainGamePanel() {									//  x				// y
 		// 															0	 	1 			0		  1 	 2 	 	  3
-		setLayout(new MigLayout("insets 0 0 0 0, gap 0px 0px", "[75%,grow][25%,grow]", "[25px:n,fill][75%][20%,fill][grow,fill]"));
-		this.setDoubleBuffered(true);
+		setLayout(new MigLayout("insets 0 0 0 0, gap 0px 0px", "[70%,grow][30%,grow]", "[25px:n,fill][75%][20%,fill][grow,fill]"));
 		
+		this.setDoubleBuffered(true);
 		GameMenuPanel menuPanel = new GameMenuPanel();
 		setLayer(menuPanel, 3);
 		add(menuPanel, "cell 0 0 2 1,grow");
 		
-		LogBackgroundPanel logBackgroundPanel = new LogBackgroundPanel();
+		LogPanel logPanel = new LogPanel();
+		
 		setLayer(logBackgroundPanel, 1);
 		add(logBackgroundPanel, "flowx,cell 0 2,grow");
-		
 		logBackgroundPanel.setLayout(new BorderLayout(0, 0));
 		logBackgroundPanel.add(logPanel);
 		
 		MapPanel mapPanel = new MapPanel();
 		setLayer(mapPanel, 0);
 		add(mapPanel, "cell 0 1 1 2,grow");
-		
 		
 		InfoPanel infoPanel = new InfoPanel();
 		setLayer(infoPanel, 2);
@@ -55,7 +54,8 @@ public class MainGamePanel extends JLayeredPane {
 		
 	}
 	
-	public static LogPanel getLogPanel() {
-		return logPanel;
+	public static LogBackgroundPanel getLogBackgroundPanel() {
+		return logBackgroundPanel;
 	}
+
 }
