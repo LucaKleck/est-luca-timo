@@ -1,5 +1,6 @@
 package frame.gamePanels;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -16,6 +17,7 @@ public class InteractionPanel extends JPanel {
 	
 	public InteractionPanel() {
 		self = this;
+		this.setBackground(Color.WHITE);
 		setLayout(new MigLayout("", "[100%,fill]", "[100%,fill]"));
 		if(refresh == null) {
 			refresh = new Refresh();
@@ -67,5 +69,9 @@ public class InteractionPanel extends JPanel {
 			self.validate();
 			self.repaint();
 		}
+	}
+	
+	public static InteractionPanel getInteractionPanel() {
+		return self;
 	}
 }

@@ -51,5 +51,9 @@ public class ObjectMap {
 
 	public static void remakeMap() {
 		map = MapCreator.createMap();
+		try {
+			MapImage.staticRepaint();
+		} catch (NullPointerException nl) {
+		}
 	}
 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class MapImage extends BufferedImage implements ImageObserver {
 
+	private static MapImage self;
 	private static final int IMAGE_TYPE = TYPE_INT_ARGB;
 	private static Graphics2D g2d;
 	private static ArrayList<MapImageEffect> effectList = new ArrayList<MapImageEffect>();
@@ -22,6 +23,7 @@ public class MapImage extends BufferedImage implements ImageObserver {
 
 	public MapImage(int width, int height) {
 		super(width, height, IMAGE_TYPE);
+		self = this;
 		MapImage.g2d = createGraphics();
 		imageWidth = width;
 		imageHeight = height;
@@ -130,6 +132,10 @@ public class MapImage extends BufferedImage implements ImageObserver {
 		drawBottomLayer();
 
 		combineLayers();
+	}
+
+	public static void staticRepaint() {
+		self.redraw();
 	}
 
 }

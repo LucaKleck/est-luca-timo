@@ -23,7 +23,6 @@ import frame.gamePanels.MapPanel;
 * @see CoreController
 */
 public class ControlInput {
-	
 	public ControlInput() {
 		KeyInputDispatcher keyInputDispatcher = new KeyInputDispatcher();
 		KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();

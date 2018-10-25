@@ -115,7 +115,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 		MapPanel.displacementX = 0;
 		MapPanel.displacementY = 0;
 	}
-
+	
 	private void mouseEventHandler(MouseEvent e) {
 		// X 
 		double factorX = (double) self.getWidth() / (double) MapImage.getImageWidth();

@@ -1,10 +1,16 @@
 package frame.gamePanels;
 
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import java.awt.GridLayout;
+
+import map.ObjectMap;
 
 public class GameMenuPanel extends JPanel {
 	private static final long serialVersionUID = 122L;
@@ -19,6 +25,33 @@ public class GameMenuPanel extends JPanel {
 		
 		JMenuItem mntmSave = new JMenuItem("Save");
 		mnOptions.add(mntmSave);
+		
+		JCheckBoxMenuItem chckbxmntmShowLog = new JCheckBoxMenuItem("show Log");
+		chckbxmntmShowLog.setSelected(true);
+		mnOptions.add(chckbxmntmShowLog);
+		
+		JMenu mnDev = new JMenu("dev");
+		menuBar.add(mnDev);
+		
+		JMenuItem mntmRemakeMap = new JMenuItem("Remake Map");
+		mnDev.add(mntmRemakeMap);
+		
+		mntmRemakeMap.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ObjectMap.remakeMap();
+			}
+			
+		});	
+		
+		chckbxmntmShowLog.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				MainGamePanel.getLogPanel().setVisible(!MainGamePanel.getLogPanel().isVisible());
+			}
+		});
 	}
 
 }
