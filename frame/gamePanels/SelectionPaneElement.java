@@ -5,12 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import entity.Entity;
 import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JLabel;
 
 public class SelectionPaneElement extends JPanel implements ActionListener {
 	private static final long serialVersionUID = 128L;
@@ -51,10 +51,10 @@ public class SelectionPaneElement extends JPanel implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		System.out.println(entity.getName());
 		ObjectMap.getSelected().setSelectedEntity(entity);
 		InteractionPanel.setSelectionPane(null);
 		InteractionPanel.staticValidate();
+		InfoPanel.refresh();
 	}
 
 }

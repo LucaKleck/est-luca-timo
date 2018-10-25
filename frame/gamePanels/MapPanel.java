@@ -144,7 +144,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 		//
 		ObjectMap.getSelected().reselect(x, y);
 
-		mapImage.redraw();
+		MapImage.staticRepaint();
 		MapPanel.refresh.run();
 	}
 
@@ -160,7 +160,12 @@ public class MapPanel extends JPanel implements ImageObserver {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			mouseEventHandler(e);
+			if (e.getButton() == 1) {
+				mouseEventHandler(e);
+			}
+			if (e.getButton() == 3) {
+				InteractionPanel.removeSelectionPane();
+			}
 		}
 
 		@Override

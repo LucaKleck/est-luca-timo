@@ -1,5 +1,6 @@
 package frame;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,12 +28,15 @@ public class MainJFrame extends JFrame implements ComponentListener {
 	private Timer recalculateTimer = new Timer(20, new resizeListener());
 
 	public MainJFrame() {
+		setBackground(Color.DARK_GRAY);
+		setName("GameMainFrame");
 		self = this;
 		this.setDefaultCloseOperation(MainJFrame.EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(800, 600));
-		this.add(new MainMenuPanel());
+		MainMenuPanel mainMenuPanel = new MainMenuPanel();
+		mainMenuPanel.setBackground(Color.DARK_GRAY);
+		getContentPane().add(mainMenuPanel);
 		this.addMouseWheelListener(ControlInput.mouseWheeListener);
-		this.addMouseListener(ControlInput.mouseListener);
 
 		Refresh r = new Refresh();
 		r.run();

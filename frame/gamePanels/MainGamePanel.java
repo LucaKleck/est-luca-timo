@@ -28,20 +28,16 @@ public class MainGamePanel extends JLayeredPane {
 		setLayer(menuPanel, 3);
 		add(menuPanel, "cell 0 0 2 1,grow");
 
-		LogPanel logPanel = new LogPanel();
+//		LogPanel logPanel = new LogPanel();
 
 		setLayer(logBackgroundPanel, 1);
 		add(logBackgroundPanel, "flowx,cell 0 2,grow");
 		logBackgroundPanel.setLayout(new BorderLayout(0, 0));
-		logBackgroundPanel.add(logPanel);
+//		logBackgroundPanel.add(logPanel);
 
 		MapPanel mapPanel = new MapPanel();
 		setLayer(mapPanel, 0);
 		add(mapPanel, "cell 0 1 1 2,grow");
-
-		InfoPanel infoPanel = new InfoPanel();
-		setLayer(infoPanel, 2);
-		add(infoPanel, "cell 1 2,grow");
 
 		AbilityPanel abilityPanel = new AbilityPanel();
 		setLayer(abilityPanel, 2);
@@ -53,6 +49,10 @@ public class MainGamePanel extends JLayeredPane {
 		InteractionPanel interactionPanel = new InteractionPanel();
 		setLayer(interactionPanel, 2);
 		add(interactionPanel, "cell 1 1, grow");
+
+		InfoPanel infoPanel = new InfoPanel();
+		setLayer(infoPanel, 2);
+		add(infoPanel, "cell 1 2 1 2,grow");
 
 	}
 

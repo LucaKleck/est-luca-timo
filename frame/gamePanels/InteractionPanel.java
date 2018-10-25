@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
 
 public class InteractionPanel extends JPanel {
@@ -33,12 +35,22 @@ public class InteractionPanel extends JPanel {
 		InteractionPanel.selectionPane = selectionPane;
 	}
 
+	public static void removeSelectionPane() {
+		InteractionPanel.selectionPane = null;
+		ObjectMap.getSelected().setSelectedEntity(null);
+	}
+
 	private class Refresh implements Runnable {
+		Timer timer = new Timer(50, new RefreshTask());
+
 		@Override
 		public void run() {
-			Timer timer = new Timer(50, new RefreshTask());
-			timer.setRepeats(true);
-			timer.start();
+			if (!timer.isRunning()) {
+				timer.setRepeats(true);
+				timer.start();
+			} else {
+				timer.restart();
+			}
 		}
 
 		private class RefreshTask implements ActionListener {

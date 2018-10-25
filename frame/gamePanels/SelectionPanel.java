@@ -28,7 +28,7 @@ public class SelectionPanel extends JScrollPane {
 
 		JPanel viewportPanel = new JPanel();
 		setViewportView(viewportPanel);
-		viewportPanel.setLayout(new MigLayout("", "[]", "[]"));
+		viewportPanel.setLayout(new MigLayout("", "[fill]", "[fill]"));
 
 		for (int i = 0; i < ObjectMap.getEntityMap()[x][y].length; i++) {
 			if (ObjectMap.getEntityMap()[x][y][i] != null) {
@@ -43,9 +43,7 @@ public class SelectionPanel extends JScrollPane {
 		String columns = "";
 
 		for (int i = 0; i < selectedEntityList.size(); i++) {
-
 			columns += "[fill]";
-
 		}
 
 		viewportPanel.setLayout(new MigLayout("", "[fill]", columns));
@@ -59,7 +57,7 @@ public class SelectionPanel extends JScrollPane {
 
 	private SelectionPaneElement createEntityPane(Entity entity) {
 		int filler = ((InteractionPanel.getInteractionPanel().getWidth() / 100 * 80 - 65));
-		System.out.println(filler);
+//		System.out.println(filler);
 		SelectionPaneElement e = new SelectionPaneElement(entity, filler);
 		return e;
 	}

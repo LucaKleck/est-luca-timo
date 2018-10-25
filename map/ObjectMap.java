@@ -6,7 +6,6 @@ package map;
 
 import core.MapCreator;
 import entity.Entity;
-import entity.EntityFilter;
 import entity.unit.Warrior;
 import frame.gamePanels.MapPanel;
 
@@ -34,8 +33,7 @@ public class ObjectMap {
 		entityMap[1][1][2] = new Warrior("12", 22, 2, 3, 1, 1);
 		entityMap[1][1][3] = new Warrior("13", 22, 4, 3, 1, 1);
 
-		System.out.println(
-				"best target = " + new EntityFilter(entityMap).getBestEntityTarget(entityMap[0][0][0]).getName());
+//		System.out.println("best target = " + new EntityFilter(entityMap).getBestEntityTarget(entityMap[0][0][0]).getName());
 
 	}
 

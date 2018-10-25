@@ -1,6 +1,7 @@
 package map;
 
 import entity.Entity;
+import frame.gamePanels.InfoPanel;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.SelectionPanel;
 
@@ -12,28 +13,26 @@ public class Selected {
 
 	public void reselect(int x, int y) {
 		try {
-			this.selectedMapTile = ObjectMap.getMap()[x][y];
+			selectedMapTile = ObjectMap.getMap()[x][y];
 		} catch (IndexOutOfBoundsException e) {
-			this.selectedMapTile = null;
+			selectedMapTile = null;
 		}
 		if (isntEmpty(x, y)) {
 			selectedEntity = null;
 			InteractionPanel.setSelectionPane(new SelectionPanel(x, y));
 		} else {
-			this.selectedEntity = null;
+			selectedEntity = null;
 			InteractionPanel.setSelectionPane(null);
 			InteractionPanel.staticValidate();
 		}
 //		System.out.println("selection pane: " + InteractionPanel.getSelectionPane());
-		try {
-			System.out.println("selected unit name: " + selectedEntity.getName());
-		} catch (NullPointerException ex) {
-			System.out.println("nothing selected");
-		}
+		System.out.println(selectedEntity);
+		InfoPanel.refresh();
 	}
 
 	public void setSelectedEntity(Entity toBeSelected) {
 		this.selectedEntity = toBeSelected;
+		InfoPanel.refresh();
 	}
 
 	public MapTile getSelectedMapTile() {

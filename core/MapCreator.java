@@ -37,8 +37,6 @@ public class MapCreator {
 	/**
 	 * @return MapTile[][] Returns an array of MapTiles that were processed to look
 	 *         like a map
-	 * @param riverCount  The amount of rivers that will be generated
-	 * @param forestCount The amount of forests that will be generated
 	 */
 	public static MapTile[][] createMap() {
 		MapTile[][] map = new MapTile[49][49];
@@ -127,7 +125,6 @@ public class MapCreator {
 		return plane;
 	}
 
-	@SuppressWarnings("unused")
 	private static MapTile createForest(int xPos, int yPos) {
 		MapTile forest = new MapTile(xPos, yPos, MapTile.FOREST, "Forest");
 		return forest;

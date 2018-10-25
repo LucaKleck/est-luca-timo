@@ -5,7 +5,14 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+
+import javax.imageio.ImageIO;
+
+import core.Boot;
 
 public class MapImage extends BufferedImage implements ImageObserver {
 
@@ -20,10 +27,18 @@ public class MapImage extends BufferedImage implements ImageObserver {
 	private static int mapTileSize;
 	private static int imageWidth;
 	private static int imageHeight;
+	private static BufferedImage plainImage;
+	private static BufferedImage forestImage;
+	
 
 	public MapImage(int width, int height) {
 		super(width, height, IMAGE_TYPE);
 		self = this;
+		try {
+			plainImage = ImageIO.read( Boot.class.getResource("/resources/plain.png") );
+			forestImage = ImageIO.read( Boot.class.getResource("/resources/forest.png") );
+		} catch (IOException e) {
+		}
 		MapImage.g2d = createGraphics();
 		imageWidth = width;
 		imageHeight = height;
@@ -53,8 +68,12 @@ public class MapImage extends BufferedImage implements ImageObserver {
 		Graphics2D g = bottomLayer.createGraphics();
 		for (int xRow = 0; xRow < ObjectMap.getMap().length; xRow++) {
 			for (int yColumn = 0; yColumn < ObjectMap.getMap()[0].length; yColumn++) {
-				g.setColor(getColorForTile(xRow, yColumn));
-				g.fillRect(xRow * mapTileSize, yColumn * mapTileSize, mapTileSize, mapTileSize);
+//				g.setColor(getColorForTile(xRow, yColumn));
+//				g.fillRect(xRow * mapTileSize, yColumn * mapTileSize, mapTileSize, mapTileSize);
+				try {
+					g.drawImage(getImageForTile(xRow, yColumn), xRow * mapTileSize, yColumn * mapTileSize, mapTileSize, mapTileSize, null);
+				} catch (NullPointerException e) {
+				}
 			}
 		}
 	}
@@ -71,19 +90,19 @@ public class MapImage extends BufferedImage implements ImageObserver {
 
 	private void drawTopLayer() {
 		topLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
-		Graphics2D g = topLayer.createGraphics();
+		drawTopInside();
+		/*Graphics2D g = topLayer.createGraphics();
 		g.setColor(new Color(255, 0, 0, 120));
 		try {
 			g.fillRect(ObjectMap.getSelected().getSelectedMapTile().getXPos() * mapTileSize,
 					ObjectMap.getSelected().getSelectedMapTile().getYPos() * mapTileSize, mapTileSize, mapTileSize);
 		} catch (NullPointerException e) {
-		}
-		for (int xRow = 0; xRow < ObjectMap.getMap().length; xRow++) {
-			for (int yColumn = 0; yColumn < ObjectMap.getMap()[0].length; yColumn++) {
-				g.setColor(new Color(0, 0, 0));
-				g.drawRect(xRow * mapTileSize, yColumn * mapTileSize, mapTileSize, mapTileSize);
-			}
-		}
+		}*/ /* Old Map Squares
+			 * for (int xRow = 0; xRow < ObjectMap.getMap().length; xRow++) { for (int
+			 * yColumn = 0; yColumn < ObjectMap.getMap()[0].length; yColumn++) {
+			 * g.setColor(new Color(0, 0, 0)); g.drawRect(xRow * mapTileSize, yColumn *
+			 * mapTileSize, mapTileSize, mapTileSize); } }
+			 */
 	}
 
 	private void drawEffectLayer() {
@@ -95,7 +114,23 @@ public class MapImage extends BufferedImage implements ImageObserver {
 			// effectList needs to be cleared after the round
 		}
 	}
-
+	private void drawTopInside() {
+		Graphics2D g = topLayer.createGraphics();
+		g.setColor(new Color(255, 0, 0, 120));
+		try {
+			g.fillRect(ObjectMap.getSelected().getSelectedMapTile().getXPos() * mapTileSize,
+					ObjectMap.getSelected().getSelectedMapTile().getYPos() * mapTileSize, mapTileSize, mapTileSize);
+		} catch (NullPointerException e) {
+		}
+	}
+	private void drawBottomInside(int x, int y) {
+		Graphics2D g = bottomLayer.createGraphics(); //TODO make it so the images are created on boot then stored for refreshes
+		try {
+			g.drawImage(getImageForTile(x, y), x * mapTileSize, y * mapTileSize, mapTileSize, mapTileSize, null);
+		} catch (NullPointerException e) {
+		}
+	}
+	@SuppressWarnings("unused")
 	private Color getColorForTile(int x, int y) {
 		Color color = Color.BLACK;
 		if (ObjectMap.getMap()[x][y].getName() == "Plain") {
@@ -108,6 +143,20 @@ public class MapImage extends BufferedImage implements ImageObserver {
 			color = new Color(10, 30, 255);
 		}
 		return color;
+	}
+	
+	private BufferedImage getImageForTile(int x, int y) {
+		if (ObjectMap.getMap()[x][y].getName() == "Plain") {
+			return plainImage;
+		} else if (ObjectMap.getMap()[x][y].getName() == "Forest") {
+			return forestImage;
+		} else if (ObjectMap.getMap()[x][y].getName() == "Mountain") {
+			return plainImage;
+		} else if (ObjectMap.getMap()[x][y].getName() == "Water") {
+			return plainImage;
+		} else {
+			return plainImage;
+		}
 	}
 
 	public static int getImageHeight() {
@@ -134,9 +183,39 @@ public class MapImage extends BufferedImage implements ImageObserver {
 
 		combineLayers();
 	}
-
+	public void redrawArea(int xStart, int xEnd, int yStart, int yEnd) {
+		int xDiff = 0;
+		int yDiff = 0;
+		//
+		if(xStart > xEnd) {
+			xDiff = xStart - xEnd;
+		} else if(xStart < xEnd) {
+			xDiff = xEnd - xStart;
+		} else {
+			xDiff = 1;
+		}
+		//
+		if(yStart > yEnd) {
+			yDiff = yStart - yEnd;
+		} else if(yStart < yEnd) {
+			yDiff = yEnd - yStart;
+		} else {
+			yDiff = 1;
+		}
+		//
+		for(int xCount = 0; xCount < xDiff; xCount++) {
+			for(int yCount = 0; yCount < yDiff; yCount++) {
+				drawTopInside();
+				drawBottomInside(xCount, yCount);
+			}
+		}
+		combineLayers();
+	}
 	public static void staticRepaint() {
 		self.redraw();
+	}
+	public static MapImage getMapImage() {
+		return self;
 	}
 
 }
