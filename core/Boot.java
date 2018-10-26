@@ -13,7 +13,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class Boot {
 
 	public static void main(String[] args) {
-		try {
+		/*try {
 			for (LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
 				if ("Nimbus".equals(info.getName())) {
 					UIManager.setLookAndFeel(info.getClassName());
@@ -30,7 +30,7 @@ public class Boot {
 			} catch (IllegalAccessException ex) {
 			}
 		}
-
+*/
 		new CoreController();
 	}
 
