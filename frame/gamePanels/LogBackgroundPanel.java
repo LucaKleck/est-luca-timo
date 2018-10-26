@@ -1,7 +1,9 @@
 package frame.gamePanels;
 
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
@@ -16,7 +18,9 @@ public class LogBackgroundPanel extends JPanel {
 	@Override
 	protected void paintComponent(Graphics g) {
 		g.setColor(getBackground());
-		g.fillRect(0, 0, getWidth(), getHeight());
+		GradientPaint dartToDarker = new GradientPaint(0, getHeight(), new Color(0,0,0,200), 0, 0, getBackground());
+		((Graphics2D) g).setPaint(dartToDarker);
+		((Graphics2D) g).fillRect(0, 0, getWidth(), getHeight());
 		super.paintComponent(g);
 	}
 

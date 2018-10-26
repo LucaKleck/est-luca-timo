@@ -1,9 +1,5 @@
 package core;
 
-import javax.swing.UIManager;
-import javax.swing.UIManager.LookAndFeelInfo;
-import javax.swing.UnsupportedLookAndFeelException;
-
 /**
  * Starts the game
  * 

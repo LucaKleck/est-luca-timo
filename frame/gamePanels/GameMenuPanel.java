@@ -44,6 +44,9 @@ public class GameMenuPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				LogPanel.appendNewLine("dev line");
+				LogPanel.appendNewLine("dev line");
+				LogPanel.appendNewLine("dev line");
+				LogPanel.appendNewLine("dev line");
 			}
 		});
 

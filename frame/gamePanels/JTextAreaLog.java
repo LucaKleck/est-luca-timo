@@ -10,6 +10,8 @@ public class JTextAreaLog extends JTextArea {
 	private static final long serialVersionUID = 8081537743411532128L;
 
 	public JTextAreaLog() {
+		setWrapStyleWord(true);
+		setLineWrap(true);
 		setOpaque(false);
 		setAutoscrolls(true);
 		setFont(new Font("MS PGothic", Font.BOLD, 13));
@@ -17,7 +19,7 @@ public class JTextAreaLog extends JTextArea {
 		setSelectedTextColor(Color.WHITE);
 		setForeground(Color.WHITE);
 		setEditable(false);
-		setText(" This is the log, keeping track of all important events");
+		setText("This is the log, keeping track of all important events");
 	}
 
 	@Override
