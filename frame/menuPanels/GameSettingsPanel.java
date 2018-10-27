@@ -10,12 +10,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import core.ControlInput;
+import frame.gamePanels.InfoPanel;
+import frame.gamePanels.InteractionPanel;
+import frame.gamePanels.LogPanel;
 import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
 
-/**  
- * Here the user can change the settings of the game and enter the name of the save
- * @author Luca Kleck 
+/**
+ * Here the user can change the settings of the game and enter the name of the
+ * save
+ * 
+ * @author Luca Kleck
  * @see frame.MainJFrame
  */
 public class GameSettingsPanel extends JPanel {
@@ -25,30 +30,37 @@ public class GameSettingsPanel extends JPanel {
 	public GameSettingsPanel() {
 		this.setBackground(Color.LIGHT_GRAY);
 		setLayout(new MigLayout("", "[grow]", "[10%][3%]"));
-		
+
 		JLabel lblGameName = new JLabel("Game Name");
 		add(lblGameName, "flowy,cell 0 0");
-		
+
 		txtNewGame = new JTextField();
 		txtNewGame.setText("New Game");
 		add(txtNewGame, "cell 0 0,growx"); // this text field will make up the save name of the game!
 		txtNewGame.setColumns(10);
-		
+
 		JButton btnStartGame = new JButton("Start Game");
 		btnStartGame.setActionCommand("frame.gamePanels.MainGamePanel");
 		btnStartGame.addActionListener(ControlInput.menuChanger);
 		btnStartGame.addActionListener(new ActionListener() {
-			
+
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				@SuppressWarnings("unused")
-				ObjectMap objectMap = new ObjectMap();
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ObjectMap.getSelected().removeSelected();
+					InteractionPanel.setSelectionPane(null);
+					InfoPanel.refresh();
+					LogPanel.kill();
+				} catch (NullPointerException nl) {
+					
+				}
+				new ObjectMap();
 			}
+
 		});
 		// TODO add another action listener that creates the save/makes the map and so on
 		add(btnStartGame, "cell 0 1");
-		
+
 	}
 
-	
 }

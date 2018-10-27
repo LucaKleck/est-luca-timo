@@ -4,109 +4,175 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.image.ImageObserver;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
 import map.MapImage;
+import map.ObjectMap;
 
-/**  
+/**
  * Contains and draws the MapImage, takes care of the displacement
- * @author Luca Kleck 
+ * 
+ * @author Luca Kleck
  * @see MainGamePanel
  */
 public class MapPanel extends JPanel implements ImageObserver {
 	private static final long serialVersionUID = 121L;
-	
+
 	private static MapImage mapImage;
 	private static MapPanel self;
 	private static double displacementMultiplier = 1;
 	private static int displacementX;
 	private static int displacementY;
-	Refresh refresh = new Refresh();
-	
+	public static Refresh refresh;
+
 	public MapPanel() {
 		this.setName("MapPanel");
+		this.setDoubleBuffered(true);
+		this.setOpaque(false);
 		self = this;
-		mapImage = new MapImage(500, 500);
+
+		mapImage = new MapImage(1568, 1568);
 		setBackground(new Color(0, 0, 0, 0));
+
+		refresh = new Refresh();
 		refresh.run();
+
+		this.addMouseListener(new MouseEventHandler());
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
-		
+
 		// Draw background
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
 		// draw map image with displacement & multiplier
-		g.drawImage(mapImage,
-				(int) (displacementX),
-				(int) (displacementY),
-				(int) (this.getWidth() * displacementMultiplier),
-				(int) (this.getWidth() * displacementMultiplier), this);
-		g.setColor(Color.RED);
-		g.fillOval((int) (displacementX-4+(this.getWidth()/2)), (int) (displacementY-4+(this.getWidth()/2)), 8, 8);
+		g.drawImage(mapImage, (int) (displacementX), (int) (displacementY),
+				(int) (this.getWidth() * displacementMultiplier), (int) (this.getWidth() * displacementMultiplier),
+				this);
 	}
-	
+
 	public static void addDisplacementX(int displacementX) {
-		if( (MapPanel.displacementX+displacementX) < (self.getWidth()/(2+(displacementMultiplier/2-0.5))) && (MapPanel.displacementX+displacementX) > -(self.getWidth()/(2+(displacementMultiplier/2-0.5))) ) {			
+		if ((MapPanel.displacementX + displacementX) < (self.getWidth() / 2 / displacementMultiplier)
+				&& (MapPanel.displacementX + displacementX) > -(self.getWidth() / 2 * displacementMultiplier * 1.25)) {
 			MapPanel.displacementX += displacementX;
+		} else {
+			if (MapPanel.displacementX > 0) {
+				MapPanel.displacementX = (int) (self.getWidth() / 2 / displacementMultiplier);
+			} else {
+				MapPanel.displacementX = (int) -(self.getWidth() / 2 * displacementMultiplier * 1.25);
+			}
 		}
-		System.out.println("-------------------");
-		System.out.println(self.getWidth()/2);
-		System.out.println("&");
-		System.out.println(MapPanel.displacementX);
+		MapPanel.refresh.run();
 	}
-	
+
 	public static void addDisplacementY(int displacementY) {
-		if( (MapPanel.displacementY+displacementY) < (self.getWidth()/5.25*displacementMultiplier) && (MapPanel.displacementY+displacementY) > -(self.getWidth()/(2+(displacementMultiplier/2-0.5))) ) {
+		if ((MapPanel.displacementY + displacementY) < (self.getWidth() / 5.25 * displacementMultiplier)
+				&& (MapPanel.displacementY + displacementY) > -(self.getWidth() / 2 * displacementMultiplier * 1.5)) {
 			MapPanel.displacementY += displacementY;
+		} else {
+			if (MapPanel.displacementY > 0) {
+				MapPanel.displacementY = (int) (self.getWidth() / 5.25 * displacementMultiplier);
+			} else {
+				MapPanel.displacementY = (int) -(self.getWidth() / 2 * displacementMultiplier * 1.5);
+			}
 		}
-		System.out.println("-------------------");
-		System.out.println(self.getWidth()/5.25*displacementMultiplier);
-		System.out.println("&");
-		System.out.println(MapPanel.displacementY);
+		MapPanel.refresh.run();
 	}
-	
+
 	public static void addDisplacementMultiplier(double displacementMultiplier) {
-		if(MapPanel.displacementMultiplier+displacementMultiplier >= 1 && MapPanel.displacementMultiplier+displacementMultiplier < 2) {
-			MapPanel.displacementMultiplier += displacementMultiplier;		
+		if (MapPanel.displacementMultiplier + displacementMultiplier >= 0.9
+				&& MapPanel.displacementMultiplier + displacementMultiplier < 2) {
+			MapPanel.displacementMultiplier += displacementMultiplier;
+			MapPanel.refresh.run();
 		}
 	}
 
 	/**
-	 * Inner class that periodically repaints the map so displacement changes feel responsive
+	 * Inner class that repaints the map so displacement changes feel responsive
+	 * 
 	 * @author Luca Kleck
 	 */
-	private class Refresh implements Runnable {
-		
+	public class Refresh implements Runnable {
+		private Timer repaintTimer = new Timer(1, new RefreshTask());
+
 		@Override
 		public void run() {
-			Timer timer = new Timer(100, new RefreshTask());
-			timer.setRepeats(true);
-			timer.start();
+			if (!repaintTimer.isRunning()) {
+				repaintTimer.setRepeats(false);
+				repaintTimer.start();
+			} else {
+				repaintTimer.restart();
+			}
 		}
-		
+
 		private class RefreshTask implements ActionListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					self.repaint();
+//					System.out.println("Height["+getHeight()+"] Width["+getWidth()+"]");
 				} catch (NullPointerException s) {
 				}
 			}
 
 		}
+
 	}
-	
+
 	public static void reset() {
 		MapPanel.displacementMultiplier = 1;
 		MapPanel.displacementX = 0;
 		MapPanel.displacementY = 0;
+		self.repaint();
+	}
+
+	private void mouseEventHandler(MouseEvent e) {
+		// X
+		double factorX = (double) this.getWidth() / (double) MapImage.getImageWidth();
+		int x = (int) (((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize());
+		// Y
+		double factorY = (double) this.getWidth() / (double) MapImage.getImageHeight();
+		int y = (int) (((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
+		//
+		if(e.getButton() == 1) {
+			ObjectMap.getSelected().clickedOnTile(x, y, true);
+		}
+		if(e.getButton() == 3) {
+			ObjectMap.getSelected().clickedOnTile(x, y, false);
+		}
+	}
+
+	private class MouseEventHandler implements MouseListener {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			mouseEventHandler(e);
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+		}
+
 	}
 }
