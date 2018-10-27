@@ -6,6 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.UIManager;
+import javax.swing.border.TitledBorder;
 
 import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
@@ -18,13 +20,15 @@ public class InteractionPanel extends JPanel {
 	private static InteractionPanel self;
 
 	public InteractionPanel() {
+		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		self = this;
-		this.setBackground(Color.WHITE);
+		this.setBackground(Color.LIGHT_GRAY);
 		setLayout(new MigLayout("", "[100%,fill]", "[100%,fill]"));
 		if (refresh == null) {
 			refresh = new Refresh();
 			refresh.run();
 		}
+		
 	}
 
 	public static SelectionPanel getSelectionPane() {
@@ -33,6 +37,7 @@ public class InteractionPanel extends JPanel {
 
 	public static void setSelectionPane(SelectionPanel selectionPane) {
 		InteractionPanel.selectionPane = selectionPane;
+		InteractionPanel.getInteractionPanel().repaint();
 	}
 
 	public static void removeSelectionPane() {
@@ -57,10 +62,6 @@ public class InteractionPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-//				try {
-//					System.out.println(selectionPane.getSelectedEntityList().toString());
-//				} catch(NullPointerException ex) {
-//				}
 				if (selectionPane != null) {
 					self.removeAll();
 					self.add(selectionPane, "cell 0 0");
@@ -76,9 +77,11 @@ public class InteractionPanel extends JPanel {
 		}
 	}
 
-	public static void staticValidate() {
+	public static void staticRemoveAll() {
 		if (self != null) {
-			self.removeAll();
+			if(InteractionPanel.selectionPane == null) {
+				self.removeAll();
+			}
 			self.validate();
 			self.repaint();
 		}

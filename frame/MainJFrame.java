@@ -12,7 +12,11 @@ import javax.swing.Timer;
 
 import core.ControlInput;
 import core.CoreController;
+import frame.gamePanels.InteractionPanel;
+import frame.gamePanels.SelectionPanel;
 import frame.menuPanels.MainMenuPanel;
+import map.ObjectMap;
+import java.awt.Toolkit;
 
 /**
  * Frame that is used to display all the content
@@ -28,6 +32,8 @@ public class MainJFrame extends JFrame implements ComponentListener {
 	private Timer recalculateTimer = new Timer(20, new resizeListener());
 
 	public MainJFrame() {
+		setTitle("4x Game");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(MainJFrame.class.getResource("/resources/gameIcon.png")));
 		setBackground(Color.DARK_GRAY);
 		setName("GameMainFrame");
 		self = this;
@@ -37,7 +43,7 @@ public class MainJFrame extends JFrame implements ComponentListener {
 		mainMenuPanel.setBackground(Color.DARK_GRAY);
 		getContentPane().add(mainMenuPanel);
 		this.addMouseWheelListener(ControlInput.mouseWheeListener);
-
+		this.addComponentListener(this);
 		Refresh r = new Refresh();
 		r.run();
 
@@ -45,6 +51,12 @@ public class MainJFrame extends JFrame implements ComponentListener {
 	}
 
 	public static void staticRepaint() {
+		try {
+			if(InteractionPanel.getSelectionPane() != null) {
+				InteractionPanel.setSelectionPane(new SelectionPanel(ObjectMap.getSelected().getSelectedMapTile().getXPos(), ObjectMap.getSelected().getSelectedMapTile().getYPos()));
+			}
+		} catch (NullPointerException nl) {
+		}
 		self.repaint();
 	}
 
@@ -62,6 +74,7 @@ public class MainJFrame extends JFrame implements ComponentListener {
 			recalculateTimer.restart();
 		} else {
 			recalculateTimer.start();
+			recalculateTimer.setRepeats(false);
 		}
 	}
 

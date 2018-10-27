@@ -3,6 +3,7 @@ package map;
 import entity.Entity;
 import frame.gamePanels.InfoPanel;
 import frame.gamePanels.InteractionPanel;
+import frame.gamePanels.MapPanel;
 import frame.gamePanels.SelectionPanel;
 
 public class Selected {
@@ -23,11 +24,11 @@ public class Selected {
 		} else {
 			selectedEntity = null;
 			InteractionPanel.setSelectionPane(null);
-			InteractionPanel.staticValidate();
+			InteractionPanel.staticRemoveAll();
 		}
-//		System.out.println("selection pane: " + InteractionPanel.getSelectionPane());
-//		System.out.println(selectedEntity);
 		InfoPanel.refresh();
+		MapImage.getMapImage().redrawArea(x, x, y, y);
+		MapPanel.refresh.run();
 	}
 
 	public void setSelectedEntity(Entity toBeSelected) {

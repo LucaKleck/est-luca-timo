@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import core.ControlInput;
+import frame.gamePanels.InteractionPanel;
+import frame.gamePanels.LogPanel;
 import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
 
@@ -42,13 +44,18 @@ public class GameSettingsPanel extends JPanel {
 		btnStartGame.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent arg0) {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					InteractionPanel.removeSelectionPane();
+					LogPanel.kill();
+				} catch (NullPointerException nl) {
+					
+				}
 				new ObjectMap();
 			}
 
 		});
-		// TODO add another action listener that creates the save/makes the map and so
-		// on
+		// TODO add another action listener that creates the save/makes the map and so on
 		add(btnStartGame, "cell 0 1");
 
 	}

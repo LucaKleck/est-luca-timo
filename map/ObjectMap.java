@@ -17,8 +17,10 @@ public class ObjectMap {
 
 	public ObjectMap() {
 		map = MapCreator.createMap();
+		selected = new Selected();
+		entityMap = new Entity[49][49][10];
 
-		entityMap[0][0][0] = new Warrior("Onsssssssssssssssssssssssse", 22, 2, 3, 0, 0);
+		entityMap[0][0][0] = new Warrior("1", 22, 2, 3, 0, 0);
 		entityMap[0][0][1] = new Warrior("2", 22, 3, 3, 0, 0);
 		entityMap[0][0][2] = new Warrior("3", 22, 4, 3, 0, 0);
 		entityMap[0][0][3] = new Warrior("4", 22, 3, 3, 0, 0);

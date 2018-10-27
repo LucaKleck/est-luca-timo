@@ -144,9 +144,6 @@ public class MapPanel extends JPanel implements ImageObserver {
 		int y = (int) (((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
 		//
 		ObjectMap.getSelected().reselect(x, y);
-
-		MapImage.getMapImage().redrawArea(x, x, y, y);
-		MapPanel.refresh.run();
 	}
 
 	private class MouseEventHandler implements MouseListener {
