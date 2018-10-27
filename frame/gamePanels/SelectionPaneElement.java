@@ -66,7 +66,6 @@ public class SelectionPaneElement extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		ObjectMap.getSelected().setSelectedEntity(entity);
 		InteractionPanel.setSelectionPane(null);
-		InteractionPanel.staticRemoveAll();
 		InfoPanel.refresh();
 	}
 }

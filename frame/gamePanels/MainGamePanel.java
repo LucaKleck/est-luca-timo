@@ -16,7 +16,7 @@ import net.miginfocom.swing.MigLayout;
  */
 public class MainGamePanel extends JLayeredPane {
 	private static final long serialVersionUID = 120L;
-	private static LogBackgroundPanel logBackgroundPanel = new LogBackgroundPanel();
+	private static LogBackgroundPanel logBackgroundPanel;
 
 	public MainGamePanel() { // x // y
 		// 0 1 0 1 2 3
@@ -29,7 +29,8 @@ public class MainGamePanel extends JLayeredPane {
 		add(menuPanel, "cell 0 0 2 1,grow");
 
 		LogPanel logPanel = new LogPanel();
-
+		
+		logBackgroundPanel = new LogBackgroundPanel();
 		setLayer(logBackgroundPanel, 1);
 		add(logBackgroundPanel, "flowx,cell 0 2,grow");
 		logBackgroundPanel.setLayout(new BorderLayout(0, 0));

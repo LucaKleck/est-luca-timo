@@ -1,4 +1,4 @@
-package map;
+package core;
 
 import entity.Ability;
 import entity.Entity;
@@ -6,16 +6,19 @@ import frame.gamePanels.InfoPanel;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.MapPanel;
 import frame.gamePanels.SelectionPanel;
+import map.MapImage;
+import map.MapTile;
+import map.ObjectMap;
 
 public class Selected {
 	/*
 	 *  selectionMode = 0 = nothing is selected
 	 *  selectionMode = 1 = mapTile is selected
-	 *  selectionMode = 2 = mapTile and unit areare selected
+	 *  selectionMode = 2 = mapTile and unit are selected
 	 *  selectionMode = 3 = mapTile, unit and ability are selected
 	 *  selectionMode = 4 = mapTile and building are selected
 	 *  selectionMode = 5 = mapTile, building and ability are selected
-	 *  selectionMode = 10 = not allowed
+	 *  selectionMode = 10 = illegal state
 	 *  selectionMode = 69 = ability and map tile (dev mode stuff);
 	 */
 	private int selectionMode = 0;
@@ -36,12 +39,12 @@ public class Selected {
 					InteractionPanel.setSelectionPane(new SelectionPanel(x, y));
 				} else {
 					selectedEntity = null;
-					InteractionPanel.staticRemoveAll();
+					InteractionPanel.setSelectionPane(null);
 				}
 				
 			}
 		} else {
-			InteractionPanel.removeSelectionPane();
+			InteractionPanel.setSelectionPane(null);
 			ObjectMap.getSelected().removeSelected();
 			MapImage.getMapImage().redrawArea(0, 0, 0, 0);
 		}

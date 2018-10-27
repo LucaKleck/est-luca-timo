@@ -7,6 +7,8 @@ import javax.swing.JPanel;
 
 import core.ControlInput;
 import net.miginfocom.swing.MigLayout;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 /**
  * Here the user can go to the different menus
@@ -19,7 +21,7 @@ public class MainMenuPanel extends JPanel {
 
 	public MainMenuPanel() {
 		setBackground(Color.LIGHT_GRAY);
-		setLayout(new MigLayout("", "[30%]", "[:10%:10%][:10%:10%][:10%:10%][:70%:70%]"));
+		setLayout(new MigLayout("", "[30%]", "[:10%:10%][:10%:10%][:10%:10%][:10%:10%][:60%:60%]"));
 
 		JButton btnNewGame = new JButton("New Game");
 		btnNewGame.setActionCommand("frame.menuPanels.GameSettingsPanel");
@@ -35,6 +37,16 @@ public class MainMenuPanel extends JPanel {
 		btnOptions.setActionCommand("frame.menuPanels.OptionMenuPanel");
 		btnOptions.addActionListener(ControlInput.menuChanger);
 		add(btnOptions, "cell 0 2,grow");
+		
+		JButton btnExit = new JButton("Exit");
+		btnExit.addActionListener(new ActionListener() {
+			
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+			
+		});
+		add(btnExit, "cell 0 3,grow");
 
 	}
 

@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import core.ControlInput;
+import frame.gamePanels.InfoPanel;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.LogPanel;
 import map.ObjectMap;
@@ -46,7 +47,9 @@ public class GameSettingsPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					InteractionPanel.removeSelectionPane();
+					ObjectMap.getSelected().removeSelected();
+					InteractionPanel.setSelectionPane(null);
+					InfoPanel.refresh();
 					LogPanel.kill();
 				} catch (NullPointerException nl) {
 					

@@ -5,6 +5,7 @@
 package map;
 
 import core.MapCreator;
+import core.Selected;
 import entity.Entity;
 import entity.unit.Warrior;
 import frame.gamePanels.MapPanel;
