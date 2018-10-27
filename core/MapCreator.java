@@ -18,23 +18,25 @@ public class MapCreator {
 	private static final int COMMON_RADIUS = 7; // this is the radius that most methods will use to determine the sizes
 	private static final Random rand = new Random();
 
-	/*
-	 * Plant trees works like this: 1. create a vector 2. choose a random point on
-	 * the map 3. create a forest with a radius on each point of the vector's path
-	 * 4. reduce the vector's length by 1-2 for x or/and y, maybe swap x and y or
-	 * negate them to change direction maybe split into another vector that will
-	 * call a similar method with predefined point and vector 5. use the end point
-	 * of the last vector as start point and repeat from step 3 until vector is too
-	 * small
-	 *
-	 * the top of the map is cold the middle is tropic the bottom cold again
-	 *
-	 * variations are not types just names, but they can still change the way
-	 * certain things interact with the tile Changes may be: - Different Graphics -
-	 * Unit Interactions - Building Interactions variations may be: - Caves/Caverns
-	 * instead of mountains - Tundra instead of Plain - Jungle instead of Forest
-	 */
 	/**
+	 * Plant trees works like this: <br>
+	 * 1. create a vector <br>
+	 * 2. choose a random point on the map <br>
+	 * 3. create a forest with a radius on each point of the vector's path<br>
+	 * 4. reduce the vector's length by 1-2 for x or/and y, maybe swap x and y or<br>
+	 * negate them to change direction maybe split into another vector that will<br>
+	 * call a similar method with predefined point and vector <br>
+	 * 5. use the end point of the last vector as start point and repeat from step 3 until vector is too small <br>
+	 *<br>
+	 * the top of the map is cold the middle is tropic the bottom cold again<br>
+	 *<br>
+	 * variations are not types just names, but they can still change the way<br>
+	 * certain things interact with the tile Changes may be: - Different Graphics -<br>
+	 * Unit Interactions - Building Interactions variations may be:<br>
+	 *  - Caves/Caverns instead of mountains <br>
+	 *  - Tundra instead of Plain <br>
+	 *  - Jungle instead of Forest<br>
+	 *
 	 * @return MapTile[][] Returns an array of MapTiles that were processed to look
 	 *         like a map
 	 */

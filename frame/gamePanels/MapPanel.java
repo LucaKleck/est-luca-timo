@@ -137,13 +137,18 @@ public class MapPanel extends JPanel implements ImageObserver {
 
 	private void mouseEventHandler(MouseEvent e) {
 		// X
-		double factorX = (double) self.getWidth() / (double) MapImage.getImageWidth();
+		double factorX = (double) this.getWidth() / (double) MapImage.getImageWidth();
 		int x = (int) (((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize());
 		// Y
-		double factorY = (double) self.getWidth() / (double) MapImage.getImageHeight();
+		double factorY = (double) this.getWidth() / (double) MapImage.getImageHeight();
 		int y = (int) (((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
 		//
-		ObjectMap.getSelected().reselect(x, y);
+		if(e.getButton() == 1) {
+			ObjectMap.getSelected().clickedOnTile(x, y, true);
+		}
+		if(e.getButton() == 3) {
+			ObjectMap.getSelected().clickedOnTile(x, y, false);
+		}
 	}
 
 	private class MouseEventHandler implements MouseListener {
@@ -158,15 +163,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			if (e.getButton() == 1) {
-				mouseEventHandler(e);
-			}
-			if (e.getButton() == 3) {
-				InteractionPanel.removeSelectionPane();
-				ObjectMap.getSelected().removeSelected();
-				MapImage.getMapImage().redrawArea(0, 0, 0, 0);
-				MapPanel.refresh.run();
-			}
+			mouseEventHandler(e);
 		}
 
 		@Override

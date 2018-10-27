@@ -1,6 +1,6 @@
 package frame.menuPanels;
 
-import java.awt.SystemColor;
+import java.awt.Color;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -18,7 +18,7 @@ public class MainMenuPanel extends JPanel {
 	private static final long serialVersionUID = 111L;
 
 	public MainMenuPanel() {
-		setBackground(SystemColor.desktop);
+		setBackground(Color.LIGHT_GRAY);
 		setLayout(new MigLayout("", "[30%]", "[:10%:10%][:10%:10%][:10%:10%][:70%:70%]"));
 
 		JButton btnNewGame = new JButton("New Game");

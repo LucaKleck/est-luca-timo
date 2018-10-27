@@ -19,7 +19,7 @@ public class LoadMenuPanel extends JPanel {
 	private static final long serialVersionUID = 114L;
 
 	public LoadMenuPanel() {
-		this.setBackground(Color.BLUE);
+		this.setBackground(Color.LIGHT_GRAY);
 		setLayout(new MigLayout("", "[]", "[10%][80%][10%]"));
 
 		JButton btnBack = new JButton("Back");

@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 
 import core.ControlInput;
 import net.miginfocom.swing.MigLayout;
+import java.awt.Color;
 
 /**
  * User can make general settings
@@ -17,6 +18,7 @@ public class OptionMenuPanel extends JPanel {
 
 	// TODO add buttons & make them write into the settings.xml or something
 	public OptionMenuPanel() {
+		setBackground(Color.LIGHT_GRAY);
 		setLayout(new MigLayout("", "[]", "[10%][80%][10%]"));
 
 		JButton btnBack = new JButton("Back");

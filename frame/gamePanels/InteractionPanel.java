@@ -16,7 +16,7 @@ public class InteractionPanel extends JPanel {
 	private static final long serialVersionUID = 124L;
 
 	private static SelectionPanel selectionPane;
-	private static Refresh refresh;
+	private static SelectionPaneCheck selectionPaneCheck;
 	private static InteractionPanel self;
 
 	public InteractionPanel() {
@@ -24,9 +24,9 @@ public class InteractionPanel extends JPanel {
 		self = this;
 		this.setBackground(Color.LIGHT_GRAY);
 		setLayout(new MigLayout("", "[100%,fill]", "[100%,fill]"));
-		if (refresh == null) {
-			refresh = new Refresh();
-			refresh.run();
+		if (selectionPaneCheck == null) {
+			selectionPaneCheck = new SelectionPaneCheck();
+			selectionPaneCheck.run();
 		}
 		
 	}
@@ -42,10 +42,11 @@ public class InteractionPanel extends JPanel {
 
 	public static void removeSelectionPane() {
 		InteractionPanel.selectionPane = null;
+		selectionPaneCheck.run();
 		ObjectMap.getSelected().setSelectedEntity(null);
 	}
 
-	private class Refresh implements Runnable {
+	private class SelectionPaneCheck implements Runnable {
 		Timer timer = new Timer(50, new RefreshTask());
 
 		@Override
@@ -62,18 +63,14 @@ public class InteractionPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (selectionPane != null) {
-					self.removeAll();
+				self.removeAll();
+				if(selectionPane != null) {
 					self.add(selectionPane, "cell 0 0");
-					self.validate();
-					self.repaint();
 				}
-				if (!isValid()) {
-					self.validate();
-					self.repaint();
-				}
+				self.validate();
+				self.repaint();
 			}
-
+			
 		}
 	}
 
@@ -84,6 +81,7 @@ public class InteractionPanel extends JPanel {
 			}
 			self.validate();
 			self.repaint();
+			InteractionPanel.getInteractionPanel().repaint();
 		}
 	}
 
