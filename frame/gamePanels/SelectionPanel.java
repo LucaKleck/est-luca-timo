@@ -59,7 +59,7 @@ public class SelectionPanel extends JScrollPane {
 
     };
     
-	public SelectionPanel(int x, int y) {
+	public SelectionPanel(int x, int y, int selectionMode) {
 		setDoubleBuffered(true);
 		setBackground(Color.DARK_GRAY);
 		setBorder(null);
@@ -109,11 +109,6 @@ public class SelectionPanel extends JScrollPane {
 
 		for (int i = 0; i < selectedEntityElementList.size(); i++) {
 			viewportPanel.add(selectedEntityElementList.get(i), ("cell 0 " + i + ", grow"));
-			try {
-				viewportPanel.wait(100);
-			} catch (InterruptedException e) {
-			} catch (IllegalMonitorStateException ex) {
-			}
 		}
 
 	}

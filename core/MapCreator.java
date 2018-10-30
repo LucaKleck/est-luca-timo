@@ -19,15 +19,6 @@ public class MapCreator {
 	private static final Random rand = new Random();
 
 	/**
-	 * Plant trees works like this: <br>
-	 * 1. create a vector <br>
-	 * 2. choose a random point on the map <br>
-	 * 3. create a forest with a radius on each point of the vector's path<br>
-	 * 4. reduce the vector's length by 1-2 for x or/and y, maybe swap x and y or<br>
-	 * negate them to change direction maybe split into another vector that will<br>
-	 * call a similar method with predefined point and vector <br>
-	 * 5. use the end point of the last vector as start point and repeat from step 3 until vector is too small <br>
-	 *<br>
 	 * the top of the map is cold the middle is tropic the bottom cold again<br>
 	 *<br>
 	 * variations are not types just names, but they can still change the way<br>
@@ -50,7 +41,16 @@ public class MapCreator {
 //		floodTheLand(map); // this puts in all the bodies of water etc.
 		return map;
 	}
-
+	/**
+	 * plantTrees works like this: <br>
+	 * 1. create a vector <br>
+	 * 2. choose a random point on the map <br>
+	 * 3. create a forest with a radius on each point of the vector's path<br>
+	 * 4. reduce the vector's length by 1-2 for x or/and y, maybe swap x and y, negate them to change direction or maybe split into another vector that will call a similar method with predefined point and vector <br>
+	 * 5. use the end point of the last vector as start point and repeat from step 3 until vector is too small <br>
+	 *<br>
+	 * @param map @see {@link MapTile}
+	 */
 	private static void plantTrees(MapTile[][] map) {
 		for (int forests = 1; forests < MapCreator.forestCount; forests++) {
 			vectorHandlerForest(map, rand.nextInt(map.length), rand.nextInt(map.length));

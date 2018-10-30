@@ -5,6 +5,7 @@ import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.Calendar;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -60,15 +61,16 @@ public class LogPanel extends JScrollPane {
 	}
 
 	public static void appendNewLine(String line) {
+		String time = ""+Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+":"+Calendar.getInstance().get(Calendar.MINUTE)+" - ";
 		try {
-			LogPanel.getLog().append(System.lineSeparator() + line);
+			LogPanel.getLog().append(System.lineSeparator() + time + line);
 		} catch (NullPointerException nl) {
 		}
 	}
 	
-	public static void kill() {
+	public static void reset(String textAfterReset) {
 		try {
-			log.setText("This is the log, keeping track of all important events");
+			log.setText(textAfterReset);
 			self.removeAll();
 		} catch (NullPointerException nl) {
 		}

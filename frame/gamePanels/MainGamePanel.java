@@ -2,7 +2,6 @@ package frame.gamePanels;
 
 import java.awt.BorderLayout;
 
-import javax.swing.JButton;
 import javax.swing.JLayeredPane;
 
 import frame.MainJFrame;
@@ -22,7 +21,6 @@ public class MainGamePanel extends JLayeredPane {
 		// 0 1 0 1 2 3
 		setLayout(new MigLayout("insets 0 0 0 0, gap 0px 0px", "[70%,grow][30%,grow]",
 				"[25px:n,fill][75%][20%,fill][grow,fill]"));
-
 		this.setDoubleBuffered(true);
 		GameMenuPanel menuPanel = new GameMenuPanel();
 		setLayer(menuPanel, 3);
@@ -44,9 +42,6 @@ public class MainGamePanel extends JLayeredPane {
 		setLayer(abilityPanel, 2);
 		add(abilityPanel, "flowx,cell 0 3,grow");
 
-		JButton btnTest = new JButton("Test");
-		abilityPanel.add(btnTest, "cell 0 0");
-
 		InteractionPanel interactionPanel = new InteractionPanel();
 		setLayer(interactionPanel, 2);
 		add(interactionPanel, "cell 1 1, grow");
@@ -60,5 +55,5 @@ public class MainGamePanel extends JLayeredPane {
 	public static LogBackgroundPanel getLogBackgroundPanel() {
 		return logBackgroundPanel;
 	}
-
+	
 }

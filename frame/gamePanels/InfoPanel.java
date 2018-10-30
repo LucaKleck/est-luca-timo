@@ -26,9 +26,6 @@ public class InfoPanel extends JScrollPane {
 
 		panel.add(lblHealth, "cell 0 1");
 
-		JLabel lblTest = new JLabel("Test");
-		panel.add(lblTest, "cell 0 2");
-
 		JLabel lblCurrentlySelected = new JLabel("Currently Selected");
 		setColumnHeaderView(lblCurrentlySelected);
 	}

@@ -3,9 +3,10 @@ package frame.gamePanels;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,9 +15,8 @@ import javax.swing.border.TitledBorder;
 import entity.Entity;
 import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.ImageIcon;
 
-public class SelectionPaneElement extends JPanel implements ActionListener {
+public class SelectionPaneElement extends JPanel implements MouseListener {
 	private static final long serialVersionUID = 128L;
 	private JButton jBtn;
 	private Entity entity;
@@ -32,7 +32,7 @@ public class SelectionPaneElement extends JPanel implements ActionListener {
 		jBtn.setBackground(Color.GRAY);
 		jBtn.setForeground(Color.WHITE);
 		jBtn.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		this.jBtn.addActionListener(this);
+		jBtn.addMouseListener(this);
 		this.jBtn.setPreferredSize(new Dimension(135, 23));
 		this.add(jBtn, "flowx,cell 0 3,grow");
 
@@ -63,9 +63,27 @@ public class SelectionPaneElement extends JPanel implements ActionListener {
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
-		ObjectMap.getSelected().setSelectedEntity(entity);
-		InteractionPanel.setSelectionPane(null);
-		InfoPanel.refresh();
+	public void mouseClicked(MouseEvent e) {
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		if(jBtn.contains(e.getPoint())) {
+			ObjectMap.getSelected().setSelectedEntity(entity);
+			InteractionPanel.setSelectionPane(null);
+			InfoPanel.refresh();
+		}
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
 	}
 }

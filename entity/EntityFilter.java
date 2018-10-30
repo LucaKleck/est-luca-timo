@@ -30,13 +30,13 @@ public class EntityFilter implements Comparable {
 						try {
 							if (x > 0 && y > 0) {
 
-								distancePoints = 100 / (calculateDifference(entity.getxPos(), x)
-										+ calculateDifference(entity.getyPos(), y) + 1);
+								distancePoints = 100 / (calculateDifference(entity.getXPos(), x)
+										+ calculateDifference(entity.getYPos(), y) + 1);
 								healthPoints = 500 / entityMap[x][y][z].getHealth();
 								priorityPoints = distancePoints + healthPoints;
 
-								if (priorityPoints > bestEntityPriorityPoints && x != entity.getxPos()
-										&& y != entity.getyPos()) {
+								if (priorityPoints > bestEntityPriorityPoints && x != entity.getXPos()
+										&& y != entity.getYPos()) {
 									bestEntityPriorityPoints = priorityPoints;
 									bestEntity = entityMap[x][y][z];
 								}

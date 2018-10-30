@@ -1,5 +1,6 @@
 package frame.gamePanels;
 
+import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -20,10 +21,13 @@ public class JTextAreaLog extends JTextArea {
 		setForeground(Color.WHITE);
 		setEditable(false);
 		setText("This is the log, keeping track of all important events");
+		disableEvents(AWTEvent.KEY_EVENT_MASK | AWTEvent.INPUT_METHOD_EVENT_MASK);
+		
 	}
 
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
 	}
+	
 }

@@ -2,9 +2,8 @@ package entity.unit;
 
 public class Warrior extends Unit {
 
-	public Warrior(String name, int damage, int health, int range, int xPos, int yPos) {
-
-		super(name, damage, health, range, xPos, yPos);
+	public Warrior(int xPos, int yPos, String name, int health,  int damage,  int movementRange) {
+		super(xPos, yPos, name, health, damage, movementRange);
 
 	}
 

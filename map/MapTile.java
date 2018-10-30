@@ -10,6 +10,7 @@ public class MapTile {
 	public static final int FOREST = 1;
 	public static final int MOUNTAIN = 2;
 	public static final int LIQUID = 3;
+	
 	private int xPos;
 	private int yPos;
 	private int type;
@@ -25,6 +26,19 @@ public class MapTile {
 		this.type = type;
 		this.name = name;
 		this.mapTileResources = new MapTileResources(type);
+	}
+	
+	public MapTile(int xPos, int yPos, int type, String name, MapTileResources mapTileResources) {
+		this.xPos = xPos;
+		this.yPos = yPos;
+		this.type = type;
+		this.name = name;
+		this.mapTileResources = mapTileResources;
+	}
+	@Override
+	public String toString() {
+		return "MapTile [xPos=" + xPos + ", yPos=" + yPos + ", type=" + type + ", name=" + name + ", mapTileResources="
+				+ mapTileResources + "]";
 	}
 
 	// TODO add constructors with UnitEffect &/or BuildingEffect

@@ -22,10 +22,13 @@ import map.ObjectMap;
  */
 public class MapPanel extends JPanel implements ImageObserver {
 	private static final long serialVersionUID = 121L;
+	
+	private static final int IMAGE_SIZE = 1568;
+	private static final int DEFAULT_DISPLACEMENT = 4;
 
 	private static MapImage mapImage;
 	private static MapPanel self;
-	private static double displacementMultiplier = 1;
+	private static double displacementMultiplier = DEFAULT_DISPLACEMENT;
 	private static int displacementX;
 	private static int displacementY;
 	public static Refresh refresh;
@@ -36,7 +39,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 		this.setOpaque(false);
 		self = this;
 
-		mapImage = new MapImage(1568, 1568);
+		mapImage = new MapImage(IMAGE_SIZE, IMAGE_SIZE);
 		setBackground(new Color(0, 0, 0, 0));
 
 		refresh = new Refresh();
@@ -44,7 +47,6 @@ public class MapPanel extends JPanel implements ImageObserver {
 
 		this.addMouseListener(new MouseEventHandler());
 	}
-
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -60,14 +62,14 @@ public class MapPanel extends JPanel implements ImageObserver {
 	}
 
 	public static void addDisplacementX(int displacementX) {
-		if ((MapPanel.displacementX + displacementX) < (self.getWidth() / 2 / displacementMultiplier)
-				&& (MapPanel.displacementX + displacementX) > -(self.getWidth() / 2 * displacementMultiplier * 1.25)) {
+		if ((MapPanel.displacementX + displacementX) < (self.getWidth() / (displacementMultiplier / 2 ) )
+				&& (MapPanel.displacementX + displacementX) > -(self.getWidth() / 2 * displacementMultiplier * 1.75)) {
 			MapPanel.displacementX += displacementX;
 		} else {
 			if (MapPanel.displacementX > 0) {
-				MapPanel.displacementX = (int) (self.getWidth() / 2 / displacementMultiplier);
+				MapPanel.displacementX = (int) (self.getWidth() / (displacementMultiplier / 2 ) );
 			} else {
-				MapPanel.displacementX = (int) -(self.getWidth() / 2 * displacementMultiplier * 1.25);
+				MapPanel.displacementX = (int) -(self.getWidth() / 2 * displacementMultiplier * 1.75);
 			}
 		}
 		MapPanel.refresh.run();
@@ -75,21 +77,21 @@ public class MapPanel extends JPanel implements ImageObserver {
 
 	public static void addDisplacementY(int displacementY) {
 		if ((MapPanel.displacementY + displacementY) < (self.getWidth() / 5.25 * displacementMultiplier)
-				&& (MapPanel.displacementY + displacementY) > -(self.getWidth() / 2 * displacementMultiplier * 1.5)) {
+				&& (MapPanel.displacementY + displacementY) > -(self.getWidth() / 2 * displacementMultiplier * 1.75)) {
 			MapPanel.displacementY += displacementY;
 		} else {
 			if (MapPanel.displacementY > 0) {
 				MapPanel.displacementY = (int) (self.getWidth() / 5.25 * displacementMultiplier);
 			} else {
-				MapPanel.displacementY = (int) -(self.getWidth() / 2 * displacementMultiplier * 1.5);
+				MapPanel.displacementY = (int) -(self.getWidth() / 2 * displacementMultiplier * 1.75);
 			}
 		}
 		MapPanel.refresh.run();
 	}
 
 	public static void addDisplacementMultiplier(double displacementMultiplier) {
-		if (MapPanel.displacementMultiplier + displacementMultiplier >= 0.9
-				&& MapPanel.displacementMultiplier + displacementMultiplier < 2) {
+		if (MapPanel.displacementMultiplier + displacementMultiplier >= 3
+				&& MapPanel.displacementMultiplier + displacementMultiplier < 5) {
 			MapPanel.displacementMultiplier += displacementMultiplier;
 			MapPanel.refresh.run();
 		}
@@ -129,7 +131,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 	}
 
 	public static void reset() {
-		MapPanel.displacementMultiplier = 1;
+		MapPanel.displacementMultiplier = DEFAULT_DISPLACEMENT;
 		MapPanel.displacementX = 0;
 		MapPanel.displacementY = 0;
 		self.repaint();
