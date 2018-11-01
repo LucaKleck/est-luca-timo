@@ -27,8 +27,6 @@ import java.awt.Toolkit;
 public class MainJFrame extends JFrame implements ComponentListener {
 	private static final long serialVersionUID = 110L;
 
-	private static MainJFrame self;
-
 	private Timer recalculateTimer = new Timer(20, new resizeListener());
 
 	public MainJFrame() {
@@ -36,7 +34,6 @@ public class MainJFrame extends JFrame implements ComponentListener {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MainJFrame.class.getResource("/resources/gameIcon.png")));
 		setBackground(Color.DARK_GRAY);
 		setName("GameMainFrame");
-		self = this;
 		this.setDefaultCloseOperation(MainJFrame.EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(800, 600));
 		MainMenuPanel mainMenuPanel = new MainMenuPanel();
@@ -57,7 +54,7 @@ public class MainJFrame extends JFrame implements ComponentListener {
 			}
 		} catch (NullPointerException nl) {
 		}
-		self.repaint();
+		CoreController.getMainJFrame().repaint();
 	}
 
 	@Override
@@ -105,8 +102,8 @@ public class MainJFrame extends JFrame implements ComponentListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if (!CoreController.mainJFrame.isValid()) {
-						CoreController.mainJFrame.validate();
+					if (!CoreController.getMainJFrame().isValid()) {
+						CoreController.getMainJFrame().validate();
 					}
 				} catch (NullPointerException s) {
 				}

@@ -21,6 +21,7 @@ import frame.gamePanels.MapPanel;
  * @see CoreController
  */
 public class ControlInput {
+	
 	public ControlInput() {
 		KeyInputDispatcher keyInputDispatcher = new KeyInputDispatcher();
 		KeyboardFocusManager kfm = KeyboardFocusManager.getCurrentKeyboardFocusManager();
@@ -56,8 +57,8 @@ public class ControlInput {
 		@Override
 		public void actionPerformed(ActionEvent evt) {
 			try {
-				CoreController.mainJFrame.getContentPane().removeAll();
-				CoreController.mainJFrame.getContentPane().add(
+				CoreController.getMainJFrame().getContentPane().removeAll();
+				CoreController.getMainJFrame().getContentPane().add(
 						(Component) ClassLoader.getSystemClassLoader().loadClass(evt.getActionCommand()).newInstance());
 			} catch (InstantiationException e) {
 				e.printStackTrace();

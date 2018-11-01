@@ -16,7 +16,7 @@ public class AbilityPanel extends JPanel {
 	public static void checkAbilities() {
 		if(ObjectMap.getSelected().getSelectedAbility() != null) {
 			// remove abilites from view
-		} else  try {
+		} else try {
 			if(ObjectMap.getSelected().getSelectedEntity().hasAbility()) {
 				// create buttons and stuff
 			}

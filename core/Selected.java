@@ -70,17 +70,22 @@ public class Selected {
 		} else {
 			InteractionPanel.setSelectionPane(null);
 			ObjectMap.getSelected().removeSelected();
-			MapImage.getMapImage().redrawArea(0, 0, 0, 0);
+			if(MapImage.getMapImage() != null) {
+				MapImage.getMapImage().redrawArea(0, 0, 0, 0);
+			}
 		}
 		
 		// mandatory stuff
 		try {
 			changeSelectionMode();
 		} catch (NullPointerException nl) {
+			nl.printStackTrace();
 		}
 		AbilityPanel.checkAbilities();
 		InfoPanel.refresh();
-		MapImage.getMapImage().redrawArea(x, x, y, y);
+		if(MapImage.getMapImage() != null) {
+			MapImage.getMapImage().redrawArea(x, x, y, y);
+		}
 		MapPanel.refresh.run();
 	}
 	/**
@@ -104,24 +109,27 @@ public class Selected {
 			if(selectedEntity instanceof Building) {
 				if(selectedAbility == null) {
 					selectionMode = 4;
+					System.out.println("Selection mode: "+selectionMode);
 					return;
 				} else {
 					selectionMode = 5;
+					System.out.println("Selection mode: "+selectionMode);
 					return;
 				}
 			}
 			if(selectedEntity instanceof Unit) {
 				if(selectedAbility == null) {
 					selectionMode = 2;
+					System.out.println("Selection mode: "+selectionMode);
 					return;
 				} else {
 					selectionMode = 3;
+					System.out.println("Selection mode: "+selectionMode);
 					return;
 				}
 			}
 			if(selectedAbility != null) {
 				selectionMode = 69;
-				return;
 			}
 		} else if(selectedAbility == null && selectedEntity == null){
 			selectionMode = 0;
@@ -130,16 +138,7 @@ public class Selected {
 		} else {
 			selectionMode = 10;
 		}
-		System.out.println("Selection Mode: "+selectionMode);
-	}
-
-	public void setSelectedEntity(Entity toBeSelected) {
-		this.selectedEntity = toBeSelected;
-		InfoPanel.refresh();
-		try {
-			changeSelectionMode();
-		} catch (NullPointerException nl) {
-		}
+		System.out.println("Selection mode: "+selectionMode);
 	}
 
 	public MapTile getSelectedMapTile() {
@@ -150,6 +149,14 @@ public class Selected {
 		return selectedEntity;
 	}
 
+	public Ability getSelectedAbility() {
+		return selectedAbility;
+	}
+	
+	public int getSelectionMode() {
+		return selectionMode;
+	}
+	
 	/** checks if there is an entity at that spot
 	 * @param x coordinate of the map to be checked
 	 * @param y coordinate of the map to be checked
@@ -168,23 +175,23 @@ public class Selected {
 		return test;
 	}
 
-	public Ability getSelectedAbility() {
-		return selectedAbility;
-	}
-
 	public void setSelectedAbility(Ability selectedAbility) {
 		this.selectedAbility = selectedAbility;
 		AbilityPanel.checkAbilities();
 		changeSelectionMode();
 	}
-
-	public int getSelectionMode() {
-		return selectionMode;
+	
+	public void setSelectedEntity(Entity toBeSelected) {
+		this.selectedEntity = toBeSelected;
+		InfoPanel.refresh();
+		changeSelectionMode();
 	}
+
 	public void removeSelected() {
 		this.selectedAbility = null;
 		this.selectedEntity = null;
 		this.selectedMapTile = null;
+		AbilityPanel.checkAbilities();
 		changeSelectionMode();
 	}
 }

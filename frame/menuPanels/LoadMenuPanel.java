@@ -85,7 +85,7 @@ public class LoadMenuPanel extends JPanel implements ComponentListener {
 	public void componentResized(ComponentEvent e) {
 		SavesPanelContainer.removeAll();
 		SavesPanelContainer.add(new SavesPanel(SavesPanelContainer));
-		CoreController.mainJFrame.repaint();
+		CoreController.getMainJFrame().repaint();
 	}
 
 	@Override

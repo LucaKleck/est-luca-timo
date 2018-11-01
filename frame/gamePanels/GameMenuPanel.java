@@ -44,7 +44,7 @@ public class GameMenuPanel extends JPanel {
 		
 		JCheckBoxMenuItem chckbxmntmFullscreen = new JCheckBoxMenuItem("Fullscreen");
 		chckbxmntmFullscreen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.ALT_MASK));
-		chckbxmntmFullscreen.setSelected(CoreController.mainJFrame.isUndecorated());
+		chckbxmntmFullscreen.setSelected(CoreController.getMainJFrame().isUndecorated());
 		mnOptions.add(chckbxmntmFullscreen);
 		
 		JMenuItem mntmExitToMain = new JMenuItem("Exit to Main Menu");
@@ -96,20 +96,20 @@ public class GameMenuPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				CoreController.mainJFrame.dispose();
+				CoreController.getMainJFrame().dispose();
 				// put it in the left uppermost corner
-				CoreController.mainJFrame.setBounds(0, 0, 0, 0);
-				CoreController.mainJFrame.setUndecorated(!CoreController.mainJFrame.isUndecorated());
-				if(CoreController.mainJFrame.isUndecorated()) {
-					CoreController.mainJFrame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+				CoreController.getMainJFrame().setBounds(0, 0, 0, 0);
+				CoreController.getMainJFrame().setUndecorated(!CoreController.getMainJFrame().isUndecorated());
+				if(CoreController.getMainJFrame().isUndecorated()) {
+					CoreController.getMainJFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
 				} else {
-					CoreController.mainJFrame.setExtendedState(JFrame.NORMAL);
+					CoreController.getMainJFrame().setExtendedState(JFrame.NORMAL);
 				}
-				CoreController.mainJFrame.pack();
-				if(!CoreController.mainJFrame.isUndecorated()) {
-					CoreController.mainJFrame.setSize(800, 600);
+				CoreController.getMainJFrame().pack();
+				if(!CoreController.getMainJFrame().isUndecorated()) {
+					CoreController.getMainJFrame().setSize(800, 600);
 				}
-				CoreController.mainJFrame.setVisible(true);
+				CoreController.getMainJFrame().setVisible(true);
 			}
 		});
 		
