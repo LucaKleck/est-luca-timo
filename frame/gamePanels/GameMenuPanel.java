@@ -1,8 +1,12 @@
 package frame.gamePanels;
 
+import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
@@ -23,48 +27,83 @@ import map.ObjectMap;
 
 public class GameMenuPanel extends JPanel {
 	private static final long serialVersionUID = 122L;
+	private JMenuBar menuBar;
 
 	public GameMenuPanel() {
+		setInheritsPopupMenu(true);
+		setForeground(Color.WHITE);
+		setBackground(Color.WHITE);
 		setLayout(new GridLayout(0, 1, 0, 0));
-		JMenuBar menuBar = new JMenuBar();
+		menuBar = new JMenuBar();
+		menuBar.setInheritsPopupMenu(true);
+		menuBar.setForeground(Color.WHITE);
+		menuBar.setFocusTraversalKeysEnabled(true);
 		menuBar.setBackground(UIManager.getColor("MenuBar.background"));
 		add(menuBar);
+		menuBar.addFocusListener(new FocusListener() {
+			
+			@Override
+			public void focusLost(FocusEvent e) {
+				System.out.println("focus lost");
+			}
+			
+			@Override
+			public void focusGained(FocusEvent e) {
+				System.out.println("focus gained");
+			}
+		});
 
 		JMenu mnOptions = new JMenu("Options");
+		mnOptions.setVerifyInputWhenFocusTarget(false);
+		mnOptions.setFocusTraversalKeysEnabled(false);
+		mnOptions.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menuBar.add(mnOptions);
 
 		JMenuItem mntmSave = new JMenuItem("Save");
+		mntmSave.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mnOptions.add(mntmSave);
 
 		JCheckBoxMenuItem chckbxmntmShowLog = new JCheckBoxMenuItem("show Log");
+		chckbxmntmShowLog.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		chckbxmntmShowLog.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK));
 		chckbxmntmShowLog.setSelected(true);
 		mnOptions.add(chckbxmntmShowLog);
 		
 		JCheckBoxMenuItem chckbxmntmFullscreen = new JCheckBoxMenuItem("Fullscreen");
+		chckbxmntmFullscreen.setVerifyInputWhenFocusTarget(false);
+		chckbxmntmFullscreen.setFocusable(true);
+		chckbxmntmFullscreen.setFocusTraversalKeysEnabled(false);
+		chckbxmntmFullscreen.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		chckbxmntmFullscreen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.ALT_MASK));
 		chckbxmntmFullscreen.setSelected(CoreController.getMainJFrame().isUndecorated());
 		mnOptions.add(chckbxmntmFullscreen);
 		
 		JMenuItem mntmExitToMain = new JMenuItem("Exit to Main Menu");
+		mntmExitToMain.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnOptions.add(mntmExitToMain);
 		
 		JMenuItem mntmExitGame = new JMenuItem("Exit Game");
+		mntmExitGame.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnOptions.add(mntmExitGame);
 
 		JMenu mnDev = new JMenu("dev");
+		mnDev.setFocusTraversalKeysEnabled(false);
+		mnDev.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menuBar.add(mnDev);
 
 		JMenuItem mntmRemakeMap = new JMenuItem("Remake Map");
+		mntmRemakeMap.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmRemakeMap.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mnDev.add(mntmRemakeMap);
 
 		JMenuItem mntmSendLogLine = new JMenuItem("Send log line");
+		mntmSendLogLine.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmSendLogLine.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mnDev.add(mntmSendLogLine);
 		
 		JMenuItem mntmGenerateDefaultUnit = new JMenuItem("generate default unit ability");
+		mntmGenerateDefaultUnit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmGenerateDefaultUnit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ObjectMap.getSelected().setSelectedAbility(new Ability("dev_create_unit"));
@@ -96,6 +135,7 @@ public class GameMenuPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				CoreController.getMainJFrame().dispose();
 				// put it in the left uppermost corner
 				CoreController.getMainJFrame().setBounds(0, 0, 0, 0);
@@ -109,6 +149,8 @@ public class GameMenuPanel extends JPanel {
 				if(!CoreController.getMainJFrame().isUndecorated()) {
 					CoreController.getMainJFrame().setSize(800, 600);
 				}
+				CoreController.getMainJFrame().validate();
+				
 				CoreController.getMainJFrame().setVisible(true);
 			}
 		});
