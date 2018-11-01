@@ -1,12 +1,9 @@
 package frame.gamePanels;
 
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
@@ -30,32 +27,12 @@ public class GameMenuPanel extends JPanel {
 	private JMenuBar menuBar;
 
 	public GameMenuPanel() {
-		setInheritsPopupMenu(true);
-		setForeground(Color.WHITE);
-		setBackground(Color.WHITE);
 		setLayout(new GridLayout(0, 1, 0, 0));
 		menuBar = new JMenuBar();
-		menuBar.setInheritsPopupMenu(true);
-		menuBar.setForeground(Color.WHITE);
-		menuBar.setFocusTraversalKeysEnabled(true);
 		menuBar.setBackground(UIManager.getColor("MenuBar.background"));
 		add(menuBar);
-		menuBar.addFocusListener(new FocusListener() {
-			
-			@Override
-			public void focusLost(FocusEvent e) {
-				System.out.println("focus lost");
-			}
-			
-			@Override
-			public void focusGained(FocusEvent e) {
-				System.out.println("focus gained");
-			}
-		});
 
 		JMenu mnOptions = new JMenu("Options");
-		mnOptions.setVerifyInputWhenFocusTarget(false);
-		mnOptions.setFocusTraversalKeysEnabled(false);
 		mnOptions.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menuBar.add(mnOptions);
 
@@ -71,9 +48,6 @@ public class GameMenuPanel extends JPanel {
 		mnOptions.add(chckbxmntmShowLog);
 		
 		JCheckBoxMenuItem chckbxmntmFullscreen = new JCheckBoxMenuItem("Fullscreen");
-		chckbxmntmFullscreen.setVerifyInputWhenFocusTarget(false);
-		chckbxmntmFullscreen.setFocusable(true);
-		chckbxmntmFullscreen.setFocusTraversalKeysEnabled(false);
 		chckbxmntmFullscreen.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		chckbxmntmFullscreen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.ALT_MASK));
 		chckbxmntmFullscreen.setSelected(CoreController.getMainJFrame().isUndecorated());
