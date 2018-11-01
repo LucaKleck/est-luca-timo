@@ -23,7 +23,7 @@ import map.ObjectMap;
 public class MapPanel extends JPanel implements ImageObserver {
 	private static final long serialVersionUID = 121L;
 	
-	private static final int IMAGE_SIZE = 1568;
+	private static final int IMAGE_SIZE = 3136;
 	private static final int DEFAULT_DISPLACEMENT = 4;
 
 	private static MapImage mapImage;

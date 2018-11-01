@@ -117,12 +117,12 @@ public class MapCreator {
 	private static void createTiles(MapTile[][] map) {
 		for (int xRow = 0; xRow < map.length; xRow++) {
 			for (int yColumn = 0; yColumn < map[0].length; yColumn++) {
-				map[xRow][yColumn] = createPlane(xRow, yColumn);
+				map[xRow][yColumn] = createPlain(xRow, yColumn);
 			}
 		}
 	}
 
-	private static MapTile createPlane(int xPos, int yPos) {
+	private static MapTile createPlain(int xPos, int yPos) {
 		MapTile plane = new MapTile(xPos, yPos, MapTile.PLAIN, "Plain");
 		return plane;
 	}
