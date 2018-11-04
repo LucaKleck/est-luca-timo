@@ -22,8 +22,8 @@ public class MainGamePanel extends JLayeredPane {
 	private AbilityPanel abilityPanel;
 	private InteractionPanel interactionPanel;
 	private InfoPanel infoPanel;
-	private GameMenuPanel menuPanel;
 	private JPanel resourcesPanel;
+	private GameMenuPanel menuPanel;
 
 	public MainGamePanel() { // x // y
 		// 0 1 0 1 2 3
@@ -36,6 +36,7 @@ public class MainGamePanel extends JLayeredPane {
 		resourcesPanel.setEnabled(false);
 		add(resourcesPanel, "cell 0 0,grow");
 		menuPanel = new GameMenuPanel();
+		menuPanel.enableInputMethods(true);
 		setLayer(menuPanel, 3);
 		add(menuPanel, "cell 1 0,grow");
 
@@ -54,8 +55,8 @@ public class MainGamePanel extends JLayeredPane {
 		abilityPanel = new AbilityPanel();
 		setLayer(abilityPanel, 2);
 		add(abilityPanel, "flowx,cell 0 3,grow");
-
 		interactionPanel = new InteractionPanel();
+		
 		setLayer(interactionPanel, 2);
 		add(interactionPanel, "cell 1 1, grow");
 

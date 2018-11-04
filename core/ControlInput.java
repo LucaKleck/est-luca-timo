@@ -18,7 +18,7 @@ import frame.gamePanels.MapPanel;
  * Contains all the events for mouse/keyboard input.
  * 
  * @author Luca Kleck
- * @see CoreController
+ * @see start
  */
 public class ControlInput {
 	
@@ -57,8 +57,8 @@ public class ControlInput {
 		@Override
 		public void actionPerformed(ActionEvent evt) {
 			try {
-				CoreController.getMainJFrame().getContentPane().removeAll();
-				CoreController.getMainJFrame().getContentPane().add(
+				start.getMainJFrame().getContentPane().removeAll();
+				start.getMainJFrame().getContentPane().add(
 						(Component) ClassLoader.getSystemClassLoader().loadClass(evt.getActionCommand()).newInstance());
 			} catch (InstantiationException e) {
 				e.printStackTrace();

@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 import core.ControlInput;
-import core.CoreController;
+import core.start;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.SelectionPanel;
 import frame.menuPanels.MainMenuPanel;
@@ -54,7 +54,7 @@ public class MainJFrame extends JFrame implements ComponentListener {
 			}
 		} catch (NullPointerException nl) {
 		}
-		CoreController.getMainJFrame().repaint();
+		start.getMainJFrame().repaint();
 	}
 
 	@Override
@@ -102,8 +102,8 @@ public class MainJFrame extends JFrame implements ComponentListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if (!CoreController.getMainJFrame().isValid()) {
-						CoreController.getMainJFrame().validate();
+					if (!start.getMainJFrame().isValid()) {
+						start.getMainJFrame().validate();
 					}
 				} catch (NullPointerException s) {
 				}

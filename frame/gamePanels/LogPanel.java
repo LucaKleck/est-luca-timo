@@ -31,6 +31,8 @@ public class LogPanel extends JScrollPane {
 		setDoubleBuffered(true);
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+		log.setEnabled(false);
+		log.setAutoscrolls(true);
 		setViewportView(log);
 
 		setOpaque(false);

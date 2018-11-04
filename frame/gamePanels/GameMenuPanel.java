@@ -14,69 +14,93 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
-import javax.swing.UIManager;
 
 import core.ControlInput;
-import core.CoreController;
 import core.XMLSaveAndLoad;
+import core.start;
 import entity.Ability;
 import map.ObjectMap;
 
 public class GameMenuPanel extends JPanel {
 	private static final long serialVersionUID = 122L;
+	private JMenu mnOptions;
+	private JMenuItem mntmSave;
+	private JCheckBoxMenuItem chckbxmntmShowLog;
+	private JCheckBoxMenuItem chckbxmntmFullscreen;
+	private JMenuItem mntmExitToMain;
+	private JMenuItem mntmExitGame;
+	private JMenu mnDev;
+	private JMenuItem mntmRemakeMap;
+	private JMenuItem mntmSendLogLine;
+	private JMenuItem mntmGenerateDefaultUnit;
 	private JMenuBar menuBar;
+	private JCheckBoxMenuItem chckbxmntmEnableLogSelection;
 
 	public GameMenuPanel() {
 		setLayout(new GridLayout(0, 1, 0, 0));
 		menuBar = new JMenuBar();
-		menuBar.setBackground(UIManager.getColor("MenuBar.background"));
 		add(menuBar);
 
-		JMenu mnOptions = new JMenu("Options");
+		mnOptions = new JMenu("Options");
 		mnOptions.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menuBar.add(mnOptions);
 
-		JMenuItem mntmSave = new JMenuItem("Save");
+		mntmSave = new JMenuItem("Save");
 		mntmSave.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmSave.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_S, InputEvent.CTRL_MASK));
 		mnOptions.add(mntmSave);
 
-		JCheckBoxMenuItem chckbxmntmShowLog = new JCheckBoxMenuItem("show Log");
+		chckbxmntmShowLog = new JCheckBoxMenuItem("show Log");
 		chckbxmntmShowLog.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		chckbxmntmShowLog.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK));
 		chckbxmntmShowLog.setSelected(true);
 		mnOptions.add(chckbxmntmShowLog);
 		
-		JCheckBoxMenuItem chckbxmntmFullscreen = new JCheckBoxMenuItem("Fullscreen");
+		chckbxmntmEnableLogSelection = new JCheckBoxMenuItem("Enable Log selection (disables key-shortcuts)");
+		chckbxmntmEnableLogSelection.setSelected(false);
+		chckbxmntmEnableLogSelection.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					LogPanel.getLog().setEnabled(!LogPanel.getLog().isEnabled());
+				} catch (NullPointerException nl) {
+					chckbxmntmEnableLogSelection.setSelected(!chckbxmntmEnableLogSelection.isSelected());
+				}
+			}
+		});
+		mnOptions.add(chckbxmntmEnableLogSelection);
+		
+		chckbxmntmFullscreen = new JCheckBoxMenuItem("Fullscreen");
 		chckbxmntmFullscreen.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		chckbxmntmFullscreen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.ALT_MASK));
-		chckbxmntmFullscreen.setSelected(CoreController.getMainJFrame().isUndecorated());
+		chckbxmntmFullscreen.setSelected(start.getMainJFrame().isUndecorated());
 		mnOptions.add(chckbxmntmFullscreen);
 		
-		JMenuItem mntmExitToMain = new JMenuItem("Exit to Main Menu");
+		mntmExitToMain = new JMenuItem("Exit to Main Menu");
 		mntmExitToMain.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnOptions.add(mntmExitToMain);
 		
-		JMenuItem mntmExitGame = new JMenuItem("Exit Game");
+		mntmExitGame = new JMenuItem("Exit Game");
 		mntmExitGame.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnOptions.add(mntmExitGame);
 
-		JMenu mnDev = new JMenu("dev");
+		mnDev = new JMenu("dev");
 		mnDev.setFocusTraversalKeysEnabled(false);
 		mnDev.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menuBar.add(mnDev);
 
-		JMenuItem mntmRemakeMap = new JMenuItem("Remake Map");
+		mntmRemakeMap = new JMenuItem("Remake Map");
 		mntmRemakeMap.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmRemakeMap.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mnDev.add(mntmRemakeMap);
 
-		JMenuItem mntmSendLogLine = new JMenuItem("Send log line");
+		mntmSendLogLine = new JMenuItem("Send log line");
 		mntmSendLogLine.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmSendLogLine.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mnDev.add(mntmSendLogLine);
 		
-		JMenuItem mntmGenerateDefaultUnit = new JMenuItem("generate default unit ability");
+		mntmGenerateDefaultUnit = new JMenuItem("generate default unit ability");
 		mntmGenerateDefaultUnit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmGenerateDefaultUnit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -109,23 +133,22 @@ public class GameMenuPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
-				CoreController.getMainJFrame().dispose();
+				start.getMainJFrame().dispose();
 				// put it in the left uppermost corner
-				CoreController.getMainJFrame().setBounds(0, 0, 0, 0);
-				CoreController.getMainJFrame().setUndecorated(!CoreController.getMainJFrame().isUndecorated());
-				if(CoreController.getMainJFrame().isUndecorated()) {
-					CoreController.getMainJFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
+				start.getMainJFrame().setUndecorated(!start.getMainJFrame().isUndecorated());
+				start.getMainJFrame().setBounds(0, 0, 0, 0);
+				if(start.getMainJFrame().isUndecorated()) {
+					start.getMainJFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
 				} else {
-					CoreController.getMainJFrame().setExtendedState(JFrame.NORMAL);
+					start.getMainJFrame().setExtendedState(JFrame.NORMAL);
 				}
-				CoreController.getMainJFrame().pack();
-				if(!CoreController.getMainJFrame().isUndecorated()) {
-					CoreController.getMainJFrame().setSize(800, 600);
+				start.getMainJFrame().pack();
+				if(!start.getMainJFrame().isUndecorated()) {
+					start.getMainJFrame().setSize(800, 600);
 				}
-				CoreController.getMainJFrame().validate();
+				start.getMainJFrame().validate();
 				
-				CoreController.getMainJFrame().setVisible(true);
+				start.getMainJFrame().setVisible(true);
 			}
 		});
 		

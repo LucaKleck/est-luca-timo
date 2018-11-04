@@ -12,7 +12,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import core.ControlInput;
-import core.CoreController;
+import core.start;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JCheckBox;
 
@@ -85,7 +85,7 @@ public class LoadMenuPanel extends JPanel implements ComponentListener {
 	public void componentResized(ComponentEvent e) {
 		SavesPanelContainer.removeAll();
 		SavesPanelContainer.add(new SavesPanel(SavesPanelContainer));
-		CoreController.getMainJFrame().repaint();
+		start.getMainJFrame().repaint();
 	}
 
 	@Override

@@ -39,7 +39,7 @@ public class XMLSaveAndLoad {
 	public XMLSaveAndLoad(String saveName) {
 		XMLSaveAndLoad.saveName = saveName;
 //		System.out.println(saveName);
-		xmlFilePath = CoreController.GAME_PATH_SAVES;
+		xmlFilePath = start.GAME_PATH_SAVES;
 		File customDir = new File(xmlFilePath);
 
     	if (customDir.exists()) {

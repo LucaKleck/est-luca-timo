@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
-import core.CoreController;
+import core.start;
 import net.miginfocom.swing.MigLayout;
 import java.awt.Color;
 
@@ -27,7 +27,7 @@ public class SavesPanel extends JScrollPane {
 		viewport.setLayout(new MigLayout("", "[fill]", "[fill]"));
 		setViewportView(viewport);
 
-		File[] saves = saveGameSearcher(CoreController.GAME_PATH_SAVES);
+		File[] saves = saveGameSearcher(start.GAME_PATH_SAVES);
 		String columns = "";
 		for(int i = 0; i < saves.length; i++) {
 			saveList.add(new SavesPanelElement(saves[i], container));

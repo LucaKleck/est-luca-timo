@@ -9,16 +9,16 @@ import frame.MainJFrame;
  * 
  * @author Luca Kleck
  */
-public class CoreController {
+public class start {
 
 	public static final String GAME_PATH = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "EST-SCHULPROJEKT";
 	public static final String GAME_PATH_SAVES = GAME_PATH + File.separator + "saves";
 	private static MainJFrame mainJFrame;
 	private static ControlInput controlInput;
 	
-	public CoreController() {
-		CoreController.controlInput = new ControlInput();
-		CoreController.mainJFrame = new MainJFrame();
+	public start() {
+		start.controlInput = new ControlInput();
+		start.mainJFrame = new MainJFrame();
 //		Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
 
 //		System.out.println(threadSet.toString());
