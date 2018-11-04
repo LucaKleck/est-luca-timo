@@ -57,6 +57,7 @@ public class GameMenuPanel extends JPanel {
 		mnOptions.add(chckbxmntmShowLog);
 		
 		chckbxmntmEnableLogSelection = new JCheckBoxMenuItem("Enable Log selection (disables key-shortcuts)");
+		chckbxmntmEnableLogSelection.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		chckbxmntmEnableLogSelection.setSelected(false);
 		chckbxmntmEnableLogSelection.addActionListener(new ActionListener() {
 			
@@ -64,6 +65,11 @@ public class GameMenuPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					LogPanel.getLog().setEnabled(!LogPanel.getLog().isEnabled());
+					if(LogPanel.getLog().isEnabled()) {
+						LogPanel.getLog().setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+					} else {
+						LogPanel.getLog().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+					}
 				} catch (NullPointerException nl) {
 					chckbxmntmEnableLogSelection.setSelected(!chckbxmntmEnableLogSelection.isSelected());
 				}

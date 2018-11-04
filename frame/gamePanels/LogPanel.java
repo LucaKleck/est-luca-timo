@@ -16,6 +16,7 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.MatteBorder;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicScrollBarUI;
+import javax.swing.text.DefaultCaret;
 
 public class LogPanel extends JScrollPane {
 	private static final long serialVersionUID = 123L;
@@ -30,19 +31,16 @@ public class LogPanel extends JScrollPane {
 
 		setDoubleBuffered(true);
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
 		log.setEnabled(false);
 		log.setAutoscrolls(true);
 		setViewportView(log);
-
+		
 		setOpaque(false);
 		
 		Component horizontalStrut = Box.createHorizontalStrut(20);
 		horizontalStrut.setPreferredSize(new Dimension(5, 0));
-		horizontalStrut.setVisible(false);
 		horizontalStrut.setEnabled(false);
-		horizontalStrut.setFocusTraversalKeysEnabled(false);
-		horizontalStrut.setFocusable(false);
 		setRowHeaderView(horizontalStrut);
 		this.getVerticalScrollBar().setUI(new LogScrollBarUI());
 		this.getVerticalScrollBar().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -66,6 +64,7 @@ public class LogPanel extends JScrollPane {
 		String time = ""+Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+":"+Calendar.getInstance().get(Calendar.MINUTE)+" - ";
 		try {
 			LogPanel.getLog().append(System.lineSeparator() + time + line);
+			LogPanel.getLog().setCaretPosition(LogPanel.getLog().getDocument().getLength());
 		} catch (NullPointerException nl) {
 		}
 	}
