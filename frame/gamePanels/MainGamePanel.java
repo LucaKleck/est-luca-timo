@@ -35,10 +35,6 @@ public class MainGamePanel extends JLayeredPane {
 		resourcesPanel.setBackground(UIManager.getColor("MenuBar.background"));
 		resourcesPanel.setEnabled(false);
 		add(resourcesPanel, "cell 0 0,grow");
-		menuPanel = new GameMenuPanel();
-		menuPanel.enableInputMethods(true);
-		setLayer(menuPanel, 3);
-		add(menuPanel, "cell 1 0,grow");
 
 		LogPanel logPanel = new LogPanel();
 		
@@ -48,6 +44,10 @@ public class MainGamePanel extends JLayeredPane {
 		logBackgroundPanel.setLayout(new BorderLayout(0, 0));
 		logBackgroundPanel.add(logPanel);
 
+		menuPanel = new GameMenuPanel();
+		setLayer(menuPanel, 3);
+		add(menuPanel, "cell 1 0,grow");
+		
 		mapPanel = new MapPanel();
 		setLayer(mapPanel, 0);
 		add(mapPanel, "cell 0 1 1 2,grow");

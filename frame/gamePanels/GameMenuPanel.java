@@ -17,24 +17,24 @@ import javax.swing.KeyStroke;
 
 import core.ControlInput;
 import core.XMLSaveAndLoad;
-import core.start;
+import core.Core;
 import entity.Ability;
 import map.ObjectMap;
 
 public class GameMenuPanel extends JPanel {
 	private static final long serialVersionUID = 122L;
-	private JMenu mnOptions;
-	private JMenuItem mntmSave;
-	private JCheckBoxMenuItem chckbxmntmShowLog;
-	private JCheckBoxMenuItem chckbxmntmFullscreen;
-	private JMenuItem mntmExitToMain;
-	private JMenuItem mntmExitGame;
-	private JMenu mnDev;
-	private JMenuItem mntmRemakeMap;
-	private JMenuItem mntmSendLogLine;
-	private JMenuItem mntmGenerateDefaultUnit;
-	private JMenuBar menuBar;
 	private JCheckBoxMenuItem chckbxmntmEnableLogSelection;
+	private JCheckBoxMenuItem chckbxmntmFullscreen;
+	private JCheckBoxMenuItem chckbxmntmShowLog;
+	private JMenuBar menuBar;
+	private JMenu mnDev;
+	private JMenu mnOptions;
+	private JMenuItem mntmExitGame;
+	private JMenuItem mntmExitToMain;
+	private JMenuItem mntmGenerateDefaultUnit;
+	private JMenuItem mntmRemakeMap;
+	private JMenuItem mntmSave;
+	private JMenuItem mntmSendLogLine;
 
 	public GameMenuPanel() {
 		setLayout(new GridLayout(0, 1, 0, 0));
@@ -53,19 +53,21 @@ public class GameMenuPanel extends JPanel {
 		chckbxmntmShowLog = new JCheckBoxMenuItem("show Log");
 		chckbxmntmShowLog.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		chckbxmntmShowLog.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK));
-		chckbxmntmShowLog.setSelected(true);
+		chckbxmntmShowLog.setSelected(MainGamePanel.getLogBackgroundPanel().isVisible());
 		mnOptions.add(chckbxmntmShowLog);
-		
+
 		chckbxmntmEnableLogSelection = new JCheckBoxMenuItem("Enable Log selection (disables key-shortcuts)");
 		chckbxmntmEnableLogSelection.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		chckbxmntmEnableLogSelection.setSelected(false);
+		chckbxmntmEnableLogSelection.setSelected(LogPanel.getLog().isEnabled());
 		chckbxmntmEnableLogSelection.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
 					LogPanel.getLog().setEnabled(!LogPanel.getLog().isEnabled());
-					if(LogPanel.getLog().isEnabled()) {
+					Core.saveSetting("enableLog", new Boolean(LogPanel.getLog().isEnabled()).toString() );
+					
+					if (LogPanel.getLog().isEnabled()) {
 						LogPanel.getLog().setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 					} else {
 						LogPanel.getLog().setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
@@ -73,20 +75,21 @@ public class GameMenuPanel extends JPanel {
 				} catch (NullPointerException nl) {
 					chckbxmntmEnableLogSelection.setSelected(!chckbxmntmEnableLogSelection.isSelected());
 				}
+				
 			}
 		});
 		mnOptions.add(chckbxmntmEnableLogSelection);
-		
+
 		chckbxmntmFullscreen = new JCheckBoxMenuItem("Fullscreen");
 		chckbxmntmFullscreen.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		chckbxmntmFullscreen.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, InputEvent.ALT_MASK));
-		chckbxmntmFullscreen.setSelected(start.getMainJFrame().isUndecorated());
+		chckbxmntmFullscreen.setSelected(Core.getMainJFrame().isUndecorated());
 		mnOptions.add(chckbxmntmFullscreen);
-		
+
 		mntmExitToMain = new JMenuItem("Exit to Main Menu");
 		mntmExitToMain.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnOptions.add(mntmExitToMain);
-		
+
 		mntmExitGame = new JMenuItem("Exit Game");
 		mntmExitGame.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnOptions.add(mntmExitGame);
@@ -94,18 +97,20 @@ public class GameMenuPanel extends JPanel {
 		mnDev = new JMenu("dev");
 		mnDev.setFocusTraversalKeysEnabled(false);
 		mnDev.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		menuBar.add(mnDev);
+		if(new Boolean(Core.getSetting("dev")))	menuBar.add(mnDev);
 
 		mntmRemakeMap = new JMenuItem("Remake Map");
 		mntmRemakeMap.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		mntmRemakeMap.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
+		mntmRemakeMap
+				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mnDev.add(mntmRemakeMap);
 
 		mntmSendLogLine = new JMenuItem("Send log line");
 		mntmSendLogLine.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		mntmSendLogLine.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
+		mntmSendLogLine
+				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mnDev.add(mntmSendLogLine);
-		
+
 		mntmGenerateDefaultUnit = new JMenuItem("generate default unit ability");
 		mntmGenerateDefaultUnit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmGenerateDefaultUnit.addActionListener(new ActionListener() {
@@ -114,50 +119,51 @@ public class GameMenuPanel extends JPanel {
 			}
 		});
 		mnDev.add(mntmGenerateDefaultUnit);
-		
-		
+
 		mntmSave.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				LogPanel.appendNewLine(XMLSaveAndLoad.saveGame());
 			}
 		});
-		
+
 		mntmExitToMain.setActionCommand("frame.menuPanels.MainMenuPanel");
 		mntmExitToMain.addActionListener(ControlInput.menuChanger);
-		
+
 		mntmExitGame.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				System.exit(0);
 			}
 		});
-		
+
 		chckbxmntmFullscreen.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				start.getMainJFrame().dispose();
+				Core.getMainJFrame().dispose();
 				// put it in the left uppermost corner
-				start.getMainJFrame().setUndecorated(!start.getMainJFrame().isUndecorated());
-				start.getMainJFrame().setBounds(0, 0, 0, 0);
-				if(start.getMainJFrame().isUndecorated()) {
-					start.getMainJFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
+				Core.getMainJFrame().setUndecorated(!Core.getMainJFrame().isUndecorated());
+				Core.getMainJFrame().setBounds(0, 0, 0, 0);
+				if (Core.getMainJFrame().isUndecorated()) {
+					Core.getMainJFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
 				} else {
-					start.getMainJFrame().setExtendedState(JFrame.NORMAL);
+					Core.getMainJFrame().setExtendedState(JFrame.NORMAL);
 				}
-				start.getMainJFrame().pack();
-				if(!start.getMainJFrame().isUndecorated()) {
-					start.getMainJFrame().setSize(800, 600);
+				Core.getMainJFrame().pack();
+				if (!Core.getMainJFrame().isUndecorated()) {
+					Core.getMainJFrame().setSize(800, 600);
 				}
-				start.getMainJFrame().validate();
+				Core.getMainJFrame().validate();
+
+				Core.getMainJFrame().setVisible(true);
 				
-				start.getMainJFrame().setVisible(true);
+				Core.saveSetting("fullscreen", new Boolean(Core.getMainJFrame().isUndecorated()).toString() );
 			}
 		});
-		
+
 		mntmSendLogLine.addActionListener(new ActionListener() {
 
 			@Override
@@ -183,7 +189,9 @@ public class GameMenuPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					MainGamePanel.getLogBackgroundPanel().setVisible(!MainGamePanel.getLogBackgroundPanel().isVisible());
+					MainGamePanel.getLogBackgroundPanel()
+							.setVisible(!MainGamePanel.getLogBackgroundPanel().isVisible());
+					Core.saveSetting("showLog", new Boolean(MainGamePanel.getLogBackgroundPanel().isVisible()).toString() );
 				} catch (NullPointerException nl) {
 				}
 			}

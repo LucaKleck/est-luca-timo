@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 import core.ControlInput;
-import core.start;
+import core.Core;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.SelectionPanel;
 import frame.menuPanels.MainMenuPanel;
@@ -44,7 +44,18 @@ public class MainJFrame extends JFrame implements ComponentListener {
 		Refresh r = new Refresh();
 		r.run();
 
+		checkSettings();
+		
 		this.setVisible(true);
+	}
+
+	private void checkSettings() {
+		if(new Boolean(Core.getSetting("fullscreen"))) {
+			setUndecorated(true);
+			setBounds(0, 0, 0, 0);
+			setExtendedState(JFrame.MAXIMIZED_BOTH);
+		}
+		this.setSize(new Dimension(Integer.parseInt(Core.getSetting("defaultWidth")), Integer.parseInt(Core.getSetting("defaultHeight")) ));
 	}
 
 	public static void staticRepaint() {
@@ -54,7 +65,7 @@ public class MainJFrame extends JFrame implements ComponentListener {
 			}
 		} catch (NullPointerException nl) {
 		}
-		start.getMainJFrame().repaint();
+		Core.getMainJFrame().repaint();
 	}
 
 	@Override
@@ -102,8 +113,8 @@ public class MainJFrame extends JFrame implements ComponentListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if (!start.getMainJFrame().isValid()) {
-						start.getMainJFrame().validate();
+					if (!Core.getMainJFrame().isValid()) {
+						Core.getMainJFrame().validate();
 					}
 				} catch (NullPointerException s) {
 				}

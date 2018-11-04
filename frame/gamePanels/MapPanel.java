@@ -138,12 +138,18 @@ public class MapPanel extends JPanel implements ImageObserver {
 	}
 
 	private void mouseEventHandler(MouseEvent e) {
-		// X
+		int x = -1;
 		double factorX = (double) this.getWidth() / (double) MapImage.getImageWidth();
-		int x = (int) (((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize());
-		// Y
+		int y = -1;
 		double factorY = (double) this.getWidth() / (double) MapImage.getImageHeight();
-		int y = (int) (((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
+		// X
+		if((((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize()) >= 0) {
+			x = (int) (((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize());
+		}
+		// Y
+		if((((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize()) >= 0) {
+			y = (int) (((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
+		}
 		//
 		if(e.getButton() == 1) {
 			ObjectMap.getSelected().clickedOnTile(x, y, true);

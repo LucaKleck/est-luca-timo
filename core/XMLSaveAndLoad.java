@@ -39,12 +39,12 @@ public class XMLSaveAndLoad {
 	public XMLSaveAndLoad(String saveName) {
 		XMLSaveAndLoad.saveName = saveName;
 //		System.out.println(saveName);
-		xmlFilePath = start.GAME_PATH_SAVES;
-		File customDir = new File(xmlFilePath);
+		xmlFilePath = Core.GAME_PATH_SAVES;
+		File saves = new File(xmlFilePath);
 
-    	if (customDir.exists()) {
+    	if (saves.exists()) {
 
-    	} else if (customDir.mkdirs()) {
+    	} else if (saves.mkdirs()) {
     		
     	} else {
 
@@ -56,13 +56,13 @@ public class XMLSaveAndLoad {
         DocumentBuilder dBuilder = null;
 		try {
 			dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(save);
-			doc.getDocumentElement().normalize();
+			Document saveDoc = dBuilder.parse(save);
+			saveDoc.getDocumentElement().normalize();
 
-			new ObjectMap(loadMap(doc),loadEntityMap(doc));
+			new ObjectMap(loadMap(saveDoc),loadEntityMap(saveDoc));
 			
 			try {
-				LogPanel.reset(doc.getElementsByTagName("gameLog").item(0).getTextContent());
+				LogPanel.reset(saveDoc.getElementsByTagName("gameLog").item(0).getTextContent());
 			} catch (NullPointerException nl) {
 			}	
 		} catch (ParserConfigurationException | SAXException | IOException e1) {
@@ -70,10 +70,10 @@ public class XMLSaveAndLoad {
 		}
 	}
 	
-	private static MapTile[][] loadMap(Document doc) {
-		NodeList nList = doc.getElementsByTagName("mapTile");
+	private static MapTile[][] loadMap(Document saveDoc) {
+		NodeList nList = saveDoc.getElementsByTagName("mapTile");
         
-        int mapSize = Integer.parseInt(doc.getElementsByTagName("map").item(0).getAttributes().getNamedItem("mapSize").getNodeValue());
+        int mapSize = Integer.parseInt(saveDoc.getElementsByTagName("map").item(0).getAttributes().getNamedItem("mapSize").getNodeValue());
         
         MapTile[][] map = new MapTile[mapSize][mapSize];
 		
@@ -147,26 +147,26 @@ public class XMLSaveAndLoad {
 		try {
     		DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
     		DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
-    		Document save = documentBuilder.newDocument();
+    		Document saveDoc = documentBuilder.newDocument();
     		// create root for save
-    		Element saveRoot = save.createElement("save");
+    		Element saveRoot = saveDoc.createElement("save");
     		
-    		save.appendChild(saveRoot);
+    		saveDoc.appendChild(saveRoot);
     		// append object map
-    		saveRoot.appendChild(saveObjectMap(save));
+    		saveRoot.appendChild(saveObjectMap(saveDoc));
 		    
     		// append game log (do this last, there is a Game Saved that will be added to the Log, if something crashes after log, it'll say "Game Saved!" even though it crashed
-    		saveRoot.appendChild(saveGameLog(save));
+    		saveRoot.appendChild(saveGameLog(saveDoc));
     		
 		    // XML create
-		    save.getDocumentElement().normalize();
-		    save.normalizeDocument();
+		    saveDoc.getDocumentElement().normalize();
+		    saveDoc.normalizeDocument();
 		    TransformerFactory transformerFactory = TransformerFactory.newInstance();
 		    Transformer transformer = transformerFactory.newTransformer();
 		    transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 		    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "3");
-		    DOMSource domSource = new DOMSource(save);
+		    DOMSource domSource = new DOMSource(saveDoc);
 		    
 		    StreamResult streamResult = new StreamResult(new File(xmlFilePath));
 		    

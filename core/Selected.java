@@ -84,10 +84,11 @@ public class Selected {
 		AbilityPanel.checkAbilities();
 		InfoPanel.refresh();
 		if(MapImage.getMapImage() != null) {
-			MapImage.getMapImage().redrawArea(x, x, y, y);
+			MapImage.getMapImage().redrawArea(x,x,y,y);
 		}
 		MapPanel.refresh.run();
 	}
+	
 	/**
 	 * Changes the selectionMode depending on what current states the selections hold<br>
 	 * <br>

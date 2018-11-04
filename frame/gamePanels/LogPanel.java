@@ -16,7 +16,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.MatteBorder;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicScrollBarUI;
-import javax.swing.text.DefaultCaret;
+
+import core.Core;
 
 public class LogPanel extends JScrollPane {
 	private static final long serialVersionUID = 123L;
@@ -32,7 +33,7 @@ public class LogPanel extends JScrollPane {
 		setDoubleBuffered(true);
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-		log.setEnabled(false);
+		log.setEnabled(new Boolean(Core.getSetting("enableLog")));
 		log.setAutoscrolls(true);
 		setViewportView(log);
 		
