@@ -186,6 +186,7 @@ public class Selected {
 		this.selectedEntity = toBeSelected;
 		InfoPanel.refresh();
 		changeSelectionMode();
+		
 	}
 
 	public void removeSelected() {

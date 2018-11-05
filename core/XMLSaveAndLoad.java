@@ -76,7 +76,7 @@ public class XMLSaveAndLoad {
         int mapSize = Integer.parseInt(saveDoc.getElementsByTagName("map").item(0).getAttributes().getNamedItem("mapSize").getNodeValue());
         
         MapTile[][] map = new MapTile[mapSize][mapSize];
-		
+        
         for (int i = 0; i < nList.getLength(); i++) {
             Node nNode = nList.item(i);
             
@@ -125,7 +125,7 @@ public class XMLSaveAndLoad {
             	   e = new Unit(xPos, yPos, name, health, damage, movementRange);
             	   if(type.matches("Warrior")) {
             		
-            		  e = new Warrior(xPos, yPos, name, health, damage, movementRange);
+            		   e = new Warrior(xPos, yPos, name, health, damage, movementRange);
             	   }
                }
                if(type.matches("Building")) {
