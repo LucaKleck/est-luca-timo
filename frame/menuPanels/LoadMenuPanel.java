@@ -25,12 +25,10 @@ import javax.swing.JCheckBox;
  */
 public class LoadMenuPanel extends JPanel implements ComponentListener {
 	private static final long serialVersionUID = 114L;
-	private static boolean askSaveDelete = true;
 	
 	private JTextField textField;
 	private JPanel SavesPanelContainer;
 	public LoadMenuPanel() {
-		if(Core.getSetting("askSaveDelete").matches("false")) askSaveDelete = false;
 		this.setBackground(Color.GRAY);
 		setLayout(new MigLayout("", "[100%,grow]", "[100%,fill][fill][fill]"));
 		setDoubleBuffered(true);
@@ -70,19 +68,16 @@ public class LoadMenuPanel extends JPanel implements ComponentListener {
 		JCheckBox chckbxAskBeforeDelete = new JCheckBox("Ask before deleting?");
 		chckbxAskBeforeDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				askSaveDelete = !askSaveDelete;
-				Core.saveSetting("askSaveDelete", new Boolean(askSaveDelete).toString() );
+				Boolean b = new Boolean(Core.getSetting("askSaveDelete"));
+				b = !b;
+				Core.saveSetting("askSaveDelete", b.toString());
 			}
 		});
 		chckbxAskBeforeDelete.setOpaque(false);
-		chckbxAskBeforeDelete.setSelected(askSaveDelete); // TODO remove the static reference and make it always load!
+		chckbxAskBeforeDelete.setSelected(new Boolean(Core.getSetting("askSaveDelete")));
 		add(chckbxAskBeforeDelete, "cell 0 2");
 	}
 	
-	public static boolean isAskBeforeDelete() {
-		return askSaveDelete;
-	}
-
 	@Override
 	public void componentResized(ComponentEvent e) {
 		SavesPanelContainer.removeAll();

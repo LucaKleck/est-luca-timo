@@ -14,6 +14,7 @@ public class MapTile {
 	private int xPos;
 	private int yPos;
 	private int type;
+	private boolean isRoad;
 
 	private String name;
 	private MapTileResources mapTileResources;
@@ -26,19 +27,21 @@ public class MapTile {
 		this.type = type;
 		this.name = name;
 		this.mapTileResources = new MapTileResources(type);
+		this.isRoad = false;
 	}
 	
-	public MapTile(int xPos, int yPos, int type, String name, MapTileResources mapTileResources) {
+	public MapTile(int xPos, int yPos, int type, String name, MapTileResources mapTileResources, boolean isRoad) {
 		this.xPos = xPos;
 		this.yPos = yPos;
 		this.type = type;
 		this.name = name;
 		this.mapTileResources = mapTileResources;
+		this.isRoad = isRoad;
 	}
 	@Override
 	public String toString() {
 		return "MapTile [xPos=" + xPos + ", yPos=" + yPos + ", type=" + type + ", name=" + name + ", mapTileResources="
-				+ mapTileResources + "]";
+				+ mapTileResources + ", isRoad=" + isRoad + "]";
 	}
 
 	// TODO add constructors with UnitEffect &/or BuildingEffect
@@ -60,6 +63,10 @@ public class MapTile {
 
 	public MapTileResources getMapTileResources() {
 		return mapTileResources;
+	}
+	
+	public boolean isRoad() {
+		return isRoad;
 	}
 	/*
 	 * public BuildingEffect getBuildingEffect() { return buildingEffect } public

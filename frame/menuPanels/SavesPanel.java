@@ -29,14 +29,16 @@ public class SavesPanel extends JScrollPane {
 
 		File[] saves = saveGameSearcher(Core.GAME_PATH_SAVES);
 		String columns = "";
-		for(int i = 0; i < saves.length; i++) {
-			saveList.add(new SavesPanelElement(saves[i], container));
-			columns += "[fill]";
-		}
-		viewport.setLayout(new MigLayout("", "[fill]", columns));
-
-		for (int i = 0; i < saveList.size(); i++) {
-			viewport.add(saveList.get(i), ("cell 0 " + i + ", grow"));
+		if(saves != null) {
+			for(int i = 0; i < saves.length; i++) {
+				saveList.add(new SavesPanelElement(saves[i], container));
+				columns += "[fill]";
+			}
+			viewport.setLayout(new MigLayout("", "[fill]", columns));
+			
+			for (int i = 0; i < saveList.size(); i++) {
+				viewport.add(saveList.get(i), ("cell 0 " + i + ", grow"));
+			}
 		}
 
 		

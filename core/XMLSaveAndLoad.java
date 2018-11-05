@@ -92,7 +92,8 @@ public class XMLSaveAndLoad {
                int stone = Integer.parseInt(eElement.getElementsByTagName("stone").item(0).getTextContent());
                int metal = Integer.parseInt(eElement.getElementsByTagName("metal").item(0).getTextContent());
                int manaStone = Integer.parseInt(eElement.getElementsByTagName("manaStone").item(0).getTextContent());
-               map[xPos][yPos] = new MapTile(xPos, yPos, type, name, new MapTileResources(gold, food, wood, stone, metal, manaStone));
+               boolean isRoad = new Boolean(eElement.getElementsByTagName("isRoad").item(0).getTextContent());
+               map[xPos][yPos] = new MapTile(xPos, yPos, type, name, new MapTileResources(gold, food, wood, stone, metal, manaStone), isRoad);
             }
         }
 		return map;
@@ -249,6 +250,11 @@ public class XMLSaveAndLoad {
 			    mapTileResources.appendChild(manaStone);
 			    
 			    mapTile.appendChild(mapTileResources);
+			    
+			    Element isRoad = save.createElement("isRoad");
+			    isRoad.appendChild(save.createTextNode(new Boolean(ObjectMap.getMap()[x][y].isRoad()).toString() ) );
+			    mapTile.appendChild(isRoad);
+			    
 	    	}
 	    }
 		return map;

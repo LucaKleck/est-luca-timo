@@ -13,6 +13,7 @@ import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
 import core.ControlInput;
+import core.Core;
 import core.XMLSaveAndLoad;
 import frame.gamePanels.InfoPanel;
 import frame.gamePanels.InteractionPanel;
@@ -41,7 +42,7 @@ public class SavesPanelElement extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(LoadMenuPanel.isAskBeforeDelete()) {
+				if(new Boolean(Core.getSetting("askSaveDelete"))) {
 					if(JOptionPane.showConfirmDialog(btnDelete, "Sure you want to delete?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)  {
 						save.delete();
 						btnDelete.setText("Deleted!");
