@@ -7,6 +7,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.ImageObserver;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -25,6 +27,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 	
 	private static final int IMAGE_SIZE = 3136;
 	private static final int DEFAULT_DISPLACEMENT = 4;
+	private static final ExecutorService EXS = Executors.newFixedThreadPool(1);
 
 	private static MapImage mapImage;
 	private static MapPanel self;
@@ -32,6 +35,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 	private static int displacementX;
 	private static int displacementY;
 	public static Refresh refresh;
+	
 
 	public MapPanel() {
 		this.setName("MapPanel");
@@ -150,15 +154,33 @@ public class MapPanel extends JPanel implements ImageObserver {
 		if((((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize()) >= 0) {
 			y = (int) (((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
 		}
-		//
+		// 
+		boolean isLeftClick = false;
 		if(e.getButton() == 1) {
-			ObjectMap.getSelected().clickedOnTile(x, y, true);
+			isLeftClick = true;
+		} else {
+			isLeftClick = false;
 		}
-		if(e.getButton() == 3) {
-			ObjectMap.getSelected().clickedOnTile(x, y, false);
-		}
+		ClickOnTileHandler clickOnTileHandler = new ClickOnTileHandler(x,y,isLeftClick);
+		EXS.execute(clickOnTileHandler);
 	}
-
+	private class ClickOnTileHandler implements Runnable {
+		private int x;
+		private int y;
+		private boolean isLeftClick;
+		
+		public ClickOnTileHandler(int x, int y, boolean isLeftClick) {
+			this.x = x;
+			this.y = y;
+			this.isLeftClick = isLeftClick;
+		}
+		
+		@Override
+		public void run() {
+			ObjectMap.getSelected().clickedOnTile(x, y, isLeftClick);
+		}
+		
+	}
 	private class MouseEventHandler implements MouseListener {
 
 		@Override
