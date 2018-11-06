@@ -70,7 +70,6 @@ public class MapImage extends BufferedImage implements ImageObserver {
 //				g.fillRect(xRow * mapTileSize, yColumn * mapTileSize, mapTileSize, mapTileSize);
 				
 				try {
-					
 					g.drawImage(getImageForTile(xRow, yColumn), xRow * mapTileSize, yColumn * mapTileSize, mapTileSize, mapTileSize, null);
 				} catch (NullPointerException e) {
 					e.printStackTrace();
