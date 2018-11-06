@@ -1,6 +1,6 @@
 package entity;
 
-public abstractw class Ability {
+public abstract class Ability {
 	String name;
 	
 	public Ability(String name) {
