@@ -103,7 +103,6 @@ public class XMLSaveAndLoad {
 	private static ArrayList<Entity> loadEntityMap(Document doc) {
 		NodeList nList = doc.getElementsByTagName("entity");
         
-        int xyEntityMapSize = Integer.parseInt(doc.getElementsByTagName("entityMap").item(0).getAttributes().getNamedItem("xyEntityMapSize").getNodeValue());
         ArrayList<Entity> entityMap = new ArrayList<>();
 		
         for (int i = 0; i < nList.getLength(); i++) {
@@ -131,7 +130,7 @@ public class XMLSaveAndLoad {
                if(type.matches("Building")) {
             	   e = new Building(xPos, yPos, name, health);
                }
-               
+               entityMap.add(e);
             }
             
         }
@@ -257,9 +256,6 @@ public class XMLSaveAndLoad {
 	
 	private static Element saveEntityMap(Document save) {
 		Element entityMap = save.createElement("entityMap");
-	    Attr xyEntityMapSize = save.createAttribute("xyEntityMapSize");
-	    xyEntityMapSize.setValue(""+ObjectMap.getEntityMap().size());
-        entityMap.setAttributeNode(xyEntityMapSize);
         
 	    for(int i = 0; i < ObjectMap.getEntityMap().size(); i++) {
 	    			Element entity = save.createElement("entity");
