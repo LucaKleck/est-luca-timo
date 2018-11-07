@@ -15,7 +15,7 @@ public class LogBackgroundPanel extends JPanel {
 	public LogBackgroundPanel() {
 		setBackground(new Color(0, 0, 0, 120));
 		setOpaque(false);
-		setVisible(new Boolean(Core.getSetting("showLog")));
+		setVisible(new Boolean(Core.getSetting(Core.SETTING_SHOW_LOG)));
 	}
 
 	@Override

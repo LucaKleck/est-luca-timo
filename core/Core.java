@@ -31,6 +31,17 @@ public class Core {
 	public static final String GAME_PATH = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "EST-SCHULPROJEKT";
 	public static final String GAME_PATH_SAVES = GAME_PATH + File.separator + "saves";
 	public static final String GAME_PATH_SETTINGS = GAME_PATH + File.separator + "settings.xml";
+	
+	// Setting strings
+	public static final String SETTING_FULLSCREEN = "fullscreen";
+	public static final String SETTING_DEFAULT_WIDTH = "defaultWidth";
+	public static final String SETTING_DEFAULT_HEIGHT = "defaultHeight";
+	public static final String SETTING_ASK_SAVE_DELETE = "askSaveDelete";
+	public static final String SETTING_SHOW_LOG = "showLog";
+	public static final String SETTING_ENABLE_LOG = "enableLog";
+	public static final String SETTING_RTX = "RTX";
+	public static final String SETTING_DEV = "dev";
+	
 	private static MainJFrame mainJFrame;
 	private static ControlInput controlInput;
 	

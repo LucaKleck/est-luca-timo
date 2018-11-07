@@ -64,7 +64,7 @@ public class GameMenuPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					LogPanel.getLog().setEnabled(!LogPanel.getLog().isEnabled());
-					Core.saveSetting("enableLog", new Boolean(LogPanel.getLog().isEnabled()).toString() );
+					Core.saveSetting(Core.SETTING_ENABLE_LOG, new Boolean(LogPanel.getLog().isEnabled()).toString() );
 					
 					if (LogPanel.getLog().isEnabled()) {
 						LogPanel.getLog().setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
@@ -96,7 +96,7 @@ public class GameMenuPanel extends JPanel {
 		mnDev = new JMenu("dev");
 		mnDev.setFocusTraversalKeysEnabled(false);
 		mnDev.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		if(new Boolean(Core.getSetting("dev")))	menuBar.add(mnDev);
+		if(new Boolean(Core.getSetting(Core.SETTING_DEV)))	menuBar.add(mnDev);
 
 		mntmRemakeMap = new JMenuItem("Remake Map");
 		mntmRemakeMap.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -159,7 +159,7 @@ public class GameMenuPanel extends JPanel {
 
 				Core.getMainJFrame().setVisible(true);
 				
-				Core.saveSetting("fullscreen", new Boolean(Core.getMainJFrame().isUndecorated()).toString() );
+				Core.saveSetting(Core.SETTING_FULLSCREEN, new Boolean(Core.getMainJFrame().isUndecorated()).toString() );
 			}
 		});
 
@@ -190,7 +190,7 @@ public class GameMenuPanel extends JPanel {
 				try {
 					MainGamePanel.getLogBackgroundPanel()
 							.setVisible(!MainGamePanel.getLogBackgroundPanel().isVisible());
-					Core.saveSetting("showLog", new Boolean(MainGamePanel.getLogBackgroundPanel().isVisible()).toString() );
+					Core.saveSetting(Core.SETTING_SHOW_LOG, new Boolean(MainGamePanel.getLogBackgroundPanel().isVisible()).toString() );
 				} catch (NullPointerException nl) {
 				}
 			}

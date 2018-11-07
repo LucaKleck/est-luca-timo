@@ -68,13 +68,13 @@ public class LoadMenuPanel extends JPanel implements ComponentListener {
 		JCheckBox chckbxAskBeforeDelete = new JCheckBox("Ask before deleting?");
 		chckbxAskBeforeDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Boolean b = new Boolean(Core.getSetting("askSaveDelete"));
+				Boolean b = new Boolean(Core.getSetting(Core.SETTING_ASK_SAVE_DELETE));
 				b = !b;
-				Core.saveSetting("askSaveDelete", b.toString());
+				Core.saveSetting(Core.SETTING_ASK_SAVE_DELETE, b.toString());
 			}
 		});
 		chckbxAskBeforeDelete.setOpaque(false);
-		chckbxAskBeforeDelete.setSelected(new Boolean(Core.getSetting("askSaveDelete")));
+		chckbxAskBeforeDelete.setSelected(new Boolean(Core.getSetting(Core.SETTING_ASK_SAVE_DELETE)));
 		add(chckbxAskBeforeDelete, "cell 0 2");
 	}
 	

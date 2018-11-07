@@ -50,12 +50,12 @@ public class MainJFrame extends JFrame implements ComponentListener {
 	}
 
 	private void checkSettings() {
-		if(new Boolean(Core.getSetting("fullscreen"))) {
+		if(new Boolean(Core.getSetting(Core.SETTING_FULLSCREEN))) {
 			setUndecorated(true);
 			setBounds(0, 0, 0, 0);
 			setExtendedState(JFrame.MAXIMIZED_BOTH);
 		}
-		this.setSize(new Dimension(Integer.parseInt(Core.getSetting("defaultWidth")), Integer.parseInt(Core.getSetting("defaultHeight")) ));
+		this.setSize(new Dimension(Integer.parseInt(Core.getSetting(Core.SETTING_DEFAULT_WIDTH)), Integer.parseInt(Core.getSetting(Core.SETTING_DEFAULT_HEIGHT)) ));
 	}
 
 	public static void staticRepaint() {
