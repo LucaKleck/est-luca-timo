@@ -34,7 +34,17 @@ public class Core {
 	private static ControlInput controlInput;
 	
 	public Core() {
+		File saves = new File(GAME_PATH);
+
+    	if (saves.exists()) {
+
+    	} else if (saves.mkdirs()) {
+    		
+    	} else {
+
+    	}
 		File settingsXML = new File(GAME_PATH_SETTINGS);
+		
 		if(!settingsXML.exists()) {
 			try {
 				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
