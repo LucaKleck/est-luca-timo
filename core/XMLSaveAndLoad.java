@@ -2,6 +2,7 @@ package core;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -99,12 +100,12 @@ public class XMLSaveAndLoad {
 		return map;
 	}
 	
-	private static Entity[][][] loadEntityMap(Document doc) {
+	private static ArrayList<Entity> loadEntityMap(Document doc) {
 		NodeList nList = doc.getElementsByTagName("entity");
         
         int xyEntityMapSize = Integer.parseInt(doc.getElementsByTagName("entityMap").item(0).getAttributes().getNamedItem("xyEntityMapSize").getNodeValue());
         int entityMapDepth = Integer.parseInt(doc.getElementsByTagName("entityMap").item(0).getAttributes().getNamedItem("entityMapDepth").getNodeValue());
-        Entity[][][] entityMap = new Entity[xyEntityMapSize][xyEntityMapSize][entityMapDepth];
+        ArrayList<Entity> entityMap = new ArrayList<>();
 		
         for (int i = 0; i < nList.getLength(); i++) {
             Node nNode = nList.item(i);
@@ -116,25 +117,28 @@ public class XMLSaveAndLoad {
                
                int xPos = Integer.parseInt(eElement.getElementsByTagName("xPos").item(0).getTextContent());
                int yPos = Integer.parseInt(eElement.getElementsByTagName("yPos").item(0).getTextContent());
+               int zPos = Integer.parseInt(eElement.getElementsByTagName("zPos").item(0).getTextContent());
                String name = eElement.getElementsByTagName("name").item(0).getTextContent();
                int health = Integer.parseInt(eElement.getElementsByTagName("health").item(0).getTextContent());
-               e = new Entity(xPos, yPos, name, health);
+               e = new Entity(xPos, yPos, zPos, name, health);
                if(type.matches("Unit") || type.matches("Warrior")) {
             	   int damage = Integer.parseInt(eElement.getElementsByTagName("damage").item(0).getTextContent());
             	   int movementRange = Integer.parseInt(eElement.getElementsByTagName("movementRange").item(0).getTextContent());
-            	   e = new Unit(xPos, yPos, name, health, damage, movementRange);
+            	   e = new Unit(xPos, yPos, zPos, name, health, damage, movementRange);
             	   if(type.matches("Warrior")) {
             		
-            		   e = new Warrior(xPos, yPos, name, health, damage, movementRange);
+            		   e = new Warrior(xPos, yPos, zPos, name, health, damage, movementRange);
             	   }
                }
                if(type.matches("Building")) {
-            	   e = new Building(xPos, yPos, name, health);
+            	   e = new Building(xPos, yPos, zPos, name, health);
                }
                for(int z = 0; z < entityMapDepth; z++) {
-            	   if(entityMap[xPos][yPos][z] == null) {
-            		   entityMap[xPos][yPos][z] = e;
-            		   break;
+            	   if(entityMap.get(z).getXPos() == xPos && entityMap.get(z).getYPos() == yPos) {
+            		   if(entityMap.get(z) == null) {
+            			   entityMap.set(z, e);
+            			   break;
+            		   }
             	   }
                }
             }
@@ -263,56 +267,50 @@ public class XMLSaveAndLoad {
 	private static Element saveEntityMap(Document save) {
 		Element entityMap = save.createElement("entityMap");
 	    Attr xyEntityMapSize = save.createAttribute("xyEntityMapSize");
-	    xyEntityMapSize.setValue(""+ObjectMap.getEntityMap().length);
+	    xyEntityMapSize.setValue(""+ObjectMap.getEntityMap().size());
         entityMap.setAttributeNode(xyEntityMapSize);
         
-        Attr entityMapDepth = save.createAttribute("entityMapDepth");
-        entityMapDepth.setValue(""+ObjectMap.getEntityMap()[0][0].length);
-        entityMap.setAttributeNode(entityMapDepth);
-        
-	    for(int x = 0; x < ObjectMap.getEntityMap().length; x++) {
-	    	for(int y = 0; y < ObjectMap.getEntityMap()[x].length; y++) {
-	    		for(int z = 0; z < ObjectMap.getEntityMap()[x][y].length; z++) {
+	    for(int i = 0; i < ObjectMap.getEntityMap().size(); i++) {
 	    			Element entity = save.createElement("entity");
 	    			Attr className = save.createAttribute("type");
-	    			if(ObjectMap.getEntityMap()[x][y][z] != null) {
-	    				className.setValue(ObjectMap.getEntityMap()[x][y][z].getClass().getSimpleName());
+	    			if(ObjectMap.getEntityMap().get(i) != null) {
+	    				className.setValue(ObjectMap.getEntityMap().get(i).getClass().getSimpleName());
 	    				
 	    				// things every entity has
 	    				Element xPos = save.createElement("xPos");
-					    xPos.appendChild(save.createTextNode(""+ObjectMap.getEntityMap()[x][y][z].getXPos()) );
+					    xPos.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getXPos()) );
 					    entity.appendChild(xPos);
 					    
 					    Element yPos = save.createElement("yPos");
-					    yPos.appendChild(save.createTextNode(""+ObjectMap.getEntityMap()[x][y][z].getYPos()) );
+					    yPos.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getYPos()) );
 					    entity.appendChild(yPos);
 					    
 					    Element name = save.createElement("name");
-					    name.appendChild(save.createTextNode(""+ObjectMap.getEntityMap()[x][y][z].getName()) );
+					    name.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getName()) );
 					    entity.appendChild(name);
 					    
 					    Element health = save.createElement("health");
-					    health.appendChild(save.createTextNode(""+ObjectMap.getEntityMap()[x][y][z].getHealth()) );
+					    health.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getCurrentHealth()) );
 					    entity.appendChild(health);
 					    
 					    // things every unit has
-		    			if(ObjectMap.getEntityMap()[x][y][z] instanceof Unit) {
+		    			if(ObjectMap.getEntityMap().get(i) instanceof Unit) {
 		    				Element damage = save.createElement("damage");
-		    				damage.appendChild(save.createTextNode(""+((Unit) ObjectMap.getEntityMap()[x][y][z]).getDamage() ) );
+		    				damage.appendChild(save.createTextNode(""+((Unit) ObjectMap.getEntityMap().get(i)).getDamage() ) );
 						    entity.appendChild(damage);
 						    
 						    Element movementRange = save.createElement("movementRange");
-						    movementRange.appendChild(save.createTextNode(""+((Unit) ObjectMap.getEntityMap()[x][y][z]).getMovementRange() ) );
+						    movementRange.appendChild(save.createTextNode(""+((Unit) ObjectMap.getEntityMap().get(i)).getMovementRange() ) );
 						    entity.appendChild(movementRange);
 						    
 						    // things every warrior has
-						    if(ObjectMap.getEntityMap()[x][y][z] instanceof Warrior) {
+						    if(ObjectMap.getEntityMap().get(i) instanceof Warrior) {
 						    	
 						    }
 						    
 		    			}
 		    			// things every building has
-		    			if(ObjectMap.getEntityMap()[x][y][z] instanceof Building) {
+		    			if(ObjectMap.getEntityMap().get(i) instanceof Building) {
 		    				
 		    			}
 		    			
@@ -322,8 +320,6 @@ public class XMLSaveAndLoad {
 	    			entity.setAttributeNode(className);
 	    			if(className.getValue() != "null") {
 	    				entityMap.appendChild(entity);
-	    			}
-	    		}
 	    	}
 	    }
 		return entityMap;

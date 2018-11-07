@@ -32,7 +32,7 @@ public class EntityFilter implements Comparable {
 
 								distancePoints = 100 / (calculateDifference(entity.getXPos(), x)
 										+ calculateDifference(entity.getYPos(), y) + 1);
-								healthPoints = 500 / entityMap[x][y][z].getHealth();
+								healthPoints = 500 / entityMap[x][y][z].getMaxHealth();
 								priorityPoints = distancePoints + healthPoints;
 
 								if (priorityPoints > bestEntityPriorityPoints && x != entity.getXPos()

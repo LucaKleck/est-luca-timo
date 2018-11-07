@@ -4,6 +4,8 @@
  */
 package map;
 
+import java.util.ArrayList;
+
 import core.MapCreator;
 import core.Selected;
 import entity.Entity;
@@ -13,18 +15,17 @@ public class ObjectMap {
 
 	private static Selected selected = new Selected();
 	private static MapTile[][] map;
-	private static Entity[][][] entityMap;
+	private static ArrayList<Entity> entityMap = new ArrayList<>();
 
 	public ObjectMap() {
 		map = MapCreator.createMap();
-		entityMap = new Entity[49][49][10];
 		selected = new Selected();
 		
 //		System.out.println("best target = " + new EntityFilter(entityMap).getBestEntityTarget(entityMap[0][0][0]).getName());
 
 	}
 	
-	public ObjectMap(MapTile[][] map, Entity[][][] entityMap) {
+	public ObjectMap(MapTile[][] map, ArrayList<Entity> entityMap) {
 		ObjectMap.map = map;
 		ObjectMap.entityMap = entityMap;
 		selected = new Selected();
@@ -38,7 +39,7 @@ public class ObjectMap {
 		return selected;
 	}
 
-	public static Entity[][][] getEntityMap() {
+	public static ArrayList<Entity> getEntityMap() {
 		return entityMap;
 	}
 

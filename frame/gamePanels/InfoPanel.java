@@ -33,7 +33,7 @@ public class InfoPanel extends JScrollPane {
 	public static void refresh() {
 		try {
 			lblName.setText("Name: " + ObjectMap.getSelected().getSelectedEntity().getName());
-			lblHealth.setText("Health: " + ObjectMap.getSelected().getSelectedEntity().getHealth());
+			lblHealth.setText("Health: " + ObjectMap.getSelected().getSelectedEntity().getCurrentHealth());
 		} catch (NullPointerException nl) {
 			lblName.setText("Name: ");
 			lblHealth.setText("Health: ");

@@ -6,16 +6,19 @@ public class Entity {
 
 	private String name;
 	private int maxRange = 5; // Will be calculated via the abilities in the future
-	private int health;
+	private int maxHealth;
+	private int currentHealth;
 	private int xPos;
 	private int yPos;
+	private int zPos;
 	private ArrayList<Ability> abilities = new ArrayList<>();
 
-	public Entity( int xPos, int yPos, String name, int health) {
+	public Entity( int xPos, int yPos, int zPos, String name, int maxHealth) {
 		this.name = name;
-		this.health = health;
+		this.maxHealth = maxHealth;
 		this.xPos = xPos;
 		this.yPos = yPos;
+		this.zPos = zPos;
 	}
 
 	public int getXPos() {
@@ -25,17 +28,32 @@ public class Entity {
 	public int getYPos() {
 		return yPos;
 	}
+	
+	public int getZPos() {
+		return zPos;
+	}
 
 	public String getName() {
 		return name;
 	}
 
-	public int getHealth() {
-		return health;
+	public int getMaxHealth() {
+		return maxHealth;
 	}
 
+	public int getCurrentHealth() {
+		return currentHealth;
+	}
+	
 	public int getMaxRange() {
 		return maxRange;
+	}
+	
+	@Override
+	public String toString() {
+		return "Entity [name=" + name + ", maxRange=" + maxRange + ", maxHealth=" + maxHealth + ", currentHealth="
+				+ currentHealth + ", xPos=" + xPos + ", yPos=" + yPos + ", zPos=" + zPos + ", abilities=" + abilities
+				+ "]";
 	}
 	
 	public boolean hasAbility() {

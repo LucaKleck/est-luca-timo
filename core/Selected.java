@@ -56,10 +56,10 @@ public class Selected {
 				
 			} else if(selectionMode == 69) {
 				if(selectedAbility.getName().matches("dev_create_unit")) {
-					for(int z = 0; z < ObjectMap.getEntityMap()[x][y].length; z++) {
+					for(int z = 0; z < ObjectMap.getEntityMap().size(); z++) {
 						selectedMapTile = ObjectMap.getMap()[x][y];
-						if(ObjectMap.getEntityMap()[x][y][z] == null) {
-							ObjectMap.getEntityMap()[x][y][z] = new Unit(x, y, "devUnit", 1, 1, 1);
+						if(ObjectMap.getEntityMap().get(z) == null) {
+							ObjectMap.getEntityMap().add(new Unit(x, y, 0, "devUnit", 1, 1, 1));
 							setSelectedAbility(null);
 							InteractionPanel.setSelectionPane(new SelectionPanel(x, y, selectionMode));
 							break;
@@ -166,9 +166,11 @@ public class Selected {
 	private boolean isntEmpty(int x, int y) {
 		boolean test = false;
 		try {
-			for (int i = 0; i < ObjectMap.getEntityMap()[x][y].length; i++) {
-				if (ObjectMap.getEntityMap()[x][y][i] != null) {
-					test = true;
+			for (int i = 0; i < ObjectMap.getEntityMap().size(); i++) {
+				if (ObjectMap.getEntityMap().get(i).getXPos() == x && ObjectMap.getEntityMap().get(i).getYPos() == y) {
+					if(ObjectMap.getEntityMap().get(i) != null) {
+						test = true;
+					}
 				}
 			}
 		} catch (ArrayIndexOutOfBoundsException ex) {

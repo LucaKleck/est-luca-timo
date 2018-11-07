@@ -92,9 +92,9 @@ public class SelectionPanel extends JScrollPane {
 		setViewportView(viewportPanel);
 		viewportPanel.setLayout(new MigLayout("", "[fill]", "[fill]"));
 
-		for (int i = 0; i < ObjectMap.getEntityMap()[x][y].length; i++) {
-			if (ObjectMap.getEntityMap()[x][y][i] != null) {
-				selectedEntityList.add(ObjectMap.getEntityMap()[x][y][i]);
+		for (int i = 0; i < ObjectMap.getEntityMap().size(); i++) {
+			if (ObjectMap.getEntityMap().get(i) != null) {
+				selectedEntityList.add(ObjectMap.getEntityMap().get(i));
 			}
 		}
 
@@ -198,7 +198,7 @@ public class SelectionPanel extends JScrollPane {
 			JLabel lblDamage = new JLabel("Range: " + entity.getMaxRange());
 			add(lblDamage, "cell 0 2 2 1,alignx left,aligny center");
 
-			JLabel lblHealth = new JLabel("Health: " + entity.getHealth());
+			JLabel lblHealth = new JLabel("Health: " + entity.getCurrentHealth());
 			lblHealth.setIcon(new ImageIcon(SelectionPaneElement.class.getResource("/resources/healthIcon.png")));
 			add(lblHealth, "cell 0 1 2 1,alignx left,aligny center");
 			
