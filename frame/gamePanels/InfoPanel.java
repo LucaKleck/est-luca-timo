@@ -26,9 +26,6 @@ public class InfoPanel extends JScrollPane {
 
 		panel.add(lblHealth, "cell 0 1");
 
-		JLabel lblTest = new JLabel("Test");
-		panel.add(lblTest, "cell 0 2");
-
 		JLabel lblCurrentlySelected = new JLabel("Currently Selected");
 		setColumnHeaderView(lblCurrentlySelected);
 	}
@@ -36,7 +33,7 @@ public class InfoPanel extends JScrollPane {
 	public static void refresh() {
 		try {
 			lblName.setText("Name: " + ObjectMap.getSelected().getSelectedEntity().getName());
-			lblHealth.setText("Health: " + ObjectMap.getSelected().getSelectedEntity().getHealth());
+			lblHealth.setText("Health: " + ObjectMap.getSelected().getSelectedEntity().getCurrentHealth());
 		} catch (NullPointerException nl) {
 			lblName.setText("Name: ");
 			lblHealth.setText("Health: ");

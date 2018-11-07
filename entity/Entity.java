@@ -1,25 +1,32 @@
 package entity;
 
+import java.util.ArrayList;
+
+import abilities.Ability;
+
 public class Entity {
 
 	private String name;
 	private int maxRange = 5; // Will be calculated via the abilities in the future
-	private int health;
+	private int maxHealth;
+	private int currentHealth;
 	private int xPos;
 	private int yPos;
+	private ArrayList<Ability> abilities = new ArrayList<>();
 
-	public Entity(String name, int health, int xPos, int yPos) {
+	public Entity( int xPos, int yPos, String name, int maxHealth) {
 		this.name = name;
-		this.health = health;
+		this.maxHealth = maxHealth;
+		this.currentHealth = maxHealth;
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}
 
-	public int getxPos() {
+	public int getXPos() {
 		return xPos;
 	}
 
-	public int getyPos() {
+	public int getYPos() {
 		return yPos;
 	}
 
@@ -27,20 +34,35 @@ public class Entity {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public int getMaxHealth() {
+		return maxHealth;
 	}
 
-	public int getHealth() {
-		return health;
+	public int getCurrentHealth() {
+		return currentHealth;
 	}
-
+	
 	public int getMaxRange() {
 		return maxRange;
 	}
-
-	public void setHealth(int health) {
-		this.health = health;
+	
+	@Override
+	public String toString() {
+		return "Entity [name=" + name + ", maxRange=" + maxRange + ", maxHealth=" + maxHealth + ", currentHealth="
+				+ currentHealth + ", xPos=" + xPos + ", yPos=" + yPos + ", abilities=" + abilities
+				+ "]";
 	}
-
+	
+	public boolean hasAbility() {
+		boolean has = false;
+		try {
+			for(int i = 0; i < abilities.size(); i++) {
+				if(abilities.get(i) != null) {
+					has = true;
+				}
+			}
+		} catch (NullPointerException nl) {
+		}
+		return has;
+	}
 }

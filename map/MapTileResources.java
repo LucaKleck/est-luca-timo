@@ -56,7 +56,21 @@ public class MapTileResources {
 			food = 70;
 		}
 	}
+	public MapTileResources(int gold,int food, int wood, int stone, int metal, int manaStone) {
+		this.gold = gold;
+		this.food = food;
+		this.wood = wood;
+		this.stone = stone;
+		this.metal = metal;
+		this.manaStone = manaStone;
+	}
 
+	@Override
+	public String toString() {
+		return "MapTileResources [gold=" + gold + ", food=" + food + ", wood=" + wood + ", stone=" + stone + ", metal="
+				+ metal + ", manaStone=" + manaStone + "]";
+	}
+	
 	public int getGoldPercent() {
 		return gold;
 	}

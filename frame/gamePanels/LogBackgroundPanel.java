@@ -7,12 +7,15 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import core.Core;
+
 public class LogBackgroundPanel extends JPanel {
 	private static final long serialVersionUID = 2527363637826501962L;
 
 	public LogBackgroundPanel() {
 		setBackground(new Color(0, 0, 0, 120));
 		setOpaque(false);
+		setVisible(new Boolean(Core.getSetting(Core.SETTING_SHOW_LOG)));
 	}
 
 	@Override

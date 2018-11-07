@@ -8,8 +8,13 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.text.AbstractDocument;
+import javax.swing.text.AttributeSet;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DocumentFilter;
 
 import core.ControlInput;
+import core.XMLSaveAndLoad;
 import frame.gamePanels.InfoPanel;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.LogPanel;
@@ -29,16 +34,18 @@ public class GameSettingsPanel extends JPanel {
 
 	public GameSettingsPanel() {
 		this.setBackground(Color.LIGHT_GRAY);
-		setLayout(new MigLayout("", "[grow]", "[10%][3%]"));
+		setLayout(new MigLayout("", "[grow]", "[10%][3%][100%][fill]"));
 
 		JLabel lblGameName = new JLabel("Game Name");
 		add(lblGameName, "flowy,cell 0 0");
 
 		txtNewGame = new JTextField();
+		txtNewGame.setToolTipText("Enter save name");
 		txtNewGame.setText("New Game");
-		add(txtNewGame, "cell 0 0,growx"); // this text field will make up the save name of the game!
-		txtNewGame.setColumns(10);
-
+		add(txtNewGame, "cell 0 0,growx");
+		txtNewGame.setColumns(1);
+		((AbstractDocument)txtNewGame.getDocument()).setDocumentFilter(new SaveNameTextDocumentFilter());
+		
 		JButton btnStartGame = new JButton("Start Game");
 		btnStartGame.setActionCommand("frame.gamePanels.MainGamePanel");
 		btnStartGame.addActionListener(ControlInput.menuChanger);
@@ -50,17 +57,37 @@ public class GameSettingsPanel extends JPanel {
 					ObjectMap.getSelected().removeSelected();
 					InteractionPanel.setSelectionPane(null);
 					InfoPanel.refresh();
-					LogPanel.kill();
+					LogPanel.reset("This is the log, keeping track of all important events");
 				} catch (NullPointerException nl) {
 					
 				}
+				new XMLSaveAndLoad(txtNewGame.getText());
 				new ObjectMap();
 			}
 
 		});
-		// TODO add another action listener that creates the save/makes the map and so on
 		add(btnStartGame, "cell 0 1");
+		
+		JButton btnBack = new JButton("Back");
+		btnBack.setActionCommand("frame.menuPanels.MainMenuPanel");
+		btnBack.addActionListener(ControlInput.menuChanger);
+		add(btnBack, "cell 0 3");
 
 	}
-
+	private class SaveNameTextDocumentFilter extends DocumentFilter {
+		private final static int charLimit = 30;
+		
+		@Override
+        public void replace(FilterBypass fb, int offset, int length, String text, AttributeSet attrs) throws BadLocationException {
+            int currentLength = fb.getDocument().getLength();
+            int overLimit = (currentLength + text.length()) - charLimit - length;
+            if (overLimit > 0) {
+                text = text.substring(0, text.length() - overLimit);
+            }
+            if (text.length() > 0) {
+                super.replace(fb, offset, length, text, attrs); 
+            }
+        }
+		
+	}
 }

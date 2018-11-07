@@ -11,7 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.Timer;
 
 import core.ControlInput;
-import core.CoreController;
+import core.Core;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.SelectionPanel;
 import frame.menuPanels.MainMenuPanel;
@@ -27,8 +27,6 @@ import java.awt.Toolkit;
 public class MainJFrame extends JFrame implements ComponentListener {
 	private static final long serialVersionUID = 110L;
 
-	private static MainJFrame self;
-
 	private Timer recalculateTimer = new Timer(20, new resizeListener());
 
 	public MainJFrame() {
@@ -36,9 +34,8 @@ public class MainJFrame extends JFrame implements ComponentListener {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MainJFrame.class.getResource("/resources/gameIcon.png")));
 		setBackground(Color.DARK_GRAY);
 		setName("GameMainFrame");
-		self = this;
 		this.setDefaultCloseOperation(MainJFrame.EXIT_ON_CLOSE);
-		this.setMinimumSize(new Dimension(800, 600));
+		this.setMinimumSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2));
 		MainMenuPanel mainMenuPanel = new MainMenuPanel();
 		mainMenuPanel.setBackground(Color.DARK_GRAY);
 		getContentPane().add(mainMenuPanel);
@@ -47,17 +44,28 @@ public class MainJFrame extends JFrame implements ComponentListener {
 		Refresh r = new Refresh();
 		r.run();
 
+		checkSettings();
+		
 		this.setVisible(true);
+	}
+
+	private void checkSettings() {
+		if(new Boolean(Core.getSetting(Core.SETTING_FULLSCREEN))) {
+			setUndecorated(true);
+			setBounds(0, 0, 0, 0);
+			setExtendedState(JFrame.MAXIMIZED_BOTH);
+		}
+		this.setSize(new Dimension(Integer.parseInt(Core.getSetting(Core.SETTING_DEFAULT_WIDTH)), Integer.parseInt(Core.getSetting(Core.SETTING_DEFAULT_HEIGHT)) ));
 	}
 
 	public static void staticRepaint() {
 		try {
 			if(InteractionPanel.getSelectionPane() != null) {
-				InteractionPanel.setSelectionPane(new SelectionPanel(ObjectMap.getSelected().getSelectedMapTile().getXPos(), ObjectMap.getSelected().getSelectedMapTile().getYPos()));
+				InteractionPanel.setSelectionPane(new SelectionPanel(ObjectMap.getSelected().getSelectedMapTile().getXPos(), ObjectMap.getSelected().getSelectedMapTile().getYPos(), ObjectMap.getSelected().getSelectionMode() ));
 			}
 		} catch (NullPointerException nl) {
 		}
-		self.repaint();
+		Core.getMainJFrame().repaint();
 	}
 
 	@Override
@@ -105,8 +113,8 @@ public class MainJFrame extends JFrame implements ComponentListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					if (!CoreController.mainJFrame.isValid()) {
-						CoreController.mainJFrame.validate();
+					if (!Core.getMainJFrame().isValid()) {
+						Core.getMainJFrame().validate();
 					}
 				} catch (NullPointerException s) {
 				}

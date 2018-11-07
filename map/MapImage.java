@@ -68,9 +68,11 @@ public class MapImage extends BufferedImage implements ImageObserver {
 			for (int yColumn = 0; yColumn < ObjectMap.getMap()[0].length; yColumn++) {
 //				g.setColor(getColorForTile(xRow, yColumn));
 //				g.fillRect(xRow * mapTileSize, yColumn * mapTileSize, mapTileSize, mapTileSize);
+				
 				try {
 					g.drawImage(getImageForTile(xRow, yColumn), xRow * mapTileSize, yColumn * mapTileSize, mapTileSize, mapTileSize, null);
 				} catch (NullPointerException e) {
+					e.printStackTrace();
 				}
 			}
 		}
@@ -144,13 +146,13 @@ public class MapImage extends BufferedImage implements ImageObserver {
 	}
 	
 	private BufferedImage getImageForTile(int x, int y) {
-		if (ObjectMap.getMap()[x][y].getName() == "Plain") {
+		if (ObjectMap.getMap()[x][y].getName().matches("Plain")) {
 			return plainImage;
-		} else if (ObjectMap.getMap()[x][y].getName() == "Forest") {
+		} else if (ObjectMap.getMap()[x][y].getName().matches("Forest") ) {
 			return forestImage;
-		} else if (ObjectMap.getMap()[x][y].getName() == "Mountain") {
+		} else if (ObjectMap.getMap()[x][y].getName().matches("Mountain") ) {
 			return plainImage;
-		} else if (ObjectMap.getMap()[x][y].getName() == "Water") {
+		} else if (ObjectMap.getMap()[x][y].getName().matches("Water") ) {
 			return plainImage;
 		} else {
 			return plainImage;

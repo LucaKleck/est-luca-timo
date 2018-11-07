@@ -1,10 +1,13 @@
 package frame.gamePanels;
 
+import java.awt.AWTEvent;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.util.Calendar;
 
 import javax.swing.Box;
 import javax.swing.JButton;
@@ -15,6 +18,8 @@ import javax.swing.ScrollPaneConstants;
 import javax.swing.border.MatteBorder;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicScrollBarUI;
+
+import core.Core;
 
 public class LogPanel extends JScrollPane {
 	private static final long serialVersionUID = 123L;
@@ -29,17 +34,16 @@ public class LogPanel extends JScrollPane {
 
 		setDoubleBuffered(true);
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+		setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		log.setEnabled(new Boolean(Core.getSetting(Core.SETTING_ENABLE_LOG)));
+		log.setAutoscrolls(true);
 		setViewportView(log);
-
+		
 		setOpaque(false);
 		
 		Component horizontalStrut = Box.createHorizontalStrut(20);
 		horizontalStrut.setPreferredSize(new Dimension(5, 0));
-		horizontalStrut.setVisible(false);
 		horizontalStrut.setEnabled(false);
-		horizontalStrut.setFocusTraversalKeysEnabled(false);
-		horizontalStrut.setFocusable(false);
 		setRowHeaderView(horizontalStrut);
 		this.getVerticalScrollBar().setUI(new LogScrollBarUI());
 		this.getVerticalScrollBar().setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
@@ -60,15 +64,17 @@ public class LogPanel extends JScrollPane {
 	}
 
 	public static void appendNewLine(String line) {
+		String time = ""+Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+":"+Calendar.getInstance().get(Calendar.MINUTE)+" - ";
 		try {
-			LogPanel.getLog().append(System.lineSeparator() + line);
+			LogPanel.getLog().append(System.lineSeparator() + time + line);
+			LogPanel.getLog().setCaretPosition(LogPanel.getLog().getDocument().getLength());
 		} catch (NullPointerException nl) {
 		}
 	}
 	
-	public static void kill() {
+	public static void reset(String textAfterReset) {
 		try {
-			log.setText("This is the log, keeping track of all important events");
+			log.setText(textAfterReset);
 			self.removeAll();
 		} catch (NullPointerException nl) {
 		}
@@ -100,6 +106,31 @@ public class LogPanel extends JScrollPane {
 					new Color(255, 255, 255, 120), new Color(255, 255, 255, 120));
 			btn.setOpaque(false);
 			return btn;
+		}
+		
+	}
+	
+	private static class JTextAreaLog extends JTextArea {
+		private static final long serialVersionUID = 8081537743411532128L;
+
+		public JTextAreaLog() {
+			setWrapStyleWord(true);
+			setLineWrap(true);
+			setOpaque(false);
+			setAutoscrolls(true);
+			setFont(new Font("MS PGothic", Font.BOLD, 13));
+			setSelectionColor(Color.DARK_GRAY);
+			setSelectedTextColor(Color.WHITE);
+			setForeground(Color.WHITE);
+			setEditable(false);
+			setText("This is the log, keeping track of all important events");
+			disableEvents(AWTEvent.KEY_EVENT_MASK | AWTEvent.INPUT_METHOD_EVENT_MASK);
+			
+		}
+
+		@Override
+		public void paint(Graphics g) {
+			super.paint(g);
 		}
 		
 	}
