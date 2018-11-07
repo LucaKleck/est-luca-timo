@@ -35,7 +35,7 @@ public class MainJFrame extends JFrame implements ComponentListener {
 		setBackground(Color.DARK_GRAY);
 		setName("GameMainFrame");
 		this.setDefaultCloseOperation(MainJFrame.EXIT_ON_CLOSE);
-		this.setMinimumSize(new Dimension(800, 600));
+		this.setMinimumSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2));
 		MainMenuPanel mainMenuPanel = new MainMenuPanel();
 		mainMenuPanel.setBackground(Color.DARK_GRAY);
 		getContentPane().add(mainMenuPanel);

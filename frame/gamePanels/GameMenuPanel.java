@@ -15,6 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import abilities.AbilityDevCreateUnit;
 import core.ControlInput;
 import core.Core;
 import core.XMLSaveAndLoad;
@@ -110,11 +111,11 @@ public class GameMenuPanel extends JPanel {
 				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mnDev.add(mntmSendLogLine);
 
-		mntmGenerateDefaultUnit = new JMenuItem("generate default unit ability (not working)");
+		mntmGenerateDefaultUnit = new JMenuItem("generate default unit ability");
 		mntmGenerateDefaultUnit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmGenerateDefaultUnit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				ObjectMap.getSelected().setSelectedAbility(new Ability("dev_create_unit"));
+				ObjectMap.getSelected().setSelectedAbility(new AbilityDevCreateUnit("dev_create_unit"));
 			}
 		});
 		mnDev.add(mntmGenerateDefaultUnit);

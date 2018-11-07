@@ -1,6 +1,6 @@
 package core;
 
-import entity.Ability;
+import abilities.Ability;
 import entity.Entity;
 import entity.building.Building;
 import entity.unit.Unit;
@@ -56,15 +56,10 @@ public class Selected {
 				
 			} else if(selectionMode == 69) {
 				if(selectedAbility.getName().matches("dev_create_unit")) {
-					for(int z = 0; z < ObjectMap.getEntityMap().size(); z++) {
 						selectedMapTile = ObjectMap.getMap()[x][y];
-						if(ObjectMap.getEntityMap().get(z) == null) {
-							ObjectMap.getEntityMap().add(new Unit(x, y, "devUnit", 1, 1, 1));
-							setSelectedAbility(null);
-							InteractionPanel.setSelectionPane(new SelectionPanel(x, y, selectionMode));
-							break;
-						}
-					}
+						ObjectMap.getEntityMap().add(new Unit(x, y, "devUnit", 1, 1, 1));
+						setSelectedAbility(null);
+						InteractionPanel.setSelectionPane(new SelectionPanel(x, y, selectionMode));
 				}
 			}
 		} else {

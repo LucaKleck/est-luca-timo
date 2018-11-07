@@ -15,6 +15,8 @@ import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.SwingConstants;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.text.NumberFormatter;
 
 import core.ControlInput;
@@ -43,10 +45,22 @@ public class OptionMenuPanel extends JPanel {
 		add(lblWindowWidth, "cell 2 0,alignx left");
 		
 		JSpinner spnWidth = new JSpinner();
-		spnWidth.setModel(new SpinnerNumberModel(Core.getMainJFrame().getWidth(), 0, (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()/10));
+		spnWidth.setModel(new SpinnerNumberModel(Core.getMainJFrame().getWidth(), 0, (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth()/10));
 		spnWidth.setEditor(new JSpinner.NumberEditor(spnWidth));
 		JFormattedTextField spnWidthTxt = ((JSpinner.NumberEditor) spnWidth.getEditor()).getTextField();
 		((NumberFormatter) spnWidthTxt.getFormatter()).setAllowsInvalid(false);
+		spnWidth.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				if( Double.parseDouble(spnWidth.getValue().toString()) >= Core.getMainJFrame().getMinimumSize().getWidth()) {
+					Core.saveSetting(Core.SETTING_DEFAULT_WIDTH, ""+Integer.parseInt(spnWidth.getValue().toString()) );
+					Core.getMainJFrame().setSize(Integer.parseInt(spnWidth.getValue().toString()), Core.getMainJFrame().getHeight());
+				} else {
+					spnWidth.setValue((int) Core.getMainJFrame().getMinimumSize().getWidth());
+				}
+			}
+		});
 		add(spnWidth, "cell 3 0,grow");
 		
 		JSeparator separator = new JSeparator();
@@ -62,6 +76,18 @@ public class OptionMenuPanel extends JPanel {
 		spnHeight.setEditor(new JSpinner.NumberEditor(spnHeight));
 		JFormattedTextField spnHeightTxt = ((JSpinner.NumberEditor) spnHeight.getEditor()).getTextField();
 		((NumberFormatter) spnHeightTxt.getFormatter()).setAllowsInvalid(false);
+		spnHeight.addChangeListener(new ChangeListener() {
+			
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				if( Double.parseDouble(spnHeight.getValue().toString())  >= Core.getMainJFrame().getMinimumSize().getHeight()) {
+					Core.saveSetting(Core.SETTING_DEFAULT_HEIGHT, ""+Integer.parseInt(spnHeight.getValue().toString()) );
+					Core.getMainJFrame().setSize(Core.getMainJFrame().getWidth(), Integer.parseInt(spnHeight.getValue().toString()) );
+				} else {
+					spnHeight.setValue((int) Core.getMainJFrame().getMinimumSize().getHeight());
+				}
+			}
+		});
 		add(spnHeight, "cell 3 1,grow");
 		add(btnBack, "cell 0 4");
 		
@@ -83,7 +109,7 @@ public class OptionMenuPanel extends JPanel {
 				}
 				Core.getMainJFrame().pack();
 				if (!Core.getMainJFrame().isUndecorated()) {
-					Core.getMainJFrame().setSize(800, 600);
+					Core.getMainJFrame().setSize(Integer.parseInt(Core.getSetting(Core.SETTING_DEFAULT_WIDTH)), Integer.parseInt(Core.getSetting(Core.SETTING_DEFAULT_HEIGHT)));
 				}
 				Core.getMainJFrame().validate();
 

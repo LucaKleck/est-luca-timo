@@ -16,6 +16,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.LookAndFeel;
@@ -63,7 +64,11 @@ public class SelectionPanel extends JScrollPane {
         }
 
     };
-    
+    /**
+     * @param x
+     * @param y
+     * @param selectionMode
+     */
 	public SelectionPanel(int x, int y, int selectionMode) {
 		setDoubleBuffered(true);
 		setBackground(Color.DARK_GRAY);
@@ -170,7 +175,10 @@ public class SelectionPanel extends JScrollPane {
 		
 	}
 
-	private class SelectionPaneElement extends JPanel implements MouseListener {
+	/**
+	 * @author Luca Kleck
+	 */
+	public class SelectionPaneElement extends JPanel implements MouseListener {
 		private static final long serialVersionUID = 128L;
 		private JButton jBtn;
 		private Entity entity;
@@ -187,6 +195,8 @@ public class SelectionPanel extends JScrollPane {
 			jBtn.setForeground(Color.WHITE);
 			jBtn.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			jBtn.addMouseListener(this);
+			
+			
 			this.jBtn.setPreferredSize(new Dimension(135, 23));
 			this.add(jBtn, "flowx,cell 0 3,grow");
 
@@ -198,9 +208,17 @@ public class SelectionPanel extends JScrollPane {
 			JLabel lblDamage = new JLabel("Range: " + entity.getMaxRange());
 			add(lblDamage, "cell 0 2 2 1,alignx left,aligny center");
 
-			JLabel lblHealth = new JLabel("Health: " + entity.getCurrentHealth());
+			JLabel lblHealth = new JLabel("");
 			lblHealth.setIcon(new ImageIcon(SelectionPaneElement.class.getResource("/resources/healthIcon.png")));
-			add(lblHealth, "cell 0 1 2 1,alignx left,aligny center");
+			add(lblHealth, "flowx,cell 0 1,alignx left,aligny center");
+			
+			JProgressBar healthStatus = new JProgressBar();
+			healthStatus.setMaximum(entity.getMaxHealth());
+			healthStatus.setMinimum(0);
+			healthStatus.setValue(entity.getCurrentHealth());
+			healthStatus.setStringPainted(true);
+			healthStatus.setString(entity.getMaxHealth()+"/"+entity.getCurrentHealth());
+			add(healthStatus, "cell 0 1,growy");
 			
 		}
 

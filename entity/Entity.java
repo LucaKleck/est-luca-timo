@@ -2,6 +2,8 @@ package entity;
 
 import java.util.ArrayList;
 
+import abilities.Ability;
+
 public class Entity {
 
 	private String name;
@@ -15,6 +17,7 @@ public class Entity {
 	public Entity( int xPos, int yPos, String name, int maxHealth) {
 		this.name = name;
 		this.maxHealth = maxHealth;
+		this.currentHealth = maxHealth;
 		this.xPos = xPos;
 		this.yPos = yPos;
 	}

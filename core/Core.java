@@ -1,5 +1,6 @@
 package core;
 
+import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
 
@@ -65,37 +66,37 @@ public class Core {
 				settingsDoc.appendChild(settingsRoot);
 				
 				// General
-				Element fullscreen = settingsDoc.createElement("fullscreen");
+				Element fullscreen = settingsDoc.createElement(SETTING_FULLSCREEN);
 				fullscreen.setTextContent("false");
 				settingsRoot.appendChild(fullscreen);
 				
-				Element defaultWidth = settingsDoc.createElement("defaultWidth");
-				defaultWidth.setTextContent("800");
+				Element defaultWidth = settingsDoc.createElement(SETTING_DEFAULT_WIDTH);
+				defaultWidth.setTextContent(""+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2));
 				settingsRoot.appendChild(defaultWidth);
 				
-				Element defaultHeight = settingsDoc.createElement("defaultHeight");
-				defaultHeight.setTextContent("600");
+				Element defaultHeight = settingsDoc.createElement(SETTING_DEFAULT_HEIGHT);
+				defaultHeight.setTextContent(""+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2));
 				settingsRoot.appendChild(defaultHeight);
 
-				Element askSaveDelete = settingsDoc.createElement("askSaveDelete");
+				Element askSaveDelete = settingsDoc.createElement(SETTING_ASK_SAVE_DELETE);
 				askSaveDelete.setTextContent("true");
 				settingsRoot.appendChild(askSaveDelete);
 				
 				// Log
-				Element showLog = settingsDoc.createElement("showLog");
+				Element showLog = settingsDoc.createElement(SETTING_SHOW_LOG);
 				showLog.setTextContent("true");
 				settingsRoot.appendChild(showLog);
 				
-				Element enableLog = settingsDoc.createElement("enableLog");
+				Element enableLog = settingsDoc.createElement(SETTING_ENABLE_LOG);
 				enableLog.setTextContent("false");
 				settingsRoot.appendChild(enableLog);
 
 				// Other
-				Element RTX = settingsDoc.createElement("RTX");
+				Element RTX = settingsDoc.createElement(SETTING_RTX);
 				RTX.setTextContent("false");
 				settingsRoot.appendChild(RTX);
 				
-				Element dev = settingsDoc.createElement("dev");
+				Element dev = settingsDoc.createElement(SETTING_DEV);
 				dev.setTextContent("false");
 				settingsRoot.appendChild(dev);
 				

@@ -1,4 +1,4 @@
-package entity;
+package abilities;
 
 public abstract class Ability {
 	String name;

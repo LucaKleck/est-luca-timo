@@ -15,11 +15,12 @@ public class ObjectMap {
 
 	private static Selected selected = new Selected();
 	private static MapTile[][] map;
-	private static ArrayList<Entity> entityMap = new ArrayList<>();
+	private static ArrayList<Entity> entityMap;
 
 	public ObjectMap() {
 		map = MapCreator.createMap();
 		selected = new Selected();
+		entityMap = new ArrayList<>();
 		
 //		System.out.println("best target = " + new EntityFilter(entityMap).getBestEntityTarget(entityMap[0][0][0]).getName());
 

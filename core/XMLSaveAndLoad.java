@@ -123,7 +123,6 @@ public class XMLSaveAndLoad {
             	   int movementRange = Integer.parseInt(eElement.getElementsByTagName("movementRange").item(0).getTextContent());
             	   e = new Unit(xPos, yPos,  name, health, damage, movementRange);
             	   if(type.matches("Warrior")) {
-            		
             		   e = new Warrior(xPos, yPos,  name, health, damage, movementRange);
             	   }
                }
