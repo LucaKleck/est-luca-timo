@@ -1,14 +1,18 @@
 package frame.gamePanels;
 
 import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,6 +21,7 @@ import javax.swing.JViewport;
 import javax.swing.LookAndFeel;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EtchedBorder;
+import javax.swing.border.TitledBorder;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
@@ -163,5 +168,73 @@ public class SelectionPanel extends JScrollPane {
 			return btn;
 		}
 		
+	}
+
+	private class SelectionPaneElement extends JPanel implements MouseListener {
+		private static final long serialVersionUID = 128L;
+		private JButton jBtn;
+		private Entity entity;
+
+		public SelectionPaneElement(Entity entity) {
+			setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			this.entity = entity;
+			MigLayout miglay = new MigLayout("insets 4 5 2 5, gap 4px 0px", "[135px]["+(InteractionPanel.getInteractionPanel().getWidth()-202)+",fill]", "[fill][fill][fill][fill]");
+			miglay.preferredLayoutSize(InteractionPanel.getInteractionPanel());
+			setLayout(miglay);
+			this.jBtn = new JButton("Select");
+			jBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+			jBtn.setBackground(Color.GRAY);
+			jBtn.setForeground(Color.WHITE);
+			jBtn.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			jBtn.addMouseListener(this);
+			this.jBtn.setPreferredSize(new Dimension(135, 23));
+			this.add(jBtn, "flowx,cell 0 3,grow");
+
+			this.setBackground(getColorFromName());
+
+			JLabel lblName = new JLabel(entity.getName());
+			add(lblName, "cell 0 0 2 1,alignx left,aligny center");
+
+			JLabel lblDamage = new JLabel("Range: " + entity.getMaxRange());
+			add(lblDamage, "cell 0 2 2 1,alignx left,aligny center");
+
+			JLabel lblHealth = new JLabel("Health: " + entity.getHealth());
+			lblHealth.setIcon(new ImageIcon(SelectionPaneElement.class.getResource("/resources/healthIcon.png")));
+			add(lblHealth, "cell 0 1 2 1,alignx left,aligny center");
+			
+		}
+
+		private Color getColorFromName() {
+			Color c = Color.lightGray;
+			if (entity.getName() == "2") {
+				c = new Color(200, 200, 100);
+			}
+			return c;
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			if(jBtn.contains(e.getPoint())) {
+				ObjectMap.getSelected().setSelectedEntity(entity);
+				InteractionPanel.setSelectionPane(null);
+				InfoPanel.refresh();
+			}
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+		}
 	}
 }
