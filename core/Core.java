@@ -3,6 +3,7 @@ package core;
 import java.io.File;
 import java.io.IOException;
 
+import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -34,14 +35,13 @@ public class Core {
 	private static ControlInput controlInput;
 	
 	public Core() {
-		File saves = new File(GAME_PATH);
+		File game_directory = new File(GAME_PATH);
 
-    	if (saves.exists()) {
-
-    	} else if (saves.mkdirs()) {
-    		
+    	if (game_directory.exists()) {
+    	} else if (game_directory.mkdirs()) {
     	} else {
-
+    		JOptionPane.showMessageDialog(null, "Game could not create folders (something blocked it!)", "BOOT FAILED", JOptionPane.ERROR_MESSAGE);
+    		System.exit(0);
     	}
 		File settingsXML = new File(GAME_PATH_SETTINGS);
 		

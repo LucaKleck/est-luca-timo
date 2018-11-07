@@ -16,9 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import core.ControlInput;
-import core.XMLSaveAndLoad;
 import core.Core;
-import entity.Ability;
+import core.XMLSaveAndLoad;
 import map.ObjectMap;
 
 public class GameMenuPanel extends JPanel {
