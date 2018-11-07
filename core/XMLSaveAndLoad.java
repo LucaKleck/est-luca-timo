@@ -104,7 +104,6 @@ public class XMLSaveAndLoad {
 		NodeList nList = doc.getElementsByTagName("entity");
         
         int xyEntityMapSize = Integer.parseInt(doc.getElementsByTagName("entityMap").item(0).getAttributes().getNamedItem("xyEntityMapSize").getNodeValue());
-        int entityMapDepth = Integer.parseInt(doc.getElementsByTagName("entityMap").item(0).getAttributes().getNamedItem("entityMapDepth").getNodeValue());
         ArrayList<Entity> entityMap = new ArrayList<>();
 		
         for (int i = 0; i < nList.getLength(); i++) {
@@ -117,30 +116,22 @@ public class XMLSaveAndLoad {
                
                int xPos = Integer.parseInt(eElement.getElementsByTagName("xPos").item(0).getTextContent());
                int yPos = Integer.parseInt(eElement.getElementsByTagName("yPos").item(0).getTextContent());
-               int zPos = Integer.parseInt(eElement.getElementsByTagName("zPos").item(0).getTextContent());
                String name = eElement.getElementsByTagName("name").item(0).getTextContent();
                int health = Integer.parseInt(eElement.getElementsByTagName("health").item(0).getTextContent());
-               e = new Entity(xPos, yPos, zPos, name, health);
+               e = new Entity(xPos, yPos, name, health);
                if(type.matches("Unit") || type.matches("Warrior")) {
             	   int damage = Integer.parseInt(eElement.getElementsByTagName("damage").item(0).getTextContent());
             	   int movementRange = Integer.parseInt(eElement.getElementsByTagName("movementRange").item(0).getTextContent());
-            	   e = new Unit(xPos, yPos, zPos, name, health, damage, movementRange);
+            	   e = new Unit(xPos, yPos,  name, health, damage, movementRange);
             	   if(type.matches("Warrior")) {
             		
-            		   e = new Warrior(xPos, yPos, zPos, name, health, damage, movementRange);
+            		   e = new Warrior(xPos, yPos,  name, health, damage, movementRange);
             	   }
                }
                if(type.matches("Building")) {
-            	   e = new Building(xPos, yPos, zPos, name, health);
+            	   e = new Building(xPos, yPos, name, health);
                }
-               for(int z = 0; z < entityMapDepth; z++) {
-            	   if(entityMap.get(z).getXPos() == xPos && entityMap.get(z).getYPos() == yPos) {
-            		   if(entityMap.get(z) == null) {
-            			   entityMap.set(z, e);
-            			   break;
-            		   }
-            	   }
-               }
+               
             }
             
         }

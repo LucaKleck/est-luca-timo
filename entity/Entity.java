@@ -10,15 +10,13 @@ public class Entity {
 	private int currentHealth;
 	private int xPos;
 	private int yPos;
-	private int zPos;
 	private ArrayList<Ability> abilities = new ArrayList<>();
 
-	public Entity( int xPos, int yPos, int zPos, String name, int maxHealth) {
+	public Entity( int xPos, int yPos, String name, int maxHealth) {
 		this.name = name;
 		this.maxHealth = maxHealth;
 		this.xPos = xPos;
 		this.yPos = yPos;
-		this.zPos = zPos;
 	}
 
 	public int getXPos() {
@@ -27,10 +25,6 @@ public class Entity {
 
 	public int getYPos() {
 		return yPos;
-	}
-	
-	public int getZPos() {
-		return zPos;
 	}
 
 	public String getName() {
@@ -52,7 +46,7 @@ public class Entity {
 	@Override
 	public String toString() {
 		return "Entity [name=" + name + ", maxRange=" + maxRange + ", maxHealth=" + maxHealth + ", currentHealth="
-				+ currentHealth + ", xPos=" + xPos + ", yPos=" + yPos + ", zPos=" + zPos + ", abilities=" + abilities
+				+ currentHealth + ", xPos=" + xPos + ", yPos=" + yPos + ", abilities=" + abilities
 				+ "]";
 	}
 	

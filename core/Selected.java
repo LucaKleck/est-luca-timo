@@ -59,7 +59,7 @@ public class Selected {
 					for(int z = 0; z < ObjectMap.getEntityMap().size(); z++) {
 						selectedMapTile = ObjectMap.getMap()[x][y];
 						if(ObjectMap.getEntityMap().get(z) == null) {
-							ObjectMap.getEntityMap().add(new Unit(x, y, 0, "devUnit", 1, 1, 1));
+							ObjectMap.getEntityMap().add(new Unit(x, y, "devUnit", 1, 1, 1));
 							setSelectedAbility(null);
 							InteractionPanel.setSelectionPane(new SelectionPanel(x, y, selectionMode));
 							break;
