@@ -34,7 +34,7 @@ public class OptionMenuPanel extends JPanel {
 
 	public OptionMenuPanel() {
 		setBackground(Color.DARK_GRAY);
-		setLayout(new MigLayout("", "[][][][60px:n,grow,fill][100%]", "[fill][fill][100%][10%][]"));
+		setLayout(new MigLayout("", "[][][][60px:60px:60px][100%]", "[fill][fill][100%][10%][]"));
 
 		JButton btnBack = new JButton("Back");
 		btnBack.setActionCommand("frame.menuPanels.MainMenuPanel");

@@ -7,10 +7,15 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
 import core.Boot;
+import entity.Entity;
+import entity.building.Building;
+import entity.unit.Unit;
 
 public class MapImage extends BufferedImage implements ImageObserver {
 
@@ -19,15 +24,14 @@ public class MapImage extends BufferedImage implements ImageObserver {
 	private static Graphics2D g2d;
 	private static ArrayList<MapImageEffect> effectList = new ArrayList<MapImageEffect>();
 	private static BufferedImage effectLayer; // draw unit movement arrows and so on
-	private static BufferedImage topLayer; // Draw the grid
-	private static BufferedImage middleLayer; // draw Units and Buildings
+	private static BufferedImage topLayer; // draw Units and buildings
+	private static BufferedImage middleLayer; // draw map tile overlays
 	private static BufferedImage bottomLayer; // draw map tiles
 	private static int mapTileSize;
 	private static int imageWidth;
 	private static int imageHeight;
 	private static BufferedImage plainImage;
 	private static BufferedImage forestImage;
-	
 
 	public MapImage(int width, int height) {
 		super(width, height, IMAGE_TYPE);
@@ -80,10 +84,13 @@ public class MapImage extends BufferedImage implements ImageObserver {
 
 	private void drawMiddleLayer() {
 		middleLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
-		@SuppressWarnings("unused")
 		Graphics2D g = middleLayer.createGraphics();
-		for (int xRow = 0; xRow < ObjectMap.getMap().length; xRow++) {
-			for (int yColumn = 0; yColumn < ObjectMap.getMap()[0].length; yColumn++) {
+		g.setColor(new Color(100,100,30));
+		for (int x = 0; x < ObjectMap.getMap().length; x++) {
+			for (int y = 0; y < ObjectMap.getMap()[0].length; y++) {
+				if(ObjectMap.getMap()[x][y].isRoad()) {
+					g.fillRect(x*mapTileSize, y*mapTileSize+27, mapTileSize, 10);
+				}
 			}
 		}
 	}
@@ -107,15 +114,13 @@ public class MapImage extends BufferedImage implements ImageObserver {
 
 	private void drawEffectLayer() {
 		effectLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
-		@SuppressWarnings("unused")
 		Graphics2D g = effectLayer.createGraphics();
 		for (int i = 0; i < effectList.size(); i++) {
 			// draw each effect
 			// effectList needs to be cleared after the round
 		}
-	}
-	private void drawTopInside() {
-		Graphics2D g = topLayer.createGraphics();
+		
+		// draw selected tile (may be put into another layer)
 		g.setColor(new Color(255, 0, 0, 120));
 		try {
 			g.fillRect(ObjectMap.getSelected().getSelectedMapTile().getXPos() * mapTileSize,
@@ -123,6 +128,22 @@ public class MapImage extends BufferedImage implements ImageObserver {
 		} catch (NullPointerException e) {
 		}
 	}
+	
+	private void drawTopInside() {
+		Graphics2D g = topLayer.createGraphics();
+		ArrayList<Entity> e = ObjectMap.getEntityMap();
+		Random r = new Random();
+		for (Iterator<Entity> iterator = e.iterator(); iterator.hasNext();) {
+			Entity s = iterator.next();
+			if(s instanceof Unit) {
+				g.setColor(Color.BLUE);
+			} else if (s instanceof Building) {
+				g.setColor(new Color(100,100,40));
+			}
+			g.fillRoundRect(s.getXPos()*mapTileSize+r.nextInt(54), s.getYPos()*mapTileSize+r.nextInt(54), 10, 10, 10, 10);
+		}
+	}
+	
 	private void drawBottomInside(int x, int y) {
 		Graphics2D g = bottomLayer.createGraphics(); //TODO make it so the images are created on boot then stored for refreshes
 		try {
@@ -130,6 +151,7 @@ public class MapImage extends BufferedImage implements ImageObserver {
 		} catch (NullPointerException e) {
 		}
 	}
+	
 	@SuppressWarnings("unused")
 	private Color getColorForTile(int x, int y) {
 		Color color = Color.BLACK;
@@ -180,9 +202,10 @@ public class MapImage extends BufferedImage implements ImageObserver {
 		drawTopLayer();
 		drawMiddleLayer();
 		drawBottomLayer();
-
+		
 		combineLayers();
 	}
+	
 	public void redrawArea(int xStart, int xEnd, int yStart, int yEnd) {
 		int xDiff = 0;
 		int yDiff = 0;
@@ -205,15 +228,18 @@ public class MapImage extends BufferedImage implements ImageObserver {
 		//
 		for(int xCount = 0; xCount < xDiff; xCount++) {
 			for(int yCount = 0; yCount < yDiff; yCount++) {
+				drawEffectLayer();
 				drawTopLayer();
 				drawBottomInside(xCount, yCount);
 			}
 		}
 		combineLayers();
 	}
+	
 	public static void staticRepaint() {
 		self.redraw();
 	}
+	
 	public static MapImage getMapImage() {
 		return self;
 	}

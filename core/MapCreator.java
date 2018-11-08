@@ -12,11 +12,11 @@ import map.MapTile;
 public class MapCreator {
 
 	// map building constants
-	private static int forestCount = 25;
+	private static int forestCount = 25; // make a pre-game setting
 	@SuppressWarnings("unused")
-	private static int riverCount = 3;
+	private static int riverCount = 3; // make a pre-game setting
 	private static final int COMMON_RADIUS = 7; // this is the radius that most methods will use to determine the sizes
-	private static final Random rand = new Random();
+	private static final Random RAND = new Random();
 
 	/**
 	 * the top of the map is cold the middle is tropic the bottom cold again<br>
@@ -36,8 +36,8 @@ public class MapCreator {
 		createTiles(map);
 		plantTrees(map);
 
-//		letTimePass(map); // this makes the map more varied... certain tiles have a chance to change to different tiles
-//		smashContinentalPlatesTogether(map); // this creates Mountians, not sure how to do it yet
+//		letTimePass(map); // this makes the map more varied.. make GoL here
+//		smashContinentalPlatesTogether(map); // this creates Mountains, not sure how to do it yet
 //		floodTheLand(map); // this puts in all the bodies of water etc.
 		return map;
 	}
@@ -53,15 +53,15 @@ public class MapCreator {
 	 */
 	private static void plantTrees(MapTile[][] map) {
 		for (int forests = 1; forests < MapCreator.forestCount; forests++) {
-			vectorHandlerForest(map, rand.nextInt(map.length), rand.nextInt(map.length));
+			vectorHandlerForest(map, RAND.nextInt(map.length), RAND.nextInt(map.length));
 		}
 	}
 
 	private static void vectorHandlerForest(MapTile[][] map, int xPos, int yPos) {
 		int[] vector = new int[2];
-		vector[0] = rand.nextInt(30) + COMMON_RADIUS;
-		vector[1] = rand.nextInt(30) + COMMON_RADIUS;
-		createSqarePatch(xPos - vector[0], yPos - vector[1], MapTile.FOREST, "Forest", map);
+		vector[0] = RAND.nextInt(30) + COMMON_RADIUS;
+		vector[1] = RAND.nextInt(30) + COMMON_RADIUS;
+		createSqarePatch(xPos - vector[0], yPos - vector[1], MapTile.TYPE_FOREST, MapTile.NAME_FOREST, map);
 //		System.out.println("-----------------");
 		while (Math.sqrt((Math.pow(vector[0], 2) + Math.pow(vector[1], 2))) > 1.43) {
 //			System.out.println(Math.sqrt( (Math.pow(vector[0], 2)+Math.pow(vector[1], 2))) );
@@ -77,27 +77,27 @@ public class MapCreator {
 			} else {
 				return;
 			}
-			createSqarePatch(xPos + vector[0], yPos + vector[1], MapTile.FOREST, "Forest", map);
+			createSqarePatch(xPos + vector[0], yPos + vector[1], MapTile.TYPE_FOREST, MapTile.NAME_FOREST, map);
 		}
 	}
 
 	private static void createSqarePatch(int xPos, int yPos, int type, String name, MapTile[][] map) {
 		for (int x = 0; x < COMMON_RADIUS; x++) {
 			int xFinal;
-			if (rand.nextBoolean()) {
+			if (RAND.nextBoolean()) {
 				xFinal = x + xPos;
 			} else {
 				xFinal = x - xPos;
 			}
 			for (int y = 0; y < COMMON_RADIUS; y++) {
 				int yFinal;
-				if (rand.nextBoolean()) {
+				if (RAND.nextBoolean()) {
 					yFinal = y + yPos;
 				} else {
 					yFinal = y - yPos;
 				}
 				if (isInBounds(xFinal, yFinal, map.length, map[0].length)) {
-					if (rand.nextInt(100) + 1 < 65) {
+					if (RAND.nextInt(100) + 1 < 65) {
 						map[xFinal][yFinal] = createForest(xFinal, yFinal);
 					}
 				}
@@ -123,12 +123,12 @@ public class MapCreator {
 	}
 
 	private static MapTile createPlain(int xPos, int yPos) {
-		MapTile plane = new MapTile(xPos, yPos, MapTile.PLAIN, "Plain");
+		MapTile plane = new MapTile(xPos, yPos, MapTile.TYPE_PLAIN, MapTile.NAME_PLAIN);
 		return plane;
 	}
 
 	private static MapTile createForest(int xPos, int yPos) {
-		MapTile forest = new MapTile(xPos, yPos, MapTile.FOREST, "Forest");
+		MapTile forest = new MapTile(xPos, yPos, MapTile.TYPE_FOREST, MapTile.NAME_FOREST);
 		return forest;
 	}
 

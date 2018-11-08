@@ -1,6 +1,6 @@
 package abilities;
 
-public abstract class Ability {
+public abstract class Ability implements Runnable {
 	String name;
 
 	public Ability(String name) {
@@ -9,5 +9,10 @@ public abstract class Ability {
 	
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public void run() {
+		
 	}
 }

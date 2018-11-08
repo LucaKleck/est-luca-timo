@@ -98,7 +98,7 @@ public class SelectionPanel extends JScrollPane {
 		viewportPanel.setLayout(new MigLayout("", "[fill]", "[fill]"));
 
 		for (int i = 0; i < ObjectMap.getEntityMap().size(); i++) {
-			if (ObjectMap.getEntityMap().get(i) != null) {
+			if(ObjectMap.getEntityMap().get(i).getXPos() == x && ObjectMap.getEntityMap().get(i).getYPos() == y) {
 				selectedEntityList.add(ObjectMap.getEntityMap().get(i));
 			}
 		}

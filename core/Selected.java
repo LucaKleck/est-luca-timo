@@ -82,6 +82,7 @@ public class Selected {
 			MapImage.getMapImage().redrawArea(x,x,y,y);
 		}
 		MapPanel.refresh.run();
+		System.gc(); // check what causes most of the issues
 	}
 	
 	/**

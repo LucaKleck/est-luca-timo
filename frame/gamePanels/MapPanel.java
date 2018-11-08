@@ -63,6 +63,9 @@ public class MapPanel extends JPanel implements ImageObserver {
 		g.drawImage(mapImage, (int) (displacementX), (int) (displacementY),
 				(int) (this.getWidth() * displacementMultiplier), (int) (this.getWidth() * displacementMultiplier),
 				this);
+		g.drawImage(mapImage, (int) (displacementX), (int) (displacementY),
+				(int) (this.getWidth() * displacementMultiplier), (int) (this.getWidth() * displacementMultiplier),
+				this);
 	}
 
 	public static void addDisplacementX(int displacementX) {
