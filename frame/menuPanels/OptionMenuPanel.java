@@ -22,6 +22,7 @@ import javax.swing.text.NumberFormatter;
 import core.ControlInput;
 import core.Core;
 import net.miginfocom.swing.MigLayout;
+import java.awt.Dimension;
 
 /**
  * Place where the settings for the game can be changed
@@ -45,6 +46,7 @@ public class OptionMenuPanel extends JPanel {
 		add(lblWindowWidth, "cell 2 0,alignx left");
 		
 		JSpinner spnWidth = new JSpinner();
+		spnWidth.setMinimumSize(new Dimension(60, 20));
 		spnWidth.setModel(new SpinnerNumberModel(Core.getMainJFrame().getWidth(), 0, (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth()/10));
 		spnWidth.setEditor(new JSpinner.NumberEditor(spnWidth));
 		JFormattedTextField spnWidthTxt = ((JSpinner.NumberEditor) spnWidth.getEditor()).getTextField();
@@ -72,6 +74,7 @@ public class OptionMenuPanel extends JPanel {
 		add(lblWindowHeight, "cell 2 1,alignx left");
 		
 		JSpinner spnHeight = new JSpinner();
+		spnHeight.setMinimumSize(new Dimension(60, 20));
 		spnHeight.setModel(new SpinnerNumberModel(Core.getMainJFrame().getHeight(), 0, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight(), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()/10));
 		spnHeight.setEditor(new JSpinner.NumberEditor(spnHeight));
 		JFormattedTextField spnHeightTxt = ((JSpinner.NumberEditor) spnHeight.getEditor()).getTextField();
