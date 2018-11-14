@@ -45,6 +45,10 @@ public class Entity {
 	public int getMaxRange() {
 		return maxRange;
 	}
+
+	public ArrayList<Ability> getAbilities() {
+		return abilities;
+	}
 	
 	@Override
 	public String toString() {
@@ -59,10 +63,12 @@ public class Entity {
 			for(int i = 0; i < abilities.size(); i++) {
 				if(abilities.get(i) != null) {
 					has = true;
+					return has;
 				}
 			}
 		} catch (NullPointerException nl) {
 		}
 		return has;
 	}
+	
 }
