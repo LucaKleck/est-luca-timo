@@ -63,9 +63,9 @@ public class MapPanel extends JPanel implements ImageObserver {
 		g.drawImage(mapImage, (int) (displacementX), (int) (displacementY),
 				(int) (this.getWidth() * displacementMultiplier), (int) (this.getWidth() * displacementMultiplier),
 				this);
-		g.drawImage(mapImage, (int) (displacementX), (int) (displacementY),
-				(int) (this.getWidth() * displacementMultiplier), (int) (this.getWidth() * displacementMultiplier),
-				this);
+//		g.drawImage(mapImage, (int) (displacementX), (int) (displacementY),
+//				(int) (this.getWidth() * displacementMultiplier), (int) (this.getWidth() * displacementMultiplier),
+//				this);
 	}
 
 	public static void addDisplacementX(int displacementX) {
@@ -166,6 +166,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 		}
 		ClickOnTileHandler clickOnTileHandler = new ClickOnTileHandler(x,y,isLeftClick);
 		EXS.execute(clickOnTileHandler);
+		System.gc();
 	}
 	private class ClickOnTileHandler implements Runnable {
 		private int x;

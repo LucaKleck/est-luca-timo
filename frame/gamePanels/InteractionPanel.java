@@ -32,6 +32,7 @@ public class InteractionPanel extends JPanel {
 	public static void selectionPaneCheck(SelectionPanel se) {
 		if(se != null) {
 			selfInteractionPanel.removeAll();
+			System.gc();
 			selfInteractionPanel.add(se, "cell 0 0");
 		} else if( se == null && selectionPane != null) {
 			selfInteractionPanel.remove(selectionPane);
