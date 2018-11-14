@@ -115,7 +115,7 @@ public class GameMenuPanel extends JPanel {
 		mntmGenerateDefaultUnit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmGenerateDefaultUnit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ObjectMap.getSelected().setSelectedAbility(new AbilityDevCreateUnit("dev_create_unit"));
+				ObjectMap.getSelected().setSelectedAbility(new AbilityDevCreateUnit("dev_create_unit", ObjectMap.getSelected().getSelectedEntity()));
 			}
 		});
 		mnDev.add(mntmGenerateDefaultUnit);
