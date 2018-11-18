@@ -148,6 +148,8 @@ public class MapImage implements ImageObserver {
 	}
 
 	public void redraw() {
+		drawMapTileLayer();
+		drawDecalLayer();
 		drawUnitBuildingLayer();
 		drawSelecionLayer();
 		drawEffectLayer();

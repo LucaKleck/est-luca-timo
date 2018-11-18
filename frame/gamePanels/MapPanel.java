@@ -42,7 +42,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 		mapImage = new MapImage(IMAGE_SIZE, IMAGE_SIZE);
 		setBackground(new Color(0, 0, 0, 0));
 
-		EXS.execute(new RepaintMapPanel());
+		EXS.submit(new RepaintMapPanel());
 
 		this.addMouseListener(new MouseEventHandler());
 	}
@@ -83,7 +83,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 				MapPanel.displacementX = (int) -(mapPanelSelf.getWidth() / 2 * displacementMultiplier * 1.75);
 			}
 		}
-		EXS.execute(new RepaintMapPanel());
+		EXS.submit(new RepaintMapPanel());
 	}
 
 	public static void addDisplacementY(int displacementY) {
@@ -97,7 +97,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 				MapPanel.displacementY = (int) -(mapPanelSelf.getWidth() / 2 * displacementMultiplier * 1.75);
 			}
 		}
-		EXS.execute(new RepaintMapPanel());
+		EXS.submit(new RepaintMapPanel());
 	}
 
 	public static void addDisplacementMultiplier(double displacementMultiplier) {
@@ -114,7 +114,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 		MapPanel.displacementMultiplier = DEFAULT_DISPLACEMENT;
 		MapPanel.displacementX = 0;
 		MapPanel.displacementY = 0;
-		EXS.execute(new RepaintMapPanel());
+		EXS.submit(new RepaintMapPanel());
 	}
 	
 	public static MapImage getMapImage() {

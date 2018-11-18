@@ -74,7 +74,7 @@ public class Selected {
 		}
 		AbilityPanel.checkAbilities();
 		InfoPanel.refresh();
-		MapPanel.getMapPanelExecutor().execute(new MapPanel.RepaintMapPanel());
+		MapPanel.getMapPanelExecutor().submit(new MapPanel.RepaintMapPanel());
 		MapPanel.getMapImage().redrawSelection();
 		System.gc();
 	}
