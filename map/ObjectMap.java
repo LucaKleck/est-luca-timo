@@ -53,8 +53,8 @@ public class ObjectMap {
 	public static void remakeMap() {
 		map = MapCreator.createMap();
 		try {
-			MapImage.staticRepaint();
-			MapPanel.refresh.run();
+			MapPanel.getMapImage().redraw();
+			MapPanel.getMapPanel().repaint();
 		} catch (NullPointerException nl) {
 		}
 	}

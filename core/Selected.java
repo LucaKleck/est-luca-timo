@@ -9,7 +9,6 @@ import frame.gamePanels.InfoPanel;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.MapPanel;
 import frame.gamePanels.SelectionPanel;
-import map.MapImage;
 import map.MapTile;
 import map.ObjectMap;
 
@@ -65,9 +64,6 @@ public class Selected {
 		} else {
 			InteractionPanel.setSelectionPane(null);
 			ObjectMap.getSelected().removeSelected();
-			if(MapImage.getMapImage() != null) {
-				MapImage.getMapImage().redrawArea(0, 0, 0, 0);
-			}
 		}
 		
 		// mandatory stuff
@@ -78,11 +74,9 @@ public class Selected {
 		}
 		AbilityPanel.checkAbilities();
 		InfoPanel.refresh();
-		if(MapImage.getMapImage() != null) {
-			MapImage.getMapImage().redrawArea(x,x,y,y);
-		}
-		MapPanel.refresh.run();
-		System.gc(); // check what causes most of the issues
+		MapPanel.getMapPanelExecutor().execute(new MapPanel.RepaintMapPanel());
+		MapPanel.getMapImage().redrawSelection();
+		System.gc();
 	}
 	
 	/**
@@ -135,7 +129,7 @@ public class Selected {
 		} else {
 			selectionMode = 10;
 		}
-		System.out.println("Selection mode: "+selectionMode);
+		//System.out.println("Selection mode: "+selectionMode);
 	}
 
 	public MapTile getSelectedMapTile() {
