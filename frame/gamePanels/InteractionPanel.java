@@ -3,6 +3,7 @@ package frame.gamePanels;
 import java.awt.Color;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.border.TitledBorder;
 
@@ -11,8 +12,9 @@ import net.miginfocom.swing.MigLayout;
 public class InteractionPanel extends JPanel {
 	private static final long serialVersionUID = 124L;
 
-	private static SelectionPanel selectionPane;
+	private static SelectionPanel selectionPanel;
 	private static InteractionPanel selfInteractionPanel;
+	private static JScrollPane currentPanel;
 
 	public InteractionPanel() {
 		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
@@ -22,20 +24,30 @@ public class InteractionPanel extends JPanel {
 		
 	}
 
+	public static void setCurrentPanel(JScrollPane currentPanel) {
+		if(InteractionPanel.currentPanel!=null) {
+			selfInteractionPanel.removeAll();
+			InteractionPanel.currentPanel = null;
+			System.gc();
+		}
+		InteractionPanel.currentPanel = currentPanel;
+		selfInteractionPanel.add(currentPanel, "cell 0 0");
+		
+	}
+	
 	public static void setSelectionPane(SelectionPanel selectionPane) {
 		selectionPaneCheck(selectionPane);
-		InteractionPanel.selectionPane = selectionPane;
+		InteractionPanel.selectionPanel = selectionPane;
 		selfInteractionPanel.validate();
 		selfInteractionPanel.repaint();
 	}
 
 	public static void selectionPaneCheck(SelectionPanel se) {
 		if(se != null) {
-			selfInteractionPanel.removeAll();
 			System.gc();
 			selfInteractionPanel.add(se, "cell 0 0");
-		} else if( se == null && selectionPane != null) {
-			selfInteractionPanel.remove(selectionPane);
+		} else if( se == null && selectionPanel != null) {
+			selfInteractionPanel.remove(selectionPanel);
 		}
 	}
 
@@ -44,6 +56,6 @@ public class InteractionPanel extends JPanel {
 	}
 	
 	public static SelectionPanel getSelectionPane() {
-		return selectionPane;
+		return selectionPanel;
 	}
 }

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import core.MapCreator;
 import core.Selected;
 import entity.Entity;
+import entity.building.Building;
 import frame.gamePanels.MapPanel;
 
 public class ObjectMap {
@@ -22,6 +23,7 @@ public class ObjectMap {
 		map = MapCreator.createMap();
 		selected = new Selected();
 		entityMap = new ArrayList<>();
+		entityMap.add(new Building(0, 0, "Townsquare", 100));
 		eventQueue = new ArrayList<>();
 		
 //		System.out.println("best target = " + new EntityFilter(entityMap).getBestEntityTarget(entityMap[0][0][0]).getName());
