@@ -13,9 +13,17 @@ public class Building extends Entity {
 	public static final String stonegetter = "Stonemason";
 	public static final String manastonegetter = "Manastonecollector";
 	
+	
 	public Building(int xPos, int yPos, String name, int health) {
 		super(xPos, yPos, name, health);
 		BuildingRessources ressources = new BuildingRessources (xPos, yPos, name);
+	}
+	
+	private static int level;
+	private static int efficiency;
+	
+	public int getEfficiency(int xPos, int yPos) {
+		return efficiency;
 	}
 	
 }

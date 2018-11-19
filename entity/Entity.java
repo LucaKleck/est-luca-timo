@@ -13,6 +13,7 @@ public class Entity {
 	private int currentHealth;
 	private int xPos;
 	private int yPos;
+	private int level;
 	private ArrayList<Ability> abilities = new ArrayList<>();
 
 	public Entity(int xPos, int yPos, String name, int maxHealth) {
@@ -60,6 +61,15 @@ public class Entity {
 		return abilities;
 	}
 
+	
+	public int getLevel() {
+		return level;
+	}
+	
+	public void addLevel() {
+		level ++;
+	}
+	
 	private void destroy() {
 
 		int i = 0;

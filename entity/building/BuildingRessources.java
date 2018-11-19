@@ -4,38 +4,33 @@ import map.ObjectMap;
 
 public class BuildingRessources {
 
-	private int collectibleRessources;
+	private int collectableRessources;
 	private int type;
+	
+	/*Types are: 	1 - Gold
+	 * 				2 - Wood
+	 * 				3 - Food
+	 * 				4 - Stone
+	 * 				5 - Metal
+	 * 				6 - Manastone
+	  */
 
 	public BuildingRessources(int y, int x, String name) {
-		if (name.matches(Building.woodgetter)) {
-			collectibleRessources = getWood(x, y);
-		} else if (name.matches(Building.goldgetter)) {
-			collectibleRessources = getGold(x, y);
+		if (name.matches(Building.goldgetter)) {
+			collectableRessources = getGold(x, y);
+		} else if (name.matches(Building.woodgetter)) {
+			collectableRessources = getWood(x, y);
 		} else if (name.matches(Building.foodgetter)) {
-			collectibleRessources = getFood(x, y);
+			collectableRessources = getFood(x, y);
 		} else if (name.matches(Building.stonegetter)) {
-			collectibleRessources = getStone(x, y);
+			collectableRessources = getStone(x, y);
 		} else if (name.matches(Building.metalgetter)) {
-			collectibleRessources = getMetal(x, y);
-		} else if (name.toLowerCase().matches("manastonegetter")) {
-			collectibleRessources = getManaStone(x, y);
+			collectableRessources = getMetal(x, y);
+		} else if (name.matches(Building.manastonegetter)) {
+			collectableRessources = getManaStone(x, y);
 		}
 	}
 	
-	private int getWood(int xCenter, int yCenter) {
-		int ressources = 0;
-		for (int x = (xCenter - 1); x <= (xCenter + 1); x++) {
-			for (int y = (yCenter - 1); y <= (yCenter + 1); y++) {
-				try {
-					ressources += ObjectMap.getMap()[x][y].getMapTileResources().getWoodPercent();
-				} catch (NullPointerException nl) {
-				}
-			}
-		}
-		return ressources;
-	}
-
 	private int getGold(int xCenter, int yCenter) {
 		int ressources = 0;
 		for (int x = (xCenter - 1); x <= (xCenter + 1); x++) {
@@ -46,6 +41,21 @@ public class BuildingRessources {
 				}
 			}
 		}
+		type = 1;
+		return ressources;
+	}
+
+	private int getWood(int xCenter, int yCenter) {
+		int ressources = 0;
+		for (int x = (xCenter - 1); x <= (xCenter + 1); x++) {
+			for (int y = (yCenter - 1); y <= (yCenter + 1); y++) {
+				try {
+					ressources += ObjectMap.getMap()[x][y].getMapTileResources().getWoodPercent();
+				} catch (NullPointerException nl) {
+				}
+			}
+		}
+		type = 2;
 		return ressources;
 	}
 
@@ -59,6 +69,7 @@ public class BuildingRessources {
 				}
 			}
 		}
+		type = 3;
 		return ressources;
 	}
 
@@ -72,6 +83,7 @@ public class BuildingRessources {
 				}
 			}
 		}
+		type = 4;
 		return ressources;
 	}
 
@@ -85,6 +97,7 @@ public class BuildingRessources {
 				}
 			}
 		}
+		type = 5;
 		return ressources;
 	}
 
@@ -98,6 +111,7 @@ public class BuildingRessources {
 				}
 			}
 		}
+		type = 6;
 		return ressources;
 	}
 
