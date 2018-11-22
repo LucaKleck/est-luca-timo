@@ -116,7 +116,7 @@ public class SavesPanel extends JScrollPane {
 					try {
 						ObjectMap.getSelected().removeSelected();
 						InfoPanel.refresh();
-						InteractionPanel.setSelectionPane(null);
+						InteractionPanel.setCurrentPanel(null);
 					} catch (NullPointerException nl) {
 					}
 				}

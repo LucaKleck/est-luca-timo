@@ -55,7 +55,7 @@ public class GameSettingsPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					ObjectMap.getSelected().removeSelected();
-					InteractionPanel.setSelectionPane(null);
+					InteractionPanel.setCurrentPanel(null);
 					InfoPanel.refresh();
 					LogPanel.reset("This is the log, keeping track of all important events");
 				} catch (NullPointerException nl) {

@@ -27,6 +27,8 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import entity.Entity;
+import entity.building.Building;
+import entity.unit.Unit;
 import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
 
@@ -50,7 +52,7 @@ public class SelectionPanel extends JScrollPane {
 		@Override
 		public void mouseDragged(MouseEvent e) {
 			if (origin != null) {
-				JViewport viewPort = InteractionPanel.getSelectionPane().getViewport();
+				JViewport viewPort = InteractionPanel.getCurrentPanel().getViewport();
 				if (viewPort != null) {
 					int deltaX = origin.x - e.getX();
 					int deltaY = origin.y - e.getY();
@@ -58,7 +60,7 @@ public class SelectionPanel extends JScrollPane {
 					Rectangle view = viewPort.getViewRect();
 					view.x += deltaX;
 					view.y += deltaY;
-					InteractionPanel.getSelectionPane().getViewport().scrollRectToVisible(view);
+					InteractionPanel.getCurrentPanel().getViewport().scrollRectToVisible(view);
 				}
 			}
 		}
@@ -242,7 +244,11 @@ public class SelectionPanel extends JScrollPane {
 		public void mouseReleased(MouseEvent e) {
 			if (jBtn.contains(e.getPoint())) {
 				ObjectMap.getSelected().setSelectedEntity(entity);
-				InteractionPanel.setSelectionPane(null);
+				if(entity instanceof Unit) {
+					InteractionPanel.setCurrentPanel(null);
+				} else if(entity instanceof Building) {
+					InteractionPanel.setCurrentPanel(new BuildingPanel((Building) entity));
+				}
 				InfoPanel.refresh();
 			}
 		}

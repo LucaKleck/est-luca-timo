@@ -15,6 +15,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import abilities.AbilityDevCreateBuilding;
 import abilities.AbilityDevCreateUnit;
 import core.ControlInput;
 import core.Core;
@@ -115,11 +116,21 @@ public class GameMenuPanel extends JPanel {
 		mntmGenerateDefaultUnit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmGenerateDefaultUnit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ObjectMap.getSelected().setSelectedAbility(new AbilityDevCreateUnit("dev_create_unit", ObjectMap.getSelected().getSelectedEntity()));
+				ObjectMap.getSelected().setSelectedAbility(new AbilityDevCreateUnit());
 			}
 		});
 		mnDev.add(mntmGenerateDefaultUnit);
-
+		
+		
+		JMenuItem mntmGenerateDefaultBuilding = new JMenuItem("generate default building ability");
+		mntmGenerateDefaultBuilding.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		mntmGenerateDefaultBuilding.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ObjectMap.getSelected().setSelectedAbility(new AbilityDevCreateBuilding());
+			}
+		});
+		mnDev.add(mntmGenerateDefaultBuilding);
+		
 		mntmSave.addActionListener(new ActionListener() {
 
 			@Override

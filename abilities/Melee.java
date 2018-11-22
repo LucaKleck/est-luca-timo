@@ -4,17 +4,15 @@ import entity.Entity;
 
 public class Melee extends Ability {
 
-	private int damage = 2;
+	private static final int BASE_DAMAGE = 2;
 	
-	public Melee(String name, Entity target) {
-		super(name, target);
+	public Melee(String name) {
+		super(name);
 	}
-	
+
 	@Override
-	public void run() {
-		
-		target.setCurrentHealth(target.getCurrentHealth() - damage);
-		
+	public void applyAbility(Entity source, Entity target) {
+		target.setCurrentHealth(target.getCurrentHealth() - BASE_DAMAGE);
 	}
 
 }

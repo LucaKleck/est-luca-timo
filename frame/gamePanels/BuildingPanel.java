@@ -7,12 +7,14 @@ import javax.swing.JScrollPane;
 
 import entity.building.Building;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.ScrollPaneConstants;
 
 public class BuildingPanel extends JScrollPane {
 	
 	private Building building;
 	
 	public BuildingPanel(Building building) {
+		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		
 		this.building = building;
 		

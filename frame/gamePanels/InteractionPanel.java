@@ -12,7 +12,6 @@ import net.miginfocom.swing.MigLayout;
 public class InteractionPanel extends JPanel {
 	private static final long serialVersionUID = 124L;
 
-	private static SelectionPanel selectionPanel;
 	private static InteractionPanel selfInteractionPanel;
 	private static JScrollPane currentPanel;
 
@@ -21,7 +20,6 @@ public class InteractionPanel extends JPanel {
 		selfInteractionPanel = this;
 		this.setBackground(Color.LIGHT_GRAY);
 		setLayout(new MigLayout("", "[100%,fill]", "[100%,fill]"));
-		
 	}
 
 	public static void setCurrentPanel(JScrollPane currentPanel) {
@@ -31,31 +29,18 @@ public class InteractionPanel extends JPanel {
 			System.gc();
 		}
 		InteractionPanel.currentPanel = currentPanel;
-		selfInteractionPanel.add(currentPanel, "cell 0 0");
-		
-	}
-	
-	public static void setSelectionPane(SelectionPanel selectionPane) {
-		selectionPaneCheck(selectionPane);
-		InteractionPanel.selectionPanel = selectionPane;
+		if(currentPanel!=null) {
+			selfInteractionPanel.add(currentPanel, "cell 0 0");
+		}
 		selfInteractionPanel.validate();
 		selfInteractionPanel.repaint();
 	}
-
-	public static void selectionPaneCheck(SelectionPanel se) {
-		if(se != null) {
-			System.gc();
-			selfInteractionPanel.add(se, "cell 0 0");
-		} else if( se == null && selectionPanel != null) {
-			selfInteractionPanel.remove(selectionPanel);
-		}
-	}
-
+	
 	public static InteractionPanel getInteractionPanel() {
 		return selfInteractionPanel;
 	}
 	
-	public static SelectionPanel getSelectionPane() {
-		return selectionPanel;
+	public static JScrollPane getCurrentPanel() {
+		return currentPanel;
 	}
 }

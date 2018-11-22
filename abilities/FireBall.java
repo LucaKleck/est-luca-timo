@@ -1,21 +1,23 @@
 package abilities;
 
 import entity.Entity;
-import map.ObjectMap;
+import entity.unit.Unit;
 
 public class FireBall extends Ability {
 
-	private int damage = 1;
+	private static final int BASE_DAMAGE = 1;
 	
-	public FireBall(String name, Entity target) {
-		super(name, target);
+	public FireBall(String name) {
+		super(name);
 	}
 	
 	@Override
-	public void run() {
-		
-		target.setCurrentHealth(target.getCurrentHealth() - damage);
-		
+	public void applyAbility(Entity source, Entity target) {
+		if(source instanceof Unit) {
+			target.setCurrentHealth(target.getCurrentHealth() - BASE_DAMAGE  + ((Unit) source).getDamage() );
+		} else {
+			target.setCurrentHealth(target.getCurrentHealth() - BASE_DAMAGE);
+		}
 	}
 
 }

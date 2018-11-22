@@ -2,21 +2,28 @@ package core;
 
 
 public class PlayerStats {
+	
+	private int clicks;
+	
 	private int unitsKilled;
 	private int buildingsDestroyed;
+	private int damageDealt;
 
 	private int unitsCreated;
 	private int buildingsBuilt;
 
+	
 	private PlayerResources playerResources;
 
 	public PlayerStats() {
 
 	}
 	
-	public PlayerStats(int unitsKilled, int buildingsDestroyed, int unitsCreated, int buildingsBuilt, PlayerResources playerResources) {
+	public PlayerStats(int clicks,int unitsKilled, int buildingsDestroyed, int damageDealt, int unitsCreated, int buildingsBuilt, PlayerResources playerResources) {
+		this.clicks = clicks;
 		this.unitsKilled = unitsKilled;
 		this.buildingsDestroyed = buildingsDestroyed;
+		this.damageDealt = damageDealt;
 		this.unitsCreated = unitsCreated;
 		this.buildingsBuilt = buildingsBuilt;
 		this.playerResources = playerResources;
@@ -35,7 +42,6 @@ public class PlayerStats {
 		private int manaStone = 0;
 
 		public PlayerResources() {
-
 		}
 
 		public PlayerResources(int gold, int food, int wood, int stone, int metal, int manaStone) {
@@ -69,6 +75,30 @@ public class PlayerStats {
 
 		public int getManaStone() {
 			return manaStone;
+		}
+
+		public synchronized void addGold(int gold) {
+			this.gold += gold;
+		}
+
+		public synchronized void addFood(int food) {
+			this.food += food;
+		}
+
+		public synchronized void addWood(int wood) {
+			this.wood += wood;
+		}
+
+		public synchronized void addStone(int stone) {
+			this.stone += stone;
+		}
+
+		public synchronized void addMetal(int metal) {
+			this.metal += metal;
+		}
+
+		public synchronized void addManaStone(int manaStone) {
+			this.manaStone += manaStone;
 		}
 		
 	}

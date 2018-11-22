@@ -48,22 +48,29 @@ public class Selected {
 				}
 				if (isntEmpty(x, y)) {
 					selectedEntity = null;
-					InteractionPanel.setSelectionPane(new SelectionPanel(x, y, selectionMode));
+					InteractionPanel.setCurrentPanel(new SelectionPanel(x, y, selectionMode));
 				} else {
 					selectedEntity = null;
-					InteractionPanel.setSelectionPane(null);
+					InteractionPanel.setCurrentPanel(null);
 				}
 				
 			} else if(selectionMode == 69) {
-				if(selectedAbility.getName().matches("dev_create_unit")) {
-						selectedMapTile = ObjectMap.getMap()[x][y];
-						ObjectMap.getEntityMap().add(new Unit(x, y, "devUnit", 1, 1, 1));
-						setSelectedAbility(null);
-						InteractionPanel.setSelectionPane(new SelectionPanel(x, y, selectionMode));
+				if(selectedAbility.getName().matches(Ability.Ability_Dev_Create_Unit)) {
+					selectedMapTile = ObjectMap.getMap()[x][y];
+					ObjectMap.getEntityMap().add(new Unit(x, y, "devUnit", 1, 1, 1));
+					setSelectedAbility(null);
+					InteractionPanel.setCurrentPanel(new SelectionPanel(x, y, selectionMode));
 				}
+				if(selectedAbility.getName().matches(Ability.Ability_Dev_Create_Building)) {
+					selectedMapTile = ObjectMap.getMap()[x][y];
+					ObjectMap.getEntityMap().add(new Building(x, y, "devBuilding", 10) );
+					setSelectedAbility(null);
+					InteractionPanel.setCurrentPanel(new SelectionPanel(x, y, selectionMode));
+				}
+				MapPanel.getMapImage().redraw();
 			}
 		} else {
-			InteractionPanel.setSelectionPane(null);
+			InteractionPanel.setCurrentPanel(null);
 			ObjectMap.getSelected().removeSelected();
 		}
 		
