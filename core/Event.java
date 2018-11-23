@@ -2,7 +2,6 @@ package core;
 
 import abilities.Ability;
 import entity.Entity;
-import map.ObjectMap;
 import map.MapImage.Effect;
 
 public class Event implements Runnable {
@@ -19,7 +18,7 @@ public class Event implements Runnable {
 		this.ability = ability;
 		this.effect = effect;
 		this.self = new Thread(this);
-		ObjectMap.getEventQueue().add(self);
+		GameInfo.getEventQueue().add(self);
 	}
 
 	public Entity getSource() {
@@ -39,12 +38,12 @@ public class Event implements Runnable {
 	}
 
 	public void cancleEvent() {
-		ObjectMap.getEventQueue().remove(self);
+		GameInfo.getEventQueue().remove(self);
 	}
 	
 	@Override
 	public void run() {
 		ability.applyAbility(source, target);
-		ObjectMap.getEventQueue().remove(self);
+		GameInfo.getEventQueue().remove(self);
 	}
 }

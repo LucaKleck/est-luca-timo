@@ -35,6 +35,66 @@ public class PlayerStats {
 		return playerResources;
 	}
 
+	public synchronized int getClicks() {
+		return clicks;
+	}
+
+	public synchronized void setClicks(int clicks) {
+		this.clicks = clicks;
+	}
+
+	public synchronized int getUnitsKilled() {
+		return unitsKilled;
+	}
+
+	public synchronized void setUnitsKilled(int unitsKilled) {
+		this.unitsKilled = unitsKilled;
+	}
+
+	public synchronized int getBuildingsDestroyed() {
+		return buildingsDestroyed;
+	}
+
+	public synchronized void setBuildingsDestroyed(int buildingsDestroyed) {
+		this.buildingsDestroyed = buildingsDestroyed;
+	}
+
+	public synchronized int getDamageDealt() {
+		return damageDealt;
+	}
+
+	public synchronized void setDamageDealt(int damageDealt) {
+		this.damageDealt = damageDealt;
+	}
+
+	public synchronized int getUnitsCreated() {
+		return unitsCreated;
+	}
+
+	public synchronized void setUnitsCreated(int unitsCreated) {
+		this.unitsCreated = unitsCreated;
+	}
+
+	public synchronized int getBuildingsBuilt() {
+		return buildingsBuilt;
+	}
+
+	public synchronized void setBuildingsBuilt(int buildingsBuilt) {
+		this.buildingsBuilt = buildingsBuilt;
+	}
+
+	public synchronized int getTimePlayedMins() {
+		return timePlayedMins;
+	}
+
+	public synchronized void setTimePlayedMins(int timePlayedMins) {
+		this.timePlayedMins = timePlayedMins;
+	}
+
+	public synchronized void setPlayerResources(PlayerResources playerResources) {
+		this.playerResources = playerResources;
+	}
+	
 	public class PlayerResources {
 		private int gold = 0;
 		private int food = 0;

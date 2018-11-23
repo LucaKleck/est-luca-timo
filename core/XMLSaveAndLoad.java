@@ -22,6 +22,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import core.PlayerStats.PlayerResources;
 import entity.Entity;
 import entity.building.Building;
 import entity.unit.Unit;
@@ -60,8 +61,9 @@ public class XMLSaveAndLoad {
 			dBuilder = dbFactory.newDocumentBuilder();
 			Document saveDoc = dBuilder.parse(save);
 			saveDoc.getDocumentElement().normalize();
-
-			new ObjectMap(loadMap(saveDoc),loadEntityMap(saveDoc));
+			
+			new GameInfo(new ObjectMap(loadMap(saveDoc),loadEntityMap(saveDoc)), loadPlayerStats(saveDoc));
+			
 			
 			try {
 				LogPanel.reset(saveDoc.getElementsByTagName("gameLog").item(0).getTextContent());
@@ -134,17 +136,17 @@ public class XMLSaveAndLoad {
                int yPos = Integer.parseInt(eElement.getElementsByTagName(Y_POS).item(0).getTextContent());
                String name = eElement.getElementsByTagName(NAME).item(0).getTextContent();
                int health = Integer.parseInt(eElement.getElementsByTagName(HEALTH).item(0).getTextContent());
-               e = new Entity(xPos, yPos, name, health);
+               e = new Entity(xPos, yPos, name, health, null);
                if(type.matches("Unit") || type.matches("Warrior")) {
             	   int damage = Integer.parseInt(eElement.getElementsByTagName(DAMAGE).item(0).getTextContent());
             	   int movementRange = Integer.parseInt(eElement.getElementsByTagName(MOVEMENT_RANGE).item(0).getTextContent());
-            	   e = new Unit(xPos, yPos,  name, health, damage, movementRange);
+            	   e = new Unit(xPos, yPos,  name, health, damage, movementRange, null);
             	   if(type.matches("Warrior")) {
-            		   e = new Warrior(xPos, yPos,  name, health, damage, movementRange);
+            		   e = new Warrior(xPos, yPos,  name);
             	   }
                }
                if(type.matches("Building")) {
-            	   e = new Building(xPos, yPos, name, health);
+            	   e = new Building(xPos, yPos, name, health, null);
                }
                entityMap.add(e);
             }
@@ -166,6 +168,9 @@ public class XMLSaveAndLoad {
     		// append object map
     		saveRoot.appendChild(saveObjectMap(saveDoc));
 		    
+    		// append player stats
+    		saveRoot.appendChild(savePlayerStats(saveDoc));
+    		
     		// append game log (do this last, there is a Game Saved that will be added to the Log, if something crashes after log, it'll say "Game Saved!" even though it crashed
     		saveRoot.appendChild(saveGameLog(saveDoc));
     		
@@ -193,6 +198,99 @@ public class XMLSaveAndLoad {
     		returnMessage = "Failed Saving: DOMException";
     	}
 		return returnMessage;
+	}
+	
+	private static PlayerStats loadPlayerStats(Document saveDoc) {
+		PlayerStats ps = new PlayerStats();
+		int clicks = 0;
+		int unitsKilled = 0;
+		int buildingsDestroyed = 0;
+		int damageDealt = 0;
+		int unitsCreated = 0;
+		int buildingsBuilt = 0;
+		int timePlayedMins = 0;
+		
+		
+		int gold = 0;
+		int food = 0;
+		int wood = 0;
+		int stone = 0;
+		int metal = 0;
+		int manaStone = 0;
+		
+		PlayerResources playerResources = ps.new PlayerResources(gold, food, wood, stone, metal, manaStone);
+				
+		ps = new PlayerStats(clicks, unitsKilled, buildingsDestroyed, damageDealt, unitsCreated, buildingsBuilt, timePlayedMins, playerResources);
+		return ps;
+	}
+	
+	private static Node savePlayerStats(Document saveDoc) {
+		Element playerStatsElement = saveDoc.createElement("PlayerStats");
+		
+		Element clicks = saveDoc.createElement("clicks");
+		clicks.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getClicks()));
+		playerStatsElement.appendChild(clicks);
+		
+		Element unitsKilled = saveDoc.createElement("unitsKilled");
+		unitsKilled.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getUnitsKilled()));
+		playerStatsElement.appendChild(unitsKilled);
+		
+		Element buildingsDestroyed = saveDoc.createElement("buildingsDestroyed");
+		buildingsDestroyed.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getBuildingsDestroyed()));
+		playerStatsElement.appendChild(buildingsDestroyed);
+		
+		Element damageDealt = saveDoc.createElement("damageDealt");
+		damageDealt.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getDamageDealt()));
+		playerStatsElement.appendChild(damageDealt);
+		
+		Element unitsCreated = saveDoc.createElement("unitsCreated");
+		unitsCreated.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getUnitsCreated()));
+		playerStatsElement.appendChild(unitsCreated);
+		
+		Element buildingsBuilt = saveDoc.createElement("buildingsBuilt");
+		buildingsBuilt.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getBuildingsBuilt()));
+		playerStatsElement.appendChild(buildingsBuilt);
+		
+		Element timePlayedMins = saveDoc.createElement("timePlayedMins");
+		timePlayedMins.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getTimePlayedMins()));
+		playerStatsElement.appendChild(timePlayedMins);
+		
+	
+		playerStatsElement.appendChild(playerResources(saveDoc));
+		
+		
+		
+		return playerStatsElement;
+	}
+	
+	private static Node playerResources(Document saveDoc) {
+		Element playerResources = saveDoc.createElement("playerResources");
+		
+		Element gold = saveDoc.createElement(GOLD);
+	    gold.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getPlayerResources().getGold()));
+	    playerResources.appendChild(gold);
+	    
+	    Element food = saveDoc.createElement(FOOD);
+	    food.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getPlayerResources().getFood() ));
+	    playerResources.appendChild(food);
+	    
+	    Element wood = saveDoc.createElement(WOOD);
+	    wood.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getPlayerResources().getWood()));
+	    playerResources.appendChild(wood);
+	    
+	    Element stone = saveDoc.createElement(STONE);
+	    stone.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getPlayerResources().getStone()));
+	    playerResources.appendChild(stone);
+	    
+	    Element metal = saveDoc.createElement(METAL);
+	    metal.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getPlayerResources().getMetal()));
+	    playerResources.appendChild(metal);
+	    
+	    Element manaStone = saveDoc.createElement(MANA_STONE);
+	    manaStone.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getPlayerResources().getManaStone()));
+	    playerResources.appendChild(manaStone);
+		
+		return playerResources;
 	}
 	
 	private static Element saveObjectMap(Document save) {

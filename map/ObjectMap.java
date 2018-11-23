@@ -17,14 +17,12 @@ public class ObjectMap {
 	private static Selected selected = new Selected();
 	private static MapTile[][] map;
 	private static ArrayList<Entity> entityMap;
-	private static ArrayList<Thread> eventQueue;
+	
 
 	public ObjectMap() {
 		map = MapCreator.createMap();
 		selected = new Selected();
 		entityMap = new ArrayList<>();
-		entityMap.add(new Building(0, 0, "Townsquare", 100));
-		eventQueue = new ArrayList<>();
 		
 //		System.out.println("best target = " + new EntityFilter(entityMap).getBestEntityTarget(entityMap[0][0][0]).getName());
 
@@ -48,10 +46,6 @@ public class ObjectMap {
 		return entityMap;
 	}
 	
-	public static ArrayList<Thread> getEventQueue() {
-		return eventQueue;
-	}
-
 	public static void remakeMap() {
 		map = MapCreator.createMap();
 		try {
