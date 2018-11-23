@@ -16,17 +16,17 @@ public class BuildingRessources {
 	  */
 
 	public BuildingRessources(int y, int x, String name) {
-		if (name.matches(Building.goldgetter)) {
+		if (name.matches(Building.GOLD_GETTER)) {
 			collectableRessources = getGold(x, y);
-		} else if (name.matches(Building.woodgetter)) {
+		} else if (name.matches(Building.WOOD_GETTER)) {
 			collectableRessources = getWood(x, y);
-		} else if (name.matches(Building.foodgetter)) {
+		} else if (name.matches(Building.FOOD_GETTER)) {
 			collectableRessources = getFood(x, y);
-		} else if (name.matches(Building.stonegetter)) {
+		} else if (name.matches(Building.STONE_GETTER)) {
 			collectableRessources = getStone(x, y);
-		} else if (name.matches(Building.metalgetter)) {
+		} else if (name.matches(Building.METAL_GETTER)) {
 			collectableRessources = getMetal(x, y);
-		} else if (name.matches(Building.manastonegetter)) {
+		} else if (name.matches(Building.MANA_GETTER)) {
 			collectableRessources = getManaStone(x, y);
 		}
 	}
@@ -113,6 +113,14 @@ public class BuildingRessources {
 		}
 		type = 6;
 		return ressources;
+	}
+
+	public int getCollectableRessources() {
+		return collectableRessources;
+	}
+
+	public int getType() {
+		return type;
 	}
 
 }
