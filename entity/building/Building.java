@@ -1,5 +1,8 @@
 package entity.building;
 
+import java.util.ArrayList;
+
+import abilities.Ability;
 import entity.Entity;
 
 public class Building extends Entity {
@@ -14,8 +17,8 @@ public class Building extends Entity {
 	public static final String MANA_GETTER = "Manastonecollector";
 	
 	
-	public Building(int xPos, int yPos, String name, int health) {
-		super(xPos, yPos, name, health);
+	public Building(int xPos, int yPos, String name, int health, ArrayList<Ability> abilities) {
+		super(xPos, yPos, name, health, abilities);
 		ressources = new BuildingRessources (xPos, yPos, name);
 	}
 	

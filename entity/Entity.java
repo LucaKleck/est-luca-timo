@@ -16,7 +16,7 @@ public class Entity {
 	private int level;
 	private ArrayList<Ability> abilities = new ArrayList<>();
 
-	public Entity(int xPos, int yPos, String name, int maxHealth) {
+	public Entity(int xPos, int yPos, String name, int maxHealth, ArrayList<Ability> abilities) {
 		this.name = name;
 		this.maxHealth = maxHealth;
 		this.currentHealth = maxHealth;
