@@ -3,29 +3,31 @@ package core;
 
 public class PlayerStats {
 	
-	private int clicks;
+	private int clicks = 0;
 	
-	private int unitsKilled;
-	private int buildingsDestroyed;
-	private int damageDealt;
+	private int unitsKilled = 0;
+	private int buildingsDestroyed = 0;
+	private int damageDealt = 0;
 
-	private int unitsCreated;
-	private int buildingsBuilt;
-
+	private int unitsCreated = 0;
+	private int buildingsBuilt = 0;
 	
+	private int timePlayedMins = 0;
+
 	private PlayerResources playerResources;
 
 	public PlayerStats() {
-
+		playerResources = new PlayerResources();
 	}
 	
-	public PlayerStats(int clicks,int unitsKilled, int buildingsDestroyed, int damageDealt, int unitsCreated, int buildingsBuilt, PlayerResources playerResources) {
+	public PlayerStats(int clicks,int unitsKilled, int buildingsDestroyed, int damageDealt, int unitsCreated, int buildingsBuilt, int timePlayedMins, PlayerResources playerResources) {
 		this.clicks = clicks;
 		this.unitsKilled = unitsKilled;
 		this.buildingsDestroyed = buildingsDestroyed;
 		this.damageDealt = damageDealt;
 		this.unitsCreated = unitsCreated;
 		this.buildingsBuilt = buildingsBuilt;
+		this.timePlayedMins = timePlayedMins;
 		this.playerResources = playerResources;
 	}
 

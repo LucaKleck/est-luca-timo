@@ -56,6 +56,7 @@ public class XMLSaveAndLoad {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = null;
 		try {
+			new XMLSaveAndLoad(save.getName().substring(0, save.getName().length()-4));
 			dBuilder = dbFactory.newDocumentBuilder();
 			Document saveDoc = dBuilder.parse(save);
 			saveDoc.getDocumentElement().normalize();

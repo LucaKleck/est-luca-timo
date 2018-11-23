@@ -14,6 +14,7 @@ import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
 import core.ControlInput;
+import core.GameInfo;
 import core.XMLSaveAndLoad;
 import frame.gamePanels.InfoPanel;
 import frame.gamePanels.InteractionPanel;
@@ -62,7 +63,7 @@ public class GameSettingsPanel extends JPanel {
 					
 				}
 				new XMLSaveAndLoad(txtNewGame.getText());
-				new ObjectMap();
+				new GameInfo();
 			}
 
 		});
