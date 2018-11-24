@@ -3,6 +3,7 @@ package entity;
 import java.util.ArrayList;
 
 import abilities.Ability;
+import map.ObjectMap;
 
 public class Entity {
 
@@ -12,9 +13,10 @@ public class Entity {
 	private int currentHealth;
 	private int xPos;
 	private int yPos;
+	private int level;
 	private ArrayList<Ability> abilities = new ArrayList<>();
 
-	public Entity( int xPos, int yPos, String name, int maxHealth) {
+	public Entity(int xPos, int yPos, String name, int maxHealth, ArrayList<Ability> abilities) {
 		this.name = name;
 		this.maxHealth = maxHealth;
 		this.currentHealth = maxHealth;
@@ -41,28 +43,63 @@ public class Entity {
 	public int getCurrentHealth() {
 		return currentHealth;
 	}
-	
+
+	public void setCurrentHealth(int currentHealth) {
+		this.currentHealth = currentHealth;
+
+		if (currentHealth <= 0) {
+			destroy();
+		}
+
+	}
+
 	public int getMaxRange() {
 		return maxRange;
 	}
+
+	public ArrayList<Ability> getAbilities() {
+		return abilities;
+	}
+
 	
+	public int getLevel() {
+		return level;
+	}
+	
+	public void addLevel() {
+		level ++;
+	}
+	
+	private void destroy() {
+
+		int i = 0;
+
+		while (ObjectMap.getEntityMap().get(i) != this) {
+			i++;
+		}
+
+		ObjectMap.getEntityMap().remove(i);
+
+	}
+
 	@Override
 	public String toString() {
 		return "Entity [name=" + name + ", maxRange=" + maxRange + ", maxHealth=" + maxHealth + ", currentHealth="
-				+ currentHealth + ", xPos=" + xPos + ", yPos=" + yPos + ", abilities=" + abilities
-				+ "]";
+				+ currentHealth + ", xPos=" + xPos + ", yPos=" + yPos + ", abilities=" + abilities + "]";
 	}
-	
+
 	public boolean hasAbility() {
 		boolean has = false;
 		try {
-			for(int i = 0; i < abilities.size(); i++) {
-				if(abilities.get(i) != null) {
+			for (int i = 0; i < abilities.size(); i++) {
+				if (abilities.get(i) != null) {
 					has = true;
+					return has;
 				}
 			}
 		} catch (NullPointerException nl) {
 		}
 		return has;
 	}
+
 }

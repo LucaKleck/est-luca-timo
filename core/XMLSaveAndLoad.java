@@ -22,6 +22,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import core.PlayerStats.PlayerResources;
 import entity.Entity;
 import entity.building.Building;
 import entity.unit.Unit;
@@ -56,11 +57,13 @@ public class XMLSaveAndLoad {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = null;
 		try {
+			new XMLSaveAndLoad(save.getName().substring(0, save.getName().length()-4));
 			dBuilder = dbFactory.newDocumentBuilder();
 			Document saveDoc = dBuilder.parse(save);
 			saveDoc.getDocumentElement().normalize();
-
-			new ObjectMap(loadMap(saveDoc),loadEntityMap(saveDoc));
+			
+			new GameInfo(new ObjectMap(loadMap(saveDoc),loadEntityMap(saveDoc)), loadPlayerStats(saveDoc));
+			
 			
 			try {
 				LogPanel.reset(saveDoc.getElementsByTagName("gameLog").item(0).getTextContent());
@@ -70,11 +73,27 @@ public class XMLSaveAndLoad {
 			e1.printStackTrace();
 		}
 	}
+	private static final String X_POS = "xPos";
+	private static final String Y_POS = "yPos";
+	private static final String TYPE = "type";
+	private static final String NAME = "name";
+	private static final String GOLD= "gold";
+	private static final String FOOD = "food";
+	private static final String WOOD = "wood";
+	private static final String STONE = "stone";
+	private static final String METAL = "metal";
+	private static final String MANA_STONE = "manaStone";
+	private static final String IS_ROAD = "isRoad";
+	private static final String ENTITY = "entity";
+	private static final String HEALTH = "health";
+	private static final String DAMAGE = "damage";
+	private static final String MOVEMENT_RANGE = "movementRange";
+	private static final String MAP_SIZE = "mapSize";
 	
 	private static MapTile[][] loadMap(Document saveDoc) {
 		NodeList nList = saveDoc.getElementsByTagName("mapTile");
         
-        int mapSize = Integer.parseInt(saveDoc.getElementsByTagName("map").item(0).getAttributes().getNamedItem("mapSize").getNodeValue());
+        int mapSize = Integer.parseInt(saveDoc.getElementsByTagName("map").item(0).getAttributes().getNamedItem(MAP_SIZE).getNodeValue());
         
         MapTile[][] map = new MapTile[mapSize][mapSize];
         
@@ -83,17 +102,17 @@ public class XMLSaveAndLoad {
             
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                Element eElement = (Element) nNode;
-               int xPos = Integer.parseInt(eElement.getElementsByTagName("xPos").item(0).getTextContent());
-               int yPos = Integer.parseInt(eElement.getElementsByTagName("yPos").item(0).getTextContent());
-               int type = Integer.parseInt(eElement.getElementsByTagName("type").item(0).getTextContent());
-               String name = eElement.getElementsByTagName("name").item(0).getTextContent();
-               int gold = Integer.parseInt(eElement.getElementsByTagName("gold").item(0).getTextContent());
-               int food = Integer.parseInt(eElement.getElementsByTagName("food").item(0).getTextContent());
-               int wood = Integer.parseInt(eElement.getElementsByTagName("wood").item(0).getTextContent());
-               int stone = Integer.parseInt(eElement.getElementsByTagName("stone").item(0).getTextContent());
-               int metal = Integer.parseInt(eElement.getElementsByTagName("metal").item(0).getTextContent());
-               int manaStone = Integer.parseInt(eElement.getElementsByTagName("manaStone").item(0).getTextContent());
-               boolean isRoad = new Boolean(eElement.getElementsByTagName("isRoad").item(0).getTextContent());
+               int xPos = Integer.parseInt(eElement.getElementsByTagName(X_POS).item(0).getTextContent());
+               int yPos = Integer.parseInt(eElement.getElementsByTagName(Y_POS).item(0).getTextContent());
+               int type = Integer.parseInt(eElement.getElementsByTagName(TYPE).item(0).getTextContent());
+               String name = eElement.getElementsByTagName(NAME).item(0).getTextContent();
+               int gold = Integer.parseInt(eElement.getElementsByTagName(GOLD).item(0).getTextContent());
+               int food = Integer.parseInt(eElement.getElementsByTagName(FOOD).item(0).getTextContent());
+               int wood = Integer.parseInt(eElement.getElementsByTagName(WOOD).item(0).getTextContent());
+               int stone = Integer.parseInt(eElement.getElementsByTagName(STONE).item(0).getTextContent());
+               int metal = Integer.parseInt(eElement.getElementsByTagName(METAL).item(0).getTextContent());
+               int manaStone = Integer.parseInt(eElement.getElementsByTagName(MANA_STONE).item(0).getTextContent());
+               boolean isRoad = new Boolean(eElement.getElementsByTagName(IS_ROAD).item(0).getTextContent());
                map[xPos][yPos] = new MapTile(xPos, yPos, type, name, new MapTileResources(gold, food, wood, stone, metal, manaStone), isRoad);
             }
         }
@@ -101,7 +120,7 @@ public class XMLSaveAndLoad {
 	}
 	
 	private static ArrayList<Entity> loadEntityMap(Document doc) {
-		NodeList nList = doc.getElementsByTagName("entity");
+		NodeList nList = doc.getElementsByTagName(ENTITY);
         
         ArrayList<Entity> entityMap = new ArrayList<>();
 		
@@ -111,23 +130,23 @@ public class XMLSaveAndLoad {
             if (nNode.getNodeType() == Node.ELEMENT_NODE) {
                Element eElement = (Element) nNode;
                Entity e;
-               String type = eElement.getAttribute("type");
+               String type = eElement.getAttribute(TYPE);
                
-               int xPos = Integer.parseInt(eElement.getElementsByTagName("xPos").item(0).getTextContent());
-               int yPos = Integer.parseInt(eElement.getElementsByTagName("yPos").item(0).getTextContent());
-               String name = eElement.getElementsByTagName("name").item(0).getTextContent();
-               int health = Integer.parseInt(eElement.getElementsByTagName("health").item(0).getTextContent());
-               e = new Entity(xPos, yPos, name, health);
+               int xPos = Integer.parseInt(eElement.getElementsByTagName(X_POS).item(0).getTextContent());
+               int yPos = Integer.parseInt(eElement.getElementsByTagName(Y_POS).item(0).getTextContent());
+               String name = eElement.getElementsByTagName(NAME).item(0).getTextContent();
+               int health = Integer.parseInt(eElement.getElementsByTagName(HEALTH).item(0).getTextContent());
+               e = new Entity(xPos, yPos, name, health, null);
                if(type.matches("Unit") || type.matches("Warrior")) {
-            	   int damage = Integer.parseInt(eElement.getElementsByTagName("damage").item(0).getTextContent());
-            	   int movementRange = Integer.parseInt(eElement.getElementsByTagName("movementRange").item(0).getTextContent());
-            	   e = new Unit(xPos, yPos,  name, health, damage, movementRange);
+            	   int damage = Integer.parseInt(eElement.getElementsByTagName(DAMAGE).item(0).getTextContent());
+            	   int movementRange = Integer.parseInt(eElement.getElementsByTagName(MOVEMENT_RANGE).item(0).getTextContent());
+            	   e = new Unit(xPos, yPos,  name, health, damage, movementRange, null);
             	   if(type.matches("Warrior")) {
-            		   e = new Warrior(xPos, yPos,  name, health, damage, movementRange);
+            		   e = new Warrior(xPos, yPos,  name);
             	   }
                }
                if(type.matches("Building")) {
-            	   e = new Building(xPos, yPos, name, health);
+            	   e = new Building(xPos, yPos, name, health, null);
                }
                entityMap.add(e);
             }
@@ -149,6 +168,9 @@ public class XMLSaveAndLoad {
     		// append object map
     		saveRoot.appendChild(saveObjectMap(saveDoc));
 		    
+    		// append player stats
+    		saveRoot.appendChild(savePlayerStats(saveDoc));
+    		
     		// append game log (do this last, there is a Game Saved that will be added to the Log, if something crashes after log, it'll say "Game Saved!" even though it crashed
     		saveRoot.appendChild(saveGameLog(saveDoc));
     		
@@ -178,6 +200,99 @@ public class XMLSaveAndLoad {
 		return returnMessage;
 	}
 	
+	private static PlayerStats loadPlayerStats(Document saveDoc) {
+		PlayerStats ps = new PlayerStats();
+		int clicks = 0;
+		int unitsKilled = 0;
+		int buildingsDestroyed = 0;
+		int damageDealt = 0;
+		int unitsCreated = 0;
+		int buildingsBuilt = 0;
+		int timePlayedMins = 0;
+		
+		
+		int gold = 0;
+		int food = 0;
+		int wood = 0;
+		int stone = 0;
+		int metal = 0;
+		int manaStone = 0;
+		
+		PlayerResources playerResources = ps.new PlayerResources(gold, food, wood, stone, metal, manaStone);
+				
+		ps = new PlayerStats(clicks, unitsKilled, buildingsDestroyed, damageDealt, unitsCreated, buildingsBuilt, timePlayedMins, playerResources);
+		return ps;
+	}
+	
+	private static Node savePlayerStats(Document saveDoc) {
+		Element playerStatsElement = saveDoc.createElement("PlayerStats");
+		
+		Element clicks = saveDoc.createElement("clicks");
+		clicks.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getClicks()));
+		playerStatsElement.appendChild(clicks);
+		
+		Element unitsKilled = saveDoc.createElement("unitsKilled");
+		unitsKilled.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getUnitsKilled()));
+		playerStatsElement.appendChild(unitsKilled);
+		
+		Element buildingsDestroyed = saveDoc.createElement("buildingsDestroyed");
+		buildingsDestroyed.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getBuildingsDestroyed()));
+		playerStatsElement.appendChild(buildingsDestroyed);
+		
+		Element damageDealt = saveDoc.createElement("damageDealt");
+		damageDealt.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getDamageDealt()));
+		playerStatsElement.appendChild(damageDealt);
+		
+		Element unitsCreated = saveDoc.createElement("unitsCreated");
+		unitsCreated.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getUnitsCreated()));
+		playerStatsElement.appendChild(unitsCreated);
+		
+		Element buildingsBuilt = saveDoc.createElement("buildingsBuilt");
+		buildingsBuilt.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getBuildingsBuilt()));
+		playerStatsElement.appendChild(buildingsBuilt);
+		
+		Element timePlayedMins = saveDoc.createElement("timePlayedMins");
+		timePlayedMins.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getTimePlayedMins()));
+		playerStatsElement.appendChild(timePlayedMins);
+		
+	
+		playerStatsElement.appendChild(playerResources(saveDoc));
+		
+		
+		
+		return playerStatsElement;
+	}
+	
+	private static Node playerResources(Document saveDoc) {
+		Element playerResources = saveDoc.createElement("playerResources");
+		
+		Element gold = saveDoc.createElement(GOLD);
+	    gold.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getPlayerResources().getGold()));
+	    playerResources.appendChild(gold);
+	    
+	    Element food = saveDoc.createElement(FOOD);
+	    food.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getPlayerResources().getFood() ));
+	    playerResources.appendChild(food);
+	    
+	    Element wood = saveDoc.createElement(WOOD);
+	    wood.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getPlayerResources().getWood()));
+	    playerResources.appendChild(wood);
+	    
+	    Element stone = saveDoc.createElement(STONE);
+	    stone.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getPlayerResources().getStone()));
+	    playerResources.appendChild(stone);
+	    
+	    Element metal = saveDoc.createElement(METAL);
+	    metal.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getPlayerResources().getMetal()));
+	    playerResources.appendChild(metal);
+	    
+	    Element manaStone = saveDoc.createElement(MANA_STONE);
+	    manaStone.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getPlayerResources().getManaStone()));
+	    playerResources.appendChild(manaStone);
+		
+		return playerResources;
+	}
+	
 	private static Element saveObjectMap(Document save) {
 		Element objectMapElement = save.createElement("ObjectMap");
 	    
@@ -190,7 +305,7 @@ public class XMLSaveAndLoad {
 
 	private static Element saveMapTileMap(Document save) {
 		Element map = save.createElement("map");
-	    Attr mapSize = save.createAttribute("mapSize");
+	    Attr mapSize = save.createAttribute(MAP_SIZE);
         mapSize.setValue(""+ObjectMap.getMap().length);
         map.setAttributeNode(mapSize);
         
@@ -200,51 +315,51 @@ public class XMLSaveAndLoad {
 			    Element mapTile = save.createElement("mapTile");
 			    map.appendChild(mapTile);
 			    
-			    Element xPos = save.createElement("xPos");
+			    Element xPos = save.createElement(X_POS);
 			    xPos.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getXPos()) );
 			    mapTile.appendChild(xPos);
 			    
-			    Element yPos = save.createElement("yPos");
+			    Element yPos = save.createElement(Y_POS);
 			    yPos.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getYPos()) );
 			    mapTile.appendChild(yPos);
 			    
-			    Element type = save.createElement("type");
+			    Element type = save.createElement(TYPE);
 			    type.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getType()) );
 			    mapTile.appendChild(type);
 			    
-			    Element name = save.createElement("name");
+			    Element name = save.createElement(NAME);
 			    name.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getName()) );
 			    mapTile.appendChild(name);
 			    
 			    Element mapTileResources = save.createElement("mapTileResources");
 
-			    Element gold = save.createElement("gold");
+			    Element gold = save.createElement(GOLD);
 			    gold.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getMapTileResources().getGoldPercent()));
 			    mapTileResources.appendChild(gold);
 			    
-			    Element food = save.createElement("food");
+			    Element food = save.createElement(FOOD);
 			    food.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getMapTileResources().getFoodPercent()));
 			    mapTileResources.appendChild(food);
 			    
-			    Element wood = save.createElement("wood");
+			    Element wood = save.createElement(WOOD);
 			    wood.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getMapTileResources().getWoodPercent()));
 			    mapTileResources.appendChild(wood);
 			    
-			    Element stone = save.createElement("stone");
+			    Element stone = save.createElement(STONE);
 			    stone.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getMapTileResources().getStonePercent()));
 			    mapTileResources.appendChild(stone);
 			    
-			    Element metal = save.createElement("metal");
+			    Element metal = save.createElement(METAL);
 			    metal.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getMapTileResources().getMetalPercent()));
 			    mapTileResources.appendChild(metal);
 			    
-			    Element manaStone = save.createElement("manaStone");
+			    Element manaStone = save.createElement(MANA_STONE);
 			    manaStone.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getMapTileResources().getManaStonePercent()));
 			    mapTileResources.appendChild(manaStone);
 			    
 			    mapTile.appendChild(mapTileResources);
 			    
-			    Element isRoad = save.createElement("isRoad");
+			    Element isRoad = save.createElement(IS_ROAD);
 			    isRoad.appendChild(save.createTextNode(new Boolean(ObjectMap.getMap()[x][y].isRoad()).toString() ) );
 			    mapTile.appendChild(isRoad);
 			    
@@ -263,29 +378,29 @@ public class XMLSaveAndLoad {
 	    				className.setValue(ObjectMap.getEntityMap().get(i).getClass().getSimpleName());
 	    				
 	    				// things every entity has
-	    				Element xPos = save.createElement("xPos");
+	    				Element xPos = save.createElement(X_POS);
 					    xPos.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getXPos()) );
 					    entity.appendChild(xPos);
 					    
-					    Element yPos = save.createElement("yPos");
+					    Element yPos = save.createElement(Y_POS);
 					    yPos.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getYPos()) );
 					    entity.appendChild(yPos);
 					    
-					    Element name = save.createElement("name");
+					    Element name = save.createElement(NAME);
 					    name.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getName()) );
 					    entity.appendChild(name);
 					    
-					    Element health = save.createElement("health");
+					    Element health = save.createElement(HEALTH);
 					    health.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getCurrentHealth()) );
 					    entity.appendChild(health);
 					    
 					    // things every unit has
 		    			if(ObjectMap.getEntityMap().get(i) instanceof Unit) {
-		    				Element damage = save.createElement("damage");
+		    				Element damage = save.createElement(DAMAGE);
 		    				damage.appendChild(save.createTextNode(""+((Unit) ObjectMap.getEntityMap().get(i)).getDamage() ) );
 						    entity.appendChild(damage);
 						    
-						    Element movementRange = save.createElement("movementRange");
+						    Element movementRange = save.createElement(MOVEMENT_RANGE);
 						    movementRange.appendChild(save.createTextNode(""+((Unit) ObjectMap.getEntityMap().get(i)).getMovementRange() ) );
 						    entity.appendChild(movementRange);
 						    

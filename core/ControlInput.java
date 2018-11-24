@@ -60,6 +60,7 @@ public class ControlInput {
 				Core.getMainJFrame().getContentPane().removeAll();
 				Core.getMainJFrame().getContentPane().add(
 						(Component) ClassLoader.getSystemClassLoader().loadClass(evt.getActionCommand()).newInstance());
+				System.gc();
 			} catch (InstantiationException e) {
 				e.printStackTrace();
 			} catch (IllegalAccessException e) {

@@ -6,10 +6,15 @@
 package map;
 
 public class MapTile {
-	public static final int PLAIN = 0;
-	public static final int FOREST = 1;
-	public static final int MOUNTAIN = 2;
-	public static final int LIQUID = 3;
+	public static final int TYPE_PLAIN = 0;
+	public static final int TYPE_FOREST = 1;
+	public static final int TYPE_MOUNTAIN = 2;
+	public static final int TYPE_LIQUID = 3;
+	
+	public static final String NAME_PLAIN = "Plain";
+	public static final String NAME_FOREST = "Forest";
+	public static final String NAME_MOUNTAIN = "Mountain";
+	public static final String NAME_RIVER = "River";
 	
 	private int xPos;
 	private int yPos;

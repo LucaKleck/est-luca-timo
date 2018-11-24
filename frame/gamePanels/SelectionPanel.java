@@ -27,6 +27,8 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import entity.Entity;
+import entity.building.Building;
+import entity.unit.Unit;
 import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
 
@@ -36,53 +38,53 @@ public class SelectionPanel extends JScrollPane {
 	private ArrayList<SelectionPaneElement> selectedEntityElementList = new ArrayList<>();
 	private MouseAdapter ma = new MouseAdapter() {
 
-        private Point origin;
+		private Point origin;
 
-        @Override
-        public void mousePressed(MouseEvent e) {
-            origin = new Point(e.getPoint());
-        }
+		@Override
+		public void mousePressed(MouseEvent e) {
+			origin = new Point(e.getPoint());
+		}
 
-        @Override
-        public void mouseReleased(MouseEvent e) {
-        }
+		@Override
+		public void mouseReleased(MouseEvent e) {
+		}
 
-        @Override
-        public void mouseDragged(MouseEvent e) {
-            if (origin != null) {
-                JViewport viewPort = InteractionPanel.getSelectionPane().getViewport();
-                if (viewPort != null) {
-                    int deltaX = origin.x - e.getX();
-                    int deltaY = origin.y - e.getY();
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			if (origin != null) {
+				JViewport viewPort = InteractionPanel.getCurrentPanel().getViewport();
+				if (viewPort != null) {
+					int deltaX = origin.x - e.getX();
+					int deltaY = origin.y - e.getY();
 
-                    Rectangle view = viewPort.getViewRect();
-                    view.x += deltaX;
-                    view.y += deltaY;
-                    InteractionPanel.getSelectionPane().getViewport().scrollRectToVisible(view);
-                }
-            }
-        }
+					Rectangle view = viewPort.getViewRect();
+					view.x += deltaX;
+					view.y += deltaY;
+					InteractionPanel.getCurrentPanel().getViewport().scrollRectToVisible(view);
+				}
+			}
+		}
 
-    };
-    /**
-     * @param x
-     * @param y
-     * @param selectionMode
-     */
+	};
+
+	/**
+	 * @param x
+	 * @param y
+	 * @param selectionMode
+	 */
 	public SelectionPanel(int x, int y, int selectionMode) {
 		setDoubleBuffered(true);
 		setBackground(Color.DARK_GRAY);
 		setBorder(null);
 		setAutoscrolls(true);
-		
+
 		this.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		this.getVerticalScrollBar().setUnitIncrement(16);
 		this.getVerticalScrollBar().setUI(new SelectionPanelScrollBarUI());
 
-		
 		this.getHorizontalScrollBar().setUnitIncrement(16);
 		this.getHorizontalScrollBar().setUI(new SelectionPanelScrollBarUI());
-		
+
 		JPanel headerPanel = new JPanel();
 		headerPanel.setForeground(Color.LIGHT_GRAY);
 		headerPanel.setBackground(Color.DARK_GRAY);
@@ -98,7 +100,7 @@ public class SelectionPanel extends JScrollPane {
 		viewportPanel.setLayout(new MigLayout("", "[fill]", "[fill]"));
 
 		for (int i = 0; i < ObjectMap.getEntityMap().size(); i++) {
-			if (ObjectMap.getEntityMap().get(i) != null) {
+			if (ObjectMap.getEntityMap().get(i).getXPos() == x && ObjectMap.getEntityMap().get(i).getYPos() == y) {
 				selectedEntityList.add(ObjectMap.getEntityMap().get(i));
 			}
 		}
@@ -122,16 +124,16 @@ public class SelectionPanel extends JScrollPane {
 		}
 
 	}
-	
+
 	@Override
 	public void paint(Graphics g) {
 		super.paint(g);
 	}
-	
+
 	private SelectionPaneElement createEntityPane(Entity entity) {
 		SelectionPaneElement e = new SelectionPaneElement(entity);
 		e.addMouseListener(ma);
-        e.addMouseMotionListener(ma);
+		e.addMouseMotionListener(ma);
 		return e;
 	}
 
@@ -143,20 +145,19 @@ public class SelectionPanel extends JScrollPane {
 	public String toString() {
 		return selectedEntityList.toString();
 	}
-	
+
 	class SelectionPanelScrollBarUI extends BasicScrollBarUI {
 		@Override
-		protected void configureScrollBarColors()
-	    {
-	        LookAndFeel.installColors(scrollbar, "ScrollBar.background",
-	                                  "ScrollBar.foreground");
-	        thumbHighlightColor = Color.DARK_GRAY;
-	        thumbLightShadowColor = Color.DARK_GRAY;
-	        thumbDarkShadowColor = Color.DARK_GRAY;
-	        thumbColor = Color.DARK_GRAY;
-	        trackColor = new Color(255, 255, 255, 120);
-	        trackHighlightColor = new Color(255, 255, 255, 120);
-	    }
+		protected void configureScrollBarColors() {
+			LookAndFeel.installColors(scrollbar, "ScrollBar.background", "ScrollBar.foreground");
+			thumbHighlightColor = Color.DARK_GRAY;
+			thumbLightShadowColor = Color.DARK_GRAY;
+			thumbDarkShadowColor = Color.DARK_GRAY;
+			thumbColor = Color.DARK_GRAY;
+			trackColor = new Color(255, 255, 255, 120);
+			trackHighlightColor = new Color(255, 255, 255, 120);
+		}
+
 		@Override
 		protected JButton createDecreaseButton(int orientation) {
 			JButton btn = new BasicArrowButton(orientation, Color.LIGHT_GRAY, new Color(0, 0, 0, 255),
@@ -172,7 +173,7 @@ public class SelectionPanel extends JScrollPane {
 			btn.setOpaque(false);
 			return btn;
 		}
-		
+
 	}
 
 	/**
@@ -186,7 +187,9 @@ public class SelectionPanel extends JScrollPane {
 		public SelectionPaneElement(Entity entity) {
 			setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			this.entity = entity;
-			MigLayout miglay = new MigLayout("insets 4 5 2 5, gap 4px 0px", "[135px]["+(InteractionPanel.getInteractionPanel().getWidth()-202)+",fill]", "[fill][fill][fill][fill]");
+			MigLayout miglay = new MigLayout("insets 4 5 2 5, gap 4px 0px",
+					"[135px][" + (InteractionPanel.getInteractionPanel().getWidth() - 202) + ",fill]",
+					"[fill][fill][fill][fill]");
 			miglay.preferredLayoutSize(InteractionPanel.getInteractionPanel());
 			setLayout(miglay);
 			this.jBtn = new JButton("Select");
@@ -195,8 +198,7 @@ public class SelectionPanel extends JScrollPane {
 			jBtn.setForeground(Color.WHITE);
 			jBtn.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			jBtn.addMouseListener(this);
-			
-			
+
 			this.jBtn.setPreferredSize(new Dimension(135, 23));
 			this.add(jBtn, "flowx,cell 0 3,grow");
 
@@ -211,15 +213,15 @@ public class SelectionPanel extends JScrollPane {
 			JLabel lblHealth = new JLabel("");
 			lblHealth.setIcon(new ImageIcon(SelectionPaneElement.class.getResource("/resources/healthIcon.png")));
 			add(lblHealth, "flowx,cell 0 1,alignx left,aligny center");
-			
+
 			JProgressBar healthStatus = new JProgressBar();
 			healthStatus.setMaximum(entity.getMaxHealth());
 			healthStatus.setMinimum(0);
 			healthStatus.setValue(entity.getCurrentHealth());
 			healthStatus.setStringPainted(true);
-			healthStatus.setString(entity.getMaxHealth()+"/"+entity.getCurrentHealth());
+			healthStatus.setString(entity.getMaxHealth() + "/" + entity.getCurrentHealth());
 			add(healthStatus, "cell 0 1,growy");
-			
+
 		}
 
 		private Color getColorFromName() {
@@ -240,9 +242,13 @@ public class SelectionPanel extends JScrollPane {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			if(jBtn.contains(e.getPoint())) {
+			if (jBtn.contains(e.getPoint())) {
 				ObjectMap.getSelected().setSelectedEntity(entity);
-				InteractionPanel.setSelectionPane(null);
+				if(entity instanceof Unit) {
+					InteractionPanel.setCurrentPanel(null);
+				} else if(entity instanceof Building) {
+					InteractionPanel.setCurrentPanel(new BuildingPanel((Building) entity));
+				}
 				InfoPanel.refresh();
 			}
 		}

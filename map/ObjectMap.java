@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import core.MapCreator;
 import core.Selected;
 import entity.Entity;
+import entity.building.Building;
 import frame.gamePanels.MapPanel;
 
 public class ObjectMap {
@@ -16,6 +17,7 @@ public class ObjectMap {
 	private static Selected selected = new Selected();
 	private static MapTile[][] map;
 	private static ArrayList<Entity> entityMap;
+	
 
 	public ObjectMap() {
 		map = MapCreator.createMap();
@@ -43,12 +45,12 @@ public class ObjectMap {
 	public static ArrayList<Entity> getEntityMap() {
 		return entityMap;
 	}
-
+	
 	public static void remakeMap() {
 		map = MapCreator.createMap();
 		try {
-			MapImage.staticRepaint();
-			MapPanel.refresh.run();
+			MapPanel.getMapImage().redraw();
+			MapPanel.getMapPanel().repaint();
 		} catch (NullPointerException nl) {
 		}
 	}

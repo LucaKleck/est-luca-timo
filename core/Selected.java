@@ -4,12 +4,13 @@ import abilities.Ability;
 import entity.Entity;
 import entity.building.Building;
 import entity.unit.Unit;
+import entity.unit.Warrior;
 import frame.gamePanels.AbilityPanel;
+import frame.gamePanels.BuildingPanel;
 import frame.gamePanels.InfoPanel;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.MapPanel;
 import frame.gamePanels.SelectionPanel;
-import map.MapImage;
 import map.MapTile;
 import map.ObjectMap;
 
@@ -39,6 +40,7 @@ public class Selected {
 	 * @param isLeftClick
 	 */
 	public void clickedOnTile(int x, int y, boolean isLeftClick) {
+		System.out.println("SelectionMode["+selectionMode+"]");
 		if(isLeftClick) {
 			if(selectionMode == 0 || selectionMode == 1 || selectionMode == 2  || selectionMode == 3  || selectionMode == 4  || selectionMode == 5 ) {
 				try {
@@ -48,26 +50,30 @@ public class Selected {
 				}
 				if (isntEmpty(x, y)) {
 					selectedEntity = null;
-					InteractionPanel.setSelectionPane(new SelectionPanel(x, y, selectionMode));
+					InteractionPanel.setCurrentPanel(new SelectionPanel(x, y, selectionMode));
 				} else {
 					selectedEntity = null;
-					InteractionPanel.setSelectionPane(null);
+					InteractionPanel.setCurrentPanel(null);
 				}
 				
 			} else if(selectionMode == 69) {
-				if(selectedAbility.getName().matches("dev_create_unit")) {
-						selectedMapTile = ObjectMap.getMap()[x][y];
-						ObjectMap.getEntityMap().add(new Unit(x, y, "devUnit", 1, 1, 1));
-						setSelectedAbility(null);
-						InteractionPanel.setSelectionPane(new SelectionPanel(x, y, selectionMode));
+				System.out.println(selectedAbility.getName());
+				if(selectedAbility.getName().matches(Ability.Ability_Dev_Create_Unit)) {
+					selectedMapTile = ObjectMap.getMap()[x][y];
+					ObjectMap.getEntityMap().add(new Warrior(x, y, "devUnit"));
+					setSelectedAbility(null);
+					InteractionPanel.setCurrentPanel(new SelectionPanel(x, y, selectionMode));
+				} else if(selectedAbility.getName().matches(Ability.Ability_Dev_Create_Building)) {
+					selectedMapTile = ObjectMap.getMap()[x][y];
+					ObjectMap.getEntityMap().add(new Building(x, y, "devBuilding", 10, null) );
+					setSelectedAbility(null);
+					InteractionPanel.setCurrentPanel(new SelectionPanel(x, y, selectionMode));
 				}
+				MapPanel.getMapImage().redraw();
 			}
 		} else {
-			InteractionPanel.setSelectionPane(null);
+			InteractionPanel.setCurrentPanel(null);
 			ObjectMap.getSelected().removeSelected();
-			if(MapImage.getMapImage() != null) {
-				MapImage.getMapImage().redrawArea(0, 0, 0, 0);
-			}
 		}
 		
 		// mandatory stuff
@@ -78,10 +84,9 @@ public class Selected {
 		}
 		AbilityPanel.checkAbilities();
 		InfoPanel.refresh();
-		if(MapImage.getMapImage() != null) {
-			MapImage.getMapImage().redrawArea(x,x,y,y);
-		}
-		MapPanel.refresh.run();
+		MapPanel.getMapPanelExecutor().submit(new MapPanel.RepaintMapPanel());
+		MapPanel.getMapImage().redrawSelection();
+		System.gc();
 	}
 	
 	/**
@@ -103,6 +108,7 @@ public class Selected {
 		if(selectedMapTile != null) {
 			selectionMode = 1;
 			if(selectedEntity instanceof Building) {
+				InteractionPanel.setCurrentPanel(new BuildingPanel ((Building) selectedEntity));
 				if(selectedAbility == null) {
 					selectionMode = 4;
 					System.out.println("Selection mode: "+selectionMode);
@@ -134,7 +140,7 @@ public class Selected {
 		} else {
 			selectionMode = 10;
 		}
-		System.out.println("Selection mode: "+selectionMode);
+		//System.out.println("Selection mode: "+selectionMode);
 	}
 
 	public MapTile getSelectedMapTile() {
