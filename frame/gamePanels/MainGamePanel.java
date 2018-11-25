@@ -6,8 +6,11 @@ import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+import core.GameInfo;
 import frame.MainJFrame;
 import net.miginfocom.swing.MigLayout;
+import java.awt.FlowLayout;
+import javax.swing.JLabel;
 
 /**
  * Contains all JPanels that are used for the game
@@ -24,6 +27,7 @@ public class MainGamePanel extends JLayeredPane {
 	private InfoPanel infoPanel;
 	private JPanel resourcesPanel;
 	private GameMenuPanel menuPanel;
+	private JLabel lblResourcesLable;
 
 	public MainGamePanel() { // x // y
 		// 0 1 0 1 2 3
@@ -35,6 +39,14 @@ public class MainGamePanel extends JLayeredPane {
 		resourcesPanel.setBackground(UIManager.getColor("MenuBar.background"));
 		resourcesPanel.setEnabled(false);
 		add(resourcesPanel, "cell 0 0,grow");
+		resourcesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		lblResourcesLable = new JLabel("Resources");
+		try {
+			lblResourcesLable.setText(GameInfo.getPlayerStats().getPlayerResources().toString());
+		} catch (NullPointerException nl) {
+		}
+		resourcesPanel.add(lblResourcesLable);
 
 		LogPanel logPanel = new LogPanel();
 		

@@ -8,7 +8,6 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 
 import javax.swing.JCheckBoxMenuItem;
-import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -19,6 +18,7 @@ import abilities.AbilityDevCreateBuilding;
 import abilities.AbilityDevCreateUnit;
 import core.ControlInput;
 import core.Core;
+import core.FullscreenActionListener;
 import core.XMLSaveAndLoad;
 import map.ObjectMap;
 
@@ -98,7 +98,7 @@ public class GameMenuPanel extends JPanel {
 		mnDev = new JMenu("dev");
 		mnDev.setFocusTraversalKeysEnabled(false);
 		mnDev.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		if(new Boolean(Core.getSetting(Core.SETTING_DEV)))	menuBar.add(mnDev);
+		if(new Boolean(Core.getSetting(Core.SETTING_DEV))) menuBar.add(mnDev);
 
 		mntmRemakeMap = new JMenuItem("Remake Map");
 		mntmRemakeMap.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
@@ -150,30 +150,7 @@ public class GameMenuPanel extends JPanel {
 			}
 		});
 
-		chckbxmntmFullscreen.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Core.getMainJFrame().dispose();
-				// put it in the left uppermost corner
-				Core.getMainJFrame().setUndecorated(!Core.getMainJFrame().isUndecorated());
-				Core.getMainJFrame().setBounds(0, 0, 0, 0);
-				if (Core.getMainJFrame().isUndecorated()) {
-					Core.getMainJFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
-				} else {
-					Core.getMainJFrame().setExtendedState(JFrame.NORMAL);
-				}
-				Core.getMainJFrame().pack();
-				if (!Core.getMainJFrame().isUndecorated()) {
-					Core.getMainJFrame().setSize(800, 600);
-				}
-				Core.getMainJFrame().validate();
-
-				Core.getMainJFrame().setVisible(true);
-				
-				Core.saveSetting(Core.SETTING_FULLSCREEN, new Boolean(Core.getMainJFrame().isUndecorated()).toString() );
-			}
-		});
+		chckbxmntmFullscreen.addActionListener(new FullscreenActionListener());
 
 		mntmSendLogLine.addActionListener(new ActionListener() {
 

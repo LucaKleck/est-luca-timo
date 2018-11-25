@@ -60,8 +60,9 @@ public class MainJFrame extends JFrame implements ComponentListener {
 
 	public static void staticRepaint() {
 		try {
-			if(InteractionPanel.getCurrentPanel() != null) {
+			if(InteractionPanel.getCurrentPanel() != null && InteractionPanel.getCurrentPanel() instanceof SelectionPanel) {
 				InteractionPanel.setCurrentPanel(new SelectionPanel(ObjectMap.getSelected().getSelectedMapTile().getXPos(), ObjectMap.getSelected().getSelectedMapTile().getYPos(), ObjectMap.getSelected().getSelectionMode() ));
+				System.gc();
 			}
 		} catch (NullPointerException nl) {
 		}

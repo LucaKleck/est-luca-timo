@@ -58,12 +58,12 @@ public class Selected {
 				
 			} else if(selectionMode == 69) {
 				System.out.println(selectedAbility.getName());
-				if(selectedAbility.getName().matches(Ability.Ability_Dev_Create_Unit)) {
+				if(selectedAbility.getName().matches(Ability.ABILITY_DEV_CREATE_UNIT)) {
 					selectedMapTile = ObjectMap.getMap()[x][y];
 					ObjectMap.getEntityMap().add(new Warrior(x, y, "devUnit"));
 					setSelectedAbility(null);
 					InteractionPanel.setCurrentPanel(new SelectionPanel(x, y, selectionMode));
-				} else if(selectedAbility.getName().matches(Ability.Ability_Dev_Create_Building)) {
+				} else if(selectedAbility.getName().matches(Ability.ABILITY_DEV_CREATE_BUILDING)) {
 					selectedMapTile = ObjectMap.getMap()[x][y];
 					ObjectMap.getEntityMap().add(new Building(x, y, "devBuilding", 10, null) );
 					setSelectedAbility(null);

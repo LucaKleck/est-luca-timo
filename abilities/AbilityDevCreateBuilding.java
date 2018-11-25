@@ -5,7 +5,7 @@ import entity.Entity;
 public class AbilityDevCreateBuilding extends Ability {
 
 	public AbilityDevCreateBuilding() {
-		super(Ability.Ability_Dev_Create_Building);
+		super(Ability.ABILITY_DEV_CREATE_BUILDING);
 	}
 
 	@Override

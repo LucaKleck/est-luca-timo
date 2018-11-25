@@ -7,14 +7,14 @@ import map.ObjectMap;
 
 public class Entity {
 
-	private String name;
-	private int maxRange = 5; // Will be calculated via the abilities in the future
-	private int maxHealth;
-	private int currentHealth;
 	private int xPos;
 	private int yPos;
-	private int level;
+	private String name;
+	private int maxHealth;
+	private int currentHealth;
 	private ArrayList<Ability> abilities = new ArrayList<>();
+	private int level = 1;
+	private int maxRange = 5; // Will be calculated via the abilities in the future
 
 	public Entity(int xPos, int yPos, String name, int maxHealth, ArrayList<Ability> abilities) {
 		this.name = name;
@@ -61,7 +61,6 @@ public class Entity {
 		return abilities;
 	}
 
-	
 	public int getLevel() {
 		return level;
 	}
