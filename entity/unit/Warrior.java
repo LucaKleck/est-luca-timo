@@ -19,7 +19,6 @@ public class Warrior extends Unit {
 					add(new Melee());
 					} 
 				}  );
-
 	}
 
 }

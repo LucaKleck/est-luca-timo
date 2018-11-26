@@ -8,6 +8,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import abilities.Ability;
+import core.Core;
 import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
 
@@ -22,9 +23,9 @@ public class AbilityPanel extends JPanel {
 
 
 	public static void checkAbilities() {
-		if(ObjectMap.getSelected().getSelectedAbility() != null) {
-			// remove abilites from view
-		} else try {
+		if(ObjectMap.getSelected().getSelectedEntity() != null) {
+			self.removeAll();
+			System.gc();
 			if(ObjectMap.getSelected().getSelectedEntity().hasAbility()) {
 				ArrayList<Ability> abList = ObjectMap.getSelected().getSelectedEntity().getAbilities();
 				String columns = "";
@@ -47,10 +48,12 @@ public class AbilityPanel extends JPanel {
 					});
 					self.add(jButton, ("cell 0 " + i + ", grow"));
 				}
-				
-				
+				self.repaint();
+				Core.getMainJFrame().repaint();
 			}
-		} catch (NullPointerException nl) {
+		} else {
+			self.removeAll();
+			System.gc();
 		}
 			
 	}

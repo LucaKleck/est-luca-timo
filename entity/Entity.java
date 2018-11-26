@@ -3,6 +3,7 @@ package entity;
 import java.util.ArrayList;
 
 import abilities.Ability;
+import core.Event;
 import map.ObjectMap;
 
 public class Entity {
@@ -12,16 +13,18 @@ public class Entity {
 	private String name;
 	private int maxHealth;
 	private int currentHealth;
-	private ArrayList<Ability> abilities = new ArrayList<>();
+	private ArrayList<Ability> abilities;
 	private int level = 1;
 	private int maxRange = 5; // Will be calculated via the abilities in the future
-
+	private Event event = null;
+	
 	public Entity(int xPos, int yPos, String name, int maxHealth, ArrayList<Ability> abilities) {
 		this.name = name;
 		this.maxHealth = maxHealth;
 		this.currentHealth = maxHealth;
 		this.xPos = xPos;
 		this.yPos = yPos;
+		this.abilities = abilities;
 	}
 
 	public int getXPos() {
@@ -99,6 +102,14 @@ public class Entity {
 		} catch (NullPointerException nl) {
 		}
 		return has;
+	}
+
+	public Event getEvent() {
+		return event;
+	}
+
+	public void setEvent(Event event) {
+		this.event = event;
 	}
 
 }

@@ -5,6 +5,8 @@
 */
 package map;
 
+import java.awt.Point;
+
 public class MapTile {
 	public static final int TYPE_PLAIN = 0;
 	public static final int TYPE_FOREST = 1;
@@ -72,6 +74,10 @@ public class MapTile {
 	
 	public boolean isRoad() {
 		return isRoad;
+	}
+	
+	public Point getXYPoint() {
+		return new Point(xPos,yPos);
 	}
 	/*
 	 * public BuildingEffect getBuildingEffect() { return buildingEffect } public

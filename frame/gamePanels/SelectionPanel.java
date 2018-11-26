@@ -26,6 +26,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
+import core.Event;
 import entity.Entity;
 import entity.building.Building;
 import entity.unit.Unit;
@@ -70,9 +71,8 @@ public class SelectionPanel extends JScrollPane {
 	/**
 	 * @param x
 	 * @param y
-	 * @param selectionMode
 	 */
-	public SelectionPanel(int x, int y, int selectionMode) {
+	public SelectionPanel(int x, int y) {
 		setDoubleBuffered(true);
 		setBackground(Color.DARK_GRAY);
 		setBorder(null);
@@ -243,13 +243,20 @@ public class SelectionPanel extends JScrollPane {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			if (jBtn.contains(e.getPoint())) {
-				ObjectMap.getSelected().setSelectedEntity(entity);
-				if(entity instanceof Unit) {
+				// if it's with an ability create event with target (this entity and source current selected entity)
+				if(ObjectMap.getSelected().getSelectionMode() == 3 || ObjectMap.getSelected().getSelectionMode() == 5) {
+					ObjectMap.getSelected().getSelectedEntity().setEvent(new Event(ObjectMap.getSelected().getSelectedEntity(), entity, ObjectMap.getSelected().getSelectedAbility(), null));
+					ObjectMap.getSelected().removeSelected();
 					InteractionPanel.setCurrentPanel(null);
-				} else if(entity instanceof Building) {
-					InteractionPanel.setCurrentPanel(new BuildingPanel((Building) entity));
+				} // else just normal selection change
+				else {
+					if(entity instanceof Unit) {
+						InteractionPanel.setCurrentPanel(null);
+					} else if(entity instanceof Building) {
+						InteractionPanel.setCurrentPanel(new BuildingPanel((Building) entity));
+					}
+					ObjectMap.getSelected().setSelectedEntity(entity);
 				}
-				InfoPanel.refresh();
 			}
 		}
 

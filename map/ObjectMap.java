@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import core.MapCreator;
 import core.Selected;
 import entity.Entity;
-import entity.building.Building;
 import frame.gamePanels.MapPanel;
 
 public class ObjectMap {
