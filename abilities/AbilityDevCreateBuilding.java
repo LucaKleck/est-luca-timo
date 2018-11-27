@@ -12,7 +12,9 @@ public class AbilityDevCreateBuilding extends Ability {
 
 	@Override
 	public void applyAbility(Entity source, Entity target) {
-		ObjectMap.getEntityMap().add(new Building(ObjectMap.getSelected().getSelectedMapTile().getXYPoint(), "Building", 10, 10, 1, null));
+		int level = 1;
+		int hp = 10;
+		ObjectMap.getEntityMap().add(new Building(ObjectMap.getSelected().getSelectedMapTile().getXYPoint(), "Building", hp, hp, level, null));
 	}
 
 }

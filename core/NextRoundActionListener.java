@@ -10,7 +10,7 @@ public class NextRoundActionListener implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Collect events that are passive (Building etc.)
-		
+		// TODO Collect events from enemies, they should happen before the passive ones and after the player created events
 		// Execute every event in a separate thread
 		// TODO fix the error that appears (synchronize it!)
 		for(Thread event : GameInfo.getEventQueue()) {
