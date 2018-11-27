@@ -33,7 +33,7 @@ public class Unit extends Entity {
 
 	@Override
 	public String toString() {
-		return "Unit [name=" + getName() + ", damage=" + damage + ", health=" + getMaxHealth() + ", movementRange=" + movementRange + "]";
+		return "Unit [ id="+super.getId()+", name=" + getName() + ", damage=" + damage + ", health=" + getMaxHealth() + ", movementRange=" + movementRange + "]";
 	}
 
 }

@@ -18,6 +18,7 @@ public class Event implements Runnable {
 		this.ability = ability;
 		this.effect = effect;
 		this.self = new Thread(this);
+		self.setName(source.toString()+" targets "+target.toString()+" with "+ability.getName());
 		GameInfo.getEventQueue().add(self);
 	}
 
@@ -45,5 +46,11 @@ public class Event implements Runnable {
 	public void run() {
 		ability.applyAbility(source, target);
 		GameInfo.getEventQueue().remove(self);
+	}
+
+	@Override
+	public String toString() {
+		return "Event [source=" + source + ", target=" + target + ", ability=" + ability + ", effect=" + effect
+				+ ", self=" + self + "]";
 	}
 }

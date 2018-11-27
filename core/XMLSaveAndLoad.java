@@ -234,31 +234,31 @@ public class XMLSaveAndLoad {
 	private static Node savePlayerStats(Document saveDoc) {
 		Element playerStatsElement = saveDoc.createElement("PlayerStats");
 		
-		Element clicks = saveDoc.createElement("clicks");
+		Element clicks = saveDoc.createElement(CLICKS);
 		clicks.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getClicks()));
 		playerStatsElement.appendChild(clicks);
 		
-		Element unitsKilled = saveDoc.createElement("unitsKilled");
+		Element unitsKilled = saveDoc.createElement(UNITS_KILLED);
 		unitsKilled.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getUnitsKilled()));
 		playerStatsElement.appendChild(unitsKilled);
 		
-		Element buildingsDestroyed = saveDoc.createElement("buildingsDestroyed");
+		Element buildingsDestroyed = saveDoc.createElement(BUILDINGS_DESTROYED);
 		buildingsDestroyed.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getBuildingsDestroyed()));
 		playerStatsElement.appendChild(buildingsDestroyed);
 		
-		Element damageDealt = saveDoc.createElement("damageDealt");
+		Element damageDealt = saveDoc.createElement(DAMAGE_DEALT);
 		damageDealt.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getDamageDealt()));
 		playerStatsElement.appendChild(damageDealt);
 		
-		Element unitsCreated = saveDoc.createElement("unitsCreated");
+		Element unitsCreated = saveDoc.createElement(UNITS_CREATED);
 		unitsCreated.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getUnitsCreated()));
 		playerStatsElement.appendChild(unitsCreated);
 		
-		Element buildingsBuilt = saveDoc.createElement("buildingsBuilt");
+		Element buildingsBuilt = saveDoc.createElement(BUILDINGS_BUILT);
 		buildingsBuilt.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getBuildingsBuilt()));
 		playerStatsElement.appendChild(buildingsBuilt);
 		
-		Element timePlayedMins = saveDoc.createElement("timePlayedMins");
+		Element timePlayedMins = saveDoc.createElement(TIME_PLAYED_MINS);
 		timePlayedMins.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getTimePlayedMins()));
 		playerStatsElement.appendChild(timePlayedMins);
 		

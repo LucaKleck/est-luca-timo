@@ -8,7 +8,9 @@ import core.Event;
 import map.ObjectMap;
 
 public class Entity {
-
+	private static int entityCount;
+	
+	private int id;
 	private int xPos;
 	private int yPos;
 	private String name;
@@ -20,6 +22,8 @@ public class Entity {
 	private Event event = null;
 	
 	public Entity(int xPos, int yPos, String name, int maxHealth, ArrayList<Ability> abilities) {
+		entityCount++;
+		this.id = entityCount;
 		this.name = name;
 		this.maxHealth = maxHealth;
 		this.currentHealth = maxHealth;
@@ -29,6 +33,8 @@ public class Entity {
 	}
 	
 	public Entity(Point pointXY, String name, int maxHealth, ArrayList<Ability> abilities) {
+		entityCount++;
+		this.id = entityCount;
 		this.name = name;
 		this.maxHealth = maxHealth;
 		this.currentHealth = maxHealth;
@@ -96,8 +102,9 @@ public class Entity {
 
 	@Override
 	public String toString() {
-		return "Entity [name=" + name + ", maxRange=" + maxRange + ", maxHealth=" + maxHealth + ", currentHealth="
-				+ currentHealth + ", xPos=" + xPos + ", yPos=" + yPos + ", abilities=" + abilities + "]";
+		return "Entity [id=" + id + ", xPos=" + xPos + ", yPos=" + yPos + ", name=" + name + ", maxHealth=" + maxHealth
+				+ ", currentHealth=" + currentHealth + ", abilities=" + abilities + ", level=" + level + ", maxRange="
+				+ maxRange + ", event=" + event + "]";
 	}
 
 	public boolean hasAbility() {
@@ -119,7 +126,26 @@ public class Entity {
 	}
 
 	public void setEvent(Event event) {
+		if(this.event != null) {
+			this.event.cancleEvent();
+			this.event=null;
+			System.gc();
+		}
 		this.event = event;
+		//System.out.println(event.toString());
+		//System.out.println(GameInfo.getEventQueue());
+	}
+
+	public static int getEntityCount() {
+		return entityCount;
+	}
+
+	public static void setEntityCount(int entityCount) {
+		Entity.entityCount = entityCount;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 }
