@@ -1,5 +1,6 @@
 package entity;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 import abilities.Ability;
@@ -24,6 +25,15 @@ public class Entity {
 		this.currentHealth = maxHealth;
 		this.xPos = xPos;
 		this.yPos = yPos;
+		this.abilities = abilities;
+	}
+	
+	public Entity(Point pointXY, String name, int maxHealth, ArrayList<Ability> abilities) {
+		this.name = name;
+		this.maxHealth = maxHealth;
+		this.currentHealth = maxHealth;
+		this.xPos = (int) pointXY.getX();
+		this.yPos = (int) pointXY.getY();
 		this.abilities = abilities;
 	}
 

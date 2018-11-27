@@ -1,5 +1,6 @@
 package entity.unit;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 import abilities.Ability;
@@ -12,6 +13,12 @@ public class Unit extends Entity {
 
 	public Unit(int xPos, int yPos, String name, int health,  int damage,  int movementRange, ArrayList<Ability> abilities) {
 		super(xPos, yPos, name, health, abilities);
+		this.damage = damage;
+		this.movementRange = movementRange;
+	}
+	
+	public Unit(Point pointXY, String name, int health,  int damage,  int movementRange, ArrayList<Ability> abilities) {
+		super(pointXY, name, health, abilities);
 		this.damage = damage;
 		this.movementRange = movementRange;
 	}

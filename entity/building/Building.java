@@ -1,5 +1,6 @@
 package entity.building;
 
+import java.awt.Point;
 import java.util.ArrayList;
 
 import abilities.Ability;
@@ -21,6 +22,11 @@ public class Building extends Entity {
 	public Building(int xPos, int yPos, String name, int health, ArrayList<Ability> abilities) {
 		super(xPos, yPos, name, health, abilities);
 		ressources = new BuildingRessources (xPos, yPos, name);
+	}
+	
+	public Building(Point pointXY, String name, int health, ArrayList<Ability> abilities) {
+		super(pointXY, name, health, abilities);
+		ressources = new BuildingRessources (getXPos(), getYPos(), name);
 	}
 	
 	

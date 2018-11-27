@@ -67,11 +67,8 @@ public class XMLSaveAndLoad {
 		File saves = new File(xmlFilePath);
 
     	if (saves.exists()) {
-
     	} else if (saves.mkdirs()) {
-    		
     	} else {
-
     	}
     	xmlFilePath += File.separator + saveName+".xml";
 	}

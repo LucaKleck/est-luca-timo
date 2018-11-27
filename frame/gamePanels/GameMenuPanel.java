@@ -112,10 +112,11 @@ public class GameMenuPanel extends JPanel {
 				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mnDev.add(mntmSendLogLine);
 
-		mntmGenerateDefaultUnit = new JMenuItem("generate default unit ability");
+		mntmGenerateDefaultUnit = new JMenuItem("generate warrior ability");
 		mntmGenerateDefaultUnit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmGenerateDefaultUnit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				ObjectMap.getSelected().removeSelected();
 				ObjectMap.getSelected().setSelectedAbility(new AbilityDevCreateUnit());
 			}
 		});

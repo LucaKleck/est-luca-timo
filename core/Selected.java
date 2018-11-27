@@ -3,12 +3,9 @@ package core;
 import java.awt.Point;
 
 import abilities.Ability;
-import abilities.AbilityDevCreateBuilding;
-import abilities.AbilityDevCreateUnit;
 import entity.Entity;
 import entity.building.Building;
 import entity.unit.Unit;
-import entity.unit.Warrior;
 import frame.gamePanels.AbilityPanel;
 import frame.gamePanels.BuildingPanel;
 import frame.gamePanels.InfoPanel;
@@ -77,21 +74,19 @@ public class Selected {
 					break;
 				// dev mode
 				case 69:
-					System.out.println(selectedAbility.getName());
-					if(selectedAbility instanceof AbilityDevCreateUnit ) {
+					try {
 						selectedMapTile = ObjectMap.getMap()[x][y];
-						ObjectMap.getEntityMap().add(new Warrior(x, y, "devUnit"));
+						selectedAbility.applyAbility(null, null);
 						setSelectedAbility(null);
 						InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
-					} else if(selectedAbility instanceof AbilityDevCreateBuilding) {
-						selectedMapTile = ObjectMap.getMap()[x][y];
-						ObjectMap.getEntityMap().add(new Building(x, y, "devBuilding", 10, null) );
-						setSelectedAbility(null);
-						InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
+						MapPanel.getMapImage().redraw();
+					} catch (NullPointerException | IndexOutOfBoundsException ex) {
+						removeSelected();
 					}
-					MapPanel.getMapImage().redraw();
+					
 				break;
-				default: // == 10 (maybe reset everything)
+				default: // == 10 (reset everything)
+					removeSelected();
 				break;
 			}
 		} else {
@@ -224,6 +219,8 @@ public class Selected {
 		this.selectedEntity = null;
 		this.selectedMapTile = null;
 		AbilityPanel.checkAbilities();
+		InfoPanel.refresh();
+		MapPanel.getMapImage().redrawSelection();
 		changeSelectionMode();
 	}
 }

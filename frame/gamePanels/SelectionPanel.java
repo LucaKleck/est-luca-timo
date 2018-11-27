@@ -91,6 +91,10 @@ public class SelectionPanel extends JScrollPane {
 		setColumnHeaderView(headerPanel);
 
 		JLabel lblSelectMenu = new JLabel("Select Menu");
+		if(ObjectMap.getSelected().getSelectionMode() == 3 || ObjectMap.getSelected().getSelectionMode() == 5) {
+			lblSelectMenu.setText("Select Target Menu");
+			// TODO remove currently selected entity from list
+		}
 		lblSelectMenu.setForeground(Color.LIGHT_GRAY);
 		lblSelectMenu.setFont(new Font("MS PGothic", Font.BOLD, 13));
 
