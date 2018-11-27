@@ -16,16 +16,16 @@ public class Building extends Entity {
 	public static final String METAL_GETTER = "Metalforge";
 	public static final String STONE_GETTER = "Stonemason";
 	public static final String MANA_GETTER = "Manastonecollector";
-	
+
 	private int efficiency;
 	
-	public Building(int xPos, int yPos, String name, int health, ArrayList<Ability> abilities) {
-		super(xPos, yPos, name, health, abilities);
+	public Building(int xPos, int yPos, String name, int maxHealth, int currentHealth, int level, ArrayList<Ability> abilities) {
+		super(xPos, yPos, name, maxHealth, currentHealth, level, abilities);
 		ressources = new BuildingRessources (xPos, yPos, name);
 	}
 	
-	public Building(Point pointXY, String name, int health, ArrayList<Ability> abilities) {
-		super(pointXY, name, health, abilities);
+	public Building(Point pointXY, String name, int maxHealth, int currentHealth, int level, ArrayList<Ability> abilities) {
+		super(pointXY, name, maxHealth, currentHealth, level, abilities);
 		ressources = new BuildingRessources (getXPos(), getYPos(), name);
 	}
 	

@@ -47,8 +47,9 @@ public class XMLSaveAndLoad {
 	private static final String MANA_STONE = "manaStone";
 	private static final String IS_ROAD = "isRoad";
 	private static final String ENTITY = "entity";
-	private static final String HEALTH = "health";
-	private static final String DAMAGE = "damage";
+	private static final String MAX_HEALTH = "maxHealth";
+	private static final String CURRENT_HEALTH = "currentHealth";
+	private static final String BASE_DAMAGE = "baseDamage";
 	private static final String MOVEMENT_RANGE = "movementRange";
 	private static final String MAP_SIZE = "mapSize";
 	private static final String CLICKS = "clicks";
@@ -58,6 +59,7 @@ public class XMLSaveAndLoad {
 	private static final String BUILDINGS_BUILT = "buildingsBuilt";
 	private static final String UNITS_CREATED = "unitsCreated";
 	private static final String TIME_PLAYED_MINS = "timePlayedMins";
+	private static final String LEVEL = "level";
 	
 	private static String xmlFilePath;
 	
@@ -139,18 +141,24 @@ public class XMLSaveAndLoad {
                int xPos = Integer.parseInt(eElement.getElementsByTagName(X_POS).item(0).getTextContent());
                int yPos = Integer.parseInt(eElement.getElementsByTagName(Y_POS).item(0).getTextContent());
                String name = eElement.getElementsByTagName(NAME).item(0).getTextContent();
-               int health = Integer.parseInt(eElement.getElementsByTagName(HEALTH).item(0).getTextContent());
-               e = new Entity(xPos, yPos, name, health, null);
+               int currentHealth = Integer.parseInt(eElement.getElementsByTagName(CURRENT_HEALTH).item(0).getTextContent());
+               int maxHealth = Integer.parseInt(eElement.getElementsByTagName(MAX_HEALTH).item(0).getTextContent());
+               int level = Integer.parseInt(eElement.getElementsByTagName(LEVEL).item(0).getTextContent());
+               
+               e = new Entity(xPos, yPos, name, maxHealth, currentHealth, 1, null);
+            		   
                if(type.matches("Unit") || type.matches("Warrior")) {
-            	   int damage = Integer.parseInt(eElement.getElementsByTagName(DAMAGE).item(0).getTextContent());
+            	   int baseDamage = Integer.parseInt(eElement.getElementsByTagName(BASE_DAMAGE).item(0).getTextContent());
             	   int movementRange = Integer.parseInt(eElement.getElementsByTagName(MOVEMENT_RANGE).item(0).getTextContent());
-            	   e = new Unit(xPos, yPos,  name, health, damage, movementRange, null);
+            	   
+            	   e = new Unit(xPos, yPos, name, maxHealth, currentHealth, level, baseDamage, movementRange, null);
+            	   
             	   if(type.matches("Warrior")) {
-            		   e = new Warrior(xPos, yPos, name);
+            		   e = new Warrior(xPos, yPos, name, currentHealth, level);
             	   }
                }
                if(type.matches("Building")) {
-            	   e = new Building(xPos, yPos, name, health, null);
+            	   e = new Building(xPos, yPos, name, maxHealth, currentHealth, level, null);
                }
                entityMap.add(e);
             }
@@ -397,14 +405,22 @@ public class XMLSaveAndLoad {
 					    name.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getName()) );
 					    entity.appendChild(name);
 					    
-					    Element health = save.createElement(HEALTH);
-					    health.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getCurrentHealth()) );
-					    entity.appendChild(health);
+					    Element maxHealth = save.createElement(MAX_HEALTH);
+					    maxHealth.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getMaxHealth()) );
+					    entity.appendChild(maxHealth);
+					    
+					    Element currentHealth = save.createElement(CURRENT_HEALTH);
+					    currentHealth.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getCurrentHealth()) );
+					    entity.appendChild(currentHealth);
+					    
+					    Element level = save.createElement(LEVEL);
+					    level.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getLevel()) );
+					    entity.appendChild(level);
 					    
 					    // things every unit has
 		    			if(ObjectMap.getEntityMap().get(i) instanceof Unit) {
-		    				Element damage = save.createElement(DAMAGE);
-		    				damage.appendChild(save.createTextNode(""+((Unit) ObjectMap.getEntityMap().get(i)).getDamage() ) );
+		    				Element damage = save.createElement(BASE_DAMAGE);
+		    				damage.appendChild(save.createTextNode(""+((Unit) ObjectMap.getEntityMap().get(i)).getBaseDamage() ) );
 						    entity.appendChild(damage);
 						    
 						    Element movementRange = save.createElement(MOVEMENT_RANGE);

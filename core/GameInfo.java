@@ -29,7 +29,7 @@ public class GameInfo {
 		return playerStats;
 	}
 	
-	public static ArrayList<Thread> getEventQueue() {
+	public static synchronized ArrayList<Thread> getEventQueue() {
 		return eventQueue;
 	}
 	

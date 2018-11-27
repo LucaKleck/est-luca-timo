@@ -10,16 +10,16 @@ public class Event implements Runnable {
 	private Entity target;
 	private Ability ability;
 	private Effect effect;
-	private Thread self;
+	private Thread selfEventThread;
 	
 	public Event(Entity source, Entity target, Ability ability, Effect effect) {
 		this.source = source;
 		this.target = target;
 		this.ability = ability;
 		this.effect = effect;
-		this.self = new Thread(this);
-		self.setName(source.toString()+" targets "+target.toString()+" with "+ability.getName());
-		GameInfo.getEventQueue().add(self);
+		this.selfEventThread = new Thread(this);
+		selfEventThread.setName(source.toString()+" targets "+target.toString()+" with "+ability.getName());
+		GameInfo.getEventQueue().add(selfEventThread);
 	}
 
 	public Entity getSource() {
@@ -39,18 +39,18 @@ public class Event implements Runnable {
 	}
 
 	public void cancleEvent() {
-		GameInfo.getEventQueue().remove(self);
+		GameInfo.getEventQueue().remove(selfEventThread);
 	}
 	
 	@Override
 	public void run() {
 		ability.applyAbility(source, target);
-		GameInfo.getEventQueue().remove(self);
+		cancleEvent();
 	}
 
 	@Override
 	public String toString() {
 		return "Event [source=" + source + ", target=" + target + ", ability=" + ability + ", effect=" + effect
-				+ ", self=" + self + "]";
+				+ ", self=" + selfEventThread + "]";
 	}
 }

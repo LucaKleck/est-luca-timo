@@ -21,25 +21,27 @@ public class Entity {
 	private int maxRange = 5; // Will be calculated via the abilities in the future
 	private Event event = null;
 	
-	public Entity(int xPos, int yPos, String name, int maxHealth, ArrayList<Ability> abilities) {
+	public Entity(int xPos, int yPos, String name, int maxHealth, int currentHealth, int level, ArrayList<Ability> abilities) {
 		entityCount++;
 		this.id = entityCount;
 		this.name = name;
 		this.maxHealth = maxHealth;
-		this.currentHealth = maxHealth;
+		this.currentHealth = currentHealth;
 		this.xPos = xPos;
 		this.yPos = yPos;
+		this.level = level;
 		this.abilities = abilities;
 	}
 	
-	public Entity(Point pointXY, String name, int maxHealth, ArrayList<Ability> abilities) {
+	public Entity(Point pointXY, String name, int maxHealth, int currentHealth, int level, ArrayList<Ability> abilities) {
 		entityCount++;
 		this.id = entityCount;
 		this.name = name;
 		this.maxHealth = maxHealth;
-		this.currentHealth = maxHealth;
+		this.currentHealth = currentHealth;
 		this.xPos = (int) pointXY.getX();
 		this.yPos = (int) pointXY.getY();
+		this.level = level;
 		this.abilities = abilities;
 	}
 
@@ -134,14 +136,6 @@ public class Entity {
 		this.event = event;
 		//System.out.println(event.toString());
 		//System.out.println(GameInfo.getEventQueue());
-	}
-
-	public static int getEntityCount() {
-		return entityCount;
-	}
-
-	public static void setEntityCount(int entityCount) {
-		Entity.entityCount = entityCount;
 	}
 
 	public int getId() {

@@ -1,16 +1,19 @@
 package frame.gamePanels;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
 import core.GameInfo;
+import core.NextRoundActionListener;
 import frame.MainJFrame;
 import net.miginfocom.swing.MigLayout;
-import java.awt.FlowLayout;
-import javax.swing.JLabel;
 
 /**
  * Contains all JPanels that are used for the game
@@ -28,6 +31,7 @@ public class MainGamePanel extends JLayeredPane {
 	private JPanel resourcesPanel;
 	private GameMenuPanel menuPanel;
 	private JLabel lblResourcesLable;
+	private JButton btnNextRound;
 
 	public MainGamePanel() { // x // y
 		// 0 1 0 1 2 3
@@ -75,6 +79,12 @@ public class MainGamePanel extends JLayeredPane {
 		infoPanel = new InfoPanel();
 		setLayer(infoPanel, 2);
 		add(infoPanel, "cell 1 2 1 2,grow");
+		
+		btnNextRound = new JButton("Next Round");
+		btnNextRound.setForeground(Color.LIGHT_GRAY);
+		btnNextRound.setBackground(Color.DARK_GRAY);
+		btnNextRound.addActionListener(new NextRoundActionListener());
+		infoPanel.setRowHeaderView(btnNextRound);
 
 	}
 

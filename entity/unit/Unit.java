@@ -8,18 +8,18 @@ import entity.Entity;
 
 public class Unit extends Entity {
 
-	private int damage;
+	private int baseDamage;
 	private int movementRange;
 
-	public Unit(int xPos, int yPos, String name, int health,  int damage,  int movementRange, ArrayList<Ability> abilities) {
-		super(xPos, yPos, name, health, abilities);
-		this.damage = damage;
+	public Unit(int xPos, int yPos, String name, int maxHealth, int currentHealth, int level,  int baseDamage,  int movementRange, ArrayList<Ability> abilities) {
+		super(xPos, yPos, name, maxHealth, currentHealth, level, abilities);
+		this.baseDamage = baseDamage;
 		this.movementRange = movementRange;
 	}
 	
-	public Unit(Point pointXY, String name, int health,  int damage,  int movementRange, ArrayList<Ability> abilities) {
-		super(pointXY, name, health, abilities);
-		this.damage = damage;
+	public Unit(Point pointXY, String name, int maxHealth, int currentHealth, int level,  int baseDamage,  int movementRange, ArrayList<Ability> abilities) {
+		super(pointXY, name, maxHealth, currentHealth, level, abilities);
+		this.baseDamage = baseDamage;
 		this.movementRange = movementRange;
 	}
 
@@ -27,13 +27,13 @@ public class Unit extends Entity {
 		return movementRange;
 	}
 
-	public int getDamage() {
-		return damage;
+	public int getBaseDamage() {
+		return baseDamage;
 	}
 
 	@Override
 	public String toString() {
-		return "Unit [ id="+super.getId()+", name=" + getName() + ", damage=" + damage + ", health=" + getMaxHealth() + ", movementRange=" + movementRange + "]";
+		return "Unit [ id="+super.getId()+", name=" + getName() + ", damage=" + baseDamage + ", health=" + getMaxHealth() + ", movementRange=" + movementRange + "]";
 	}
 
 }
