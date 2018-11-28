@@ -146,6 +146,9 @@ public class MapImage implements ImageObserver {
 			if(!top && right && !bottom && left && !topLeft && !topRight && !bottomLeft && !bottomRight) {
 				return forestImageLeftRight;
 			}
+			if(!top && !right && bottom && !left && !topLeft && !topRight && !bottomLeft && !bottomRight) {
+				return forestImageTopBottom;
+			}
 			if(!top && !right && !bottom && !left && !topLeft && !topRight && !bottomLeft && !bottomRight) {
 				return forestImage;
 			}
@@ -157,7 +160,6 @@ public class MapImage implements ImageObserver {
 		} else {
 			return plainImage;
 		}
-		return null;
 	}
 
 	private boolean checkTopRight(int x, int y, int type) {
