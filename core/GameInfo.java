@@ -4,11 +4,19 @@ import java.util.ArrayList;
 
 import map.ObjectMap;
 
+/**
+ * @author Luca Kleck
+ *
+ */
 public class GameInfo {
 	private static ObjectMap objectMap;
 	private static PlayerStats playerStats;
 	private static ArrayList<Thread> eventQueue;
 	
+	/**
+	 * @param objectMap - map you want to put into the current game
+	 * @param playerStats - player stats you want to load
+	 */
 	public GameInfo(ObjectMap objectMap, PlayerStats playerStats) {
 		GameInfo.objectMap = objectMap;
 		GameInfo.playerStats = playerStats;

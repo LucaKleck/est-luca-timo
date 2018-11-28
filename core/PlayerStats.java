@@ -1,6 +1,9 @@
 package core;
 
 
+/**
+ * @author Luca Kleck
+ */
 public class PlayerStats {
 	
 	private int clicks = 0;

@@ -134,6 +134,11 @@ public class Core {
 		return controlInput;
 	}
 
+	/**
+	 * @author Luca Kleck
+	 * @param settingName - setting name of the setting you want to get information of
+	 * @return current state of setting
+	 */
 	public static String getSetting(String settingName) {
 		String settingString = null;
 		
@@ -159,6 +164,11 @@ public class Core {
 		return settingString;
 	}
 	
+	/**
+	 * @author Luca Kleck
+	 * @param settingName - setting you want to reach
+	 * @param state - state you want to put it into
+	 */
 	public static void saveSetting(String settingName, String state) {
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder dBuilder = null;

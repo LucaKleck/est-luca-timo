@@ -21,6 +21,9 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import core.Core;
 
+/**
+ * @author Luca Kleck
+ */
 public class LogPanel extends JScrollPane {
 	private static final long serialVersionUID = 123L;
 	private static JTextArea log = new JTextAreaLog();

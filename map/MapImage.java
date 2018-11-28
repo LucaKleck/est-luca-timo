@@ -36,11 +36,17 @@ public class MapImage implements ImageObserver {
 	// external resources
 	private static BufferedImage plainImage;
 	private static BufferedImage forestImage;
+	private static BufferedImage forestImage192;
+	private static BufferedImage forestImageLeftRight;
+	private static BufferedImage forestImageTopBottom;
 
 	public MapImage(int width, int height) {
 		try {
 			plainImage = ImageIO.read( Boot.class.getResource("/resources/plain.png") );
 			forestImage = ImageIO.read( Boot.class.getResource("/resources/forest.png") );
+			forestImage192 = ImageIO.read( Boot.class.getResource("/resources/forest192.png") );
+			forestImageLeftRight = ImageIO.read( Boot.class.getResource("/resources/forestLeftRight.png") );
+			forestImageTopBottom = ImageIO.read( Boot.class.getResource("/resources/forestTopBottom.png") );
 		} catch (IOException e) {
 		}
 
@@ -122,9 +128,27 @@ public class MapImage implements ImageObserver {
 	}
 	
 	private BufferedImage getImageForTile(int x, int y) {
+		boolean top = checkTop(x, y, ObjectMap.getMap()[x][y].getType());
+		boolean right = checkRight(x, y, ObjectMap.getMap()[x][y].getType());
+		boolean bottom = checkBottom(x, y, ObjectMap.getMap()[x][y].getType());
+		boolean left = checkLeft(x, y, ObjectMap.getMap()[x][y].getType());
+		boolean topLeft = checkTopLeft(x, y, ObjectMap.getMap()[x][y].getType());
+		boolean topRight = checkTopRight(x, y, ObjectMap.getMap()[x][y].getType());
+		boolean bottomLeft = checkBottomLeft(x, y, ObjectMap.getMap()[x][y].getType());
+		boolean bottomRight = checkBottomRight(x, y, ObjectMap.getMap()[x][y].getType());
+		
 		if (ObjectMap.getMap()[x][y].getName().matches("Plain")) {
 			return plainImage;
 		} else if (ObjectMap.getMap()[x][y].getName().matches("Forest") ) {
+			if(top && right && bottom && left && topLeft && topRight && bottomLeft && bottomRight) {
+				return forestImage192.getSubimage(64, 64, 64, 64);
+			}
+			if(!top && right && !bottom && left && !topLeft && !topRight && !bottomLeft && !bottomRight) {
+				return forestImageLeftRight;
+			}
+			if(!top && !right && !bottom && !left && !topLeft && !topRight && !bottomLeft && !bottomRight) {
+				return forestImage;
+			}
 			return forestImage;
 		} else if (ObjectMap.getMap()[x][y].getName().matches("Mountain") ) {
 			return plainImage;
@@ -133,6 +157,95 @@ public class MapImage implements ImageObserver {
 		} else {
 			return plainImage;
 		}
+		return null;
+	}
+
+	private boolean checkTopRight(int x, int y, int type) {
+		boolean flag = false;
+		try {
+			if(ObjectMap.getMap()[(x+1)][y-1].getType() == type) {
+				flag = true;
+			}
+		} catch (IndexOutOfBoundsException iex) {
+		}
+		return flag;
+	}
+
+	private boolean checkBottomLeft(int x, int y, int type) {
+		boolean flag = false;
+		try {
+			if(ObjectMap.getMap()[(x-1)][y+1].getType() == type) {
+				flag = true;
+			}
+		} catch (IndexOutOfBoundsException iex) {
+		}
+		return flag;
+	}
+
+	private boolean checkBottomRight(int x, int y, int type) {
+		boolean flag = false;
+		try {
+			if(ObjectMap.getMap()[(x+1)][y+1].getType() == type) {
+				flag = true;
+			}
+		} catch (IndexOutOfBoundsException iex) {
+		}
+		return flag;
+	}
+
+	private boolean checkTopLeft(int x, int y, int type) {
+		boolean flag = false;
+		try {
+			if(ObjectMap.getMap()[(x-1)][y-1].getType() == type) {
+				flag = true;
+			}
+		} catch (IndexOutOfBoundsException iex) {
+		}
+		return flag;
+	}
+
+	private boolean checkLeft(int x, int y, int type) {
+		boolean flag = false;
+		try {
+			if(ObjectMap.getMap()[(x-1)][y].getType() == type) {
+				flag = true;
+			}
+		} catch (IndexOutOfBoundsException iex) {
+		}
+		return flag;
+	}
+
+	private boolean checkBottom(int x, int y, int type) {
+		boolean flag = false;
+		try {
+			if(ObjectMap.getMap()[(x)][y+1].getType() == type) {
+				flag = true;
+			}
+		} catch (IndexOutOfBoundsException iex) {
+		}
+		return flag;
+	}
+
+	private boolean checkRight(int x, int y, int type) {
+		boolean flag = false;
+		try {
+			if(ObjectMap.getMap()[(x+1)][y].getType() == type) {
+				flag = true;
+			}
+		} catch (IndexOutOfBoundsException iex) {
+		}
+		return flag;
+	}
+
+	private boolean checkTop(int x, int y, int type) {
+		boolean flag = false;
+		try {
+			if(ObjectMap.getMap()[(x)][y-1].getType() == type) {
+				flag = true;
+			}
+		} catch (IndexOutOfBoundsException iex) {
+		}
+		return flag;
 	}
 
 	public static int getImageHeight() {

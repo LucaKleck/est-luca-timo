@@ -49,7 +49,7 @@ public class MapCreator {
 	 * 4. reduce the vector's length by 1-2 for x or/and y, maybe swap x and y, negate them to change direction or maybe split into another vector that will call a similar method with predefined point and vector <br>
 	 * 5. use the end point of the last vector as start point and repeat from step 3 until vector is too small <br>
 	 *<br>
-	 * @param map @see {@link MapTile}
+	 * @param map - 2D array of @see {@link MapTile}
 	 */
 	private static void plantTrees(MapTile[][] map) {
 		for (int forests = 1; forests < MapCreator.forestCount; forests++) {
