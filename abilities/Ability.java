@@ -10,6 +10,7 @@ public abstract class Ability {
 	// Unit Abilities
 	public static final String ABILITY_FIRE_BALL = "Fireball";
 	public static final String ABILITY_MELEE = "Melee";
+	public static final String ABILITY_MOVE = "Move";
 	
 	// Building Abilities
 	public static final String ABILITY_COLLECT_RESOURCES = "Collect Resources";

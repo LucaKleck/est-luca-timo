@@ -38,14 +38,14 @@ public class Event implements Runnable {
 		return effect;
 	}
 
-	public void cancleEvent() {
+	public void cancelEvent() {
 		GameInfo.getEventQueue().remove(selfEventThread);
 	}
 	
 	@Override
 	public void run() {
 		ability.applyAbility(source, target);
-		cancleEvent();
+		cancelEvent();
 	}
 
 	@Override

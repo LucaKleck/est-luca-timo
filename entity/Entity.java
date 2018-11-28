@@ -7,12 +7,10 @@ import abilities.Ability;
 import core.Event;
 import map.ObjectMap;
 
-public class Entity {
+public class Entity extends Target {
 	private static int entityCount;
 	
 	private int id;
-	private int xPos;
-	private int yPos;
 	private String name;
 	private int maxHealth;
 	private int currentHealth;
@@ -26,9 +24,8 @@ public class Entity {
 		this.id = entityCount;
 		this.name = name;
 		this.maxHealth = maxHealth;
-		this.currentHealth = currentHealth;
-		this.xPos = xPos;
-		this.yPos = yPos;
+		super.xPos = xPos;
+		super.yPos = yPos;
 		this.level = level;
 		this.abilities = abilities;
 	}
@@ -38,7 +35,6 @@ public class Entity {
 		this.id = entityCount;
 		this.name = name;
 		this.maxHealth = maxHealth;
-		this.currentHealth = currentHealth;
 		this.xPos = (int) pointXY.getX();
 		this.yPos = (int) pointXY.getY();
 		this.level = level;
@@ -51,6 +47,14 @@ public class Entity {
 
 	public int getYPos() {
 		return yPos;
+	}
+
+	public void setxPos(int xPos) {
+		this.xPos = xPos;
+	}
+
+	public void setyPos(int yPos) {
+		this.yPos = yPos;
 	}
 
 	public String getName() {
@@ -129,7 +133,7 @@ public class Entity {
 
 	public void setEvent(Event event) {
 		if(this.event != null) {
-			this.event.cancleEvent();
+			this.event.cancelEvent();
 			this.event=null;
 			System.gc();
 		}

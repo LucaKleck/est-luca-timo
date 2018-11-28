@@ -26,7 +26,12 @@ public class Unit extends Entity {
 	public int getMovementRange() {
 		return movementRange;
 	}
-
+	
+	public void setPosition(int xPos, int yPos) {
+		this.setxPos(xPos);
+		this.setyPos(yPos);
+	}
+	
 	public int getBaseDamage() {
 		return baseDamage;
 	}

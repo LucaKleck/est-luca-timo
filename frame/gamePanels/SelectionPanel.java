@@ -123,7 +123,7 @@ public class SelectionPanel extends JScrollPane {
 
 		headerPanel.add(lblSelectMenu);
 
-		for (int i = 0; i < selectedEntityElementList.size(); i++) {
+		for (int i = 0; i < selectedEntityElementList.size() + 1; i++) {
 			viewportPanel.add(selectedEntityElementList.get(i), ("cell 0 " + i + ", grow"));
 		}
 
