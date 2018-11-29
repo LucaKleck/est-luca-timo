@@ -1,6 +1,7 @@
 package abilities;
 
 import entity.Entity;
+import map.ObjectMap;
 
 public class Move extends Ability {
 	
@@ -10,9 +11,9 @@ public class Move extends Ability {
 
 	@Override
 	public void applyAbility(Entity source, Entity target) {
-		// TODO Auto-generated method stub
-		
+		if(source.equals(target)) {
+			source.setPoint(ObjectMap.getSelected().getSelectedMapTile().getXYPoint());
+		}
 	}
-
 }
 

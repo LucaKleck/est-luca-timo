@@ -18,26 +18,31 @@ public class Entity extends Target {
 	private int level = 1;
 	private int maxRange = 5; // Will be calculated via the abilities in the future
 	private Event event = null;
+	private boolean controlable = false;
 	
-	public Entity(int xPos, int yPos, String name, int maxHealth, int currentHealth, int level, ArrayList<Ability> abilities) {
+	public Entity(int xPos, int yPos, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
 		entityCount++;
 		this.id = entityCount;
 		this.name = name;
 		this.maxHealth = maxHealth;
+		this.currentHealth = currentHealth;
 		super.xPos = xPos;
 		super.yPos = yPos;
 		this.level = level;
+		this.controlable = controlable;
 		this.abilities = abilities;
 	}
 	
-	public Entity(Point pointXY, String name, int maxHealth, int currentHealth, int level, ArrayList<Ability> abilities) {
+	public Entity(Point pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
 		entityCount++;
 		this.id = entityCount;
 		this.name = name;
 		this.maxHealth = maxHealth;
+		this.currentHealth = currentHealth;
 		this.xPos = (int) pointXY.getX();
 		this.yPos = (int) pointXY.getY();
 		this.level = level;
+		this.controlable = controlable;
 		this.abilities = abilities;
 	}
 
@@ -57,6 +62,11 @@ public class Entity extends Target {
 		this.yPos = yPos;
 	}
 
+	public void setPoint(Point pointXY) {
+		this.xPos = (int) pointXY.getX();
+		this.yPos = (int) pointXY.getY();
+	}
+	
 	public String getName() {
 		return name;
 	}
@@ -92,6 +102,10 @@ public class Entity extends Target {
 	
 	public void addLevel() {
 		level ++;
+	}
+	
+	public boolean getControlable() {
+		return controlable;
 	}
 	
 	private void destroy() {

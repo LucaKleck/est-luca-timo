@@ -60,6 +60,7 @@ public class XMLSaveAndLoad {
 	private static final String UNITS_CREATED = "unitsCreated";
 	private static final String TIME_PLAYED_MINS = "timePlayedMins";
 	private static final String LEVEL = "level";
+	private static final String CONTROLABLE = "controlable";
 	
 	private static String xmlFilePath;
 	
@@ -144,21 +145,22 @@ public class XMLSaveAndLoad {
                int currentHealth = Integer.parseInt(eElement.getElementsByTagName(CURRENT_HEALTH).item(0).getTextContent());
                int maxHealth = Integer.parseInt(eElement.getElementsByTagName(MAX_HEALTH).item(0).getTextContent());
                int level = Integer.parseInt(eElement.getElementsByTagName(LEVEL).item(0).getTextContent());
+               boolean controlable = new Boolean(eElement.getElementsByTagName(CONTROLABLE).item(0).getTextContent());
                
-               e = new Entity(xPos, yPos, name, maxHealth, currentHealth, 1, null);
+               e = new Entity(xPos, yPos, name, maxHealth, currentHealth, level, controlable, null);
             		   
                if(type.matches("Unit") || type.matches("Warrior")) {
             	   int baseDamage = Integer.parseInt(eElement.getElementsByTagName(BASE_DAMAGE).item(0).getTextContent());
             	   int movementRange = Integer.parseInt(eElement.getElementsByTagName(MOVEMENT_RANGE).item(0).getTextContent());
             	   
-            	   e = new Unit(xPos, yPos, name, maxHealth, currentHealth, level, baseDamage, movementRange, null);
+            	   e = new Unit(xPos, yPos, name, maxHealth, currentHealth, level, controlable, baseDamage, movementRange, null);
             	   
             	   if(type.matches("Warrior")) {
-            		   e = new Warrior(xPos, yPos, name, currentHealth, level);
+            		   e = new Warrior(xPos, yPos, name, currentHealth, level, controlable);
             	   }
                }
                if(type.matches("Building")) {
-            	   e = new Building(xPos, yPos, name, maxHealth, currentHealth, level, null);
+            	   e = new Building(xPos, yPos, name, maxHealth, currentHealth, level, controlable, null);
                }
                entityMap.add(e);
             }
@@ -412,10 +414,14 @@ public class XMLSaveAndLoad {
 					    Element currentHealth = save.createElement(CURRENT_HEALTH);
 					    currentHealth.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getCurrentHealth()) );
 					    entity.appendChild(currentHealth);
-					    
+
 					    Element level = save.createElement(LEVEL);
 					    level.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getLevel()) );
 					    entity.appendChild(level);
+
+					    Element controlable = save.createElement(CONTROLABLE);
+					    controlable.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getLevel()) );
+					    entity.appendChild(controlable);
 					    
 					    // things every unit has
 		    			if(ObjectMap.getEntityMap().get(i) instanceof Unit) {

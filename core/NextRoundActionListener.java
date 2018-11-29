@@ -13,12 +13,11 @@ public class NextRoundActionListener implements ActionListener {
 		// TODO Collect events from enemies, they should happen before the passive ones and after the player created events
 		// Execute every event in a separate thread
 		// TODO fix the error that appears (synchronize it!)
-		for(Thread event : GameInfo.getEventQueue()) {
+		for(Event event : GameInfo.getRoundInfo().getEventList()) {
 			System.out.println("----------");
-			System.out.println(GameInfo.getEventQueue());
+			System.out.println(event);
 			System.out.println("----------");
 			EXS.execute(event);
-			return;
 		}
 		
 	}

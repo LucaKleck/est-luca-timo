@@ -3,6 +3,7 @@ package core;
 import java.awt.Point;
 
 import abilities.Ability;
+import abilities.Move;
 import entity.Entity;
 import entity.building.Building;
 import entity.unit.Unit;
@@ -70,6 +71,16 @@ public class Selected {
 					}
 				break;
 				case 3: case 5:
+					try {
+						selectedMapTile = ObjectMap.getMap()[x][y];
+					} catch(NullPointerException nl) {
+						break;
+					}
+					if(selectedAbility instanceof Move) {
+						this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, null));
+						
+						break;
+					}
 					InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
 					break;
 				// dev mode
@@ -104,6 +115,7 @@ public class Selected {
 		InfoPanel.refresh();
 		MapPanel.getMapPanelExecutor().submit(new MapPanel.RepaintMapPanel());
 		MapPanel.getMapImage().redrawSelection();
+		MapPanel.getMapImage().redrawUnitBuildingLayer();
 		System.out.println("SelectionModeEnd["+selectionMode+"]");
 		System.gc();
 	}

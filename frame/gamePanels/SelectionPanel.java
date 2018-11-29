@@ -225,7 +225,7 @@ public class SelectionPanel extends JScrollPane {
 			healthStatus.setMinimum(0);
 			healthStatus.setValue(entity.getCurrentHealth());
 			healthStatus.setStringPainted(true);
-			healthStatus.setString(entity.getMaxHealth() + "/" + entity.getCurrentHealth());
+			healthStatus.setString(entity.getCurrentHealth()+ "/" + entity.getMaxHealth() );
 			add(healthStatus, "cell 0 1,growy");
 
 		}

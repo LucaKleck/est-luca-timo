@@ -12,7 +12,7 @@ public class AbilityDevCreateUnit extends Ability {
 
 	@Override
 	public void applyAbility(Entity source, Entity target) {
-		ObjectMap.getEntityMap().add(new Warrior(ObjectMap.getSelected().getSelectedMapTile().getXYPoint(), "Warrior"));
+		ObjectMap.getEntityMap().add(new Warrior(ObjectMap.getSelected().getSelectedMapTile().getXYPoint(), "Warrior", 3, 1, true));
 	}
 
 }

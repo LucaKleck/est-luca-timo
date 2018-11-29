@@ -13,6 +13,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import core.Boot;
+import effects.MapImageEffect;
 import entity.Entity;
 import entity.building.Building;
 import entity.unit.Unit;
@@ -71,6 +72,12 @@ public class MapImage implements ImageObserver {
 			g.fillRect(ObjectMap.getSelected().getSelectedMapTile().getXPos() * mapTileSize,
 					ObjectMap.getSelected().getSelectedMapTile().getYPos() * mapTileSize, mapTileSize, mapTileSize);
 		} catch (NullPointerException e) {
+		}
+		try {
+			g.setColor(new Color(0,0,255,120));
+			g.fillRect(ObjectMap.getSelected().getSelectedEntity().getXPos() * mapTileSize,
+					ObjectMap.getSelected().getSelectedEntity().getYPos() * mapTileSize, mapTileSize, mapTileSize);
+		} catch(NullPointerException nl) {
 		}
 	}
 	
@@ -274,6 +281,10 @@ public class MapImage implements ImageObserver {
 		drawSelecionLayer();
 	}
 	
+	public void redrawUnitBuildingLayer() {
+		drawUnitBuildingLayer();
+	}
+	
 	public void redrawArea(int xStart, int xEnd, int yStart, int yEnd) {
 		int xDiff = 0;
 		int yDiff = 0;
@@ -324,12 +335,6 @@ public class MapImage implements ImageObserver {
 	@Override
 	public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		return false;
-	}
-	
-	public class Effect {
-		
-		
-		
 	}
 	
 }

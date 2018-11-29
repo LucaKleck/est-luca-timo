@@ -12,6 +12,7 @@ import javax.swing.UIManager;
 
 import core.GameInfo;
 import core.NextRoundActionListener;
+import core.RedrawActionListener;
 import frame.MainJFrame;
 import net.miginfocom.swing.MigLayout;
 
@@ -84,6 +85,7 @@ public class MainGamePanel extends JLayeredPane {
 		btnNextRound.setForeground(Color.LIGHT_GRAY);
 		btnNextRound.setBackground(Color.DARK_GRAY);
 		btnNextRound.addActionListener(new NextRoundActionListener());
+		btnNextRound.addActionListener(new RedrawActionListener());
 		infoPanel.setRowHeaderView(btnNextRound);
 
 	}
