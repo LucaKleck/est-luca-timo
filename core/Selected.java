@@ -78,7 +78,7 @@ public class Selected {
 					}
 					if(selectedAbility instanceof Move) {
 						this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, null));
-						
+						removeSelected();
 						break;
 					}
 					InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));

@@ -19,6 +19,7 @@ public class Event implements Runnable {
 		this.effect = effect;
 		this.eventThread = new Thread(this);
 		eventThread.setName(source.toString()+" targets "+target.toString()+" with "+ability.getName());
+		GameInfo.getRoundInfo().getEventList().add(this);
 	}
 
 	public Entity getSource() {

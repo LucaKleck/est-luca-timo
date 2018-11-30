@@ -19,7 +19,7 @@ public class Warrior extends Unit {
 				new ArrayList<Ability>(){
 					{
 					add(new Melee());
-					add(new Move());
+					add(new Move(new Point(xPos,yPos)));
 					} 
 				}  );
 	}
@@ -30,7 +30,7 @@ public class Warrior extends Unit {
 				new ArrayList<Ability>(){
 					{
 					add(new Melee());
-					add(new Move());
+					add(new Move(pointXY));
 					} 
 				}  );
 	}
