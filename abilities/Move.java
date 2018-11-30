@@ -7,9 +7,8 @@ import entity.Entity;
 public class Move extends Ability {
 	private Point moveToPoint;
 	
-	public Move(Point moveToPoint) {
+	public Move() {
 		super(Ability.ABILITY_MOVE);
-		this.moveToPoint = moveToPoint;
 	}
 
 	@Override
@@ -18,5 +17,14 @@ public class Move extends Ability {
 			source.setPoint(moveToPoint);
 		}
 	}
+	
+	public void setMoveToPoint(Point moveToPoint) {
+		this.moveToPoint = moveToPoint;
+	}
+	
+	public Point getMoveToPoint() {
+		return moveToPoint;
+	}
+	
 }
 

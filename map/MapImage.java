@@ -13,7 +13,7 @@ import java.util.Random;
 import javax.imageio.ImageIO;
 
 import core.Boot;
-import effects.MapImageEffect;
+import core.GameInfo;
 import entity.Entity;
 import entity.building.Building;
 import entity.unit.Unit;
@@ -30,8 +30,6 @@ public class MapImage implements ImageObserver {
 	private static final int[] BOTTOM_LEFT = {-1, 1};
 	private static final int[] BOTTOM = {0, 1};
 	private static final int[] BOTTOM_RIGHT = {1, 1};
-	
-	private static ArrayList<MapImageEffect> effectList = new ArrayList<MapImageEffect>();
 	
 	private static BufferedImage selectionLayer; // selection is drawn here
 	private static BufferedImage effectLayer; // draw unit movement arrows and so on
@@ -135,11 +133,13 @@ public class MapImage implements ImageObserver {
 
 	private void drawEffectLayer() {
 		effectLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
-		@SuppressWarnings("unused")
 		Graphics2D g = effectLayer.createGraphics();
-		for (int i = 0; i < effectList.size(); i++) {
+		for (int i = 0; i < GameInfo.getRoundInfo().getEventList().size(); i++) {
 			// draw each effect
 			// effectList needs to be cleared after the round
+			if(GameInfo.getRoundInfo().getEventList().get(i).getEffect() != null) {
+				g.drawImage(GameInfo.getRoundInfo().getEventList().get(i).getEffect(), 0, 0, imageWidth, imageHeight, null);
+			}
 		}
 	}
 	
@@ -257,12 +257,22 @@ public class MapImage implements ImageObserver {
 		drawEffectLayer();
 	}
 	
+	public void redrawUpperLayers() {
+		drawUnitBuildingLayer();
+		drawSelecionLayer();
+		drawEffectLayer();
+	}
+	
 	public void redrawSelection() {
 		drawSelecionLayer();
 	}
 	
 	public void redrawUnitBuildingLayer() {
 		drawUnitBuildingLayer();
+	}
+	
+	public void redrawEffectLayer() {
+		drawEffectLayer();
 	}
 	
 	public void redrawArea(int xStart, int xEnd, int yStart, int yEnd) {

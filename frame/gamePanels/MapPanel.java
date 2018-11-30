@@ -108,8 +108,6 @@ public class MapPanel extends JPanel implements ImageObserver {
 		}
 	}
 
-	
-
 	public static void reset() {
 		MapPanel.displacementMultiplier = DEFAULT_DISPLACEMENT;
 		MapPanel.displacementX = 0;

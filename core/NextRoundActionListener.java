@@ -5,6 +5,9 @@ import java.awt.event.ActionListener;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import frame.gamePanels.MapPanel;
+import map.ObjectMap;
+
 public class NextRoundActionListener implements ActionListener {
 	private static final ExecutorService EXS = Executors.newFixedThreadPool(1); 
 	@Override
@@ -17,9 +20,14 @@ public class NextRoundActionListener implements ActionListener {
 			System.out.println("----------");
 			System.out.println(event);
 			System.out.println("----------");
-			EXS.execute(event);
+			EXS.submit(event);
 		}
-		
+		ObjectMap.getSelected().removeSelected();
+		if(GameInfo.getRoundInfo().getEventList().isEmpty()) {
+			MapPanel.getMapImage().redrawUpperLayers(); // TODO find out why this fires so early (make it wait for event to finish)
+		} else {
+			System.out.println("Sas");
+		}
 	}
 
 }

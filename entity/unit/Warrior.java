@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import abilities.Ability;
 import abilities.Melee;
-import abilities.Move;
 
 public class Warrior extends Unit {
 
@@ -19,7 +18,6 @@ public class Warrior extends Unit {
 				new ArrayList<Ability>(){
 					{
 					add(new Melee());
-					add(new Move(new Point(xPos,yPos)));
 					} 
 				}  );
 	}
@@ -30,7 +28,6 @@ public class Warrior extends Unit {
 				new ArrayList<Ability>(){
 					{
 					add(new Melee());
-					add(new Move(pointXY));
 					} 
 				}  );
 	}

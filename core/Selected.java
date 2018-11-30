@@ -4,6 +4,7 @@ import java.awt.Point;
 
 import abilities.Ability;
 import abilities.Move;
+import effects.MoveEffect;
 import entity.Entity;
 import entity.building.Building;
 import entity.unit.Unit;
@@ -77,7 +78,8 @@ public class Selected {
 						break;
 					}
 					if(selectedAbility instanceof Move) {
-						this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, null));
+						((Unit)this.getSelectedEntity()).getMove().setMoveToPoint(selectedMapTile.getXYPoint());;
+						this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, new MoveEffect(selectedEntity, selectedEntity, (Move) selectedAbility)));
 						removeSelected();
 						break;
 					}
@@ -116,6 +118,7 @@ public class Selected {
 		MapPanel.getMapPanelExecutor().submit(new MapPanel.RepaintMapPanel());
 		MapPanel.getMapImage().redrawSelection();
 		MapPanel.getMapImage().redrawUnitBuildingLayer();
+		MapPanel.getMapImage().redrawEffectLayer();
 		System.out.println("SelectionModeEnd["+selectionMode+"]");
 		System.gc();
 	}

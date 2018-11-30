@@ -13,7 +13,7 @@ public class RoundInfo {
 		this.eventList = eventList;
 	}
 	
-	public ArrayList<Event> getEventList() {
+	public synchronized ArrayList<Event> getEventList() {
 		return eventList;
 	}
 }
