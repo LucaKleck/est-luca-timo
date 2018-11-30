@@ -45,13 +45,15 @@ public class MapImage implements ImageObserver {
 	private static BufferedImage plainImage;
 	private static BufferedImage forestImage;
 	private static BufferedImage forestImage192;
+
 	private static BufferedImage forestImageLeftRight;
 	private static BufferedImage forestImageTopBottom;
+
 	private static BufferedImage forestImageEndBottom;
 	private static BufferedImage forestImageEndLeft;
 	private static BufferedImage forestImageEndTop;
 	private static BufferedImage forestImageEndRight;
-
+	
 	public MapImage(int width, int height) {
 		try {
 			plainImage = ImageIO.read( Boot.class.getResource("/resources/plain.png") );
