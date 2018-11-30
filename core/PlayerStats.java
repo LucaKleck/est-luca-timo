@@ -1,6 +1,9 @@
 package core;
 
 
+/**
+ * @author Luca Kleck
+ */
 public class PlayerStats {
 	
 	private int clicks = 0;
@@ -161,6 +164,12 @@ public class PlayerStats {
 
 		public synchronized void addManaStone(int manaStone) {
 			this.manaStone += manaStone;
+		}
+
+		@Override
+		public String toString() {
+			return "PlayerResources [gold=" + gold + ", food=" + food + ", wood=" + wood + ", stone=" + stone
+					+ ", metal=" + metal + ", manaStone=" + manaStone + "]";
 		}
 		
 	}

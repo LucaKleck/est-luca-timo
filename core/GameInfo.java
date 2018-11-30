@@ -1,24 +1,36 @@
 package core;
 
-import java.util.ArrayList;
-
 import map.ObjectMap;
 
+/**
+ * @author Luca Kleck
+ *
+ */
 public class GameInfo {
 	private static ObjectMap objectMap;
 	private static PlayerStats playerStats;
-	private static ArrayList<Thread> eventQueue;
+	private static RoundInfo roundInfo;
+	
+	/**
+	 * @param objectMap - map you want to put into the current game
+	 * @param playerStats - player stats you want to load
+	 */
+	public GameInfo(ObjectMap objectMap, PlayerStats playerStats, RoundInfo roundInfo) {
+		GameInfo.objectMap = objectMap;
+		GameInfo.playerStats = playerStats;
+		GameInfo.roundInfo = roundInfo;
+	}
 	
 	public GameInfo(ObjectMap objectMap, PlayerStats playerStats) {
 		GameInfo.objectMap = objectMap;
 		GameInfo.playerStats = playerStats;
-		eventQueue = new ArrayList<>();
+		GameInfo.roundInfo = new RoundInfo();
 	}
 	
 	public GameInfo() {
 		GameInfo.objectMap = new ObjectMap();
 		GameInfo.playerStats = new PlayerStats();
-		eventQueue = new ArrayList<>();
+		GameInfo.roundInfo = new RoundInfo();
 	}
 
 	public static synchronized ObjectMap getObjectMap() {
@@ -29,8 +41,8 @@ public class GameInfo {
 		return playerStats;
 	}
 	
-	public static ArrayList<Thread> getEventQueue() {
-		return eventQueue;
+	public static synchronized RoundInfo getRoundInfo() {
+		return roundInfo;
 	}
 	
 }

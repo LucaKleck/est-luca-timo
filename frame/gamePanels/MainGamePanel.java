@@ -1,11 +1,18 @@
 package frame.gamePanels;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.FlowLayout;
 
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 
+import core.GameInfo;
+import core.NextRoundActionListener;
+import core.RedrawActionListener;
 import frame.MainJFrame;
 import net.miginfocom.swing.MigLayout;
 
@@ -24,6 +31,8 @@ public class MainGamePanel extends JLayeredPane {
 	private InfoPanel infoPanel;
 	private JPanel resourcesPanel;
 	private GameMenuPanel menuPanel;
+	private JLabel lblResourcesLable;
+	private JButton btnNextRound;
 
 	public MainGamePanel() { // x // y
 		// 0 1 0 1 2 3
@@ -35,6 +44,14 @@ public class MainGamePanel extends JLayeredPane {
 		resourcesPanel.setBackground(UIManager.getColor("MenuBar.background"));
 		resourcesPanel.setEnabled(false);
 		add(resourcesPanel, "cell 0 0,grow");
+		resourcesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		lblResourcesLable = new JLabel("Resources");
+		try {
+			lblResourcesLable.setText(GameInfo.getPlayerStats().getPlayerResources().toString());
+		} catch (NullPointerException nl) {
+		}
+		resourcesPanel.add(lblResourcesLable);
 
 		LogPanel logPanel = new LogPanel();
 		
@@ -63,6 +80,13 @@ public class MainGamePanel extends JLayeredPane {
 		infoPanel = new InfoPanel();
 		setLayer(infoPanel, 2);
 		add(infoPanel, "cell 1 2 1 2,grow");
+		
+		btnNextRound = new JButton("Next Round");
+		btnNextRound.setForeground(Color.LIGHT_GRAY);
+		btnNextRound.setBackground(Color.DARK_GRAY);
+		btnNextRound.addActionListener(new NextRoundActionListener());
+		btnNextRound.addActionListener(new RedrawActionListener());
+		infoPanel.setRowHeaderView(btnNextRound);
 
 	}
 

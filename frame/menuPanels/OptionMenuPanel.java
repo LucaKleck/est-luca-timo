@@ -1,6 +1,7 @@
 package frame.menuPanels;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,7 +9,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSeparator;
@@ -21,8 +21,8 @@ import javax.swing.text.NumberFormatter;
 
 import core.ControlInput;
 import core.Core;
+import core.FullscreenActionListener;
 import net.miginfocom.swing.MigLayout;
-import java.awt.Dimension;
 
 /**
  * Place where the settings for the game can be changed
@@ -97,30 +97,7 @@ public class OptionMenuPanel extends JPanel {
 		JCheckBox chckbxFullscreen = new JCheckBox("Fullscreen");
 		chckbxFullscreen.setBackground(Color.LIGHT_GRAY);
 		chckbxFullscreen.setSelected(Core.getMainJFrame().isUndecorated());
-		chckbxFullscreen.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Core.getMainJFrame().dispose();
-				// put it in the left uppermost corner
-				Core.getMainJFrame().setUndecorated(!Core.getMainJFrame().isUndecorated());
-				Core.getMainJFrame().setBounds(0, 0, 0, 0);
-				if (Core.getMainJFrame().isUndecorated()) {
-					Core.getMainJFrame().setExtendedState(JFrame.MAXIMIZED_BOTH);
-				} else {
-					Core.getMainJFrame().setExtendedState(JFrame.NORMAL);
-				}
-				Core.getMainJFrame().pack();
-				if (!Core.getMainJFrame().isUndecorated()) {
-					Core.getMainJFrame().setSize(Integer.parseInt(Core.getSetting(Core.SETTING_DEFAULT_WIDTH)), Integer.parseInt(Core.getSetting(Core.SETTING_DEFAULT_HEIGHT)));
-				}
-				Core.getMainJFrame().validate();
-
-				Core.getMainJFrame().setVisible(true);
-				
-				Core.saveSetting(Core.SETTING_FULLSCREEN, new Boolean(Core.getMainJFrame().isUndecorated()).toString() );
-			}
-		});
+		chckbxFullscreen.addActionListener(new FullscreenActionListener());
 		add(chckbxFullscreen, "cell 0 0,growx,aligny center");
 		
 		JCheckBox chckbxAskBeforeDeleting = new JCheckBox("Ask before deleting saves");

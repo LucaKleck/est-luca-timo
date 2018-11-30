@@ -14,7 +14,7 @@ public class FireBall extends Ability {
 	@Override
 	public void applyAbility(Entity source, Entity target) {
 		if(source instanceof Unit) {
-			target.setCurrentHealth(target.getCurrentHealth() - BASE_DAMAGE  + ((Unit) source).getDamage() );
+			target.setCurrentHealth(target.getCurrentHealth() - BASE_DAMAGE  + ((Unit) source).getBaseDamage() );
 		} else {
 			target.setCurrentHealth(target.getCurrentHealth() - BASE_DAMAGE);
 		}

@@ -5,7 +5,11 @@
 */
 package map;
 
-public class MapTile {
+import java.awt.Point;
+
+import entity.Target;
+
+public class MapTile extends Target {
 	public static final int TYPE_PLAIN = 0;
 	public static final int TYPE_FOREST = 1;
 	public static final int TYPE_MOUNTAIN = 2;
@@ -16,8 +20,6 @@ public class MapTile {
 	public static final String NAME_MOUNTAIN = "Mountain";
 	public static final String NAME_RIVER = "River";
 	
-	private int xPos;
-	private int yPos;
 	private int type;
 	private boolean isRoad;
 
@@ -72,6 +74,10 @@ public class MapTile {
 	
 	public boolean isRoad() {
 		return isRoad;
+	}
+	
+	public Point getXYPoint() {
+		return new Point(xPos,yPos);
 	}
 	/*
 	 * public BuildingEffect getBuildingEffect() { return buildingEffect } public

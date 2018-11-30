@@ -1,24 +1,25 @@
 package core;
 
 import abilities.Ability;
+import effects.MapImageEffect;
 import entity.Entity;
-import map.MapImage.Effect;
 
 public class Event implements Runnable {
 
 	private Entity source;
 	private Entity target;
 	private Ability ability;
-	private Effect effect;
-	private Thread self;
+	private MapImageEffect effect;
+	private Thread eventThread;
 	
-	public Event(Entity source, Entity target, Ability ability, Effect effect) {
+	public Event(Entity source, Entity target, Ability ability, MapImageEffect effect) {
 		this.source = source;
 		this.target = target;
 		this.ability = ability;
 		this.effect = effect;
-		this.self = new Thread(this);
-		GameInfo.getEventQueue().add(self);
+		this.eventThread = new Thread(this);
+		eventThread.setName(source.getName()+",ID="+source.getId()+" targets "+target.getName() + ", ID="+target.getId() +" with "+ability.getName());
+		GameInfo.getRoundInfo().getEventList().add(this);
 	}
 
 	public Entity getSource() {
@@ -33,17 +34,26 @@ public class Event implements Runnable {
 		return ability;
 	}
 
-	public Effect getEffect() {
+	public MapImageEffect getEffect() {
 		return effect;
 	}
-
-	public void cancleEvent() {
-		GameInfo.getEventQueue().remove(self);
+	
+	public Thread getEventThread() {
+		return eventThread;
+	}
+	public void cancelEvent() {
+		GameInfo.getRoundInfo().getEventList().remove(this);
 	}
 	
 	@Override
 	public void run() {
 		ability.applyAbility(source, target);
-		GameInfo.getEventQueue().remove(self);
+		source.setEvent(null);
+	}
+
+	@Override
+	public String toString() {
+		return "Event [source=" + source + ", target=" + target + ", ability=" + ability + ", effect=" + effect
+				+ ", self=" + eventThread + "]";
 	}
 }

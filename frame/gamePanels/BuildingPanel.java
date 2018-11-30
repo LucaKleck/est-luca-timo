@@ -10,6 +10,7 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.ScrollPaneConstants;
 
 public class BuildingPanel extends JScrollPane {
+	private static final long serialVersionUID = 1L;
 	
 	private Building building;
 	
@@ -28,7 +29,7 @@ public class BuildingPanel extends JScrollPane {
 		JLabel lblNewLabel = new JLabel(building.getName());
 		panel.add(lblNewLabel, "cell 1 0");
 		
-		JLabel lblLevel = new JLabel("Level:");
+		JLabel lblLevel = new JLabel("Level:" + this.building.getLevel());
 		panel.add(lblLevel, "cell 0 1");
 		
 		JLabel lblNewLabel_1 = new JLabel(Integer.toString(building.getLevel()));

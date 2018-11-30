@@ -34,22 +34,44 @@ import map.ObjectMap;
 
 
 public class XMLSaveAndLoad {
-	@SuppressWarnings("unused")
-	private static String saveName;
+	
+	private static final String X_POS = "xPos";
+	private static final String Y_POS = "yPos";
+	private static final String TYPE = "type";
+	private static final String NAME = "name";
+	private static final String GOLD= "gold";
+	private static final String FOOD = "food";
+	private static final String WOOD = "wood";
+	private static final String STONE = "stone";
+	private static final String METAL = "metal";
+	private static final String MANA_STONE = "manaStone";
+	private static final String IS_ROAD = "isRoad";
+	private static final String ENTITY = "entity";
+	private static final String MAX_HEALTH = "maxHealth";
+	private static final String CURRENT_HEALTH = "currentHealth";
+	private static final String BASE_DAMAGE = "baseDamage";
+	private static final String MOVEMENT_RANGE = "movementRange";
+	private static final String MAP_SIZE = "mapSize";
+	private static final String CLICKS = "clicks";
+	private static final String UNITS_KILLED = "unitsKilled";
+	private static final String BUILDINGS_DESTROYED = "buildingsDestroyed";
+	private static final String DAMAGE_DEALT = "damageDealt";
+	private static final String BUILDINGS_BUILT = "buildingsBuilt";
+	private static final String UNITS_CREATED = "unitsCreated";
+	private static final String TIME_PLAYED_MINS = "timePlayedMins";
+	private static final String LEVEL = "level";
+	private static final String CONTROLABLE = "controlable";
+	
 	private static String xmlFilePath;
 	
 	public XMLSaveAndLoad(String saveName) {
-		XMLSaveAndLoad.saveName = saveName;
 //		System.out.println(saveName);
 		xmlFilePath = Core.GAME_PATH_SAVES;
 		File saves = new File(xmlFilePath);
 
     	if (saves.exists()) {
-
     	} else if (saves.mkdirs()) {
-    		
     	} else {
-
     	}
     	xmlFilePath += File.separator + saveName+".xml";
 	}
@@ -73,22 +95,7 @@ public class XMLSaveAndLoad {
 			e1.printStackTrace();
 		}
 	}
-	private static final String X_POS = "xPos";
-	private static final String Y_POS = "yPos";
-	private static final String TYPE = "type";
-	private static final String NAME = "name";
-	private static final String GOLD= "gold";
-	private static final String FOOD = "food";
-	private static final String WOOD = "wood";
-	private static final String STONE = "stone";
-	private static final String METAL = "metal";
-	private static final String MANA_STONE = "manaStone";
-	private static final String IS_ROAD = "isRoad";
-	private static final String ENTITY = "entity";
-	private static final String HEALTH = "health";
-	private static final String DAMAGE = "damage";
-	private static final String MOVEMENT_RANGE = "movementRange";
-	private static final String MAP_SIZE = "mapSize";
+	
 	
 	private static MapTile[][] loadMap(Document saveDoc) {
 		NodeList nList = saveDoc.getElementsByTagName("mapTile");
@@ -135,18 +142,25 @@ public class XMLSaveAndLoad {
                int xPos = Integer.parseInt(eElement.getElementsByTagName(X_POS).item(0).getTextContent());
                int yPos = Integer.parseInt(eElement.getElementsByTagName(Y_POS).item(0).getTextContent());
                String name = eElement.getElementsByTagName(NAME).item(0).getTextContent();
-               int health = Integer.parseInt(eElement.getElementsByTagName(HEALTH).item(0).getTextContent());
-               e = new Entity(xPos, yPos, name, health, null);
+               int currentHealth = Integer.parseInt(eElement.getElementsByTagName(CURRENT_HEALTH).item(0).getTextContent());
+               int maxHealth = Integer.parseInt(eElement.getElementsByTagName(MAX_HEALTH).item(0).getTextContent());
+               int level = Integer.parseInt(eElement.getElementsByTagName(LEVEL).item(0).getTextContent());
+               boolean controlable = new Boolean(eElement.getElementsByTagName(CONTROLABLE).item(0).getTextContent());
+               
+               e = new Entity(xPos, yPos, name, maxHealth, currentHealth, level, controlable, null);
+            		   
                if(type.matches("Unit") || type.matches("Warrior")) {
-            	   int damage = Integer.parseInt(eElement.getElementsByTagName(DAMAGE).item(0).getTextContent());
+            	   int baseDamage = Integer.parseInt(eElement.getElementsByTagName(BASE_DAMAGE).item(0).getTextContent());
             	   int movementRange = Integer.parseInt(eElement.getElementsByTagName(MOVEMENT_RANGE).item(0).getTextContent());
-            	   e = new Unit(xPos, yPos,  name, health, damage, movementRange, null);
+            	   
+            	   e = new Unit(xPos, yPos, name, maxHealth, currentHealth, level, controlable, baseDamage, movementRange, null);
+            	   
             	   if(type.matches("Warrior")) {
-            		   e = new Warrior(xPos, yPos,  name);
+            		   e = new Warrior(xPos, yPos, name, currentHealth, level, controlable);
             	   }
                }
                if(type.matches("Building")) {
-            	   e = new Building(xPos, yPos, name, health, null);
+            	   e = new Building(xPos, yPos, name, maxHealth, currentHealth, level, controlable, null);
                }
                entityMap.add(e);
             }
@@ -202,24 +216,27 @@ public class XMLSaveAndLoad {
 	
 	private static PlayerStats loadPlayerStats(Document saveDoc) {
 		PlayerStats ps = new PlayerStats();
-		int clicks = 0;
-		int unitsKilled = 0;
-		int buildingsDestroyed = 0;
-		int damageDealt = 0;
-		int unitsCreated = 0;
-		int buildingsBuilt = 0;
-		int timePlayedMins = 0;
+	
+		Element playerStatsElement = (Element) saveDoc.getElementsByTagName("PlayerStats").item(0);
 		
+		int clicks = Integer.parseInt(playerStatsElement.getElementsByTagName(CLICKS).item(0).getTextContent());
+		int unitsKilled = Integer.parseInt(playerStatsElement.getElementsByTagName(UNITS_KILLED).item(0).getTextContent());
+		int buildingsDestroyed = Integer.parseInt(playerStatsElement.getElementsByTagName(BUILDINGS_DESTROYED).item(0).getTextContent());
+		int damageDealt = Integer.parseInt(playerStatsElement.getElementsByTagName(DAMAGE_DEALT).item(0).getTextContent());
+		int unitsCreated = Integer.parseInt(playerStatsElement.getElementsByTagName(UNITS_CREATED).item(0).getTextContent());
+		int buildingsBuilt = Integer.parseInt(playerStatsElement.getElementsByTagName(BUILDINGS_BUILT).item(0).getTextContent());
+		int timePlayedMins = Integer.parseInt(playerStatsElement.getElementsByTagName(TIME_PLAYED_MINS).item(0).getTextContent());;
 		
-		int gold = 0;
-		int food = 0;
-		int wood = 0;
-		int stone = 0;
-		int metal = 0;
-		int manaStone = 0;
-		
-		PlayerResources playerResources = ps.new PlayerResources(gold, food, wood, stone, metal, manaStone);
+		Element playerResourcesElement = (Element) saveDoc.getElementsByTagName("playerResources").item(0);
+		int gold = Integer.parseInt(playerResourcesElement.getElementsByTagName(GOLD).item(0).getTextContent());
+		int food = Integer.parseInt(playerResourcesElement.getElementsByTagName(FOOD).item(0).getTextContent());
+		int wood = Integer.parseInt(playerResourcesElement.getElementsByTagName(WOOD).item(0).getTextContent());
+		int stone = Integer.parseInt(playerResourcesElement.getElementsByTagName(STONE).item(0).getTextContent());
+		int metal = Integer.parseInt(playerResourcesElement.getElementsByTagName(METAL).item(0).getTextContent());
+		int manaStone = Integer.parseInt(playerResourcesElement.getElementsByTagName(MANA_STONE).item(0).getTextContent());
 				
+		PlayerResources playerResources = ps.new PlayerResources(gold, food, wood, stone, metal, manaStone);
+						
 		ps = new PlayerStats(clicks, unitsKilled, buildingsDestroyed, damageDealt, unitsCreated, buildingsBuilt, timePlayedMins, playerResources);
 		return ps;
 	}
@@ -227,31 +244,31 @@ public class XMLSaveAndLoad {
 	private static Node savePlayerStats(Document saveDoc) {
 		Element playerStatsElement = saveDoc.createElement("PlayerStats");
 		
-		Element clicks = saveDoc.createElement("clicks");
+		Element clicks = saveDoc.createElement(CLICKS);
 		clicks.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getClicks()));
 		playerStatsElement.appendChild(clicks);
 		
-		Element unitsKilled = saveDoc.createElement("unitsKilled");
+		Element unitsKilled = saveDoc.createElement(UNITS_KILLED);
 		unitsKilled.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getUnitsKilled()));
 		playerStatsElement.appendChild(unitsKilled);
 		
-		Element buildingsDestroyed = saveDoc.createElement("buildingsDestroyed");
+		Element buildingsDestroyed = saveDoc.createElement(BUILDINGS_DESTROYED);
 		buildingsDestroyed.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getBuildingsDestroyed()));
 		playerStatsElement.appendChild(buildingsDestroyed);
 		
-		Element damageDealt = saveDoc.createElement("damageDealt");
+		Element damageDealt = saveDoc.createElement(DAMAGE_DEALT);
 		damageDealt.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getDamageDealt()));
 		playerStatsElement.appendChild(damageDealt);
 		
-		Element unitsCreated = saveDoc.createElement("unitsCreated");
+		Element unitsCreated = saveDoc.createElement(UNITS_CREATED);
 		unitsCreated.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getUnitsCreated()));
 		playerStatsElement.appendChild(unitsCreated);
 		
-		Element buildingsBuilt = saveDoc.createElement("buildingsBuilt");
+		Element buildingsBuilt = saveDoc.createElement(BUILDINGS_BUILT);
 		buildingsBuilt.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getBuildingsBuilt()));
 		playerStatsElement.appendChild(buildingsBuilt);
 		
-		Element timePlayedMins = saveDoc.createElement("timePlayedMins");
+		Element timePlayedMins = saveDoc.createElement(TIME_PLAYED_MINS);
 		timePlayedMins.appendChild(saveDoc.createTextNode(""+GameInfo.getPlayerStats().getTimePlayedMins()));
 		playerStatsElement.appendChild(timePlayedMins);
 		
@@ -390,14 +407,26 @@ public class XMLSaveAndLoad {
 					    name.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getName()) );
 					    entity.appendChild(name);
 					    
-					    Element health = save.createElement(HEALTH);
-					    health.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getCurrentHealth()) );
-					    entity.appendChild(health);
+					    Element maxHealth = save.createElement(MAX_HEALTH);
+					    maxHealth.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getMaxHealth()) );
+					    entity.appendChild(maxHealth);
+					    
+					    Element currentHealth = save.createElement(CURRENT_HEALTH);
+					    currentHealth.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getCurrentHealth()) );
+					    entity.appendChild(currentHealth);
+
+					    Element level = save.createElement(LEVEL);
+					    level.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getLevel()) );
+					    entity.appendChild(level);
+
+					    Element controlable = save.createElement(CONTROLABLE);
+					    controlable.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getLevel()) );
+					    entity.appendChild(controlable);
 					    
 					    // things every unit has
 		    			if(ObjectMap.getEntityMap().get(i) instanceof Unit) {
-		    				Element damage = save.createElement(DAMAGE);
-		    				damage.appendChild(save.createTextNode(""+((Unit) ObjectMap.getEntityMap().get(i)).getDamage() ) );
+		    				Element damage = save.createElement(BASE_DAMAGE);
+		    				damage.appendChild(save.createTextNode(""+((Unit) ObjectMap.getEntityMap().get(i)).getBaseDamage() ) );
 						    entity.appendChild(damage);
 						    
 						    Element movementRange = save.createElement(MOVEMENT_RANGE);

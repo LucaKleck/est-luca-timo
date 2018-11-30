@@ -4,7 +4,7 @@ package core;
  * Starts the game
  * 
  * @author Luca Kleck
- * @version 0.03
+ * @version 0.04
  */
 public class Boot {
 
