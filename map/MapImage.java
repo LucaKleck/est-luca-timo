@@ -47,14 +47,27 @@ public class MapImage implements ImageObserver {
 	private static BufferedImage forestImage192;
 	private static BufferedImage forestImageLeftRight;
 	private static BufferedImage forestImageTopBottom;
+	private static BufferedImage forestImageEndBottom;
+	private static BufferedImage forestImageEndLeft;
+	private static BufferedImage forestImageEndTop;
+	private static BufferedImage forestImageEndRight;
 
 	public MapImage(int width, int height) {
 		try {
 			plainImage = ImageIO.read( Boot.class.getResource("/resources/plain.png") );
+			
+			// Forest
 			forestImage = ImageIO.read( Boot.class.getResource("/resources/forest.png") );
 			forestImage192 = ImageIO.read( Boot.class.getResource("/resources/forest192.png") );
+			
 			forestImageLeftRight = ImageIO.read( Boot.class.getResource("/resources/forestLeftRight.png") );
 			forestImageTopBottom = ImageIO.read( Boot.class.getResource("/resources/forestTopBottom.png") );
+			
+			forestImageEndBottom = ImageIO.read( Boot.class.getResource("/resources/forestEndBottom.png") );
+			forestImageEndLeft = ImageIO.read( Boot.class.getResource("/resources/forestEndLeft.png") );
+			forestImageEndTop = ImageIO.read( Boot.class.getResource("/resources/forestEndTop.png") );
+			forestImageEndRight = ImageIO.read( Boot.class.getResource("/resources/forestEndRight.png") );
+			
 		} catch (IOException e) {
 		}
 
@@ -192,10 +205,10 @@ public class MapImage implements ImageObserver {
 			
 			//LEFT TO RIGHT
 			if(!top && right && !bottom && !left) {
-				return forestImage192.getSubimage(0, 64, 64, 64);
+				return forestImageEndLeft;
 			}
 			if(!top && !right && !bottom && left) {
-				return forestImage192.getSubimage(128, 64, 64, 64);
+				return forestImageEndRight;
 			}
 			if(!top && right && !bottom && left) {
 				return forestImageLeftRight;
@@ -203,10 +216,10 @@ public class MapImage implements ImageObserver {
 			
 			//TOP TO BOTTOM
 			if(!top && !right && bottom && !left) {
-				return forestImage192.getSubimage(64, 0, 64, 64);
+				return forestImageEndTop;
 			}
 			if(top && !right && !bottom && !left) {
-				return forestImage192.getSubimage(64, 128, 64, 64);
+				return forestImageEndBottom;
 			}
 			if(top && !right && bottom && !left) {
 				return forestImageTopBottom;
