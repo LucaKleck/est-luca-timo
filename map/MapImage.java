@@ -1,5 +1,6 @@
 package map;
 
+import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Image;
@@ -9,6 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 
@@ -17,6 +20,7 @@ import core.GameInfo;
 import entity.Entity;
 import entity.building.Building;
 import entity.unit.Unit;
+import frame.gamePanels.MapPanel;
 
 public class MapImage implements ImageObserver {
 
@@ -31,11 +35,11 @@ public class MapImage implements ImageObserver {
 	private static final int[] BOTTOM = {0, 1};
 	private static final int[] BOTTOM_RIGHT = {1, 1};
 	
-	private static BufferedImage selectionLayer; // selection is drawn here
-	private static BufferedImage effectLayer; // draw unit movement arrows and so on
-	private static BufferedImage unitBuildingLayer; // draw Units and buildings
-	private static BufferedImage decalLayer; // draw map tile overlays
-	private static BufferedImage mapTileLayer; // draw map tiles
+	private BufferedImage selectionLayer; // selection is drawn here
+	private BufferedImage effectLayer; // draw unit movement arrows and so on
+	private BufferedImage unitBuildingLayer; // draw Units and buildings
+	private BufferedImage decalLayer; // draw map tile overlays
+	private BufferedImage mapTileLayer; // draw map tiles
 
 	private static int mapTileSize;
 	private static int imageWidth;
@@ -54,41 +58,81 @@ public class MapImage implements ImageObserver {
 	private static BufferedImage forestImageEndTop;
 	private static BufferedImage forestImageEndRight;
 	
+	private BufferedImage combinedImage;
+
+	private boolean updateFlag = true;
+
+	
 	public MapImage(int width, int height) {
-		try {
-			plainImage = ImageIO.read( Boot.class.getResource("/resources/plain.png") );
-			
-			// Forest
-			forestImage = ImageIO.read( Boot.class.getResource("/resources/forest.png") );
-			forestImage192 = ImageIO.read( Boot.class.getResource("/resources/forest192.png") );
-			
-			forestImageLeftRight = ImageIO.read( Boot.class.getResource("/resources/forestLeftRight.png") );
-			forestImageTopBottom = ImageIO.read( Boot.class.getResource("/resources/forestTopBottom.png") );
-			
-			forestImageEndBottom = ImageIO.read( Boot.class.getResource("/resources/forestEndBottom.png") );
-			forestImageEndLeft = ImageIO.read( Boot.class.getResource("/resources/forestEndLeft.png") );
-			forestImageEndTop = ImageIO.read( Boot.class.getResource("/resources/forestEndTop.png") );
-			forestImageEndRight = ImageIO.read( Boot.class.getResource("/resources/forestEndRight.png") );
-			
-		} catch (IOException e) {
+		if(plainImage == null) {
+			try {
+				plainImage = ImageIO.read( Boot.class.getResource("/resources/plain.png") );
+				
+				// Forest
+				forestImage = ImageIO.read( Boot.class.getResource("/resources/forest.png") );
+				forestImage192 = ImageIO.read( Boot.class.getResource("/resources/forest192.png") );
+				
+				forestImageLeftRight = ImageIO.read( Boot.class.getResource("/resources/forestLeftRight.png") );
+				forestImageTopBottom = ImageIO.read( Boot.class.getResource("/resources/forestTopBottom.png") );
+				
+				forestImageEndBottom = ImageIO.read( Boot.class.getResource("/resources/forestEndBottom.png") );
+				forestImageEndLeft = ImageIO.read( Boot.class.getResource("/resources/forestEndLeft.png") );
+				forestImageEndTop = ImageIO.read( Boot.class.getResource("/resources/forestEndTop.png") );
+				forestImageEndRight = ImageIO.read( Boot.class.getResource("/resources/forestEndRight.png") );
+				
+			} catch (IOException e) {
+			}
 		}
 
 		imageWidth = width;
 		imageHeight = height;
 		mapTileSize = (int) (width / ObjectMap.getMap().length);
 
+		mapTileLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
+		decalLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
 		drawMapTileLayer();
 		drawDecalLayer();
-		drawUnitBuildingLayer();
-		drawSelecionLayer();
-		drawEffectLayer();
-
+		
+		unitBuildingLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
+		effectLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
+		selectionLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
+		
+		combinedImage = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
+		
+		Timer graphicsTimer = new Timer("GraphicsThread");
+		graphicsTimer.scheduleAtFixedRate(new GraphicsTask(), 10, 15);
 
 	}
-
+	
+	private void drawDecalLayer() {
+		Graphics2D g = getDecalLayer().createGraphics();
+		for (int x = 0; x < ObjectMap.getMap().length; x++) {
+			for (int y = 0; y < ObjectMap.getMap()[0].length; y++) {
+				if(ObjectMap.getMap()[x][y].isRoad()) {
+					g.fillRect(x*mapTileSize, y*mapTileSize+27, mapTileSize, 10);
+				}
+			}
+		}
+	}
+	
+	private void drawMapTileLayer() {
+		Graphics2D g = getMapTileLayer().createGraphics();
+		for (int xRow = 0; xRow < ObjectMap.getMap().length; xRow++) {
+			for (int yColumn = 0; yColumn < ObjectMap.getMap()[0].length; yColumn++) {
+				try {
+					g.drawImage(getImageForTile(xRow, yColumn), xRow * mapTileSize, yColumn * mapTileSize, mapTileSize, mapTileSize, null);
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
 	private void drawSelecionLayer() {
-		selectionLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
-		Graphics2D g = selectionLayer.createGraphics();
+		Graphics2D g = getSelectionLayer().createGraphics();
+		g.setComposite(AlphaComposite.Clear);
+		g.fillRect(0, 0, imageWidth, imageHeight); 
+		g.setComposite(AlphaComposite.SrcOver);
 		g.setColor(new Color(255, 0, 0, 120));
 		try {
 			g.fillRect(ObjectMap.getSelected().getSelectedMapTile().getXPos() * mapTileSize,
@@ -103,36 +147,11 @@ public class MapImage implements ImageObserver {
 		}
 	}
 	
-	private void drawMapTileLayer() {
-		mapTileLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
-		Graphics2D g = mapTileLayer.createGraphics();
-		for (int xRow = 0; xRow < ObjectMap.getMap().length; xRow++) {
-			for (int yColumn = 0; yColumn < ObjectMap.getMap()[0].length; yColumn++) {
-				try {
-					g.drawImage(getImageForTile(xRow, yColumn), xRow * mapTileSize, yColumn * mapTileSize, mapTileSize, mapTileSize, null);
-				} catch (NullPointerException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-	}
-
-	private void drawDecalLayer() {
-		decalLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
-		Graphics2D g = decalLayer.createGraphics();
-		g.setColor(new Color(100,100,30));
-		for (int x = 0; x < ObjectMap.getMap().length; x++) {
-			for (int y = 0; y < ObjectMap.getMap()[0].length; y++) {
-				if(ObjectMap.getMap()[x][y].isRoad()) {
-					g.fillRect(x*mapTileSize, y*mapTileSize+27, mapTileSize, 10);
-				}
-			}
-		}
-	}
-
 	private void drawUnitBuildingLayer() {
-		unitBuildingLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
-		Graphics2D g = unitBuildingLayer.createGraphics();
+		Graphics2D g = getUnitBuildingLayer().createGraphics();
+		g.setComposite(AlphaComposite.Clear);
+		g.fillRect(0, 0, imageWidth, imageHeight); 
+		g.setComposite(AlphaComposite.SrcOver);
 		ArrayList<Entity> e = ObjectMap.getEntityMap();
 		Random r = new Random();
 		for (Iterator<Entity> iterator = e.iterator(); iterator.hasNext();) {
@@ -147,8 +166,10 @@ public class MapImage implements ImageObserver {
 	}
 
 	private void drawEffectLayer() {
-		effectLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
-		Graphics2D g = effectLayer.createGraphics();
+		Graphics2D g = getEffectLayer().createGraphics();
+		g.setComposite(AlphaComposite.Clear);
+		g.fillRect(0, 0, imageWidth, imageHeight); 
+		g.setComposite(AlphaComposite.SrcOver);
 		for (int i = 0; i < GameInfo.getRoundInfo().getEventList().size(); i++) {
 			// draw each effect
 			// effectList needs to be cleared after the round
@@ -252,44 +273,6 @@ public class MapImage implements ImageObserver {
 		return flag;
 	}
 
-	public static int getImageHeight() {
-		return imageHeight;
-	}
-
-	public static int getImageWidth() {
-		return imageWidth;
-	}
-
-	public double getMapTileSize() {
-		return mapTileSize;
-	}
-
-	public void redraw() {
-		drawMapTileLayer();
-		drawDecalLayer();
-		drawUnitBuildingLayer();
-		drawSelecionLayer();
-		drawEffectLayer();
-	}
-	
-	public void redrawUpperLayers() {
-		drawUnitBuildingLayer();
-		drawSelecionLayer();
-		drawEffectLayer();
-	}
-	
-	public void redrawSelection() {
-		drawSelecionLayer();
-	}
-	
-	public void redrawUnitBuildingLayer() {
-		drawUnitBuildingLayer();
-	}
-	
-	public void redrawEffectLayer() {
-		drawEffectLayer();
-	}
-	
 	public void redrawArea(int xStart, int xEnd, int yStart, int yEnd) {
 		int xDiff = 0;
 		int yDiff = 0;
@@ -317,28 +300,73 @@ public class MapImage implements ImageObserver {
 		}
 	}
 	
-	public static BufferedImage getSelectionLayer() {
+	private void drawCombinedImage() {
+		Graphics2D g = getCombinedImage().createGraphics();
+		g.drawImage(getMapTileLayer(), 0, 0, null);
+		g.drawImage(getDecalLayer(), 0, 0, null);
+		g.drawImage(getUnitBuildingLayer(), 0, 0, null);
+		g.drawImage(getEffectLayer(), 0, 0, null);
+		g.drawImage(getSelectionLayer(), 0, 0, null);
+	}
+	
+	public synchronized BufferedImage getSelectionLayer() {
 		return selectionLayer;
 	}
 
-	public static BufferedImage getEffectLayer() {
+	public synchronized BufferedImage getEffectLayer() {
 		return effectLayer;
 	}
 
-	public static BufferedImage getUnitBuildingLayer() {
+	public synchronized BufferedImage getUnitBuildingLayer() {
 		return unitBuildingLayer;
 	}
 
-	public static BufferedImage getDecalLayer() {
+	public synchronized BufferedImage getDecalLayer() {
 		return decalLayer;
 	}
 
-	public static BufferedImage getMapTileLayer() {
+	public synchronized BufferedImage getMapTileLayer() {
 		return mapTileLayer;
 	}
 
+	public synchronized BufferedImage getCombinedImage() {
+		return combinedImage;
+	}
+	
+	public static int getImageHeight() {
+		return imageHeight;
+	}
+
+	public static int getImageWidth() {
+		return imageWidth;
+	}
+
+	public double getMapTileSize() {
+		return mapTileSize;
+	}
+	
+	public synchronized void update() {
+		this.updateFlag = true;
+	}
+	
+	private class GraphicsTask extends TimerTask {
+
+		@Override
+		public void run() {
+			if(updateFlag) {
+				drawSelecionLayer();
+				drawUnitBuildingLayer();
+				drawEffectLayer();
+				drawCombinedImage();
+				updateFlag = false;
+			}
+			new MapPanel.RepaintMapPanel().run();
+		}
+		
+	}
+	
 	@Override
-	public boolean imageUpdate(Image arg0, int arg1, int arg2, int arg3, int arg4, int arg5) {
+	public boolean imageUpdate(Image img, int arg1, int arg2, int arg3, int arg4, int arg5) {
 		return false;
 	}
 	
