@@ -230,6 +230,7 @@ public class Selected {
 		this.selectedEntity = null;
 		this.selectedMapTile = null;
 		AbilityPanel.checkAbilities();
+		InteractionPanel.setCurrentPanel(null);
 		InfoPanel.refresh();
 		// TODO make some refresh or something
 		changeSelectionMode();
