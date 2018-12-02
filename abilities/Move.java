@@ -25,6 +25,11 @@ public class Move extends Ability {
 	public Point getMoveToPoint() {
 		return moveToPoint;
 	}
+
+	@Override
+	public String toString() {
+		return "Move [moveToPoint=" + moveToPoint + "]";
+	}
 	
 }
 

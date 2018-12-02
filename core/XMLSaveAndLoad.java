@@ -146,6 +146,7 @@ public class XMLSaveAndLoad {
                int maxHealth = Integer.parseInt(eElement.getElementsByTagName(MAX_HEALTH).item(0).getTextContent());
                int level = Integer.parseInt(eElement.getElementsByTagName(LEVEL).item(0).getTextContent());
                boolean controlable = new Boolean(eElement.getElementsByTagName(CONTROLABLE).item(0).getTextContent());
+               System.out.println(controlable);
                
                e = new Entity(xPos, yPos, name, maxHealth, currentHealth, level, controlable, null);
             		   
@@ -153,7 +154,7 @@ public class XMLSaveAndLoad {
             	   int baseDamage = Integer.parseInt(eElement.getElementsByTagName(BASE_DAMAGE).item(0).getTextContent());
             	   int movementRange = Integer.parseInt(eElement.getElementsByTagName(MOVEMENT_RANGE).item(0).getTextContent());
             	   
-            	   e = new Unit(xPos, yPos, name, maxHealth, currentHealth, level, controlable, baseDamage, movementRange, null);
+            	   e = new Unit(xPos, yPos, name, maxHealth, currentHealth, level, controlable, baseDamage, movementRange, new ArrayList<>());
             	   
             	   if(type.matches("Warrior")) {
             		   e = new Warrior(xPos, yPos, name, currentHealth, level, controlable);
@@ -420,7 +421,7 @@ public class XMLSaveAndLoad {
 					    entity.appendChild(level);
 
 					    Element controlable = save.createElement(CONTROLABLE);
-					    controlable.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getLevel()) );
+					    controlable.appendChild(save.createTextNode(new Boolean(ObjectMap.getEntityMap().get(i).getControlable()).toString()) );
 					    entity.appendChild(controlable);
 					    
 					    // things every unit has

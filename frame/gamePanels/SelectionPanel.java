@@ -205,14 +205,18 @@ public class SelectionPanel extends JScrollPane {
 			jBtn.addMouseListener(this);
 
 			this.jBtn.setPreferredSize(new Dimension(135, 23));
-			this.add(jBtn, "flowx,cell 0 3,grow");
+			if( entity.getControlable() && ObjectMap.getSelected().getSelectionMode() != 3 && ObjectMap.getSelected().getSelectionMode() != 5 ) {
+				this.add(jBtn, "flowx,cell 0 3,grow");
+			} else if( !entity.getControlable() && ObjectMap.getSelected().getSelectionMode() == 3 || ObjectMap.getSelected().getSelectionMode() == 5) {
+				this.add(jBtn, "flowx,cell 0 3,grow");
+			}
 
 			this.setBackground(getColorFromName());
 
 			JLabel lblName = new JLabel(entity.getName());
 			add(lblName, "cell 0 0 2 1,alignx left,aligny center");
 
-			JLabel lblDamage = new JLabel("Range: " + entity.getMaxRange());
+			JLabel lblDamage = new JLabel("Level: " + entity.getLevel());
 			add(lblDamage, "cell 0 2 2 1,alignx left,aligny center");
 
 			JLabel lblHealth = new JLabel("");
