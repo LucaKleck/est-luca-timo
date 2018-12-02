@@ -262,6 +262,7 @@ public class SelectionPanel extends JScrollPane {
 					}
 					ObjectMap.getSelected().setSelectedEntity(entity);
 				}
+				MapPanel.getMapImage().update();
 			}
 		}
 
