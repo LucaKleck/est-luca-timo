@@ -45,7 +45,6 @@ public class ObjectMap {
 	public static void remakeMap() {
 		map = MapCreator.createMap();
 		try {
-			MapPanel.getMapImage().redraw();
 			MapPanel.getMapPanel().repaint();
 		} catch (NullPointerException nl) {
 		}

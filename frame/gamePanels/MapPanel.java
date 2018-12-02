@@ -55,7 +55,10 @@ public class MapPanel extends JPanel implements ImageObserver {
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 
 		// draw map image with displacement & multiplier
-		g.drawImage(MapImage.getMapTileLayer(), (int) (displacementX), (int) (displacementY),
+		g.drawImage(mapImage.getCombinedImage(), (int) (displacementX), (int) (displacementY),
+				(int) (this.getWidth() * displacementMultiplier), (int) (this.getWidth() * displacementMultiplier),
+				this);
+		/*g.drawImage(MapImage.getMapTileLayer(), (int) (displacementX), (int) (displacementY),
 				(int) (this.getWidth() * displacementMultiplier), (int) (this.getWidth() * displacementMultiplier),
 				this);
 		g.drawImage(MapImage.getDecalLayer(), (int) (displacementX), (int) (displacementY),
@@ -69,7 +72,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 				this);
 		g.drawImage(MapImage.getSelectionLayer(), (int) (displacementX), (int) (displacementY),
 				(int) (this.getWidth() * displacementMultiplier), (int) (this.getWidth() * displacementMultiplier),
-				this);
+				this);*/
 	}
 
 	public static void addDisplacementX(int displacementX) {
@@ -83,7 +86,6 @@ public class MapPanel extends JPanel implements ImageObserver {
 				MapPanel.displacementX = (int) -(mapPanelSelf.getWidth() / 2 * displacementMultiplier * 1.75);
 			}
 		}
-		EXS.submit(new RepaintMapPanel());
 	}
 
 	public static void addDisplacementY(int displacementY) {
@@ -97,7 +99,6 @@ public class MapPanel extends JPanel implements ImageObserver {
 				MapPanel.displacementY = (int) -(mapPanelSelf.getWidth() / 2 * displacementMultiplier * 1.75);
 			}
 		}
-		EXS.submit(new RepaintMapPanel());
 	}
 
 	public static void addDisplacementMultiplier(double displacementMultiplier) {
@@ -112,7 +113,6 @@ public class MapPanel extends JPanel implements ImageObserver {
 		MapPanel.displacementMultiplier = DEFAULT_DISPLACEMENT;
 		MapPanel.displacementX = 0;
 		MapPanel.displacementY = 0;
-		EXS.submit(new RepaintMapPanel());
 	}
 	
 	public static MapImage getMapImage() {

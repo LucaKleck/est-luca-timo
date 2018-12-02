@@ -94,7 +94,6 @@ public class SelectionPanel extends JScrollPane {
 		if(ObjectMap.getSelected().getSelectionMode() == 3 || ObjectMap.getSelected().getSelectionMode() == 5) {
 			lblSelectMenu.setText("Select Target Menu");
 			// TODO remove currently selected entity from list
-			// TODO Add flag if they can't be selected (enemies)
 			
 		}
 		lblSelectMenu.setForeground(Color.LIGHT_GRAY);

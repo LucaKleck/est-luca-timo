@@ -37,6 +37,7 @@ public class Core {
 	public static final String SETTING_FULLSCREEN = "fullscreen";
 	public static final String SETTING_DEFAULT_WIDTH = "defaultWidth";
 	public static final String SETTING_DEFAULT_HEIGHT = "defaultHeight";
+	public static final String SETTING_FPS_LIMIT = "fpsLimit";
 	public static final String SETTING_ASK_SAVE_DELETE = "askSaveDelete";
 	public static final String SETTING_SHOW_LOG = "showLog";
 	public static final String SETTING_ENABLE_LOG = "enableLog";
@@ -77,6 +78,10 @@ public class Core {
 				Element defaultHeight = settingsDoc.createElement(SETTING_DEFAULT_HEIGHT);
 				defaultHeight.setTextContent(""+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2));
 				settingsRoot.appendChild(defaultHeight);
+
+				Element fpsLimit = settingsDoc.createElement(SETTING_FPS_LIMIT);
+				fpsLimit.setTextContent("30");
+				settingsRoot.appendChild(fpsLimit);
 
 				Element askSaveDelete = settingsDoc.createElement(SETTING_ASK_SAVE_DELETE);
 				askSaveDelete.setTextContent("true");

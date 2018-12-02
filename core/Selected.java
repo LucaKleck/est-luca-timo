@@ -92,7 +92,6 @@ public class Selected {
 						selectedAbility.applyAbility(null, null);
 						setSelectedAbility(null);
 						InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
-						MapPanel.getMapImage().redraw();
 					} catch (NullPointerException | IndexOutOfBoundsException ex) {
 						removeSelected();
 					}
@@ -115,10 +114,7 @@ public class Selected {
 		}
 		AbilityPanel.checkAbilities();
 		InfoPanel.refresh();
-		MapPanel.getMapPanelExecutor().submit(new MapPanel.RepaintMapPanel());
-		MapPanel.getMapImage().redrawSelection();
-		MapPanel.getMapImage().redrawUnitBuildingLayer();
-		MapPanel.getMapImage().redrawEffectLayer();
+		MapPanel.getMapImage().update();
 		System.out.println("SelectionModeEnd["+selectionMode+"]");
 		System.gc();
 	}
@@ -234,8 +230,9 @@ public class Selected {
 		this.selectedEntity = null;
 		this.selectedMapTile = null;
 		AbilityPanel.checkAbilities();
+		InteractionPanel.setCurrentPanel(null);
 		InfoPanel.refresh();
-		MapPanel.getMapImage().redrawSelection();
+		// TODO make some refresh or something
 		changeSelectionMode();
 	}
 }

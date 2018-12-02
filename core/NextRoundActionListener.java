@@ -22,12 +22,8 @@ public class NextRoundActionListener implements ActionListener {
 			System.out.println("----------");
 			EXS.submit(event);
 		}
+		MapPanel.getMapImage().update();
 		ObjectMap.getSelected().removeSelected();
-		if(GameInfo.getRoundInfo().getEventList().isEmpty()) {
-			MapPanel.getMapImage().redrawUpperLayers(); // TODO find out why this fires so early (make it wait for event to finish)
-		} else {
-			System.out.println("Sas");
-		}
 	}
 
 }
