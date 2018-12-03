@@ -1,5 +1,7 @@
 package abilities;
 
+import com.sun.javafx.geom.Point2D;
+
 import entity.Entity;
 import entity.unit.Warrior;
 import map.ObjectMap;
@@ -12,7 +14,8 @@ public class AbilityDevCreateUnit extends Ability {
 
 	@Override
 	public void applyAbility(Entity source, Entity target) {
-		ObjectMap.getEntityMap().add(new Warrior(ObjectMap.getSelected().getSelectedMapTile().getXYPoint(), "Warrior", 3, 1, true));
+		Point2D p = new Point2D((float) ObjectMap.getSelected().getSelectedMapTile().getXPos(), (float) ObjectMap.getSelected().getSelectedMapTile().getYPos());
+		ObjectMap.getEntityMap().add(new Warrior(p, "Warrior", 3, 1, true));
 	}
 
 }

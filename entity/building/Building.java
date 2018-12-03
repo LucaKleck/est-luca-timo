@@ -1,7 +1,8 @@
 package entity.building;
 
-import java.awt.Point;
 import java.util.ArrayList;
+
+import com.sun.javafx.geom.Point2D;
 
 import abilities.Ability;
 import entity.Entity;
@@ -19,12 +20,7 @@ public class Building extends Entity {
 
 	private int efficiency;
 	
-	public Building(int xPos, int yPos, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
-		super(xPos, yPos, name, maxHealth, currentHealth, level, controlable, abilities);
-		ressources = new BuildingRessources (xPos, yPos, name);
-	}
-	
-	public Building(Point pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
+	public Building(Point2D pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
 		super(pointXY, name, maxHealth, currentHealth, level, controlable, abilities);
 		ressources = new BuildingRessources (getXPos(), getYPos(), name);
 	}

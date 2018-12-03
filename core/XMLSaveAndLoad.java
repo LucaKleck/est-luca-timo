@@ -22,6 +22,8 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
+import com.sun.javafx.geom.Point2D;
+
 import core.PlayerStats.PlayerResources;
 import entity.Entity;
 import entity.building.Building;
@@ -139,8 +141,9 @@ public class XMLSaveAndLoad {
                Entity e;
                String type = eElement.getAttribute(TYPE);
                
-               int xPos = Integer.parseInt(eElement.getElementsByTagName(X_POS).item(0).getTextContent());
-               int yPos = Integer.parseInt(eElement.getElementsByTagName(Y_POS).item(0).getTextContent());
+               float xPos = Float.parseFloat(eElement.getElementsByTagName(X_POS).item(0).getTextContent());
+               float yPos = Float.parseFloat(eElement.getElementsByTagName(Y_POS).item(0).getTextContent());
+               Point2D p = new Point2D(xPos, yPos);
                String name = eElement.getElementsByTagName(NAME).item(0).getTextContent();
                int currentHealth = Integer.parseInt(eElement.getElementsByTagName(CURRENT_HEALTH).item(0).getTextContent());
                int maxHealth = Integer.parseInt(eElement.getElementsByTagName(MAX_HEALTH).item(0).getTextContent());
@@ -148,20 +151,20 @@ public class XMLSaveAndLoad {
                boolean controlable = new Boolean(eElement.getElementsByTagName(CONTROLABLE).item(0).getTextContent());
                System.out.println(controlable);
                
-               e = new Entity(xPos, yPos, name, maxHealth, currentHealth, level, controlable, null);
+               e = new Entity(p, name, maxHealth, currentHealth, level, controlable, null);
             		   
                if(type.matches("Unit") || type.matches("Warrior")) {
             	   int baseDamage = Integer.parseInt(eElement.getElementsByTagName(BASE_DAMAGE).item(0).getTextContent());
             	   int movementRange = Integer.parseInt(eElement.getElementsByTagName(MOVEMENT_RANGE).item(0).getTextContent());
             	   
-            	   e = new Unit(xPos, yPos, name, maxHealth, currentHealth, level, controlable, baseDamage, movementRange, new ArrayList<>());
+            	   e = new Unit(p, name, maxHealth, currentHealth, level, controlable, baseDamage, movementRange, new ArrayList<>());
             	   
             	   if(type.matches("Warrior")) {
-            		   e = new Warrior(xPos, yPos, name, currentHealth, level, controlable);
+            		   e = new Warrior(p, name, currentHealth, level, controlable);
             	   }
                }
                if(type.matches("Building")) {
-            	   e = new Building(xPos, yPos, name, maxHealth, currentHealth, level, controlable, null);
+            	   e = new Building(p, name, maxHealth, currentHealth, level, controlable, new ArrayList<>() );
                }
                entityMap.add(e);
             }
@@ -397,11 +400,11 @@ public class XMLSaveAndLoad {
 	    				
 	    				// things every entity has
 	    				Element xPos = save.createElement(X_POS);
-					    xPos.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getXPos()) );
+					    xPos.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getPoint().x) );
 					    entity.appendChild(xPos);
 					    
 					    Element yPos = save.createElement(Y_POS);
-					    yPos.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getYPos()) );
+					    yPos.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getPoint().y) );
 					    entity.appendChild(yPos);
 					    
 					    Element name = save.createElement(NAME);

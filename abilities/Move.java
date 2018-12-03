@@ -1,11 +1,11 @@
 package abilities;
 
-import java.awt.Point;
+import com.sun.javafx.geom.Point2D;
 
 import entity.Entity;
 
 public class Move extends Ability {
-	private Point moveToPoint;
+	private Point2D moveToPoint = new Point2D();
 	
 	public Move() {
 		super(Ability.ABILITY_MOVE);
@@ -18,11 +18,11 @@ public class Move extends Ability {
 		}
 	}
 	
-	public void setMoveToPoint(Point moveToPoint) {
-		this.moveToPoint = moveToPoint;
+	public void setMoveToPoint(Point2D moveToPoint) {
+		this.moveToPoint.setLocation(moveToPoint);
 	}
 	
-	public Point getMoveToPoint() {
+	public Point2D getMoveToPoint() {
 		return moveToPoint;
 	}
 

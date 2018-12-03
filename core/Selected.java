@@ -2,6 +2,8 @@ package core;
 
 import java.awt.Point;
 
+import com.sun.javafx.geom.Point2D;
+
 import abilities.Ability;
 import abilities.Move;
 import effects.MoveEffect;
@@ -44,7 +46,9 @@ public class Selected {
 	 * @param y position on the map
 	 * @param isLeftClick
 	 */
-	public void clickedOnTile(int x, int y, boolean isLeftClick) {
+	public void clickedOnTile(float xD, float yD, boolean isLeftClick) {
+		int x = (int) xD;
+		int y = (int) yD;
 		System.out.println("SelectionModeStart["+selectionMode+"]");
 		if(isLeftClick) {
 			switch(selectionMode) {
@@ -78,8 +82,8 @@ public class Selected {
 						break;
 					}
 					if(selectedAbility instanceof Move) {
-						((Unit)this.getSelectedEntity()).getMove().setMoveToPoint(selectedMapTile.getXYPoint());;
-						this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, new MoveEffect(selectedEntity, selectedEntity, (Move) selectedAbility)));
+						((Unit)this.getSelectedEntity()).getMove().setMoveToPoint(new Point2D(xD, yD));
+						this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, new MoveEffect((Unit) selectedEntity, (Unit) selectedEntity, (Move) selectedAbility)));
 						removeSelected();
 						break;
 					}

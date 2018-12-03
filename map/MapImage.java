@@ -9,7 +9,6 @@ import java.awt.image.ImageObserver;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -153,7 +152,6 @@ public class MapImage implements ImageObserver {
 		g.fillRect(0, 0, imageWidth, imageHeight); 
 		g.setComposite(AlphaComposite.SrcOver);
 		ArrayList<Entity> e = ObjectMap.getEntityMap();
-		Random r = new Random();
 		for (Iterator<Entity> iterator = e.iterator(); iterator.hasNext();) {
 			Entity s = iterator.next();
 			if(s instanceof Unit) {
@@ -161,7 +159,12 @@ public class MapImage implements ImageObserver {
 			} else if (s instanceof Building) {
 				g.setColor(new Color(100,100,40));
 			}
-			g.fillRoundRect(s.getXPos()*mapTileSize+r.nextInt(54), s.getYPos()*mapTileSize+r.nextInt(54), 10, 10, 10, 10);
+			if(ObjectMap.getSelected().getSelectedEntity() != null) {
+				if(ObjectMap.getSelected().getSelectedEntity().equals(s)) {
+					g.setColor(Color.WHITE);
+				}
+			}
+			g.fillRoundRect((int) (s.getPoint().x*mapTileSize), (int) (s.getPoint().y*mapTileSize), 10, 10, 10, 10);
 		}
 	}
 

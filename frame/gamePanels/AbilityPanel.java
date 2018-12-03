@@ -46,7 +46,7 @@ public class AbilityPanel extends JPanel {
 							ObjectMap.getSelected().setSelectedAbility(abl);
 						}
 					});
-					self.add(jButton, ("cell 0 " + i + ", grow"));
+					self.add(jButton, ("cell " + i + " 0, grow"));
 				}
 				self.repaint();
 				Core.getMainJFrame().repaint();

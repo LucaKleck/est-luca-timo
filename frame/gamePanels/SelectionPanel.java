@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -30,6 +31,7 @@ import core.Event;
 import entity.Entity;
 import entity.building.Building;
 import entity.unit.Unit;
+import entity.unit.Warrior;
 import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
 
@@ -193,7 +195,7 @@ public class SelectionPanel extends JScrollPane {
 			setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			this.entity = entity;
 			MigLayout miglay = new MigLayout("insets 4 5 2 5, gap 4px 0px",
-					"[135px][" + (InteractionPanel.getInteractionPanel().getWidth() - 202) + ",fill]",
+					"[135px][" + (InteractionPanel.getInteractionPanel().getWidth() - 207) + ",fill]",
 					"[fill][fill][fill][fill]");
 			miglay.preferredLayoutSize(InteractionPanel.getInteractionPanel());
 			setLayout(miglay);
@@ -210,8 +212,10 @@ public class SelectionPanel extends JScrollPane {
 			} else if( !entity.getControlable() && ObjectMap.getSelected().getSelectionMode() == 3 || ObjectMap.getSelected().getSelectionMode() == 5) {
 				this.add(jBtn, "flowx,cell 0 3,grow");
 			}
-
-			this.setBackground(getColorFromName());
+			
+			this.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
+			this.setBackground(new Color(0, 0, 0, 0));
+			this.setOpaque(false);
 
 			JLabel lblName = new JLabel(entity.getName());
 			add(lblName, "cell 0 0 2 1,alignx left,aligny center");
@@ -232,11 +236,34 @@ public class SelectionPanel extends JScrollPane {
 			add(healthStatus, "cell 0 1,growy");
 
 		}
+		
+		public void paint(Graphics g) {
+			g.setColor(Color.LIGHT_GRAY);
+			g.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
+			g.setColor(getControllableColor());
+			g.fillRoundRect(0, 0, 5, getHeight(), 10, 10);
+			g.setColor(getColorFromClass());
+			g.fillRoundRect(getWidth()-5, 0, 5, getHeight(), 10, 10);
+			g.setColor(new Color(0,0,0,120));
+			g.drawRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
+			super.paint(g);
+		}
 
-		private Color getColorFromName() {
+		private Color getControllableColor() {
+			Color c;
+			if(entity.getControlable() == true) {
+				c = new Color(0, 255, 0);
+			} else {
+				c = new Color(255, 0, 0);
+			}
+			
+			return c;
+		}
+		
+		private Color getColorFromClass() {
 			Color c = Color.lightGray;
-			if (entity.getName() == "2") {
-				c = new Color(200, 200, 100);
+			if (entity instanceof Warrior) {
+				c = new Color(255, 0, 0);
 			}
 			return c;
 		}

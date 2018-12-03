@@ -5,17 +5,17 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import abilities.Move;
-import entity.Entity;
+import entity.unit.Unit;
 import frame.gamePanels.MapPanel;
 
 public class MoveEffect extends MapImageEffect {
 
-	public MoveEffect(Entity source, Entity target, Move ability) {
+	public MoveEffect(Unit source, Unit target, Move ability) {
 		super(source, target, ability);
 		Graphics2D g = this.createGraphics();
 		g.setColor(Color.BLUE);
 		g.setStroke(new BasicStroke(3f));
-		g.drawLine((int) (source.getXPos()*MapPanel.getMapImage().getMapTileSize()+32), (int) (source.getYPos()*MapPanel.getMapImage().getMapTileSize()+32), (int) (ability.getMoveToPoint().getX()*MapPanel.getMapImage().getMapTileSize()+32), (int) (ability.getMoveToPoint().getY()*MapPanel.getMapImage().getMapTileSize()+32));
+		g.drawLine( (int) (source.getPoint().x*MapPanel.getMapImage().getMapTileSize()), (int) (source.getPoint().y*MapPanel.getMapImage().getMapTileSize()), (int) (source.getMove().getMoveToPoint().x*MapPanel.getMapImage().getMapTileSize()), (int) (source.getMove().getMoveToPoint().y*MapPanel.getMapImage().getMapTileSize()));
 	}
 
 	@Override
