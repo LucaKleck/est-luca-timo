@@ -19,6 +19,7 @@ import core.GameInfo;
 import entity.Entity;
 import entity.building.Building;
 import entity.unit.Unit;
+import entity.unit.Warrior;
 import frame.gamePanels.MapPanel;
 
 public class MapImage implements ImageObserver {
@@ -45,6 +46,8 @@ public class MapImage implements ImageObserver {
 	private static int imageHeight;
 	
 	// external resources
+	// Map Tiles
+	// Forest
 	private static BufferedImage plainImage;
 	private static BufferedImage forestImage;
 	private static BufferedImage forestImage192;
@@ -56,6 +59,13 @@ public class MapImage implements ImageObserver {
 	private static BufferedImage forestImageEndLeft;
 	private static BufferedImage forestImageEndTop;
 	private static BufferedImage forestImageEndRight;
+
+	
+	//Buildings
+	private static BufferedImage buildingImage;
+	
+	//Units
+	private static BufferedImage warriorImage;
 	
 	private BufferedImage combinedImage;
 
@@ -78,6 +88,12 @@ public class MapImage implements ImageObserver {
 				forestImageEndLeft = ImageIO.read( Boot.class.getResource("/resources/forestEndLeft.png") );
 				forestImageEndTop = ImageIO.read( Boot.class.getResource("/resources/forestEndTop.png") );
 				forestImageEndRight = ImageIO.read( Boot.class.getResource("/resources/forestEndRight.png") );
+				
+				// Buildings
+				buildingImage = ImageIO.read( Boot.class.getResource("/resources/building.png") );
+				
+				//Units
+				warriorImage = ImageIO.read( Boot.class.getResource("/resources/warrior.png") );
 				
 			} catch (IOException e) {
 			}
@@ -127,6 +143,46 @@ public class MapImage implements ImageObserver {
 		}
 	}
 	
+	
+	private void drawUnitBuildingLayer() {
+		Graphics2D g = getUnitBuildingLayer().createGraphics();
+		g.setComposite(AlphaComposite.Clear);
+		g.fillRect(0, 0, imageWidth, imageHeight); 
+		g.setComposite(AlphaComposite.SrcOver);
+		ArrayList<Entity> e = ObjectMap.getEntityMap();
+		for (Iterator<Entity> iterator = e.iterator(); iterator.hasNext();) {
+			Entity s = iterator.next();
+			if(s instanceof Unit) {
+				g.setColor(Color.BLUE);
+				if(ObjectMap.getSelected().getSelectedEntity() != null) {
+					if(ObjectMap.getSelected().getSelectedEntity().equals(s)) {
+						g.setColor(Color.WHITE);
+					}
+				}
+				g.fillRoundRect((int) (s.getPoint().x*mapTileSize)-5, (int) (s.getPoint().y*mapTileSize)-5, 10, 10, 10, 10);
+				if(s instanceof Warrior) {
+					g.drawImage(warriorImage, (int) (s.getPoint().x*mapTileSize)-8, (int) (s.getPoint().y*mapTileSize)-8, null);
+				}
+			} else if(s instanceof Building) {
+				// if instance of other building
+				g.drawImage(buildingImage, s.getXPos()*mapTileSize, s.getYPos()*mapTileSize, null);
+			}
+		}
+	}
+
+	private void drawEffectLayer() {
+		Graphics2D g = getEffectLayer().createGraphics();
+		g.setComposite(AlphaComposite.Clear);
+		g.fillRect(0, 0, imageWidth, imageHeight); 
+		g.setComposite(AlphaComposite.SrcOver);
+		for (int i = 0; i < GameInfo.getRoundInfo().getEventList().size(); i++) {
+			// draw each effect
+			if(GameInfo.getRoundInfo().getEventList().get(i).getEffect() != null) {
+				g.drawImage(GameInfo.getRoundInfo().getEventList().get(i).getEffect(), 0, 0, imageWidth, imageHeight, null);
+			}
+		}
+	}
+	
 	private void drawSelecionLayer() {
 		Graphics2D g = getSelectionLayer().createGraphics();
 		g.setComposite(AlphaComposite.Clear);
@@ -141,41 +197,6 @@ public class MapImage implements ImageObserver {
 			g.setColor(new Color(0,0,255,120));
 			g.fillRect(ObjectMap.getSelected().getSelectedEntity().getXPos() * mapTileSize,
 					ObjectMap.getSelected().getSelectedEntity().getYPos() * mapTileSize, mapTileSize, mapTileSize);
-		}
-	}
-	
-	private void drawUnitBuildingLayer() {
-		Graphics2D g = getUnitBuildingLayer().createGraphics();
-		g.setComposite(AlphaComposite.Clear);
-		g.fillRect(0, 0, imageWidth, imageHeight); 
-		g.setComposite(AlphaComposite.SrcOver);
-		ArrayList<Entity> e = ObjectMap.getEntityMap();
-		for (Iterator<Entity> iterator = e.iterator(); iterator.hasNext();) {
-			Entity s = iterator.next();
-			if(s instanceof Unit) {
-				g.setColor(Color.BLUE);
-			} else if (s instanceof Building) {
-				g.setColor(new Color(100,100,40));
-			}
-			if(ObjectMap.getSelected().getSelectedEntity() != null) {
-				if(ObjectMap.getSelected().getSelectedEntity().equals(s)) {
-					g.setColor(Color.WHITE);
-				}
-			}
-			g.fillRoundRect((int) (s.getPoint().x*mapTileSize)-5, (int) (s.getPoint().y*mapTileSize)-5, 10, 10, 10, 10);
-		}
-	}
-
-	private void drawEffectLayer() {
-		Graphics2D g = getEffectLayer().createGraphics();
-		g.setComposite(AlphaComposite.Clear);
-		g.fillRect(0, 0, imageWidth, imageHeight); 
-		g.setComposite(AlphaComposite.SrcOver);
-		for (int i = 0; i < GameInfo.getRoundInfo().getEventList().size(); i++) {
-			// draw each effect
-			if(GameInfo.getRoundInfo().getEventList().get(i).getEffect() != null) {
-				g.drawImage(GameInfo.getRoundInfo().getEventList().get(i).getEffect(), 0, 0, imageWidth, imageHeight, null);
-			}
 		}
 	}
 	
@@ -304,9 +325,9 @@ public class MapImage implements ImageObserver {
 		Graphics2D g = getCombinedImage().createGraphics();
 		g.drawImage(getMapTileLayer(), 0, 0, null);
 		g.drawImage(getDecalLayer(), 0, 0, null);
+		g.drawImage(getSelectionLayer(), 0, 0, null);
 		g.drawImage(getUnitBuildingLayer(), 0, 0, null);
 		g.drawImage(getEffectLayer(), 0, 0, null);
-		g.drawImage(getSelectionLayer(), 0, 0, null);
 	}
 	
 	public synchronized BufferedImage getSelectionLayer() {
