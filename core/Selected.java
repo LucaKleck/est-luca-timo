@@ -119,7 +119,6 @@ public class Selected {
 		AbilityPanel.checkAbilities();
 		InfoPanel.refresh();
 		MapPanel.getMapImage().update();
-		System.out.println("SelectionModeEnd["+selectionMode+"]");
 		System.gc();
 	}
 	

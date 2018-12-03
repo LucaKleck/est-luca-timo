@@ -1,5 +1,7 @@
 package frame.gamePanels;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import javax.swing.JPanel;
 
 import abilities.Ability;
 import core.Core;
+import javafx.scene.layout.Background;
 import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
 
@@ -18,6 +21,8 @@ public class AbilityPanel extends JPanel {
 	
 	public AbilityPanel() {
 		setLayout(new MigLayout("insets 0 0 0 0, gap 0px 0px", "[]", "[]"));
+		this.setMinimumSize(new Dimension(40, 40));
+		this.setBackground(Color.DARK_GRAY);
 		self = this;
 	}
 
@@ -43,16 +48,20 @@ public class AbilityPanel extends JPanel {
 						
 						@Override
 						public void actionPerformed(ActionEvent e) {
+							InteractionPanel.setCurrentPanel(null);
 							ObjectMap.getSelected().setSelectedAbility(abl);
 						}
 					});
 					self.add(jButton, ("cell " + i + " 0, grow"));
 				}
 				self.repaint();
+				self.getParent().repaint();
 				Core.getMainJFrame().repaint();
 			}
 		} else {
 			self.removeAll();
+			self.repaint();
+			self.getParent().repaint();
 			System.gc();
 		}
 			
