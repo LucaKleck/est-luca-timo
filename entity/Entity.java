@@ -6,6 +6,7 @@ import com.sun.javafx.geom.Point2D;
 
 import abilities.Ability;
 import core.Event;
+import core.GameInfo;
 import map.ObjectMap;
 
 public class Entity {
@@ -134,13 +135,15 @@ public class Entity {
 
 	public void setEvent(Event event) {
 		if(this.event != null) {
-			this.event.cancelEvent();
+			GameInfo.getRoundInfo().getEventList().remove(this.event);
 			this.event=null;
 			System.gc();
 		}
 		this.event = event;
-		//System.out.println(event.toString());
-		//System.out.println(GameInfo.getEventQueue());
+	}
+
+	public void removeEvent() {
+		this.event = null;
 	}
 
 }

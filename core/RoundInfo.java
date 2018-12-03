@@ -1,19 +1,19 @@
 package core;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 
 public class RoundInfo {
-	private ArrayList<Event> eventList = new ArrayList<>();
+	private LinkedList<Event> eventList = new LinkedList<>();
 	
 	public RoundInfo() {
 		
 	}
 	
-	public RoundInfo(ArrayList<Event> eventList) {
+	public RoundInfo(LinkedList<Event> eventList) {
 		this.eventList = eventList;
 	}
 	
-	public synchronized ArrayList<Event> getEventList() {
+	public synchronized LinkedList<Event> getEventList() {
 		return eventList;
 	}
 }

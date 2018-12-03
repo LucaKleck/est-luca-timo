@@ -133,16 +133,14 @@ public class MapImage implements ImageObserver {
 		g.fillRect(0, 0, imageWidth, imageHeight); 
 		g.setComposite(AlphaComposite.SrcOver);
 		g.setColor(new Color(255, 0, 0, 120));
-		try {
+		if(ObjectMap.getSelected().getSelectedMapTile() != null) {
 			g.fillRect(ObjectMap.getSelected().getSelectedMapTile().getXPos() * mapTileSize,
 					ObjectMap.getSelected().getSelectedMapTile().getYPos() * mapTileSize, mapTileSize, mapTileSize);
-		} catch (NullPointerException e) {
 		}
-		try {
+		if(ObjectMap.getSelected().getSelectedEntity() != null) {
 			g.setColor(new Color(0,0,255,120));
 			g.fillRect(ObjectMap.getSelected().getSelectedEntity().getXPos() * mapTileSize,
 					ObjectMap.getSelected().getSelectedEntity().getYPos() * mapTileSize, mapTileSize, mapTileSize);
-		} catch(NullPointerException nl) {
 		}
 	}
 	
