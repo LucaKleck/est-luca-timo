@@ -34,6 +34,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 			e.run();
 			e.getSource().removeEvent();
 			iterator.remove();
+			System.gc();
 		}
 		MapPanel.getMapImage().update();
 		j.setEnabled(true);

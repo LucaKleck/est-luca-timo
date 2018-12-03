@@ -162,7 +162,7 @@ public class MapImage implements ImageObserver {
 					g.setColor(Color.WHITE);
 				}
 			}
-			g.fillRoundRect((int) (s.getPoint().x*mapTileSize), (int) (s.getPoint().y*mapTileSize), 10, 10, 10, 10);
+			g.fillRoundRect((int) (s.getPoint().x*mapTileSize)-5, (int) (s.getPoint().y*mapTileSize)-5, 10, 10, 10, 10);
 		}
 	}
 
@@ -173,7 +173,6 @@ public class MapImage implements ImageObserver {
 		g.setComposite(AlphaComposite.SrcOver);
 		for (int i = 0; i < GameInfo.getRoundInfo().getEventList().size(); i++) {
 			// draw each effect
-			// effectList needs to be cleared after the round
 			if(GameInfo.getRoundInfo().getEventList().get(i).getEffect() != null) {
 				g.drawImage(GameInfo.getRoundInfo().getEventList().get(i).getEffect(), 0, 0, imageWidth, imageHeight, null);
 			}
