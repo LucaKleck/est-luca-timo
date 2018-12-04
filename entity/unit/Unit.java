@@ -16,7 +16,7 @@ public class Unit extends Entity {
 
 	public Unit(Point2D pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable,  int baseDamage,  int movementRange, ArrayList<Ability> abilities) {
 		super(pointXY, name, maxHealth, currentHealth, level, controlable, abilities);
-		abilities.add(move);
+		abilities.add(0, move);
 		this.baseDamage = baseDamage;
 		this.movementRange = movementRange;
 	}

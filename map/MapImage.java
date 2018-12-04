@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.imageio.ImageIO;
 
@@ -18,7 +20,6 @@ import entity.Entity;
 import entity.building.Building;
 import entity.unit.Unit;
 import entity.unit.Warrior;
-import frame.gamePanels.MapPanel;
 
 public class MapImage {
 
@@ -39,6 +40,8 @@ public class MapImage {
 	private BufferedImage decalLayer; // draw map tile overlays
 	private BufferedImage mapTileLayer; // draw map tiles
 
+	
+	private static final Lock mapImageLock = new ReentrantLock();
 	private static int mapTileSize;
 	private static int imageWidth;
 	private static int imageHeight;
@@ -114,7 +117,7 @@ public class MapImage {
 		
 		Timer graphicsTimer = new Timer("GraphicsThread");
 		graphicsTimer.scheduleAtFixedRate(new GraphicsTask(), 10, 15);
-		graphicsTimer.scheduleAtFixedRate(new MapPanelRefresh(), 10, 15);
+		
 
 	}
 	
@@ -322,7 +325,9 @@ public class MapImage {
 	
 	private void drawCombinedImage() {
 		Graphics2D g = getCombinedImage().createGraphics();
-		g.drawImage(getMapTileLayer(), 0, 0, null);
+		g.setComposite(AlphaComposite.Clear);
+		g.fillRect(0, 0, imageWidth, imageHeight); 
+		g.setComposite(AlphaComposite.SrcOver);
 		g.drawImage(getDecalLayer(), 0, 0, null);
 		g.drawImage(getSelectionLayer(), 0, 0, null);
 		g.drawImage(getUnitBuildingLayer(), 0, 0, null);
@@ -369,13 +374,8 @@ public class MapImage {
 		this.updateFlag = true;
 	}
 	
-	private class MapPanelRefresh extends TimerTask {
-
-		@Override
-		public void run() {
-			new MapPanel.RepaintMapPanel().run();
-		}
-		
+	public ReentrantLock getMapImageLock() {
+		return (ReentrantLock) mapImageLock;
 	}
 	
 	private class GraphicsTask extends TimerTask {
@@ -383,11 +383,14 @@ public class MapImage {
 		@Override
 		public void run() {
 			if(updateFlag) {
+				mapImageLock.lock();
+				drawDecalLayer();
 				drawSelecionLayer();
 				drawUnitBuildingLayer();
 				drawEffectLayer();
 				drawCombinedImage();
 				updateFlag = false;
+				mapImageLock.unlock();
 			}
 		}
 		

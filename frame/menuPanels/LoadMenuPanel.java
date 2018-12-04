@@ -10,6 +10,8 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import core.ControlInput;
 import core.Core;
@@ -23,11 +25,12 @@ import javax.swing.JCheckBox;
  * @author Luca Kleck
  * @see frame.MainJFrame
  */
-public class LoadMenuPanel extends JPanel implements ComponentListener {
+public class LoadMenuPanel extends JPanel implements ComponentListener, DocumentListener {
 	private static final long serialVersionUID = 114L;
 	
-	private JTextField textField;
+	private JTextField filterTextField;
 	private JPanel SavesPanelContainer;
+	
 	public LoadMenuPanel() {
 		this.setBackground(Color.GRAY);
 		setLayout(new MigLayout("", "[100%,grow]", "[100%,fill][fill][fill]"));
@@ -42,14 +45,16 @@ public class LoadMenuPanel extends JPanel implements ComponentListener {
 		add(SavesPanelContainer, "cell 0 0,grow");
 		SavesPanelContainer.setLayout(new MigLayout("", "[100%,fill]", "[100%,fill]"));
 		
-		SavesPanelContainer.add(new SavesPanel(SavesPanelContainer), "cell 0 0,grow");
-		
 		JLabel lblSearch = new JLabel("Search");
 		add(lblSearch, "flowx,cell 0 1,alignx left,aligny center");
 		
-		textField = new JTextField();
-		add(textField, "cell 0 1,grow");
-		textField.setColumns(1);
+		filterTextField = new JTextField();
+		filterTextField.setColumns(1);
+		filterTextField.getDocument().addDocumentListener(this);
+		add(filterTextField, "cell 0 1,grow");
+		
+		SavesPanelContainer.add(new SavesPanel(SavesPanelContainer, filterTextField.getText()), "cell 0 0,grow");
+		
 		add(btnBack, "flowx,cell 0 2,alignx left,aligny center");
 		
 		JButton btnRefresh = new JButton("Refresh");
@@ -60,7 +65,7 @@ public class LoadMenuPanel extends JPanel implements ComponentListener {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SavesPanelContainer.removeAll();
-				SavesPanelContainer.add(new SavesPanel(SavesPanelContainer));
+				SavesPanelContainer.add(new SavesPanel(SavesPanelContainer, filterTextField.getText()));
 			}
 		});
 		this.addComponentListener(this);
@@ -81,7 +86,7 @@ public class LoadMenuPanel extends JPanel implements ComponentListener {
 	@Override
 	public void componentResized(ComponentEvent e) {
 		SavesPanelContainer.removeAll();
-		SavesPanelContainer.add(new SavesPanel(SavesPanelContainer));
+		SavesPanelContainer.add(new SavesPanel(SavesPanelContainer, filterTextField.getText()));
 		Core.getMainJFrame().repaint();
 	}
 
@@ -95,6 +100,27 @@ public class LoadMenuPanel extends JPanel implements ComponentListener {
 
 	@Override
 	public void componentHidden(ComponentEvent e) {
+	}
+
+	@Override
+	public void insertUpdate(DocumentEvent e) {
+		SavesPanelContainer.removeAll();
+		SavesPanelContainer.add(new SavesPanel(SavesPanelContainer, filterTextField.getText()));
+		Core.getMainJFrame().repaint();
+	}
+
+	@Override
+	public void removeUpdate(DocumentEvent e) {
+		SavesPanelContainer.removeAll();
+		SavesPanelContainer.add(new SavesPanel(SavesPanelContainer, filterTextField.getText()));
+		Core.getMainJFrame().repaint();
+	}
+
+	@Override
+	public void changedUpdate(DocumentEvent e) {
+		SavesPanelContainer.removeAll();
+		SavesPanelContainer.add(new SavesPanel(SavesPanelContainer, filterTextField.getText()));
+		Core.getMainJFrame().repaint();
 	}
 	
 	

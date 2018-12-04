@@ -11,7 +11,6 @@ import javax.swing.JPanel;
 
 import abilities.Ability;
 import core.Core;
-import javafx.scene.layout.Background;
 import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
 

@@ -27,8 +27,10 @@ import net.miginfocom.swing.MigLayout;
 public class SavesPanel extends JScrollPane {
 	private static final long serialVersionUID = 6973604110107187761L;
 	private ArrayList<JPanel> saveList= new ArrayList<>();
+	private String filterString = "";
 	
-	public SavesPanel(JPanel container) {
+	public SavesPanel(JPanel container, String filterString) {
+		this.filterString = filterString;
 		setBackground(Color.DARK_GRAY);
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		getVerticalScrollBar().setUnitIncrement(16);
@@ -61,7 +63,13 @@ public class SavesPanel extends JScrollPane {
 
         return savesFolder.listFiles(new FilenameFilter() { 
                  public boolean accept(File dir, String filename)
-                      { return filename.endsWith(".xml"); }
+                    { 
+                	 boolean b = false;
+            		 if( filename.endsWith(".xml") && filename.toLowerCase().contains(filterString.toLowerCase())) {
+            			 b = true;
+            		 }
+                	 return b;
+                	}
         } );
 	}
 	
@@ -126,4 +134,5 @@ public class SavesPanel extends JScrollPane {
 		}
 
 	}
+
 }
