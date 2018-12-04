@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.awt.image.ImageObserver;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -32,6 +33,7 @@ public class MapPanel extends JPanel implements ImageObserver {
 	private static int displacementX;
 	private static int displacementY;
 	
+	private BufferedImage mapImageLocal;
 
 	public MapPanel() {
 		this.setName("MapPanel");
@@ -53,9 +55,12 @@ public class MapPanel extends JPanel implements ImageObserver {
 		// Draw background
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
-
+		
+		if(mapImageLocal == null) {
+			 mapImageLocal = mapImage.getCombinedImage();
+		}
 		// draw map image with displacement & multiplier
-		g.drawImage(mapImage.getCombinedImage(), (int) (displacementX), (int) (displacementY),
+		g.drawImage(mapImageLocal, (int) (displacementX), (int) (displacementY),
 				(int) (this.getWidth() * displacementMultiplier), (int) (this.getWidth() * displacementMultiplier),
 				this);
 	}
