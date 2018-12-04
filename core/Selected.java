@@ -53,32 +53,36 @@ public class Selected {
 		if(isLeftClick) {
 			switch(selectionMode) {
 				case 0:
-					try {
+					if(inBounds(x) && inBounds(y)){
 						selectedMapTile = ObjectMap.getMap()[x][y];
 						if(isntEmpty(x, y)) {
 							InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
 						} else if(InteractionPanel.getCurrentPanel() instanceof SelectionPanel) {
 							InteractionPanel.setCurrentPanel(null);
 						}
-					} catch (IndexOutOfBoundsException e) {
-						selectedMapTile = null;
+					} else {
+						removeSelected();
 					}
 				break;
 				case 1: case 2: case 4:
-					if(!selectedMapTile.getXYPoint().equals(new Point(x, y))) {
-						selectedMapTile = ObjectMap.getMap()[x][y];
-					}
-					selectedEntity = null;
-					if(isntEmpty(x, y)) {
-						InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
+					if(inBounds(x) && inBounds(y)) {
+						if(!selectedMapTile.getXYPoint().equals(new Point(x, y))) {
+							selectedMapTile = ObjectMap.getMap()[x][y];
+						}
+						selectedEntity = null;
+						if(isntEmpty(x, y)) {
+							InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
+						} else {
+							InteractionPanel.setCurrentPanel(null);
+						}
 					} else {
-						InteractionPanel.setCurrentPanel(null);
+						removeSelected();
 					}
 				break;
 				case 3: case 5:
-					try {
+					if(inBounds(x) && inBounds(y)){
 						selectedMapTile = ObjectMap.getMap()[x][y];
-					} catch(NullPointerException nl) {
+					} else {
 						break;
 					}
 					if(selectedAbility instanceof Move) {
@@ -123,10 +127,13 @@ public class Selected {
 		System.gc();
 	}
 	
-	
-	
-	
-	
+	private boolean inBounds(int c) {
+		if(c >= 0 && c < ObjectMap.getMap().length) {
+			return true;
+		}
+		return false;
+	}
+
 	/**
 	 * Changes the selectionMode depending on what current states the selections hold<br>
 	 * <br>

@@ -3,9 +3,7 @@ package map;
 import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.awt.image.ImageObserver;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -21,7 +19,7 @@ import entity.building.Building;
 import entity.unit.Unit;
 import frame.gamePanels.MapPanel;
 
-public class MapImage implements ImageObserver {
+public class MapImage {
 
 	private static final int IMAGE_TYPE = BufferedImage.TYPE_INT_ARGB;
 	
@@ -100,6 +98,7 @@ public class MapImage implements ImageObserver {
 		
 		Timer graphicsTimer = new Timer("GraphicsThread");
 		graphicsTimer.scheduleAtFixedRate(new GraphicsTask(), 10, 15);
+		graphicsTimer.scheduleAtFixedRate(new MapPanelRefresh(), 10, 15);
 
 	}
 	
@@ -352,6 +351,15 @@ public class MapImage implements ImageObserver {
 		this.updateFlag = true;
 	}
 	
+	private class MapPanelRefresh extends TimerTask {
+
+		@Override
+		public void run() {
+			new MapPanel.RepaintMapPanel().run();
+		}
+		
+	}
+	
 	private class GraphicsTask extends TimerTask {
 
 		@Override
@@ -363,14 +371,8 @@ public class MapImage implements ImageObserver {
 				drawCombinedImage();
 				updateFlag = false;
 			}
-			new MapPanel.RepaintMapPanel().run();
 		}
 		
-	}
-	
-	@Override
-	public boolean imageUpdate(Image img, int arg1, int arg2, int arg3, int arg4, int arg5) {
-		return false;
 	}
 	
 }
