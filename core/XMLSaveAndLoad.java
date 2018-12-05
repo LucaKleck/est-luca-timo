@@ -149,7 +149,6 @@ public class XMLSaveAndLoad {
                int maxHealth = Integer.parseInt(eElement.getElementsByTagName(MAX_HEALTH).item(0).getTextContent());
                int level = Integer.parseInt(eElement.getElementsByTagName(LEVEL).item(0).getTextContent());
                boolean controlable = new Boolean(eElement.getElementsByTagName(CONTROLABLE).item(0).getTextContent());
-               System.out.println(controlable);
                
                e = new Entity(p, name, maxHealth, currentHealth, level, controlable, null);
             		   

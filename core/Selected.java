@@ -20,7 +20,7 @@ import map.MapTile;
 
 /** Keeps track of the selected entities and handles the modes that define what actions a click will bring with it
  * @author Luca Kleck
- *
+ * @version 6
  */
 public class Selected {
 	/**
@@ -49,41 +49,32 @@ public class Selected {
 		int x = (int) xD;
 		int y = (int) yD;
 		System.out.println("SelectionModeStart["+selectionMode+"]");
-		if(isLeftClick) {
-			switch(selectionMode) {
+		if(!inBounds(x, y)) {
+			removeSelected();
+		} else {
+			if(isLeftClick) {
+				switch(selectionMode) {
 				case 0:
-					if(inBounds(x) && inBounds(y)){
-						selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
-						if(isntEmpty(x, y)) {
-							InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
-						} else if(InteractionPanel.getCurrentPanel() instanceof SelectionPanel) {
-							InteractionPanel.setCurrentPanel(null);
-						}
-					} else {
-						removeSelected();
+					selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
+					if(isntEmpty(x, y)) {
+						InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
+					} else if(InteractionPanel.getCurrentPanel() instanceof SelectionPanel) {
+						InteractionPanel.setCurrentPanel(null);
 					}
-				break;
+					break;
 				case 1: case 2: case 4:
-					if(inBounds(x) && inBounds(y)) {
-						if(!selectedMapTile.getXYPoint().equals(new Point(x, y))) {
-							selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
-						}
-						selectedEntity = null;
-						if(isntEmpty(x, y)) {
-							InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
-						} else {
-							InteractionPanel.setCurrentPanel(null);
-						}
-					} else {
-						removeSelected();
-					}
-				break;
-				case 3: case 5:
-					if(inBounds(x) && inBounds(y)){
+					if(!selectedMapTile.getXYPoint().equals(new Point(x, y))) {
 						selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
-					} else {
-						break;
 					}
+					selectedEntity = null;
+					if(isntEmpty(x, y)) {
+						InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
+					} else {
+						InteractionPanel.setCurrentPanel(null);
+					}
+					break;
+				case 3: case 5:
+					selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
 					if(selectedAbility instanceof Move) {
 						((Unit)this.getSelectedEntity()).getMove().setMoveToPoint(new Point2D(xD, yD));
 						this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, new MoveEffect((Unit) selectedEntity, (Unit) selectedEntity, (Move) selectedAbility)));
@@ -92,33 +83,25 @@ public class Selected {
 					}
 					InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
 					break;
-				// dev mode
+					// dev mode
 				case 69:
-					try {
-						selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
-						selectedAbility.applyAbility(null, null);
-						setSelectedAbility(null);
-						InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
-					} catch (NullPointerException | IndexOutOfBoundsException ex) {
-						removeSelected();
-					}
-					
-				break;
+					selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
+					selectedAbility.applyAbility(null, null);
+					setSelectedAbility(null);
+					InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
+					break;
 				default: // == 10 (reset everything)
 					removeSelected();
-				break;
+					break;
+				}
+			} else {
+				InteractionPanel.setCurrentPanel(null);
+				GameInfo.getObjectMap().getSelected().removeSelected();
 			}
-		} else {
-			InteractionPanel.setCurrentPanel(null);
-			GameInfo.getObjectMap().getSelected().removeSelected();
 		}
 		
 		// mandatory stuff
-		try {
-			changeSelectionMode();
-		} catch (NullPointerException nl) {
-			nl.printStackTrace();
-		}
+		changeSelectionMode();
 		AbilityPanel.checkAbilities();
 		InfoPanel.refresh();
 		MapPanel.getMapImage().update();
@@ -127,6 +110,13 @@ public class Selected {
 	
 	private boolean inBounds(int c) {
 		if(c >= 0 && c < GameInfo.getObjectMap().getMap().length) {
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean inBounds(int x, int y) {
+		if(inBounds(x) && inBounds(y)) {
 			return true;
 		}
 		return false;
