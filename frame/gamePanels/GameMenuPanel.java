@@ -113,6 +113,7 @@ public class GameMenuPanel extends JPanel {
 		mnDev.add(mntmSendLogLine);
 
 		mntmGenerateDefaultUnit = new JMenuItem("generate warrior ability");
+		mntmGenerateDefaultUnit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
 		mntmGenerateDefaultUnit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmGenerateDefaultUnit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
