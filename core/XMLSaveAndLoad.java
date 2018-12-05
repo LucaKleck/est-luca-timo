@@ -150,16 +150,16 @@ public class XMLSaveAndLoad {
                int level = Integer.parseInt(eElement.getElementsByTagName(LEVEL).item(0).getTextContent());
                boolean controlable = new Boolean(eElement.getElementsByTagName(CONTROLABLE).item(0).getTextContent());
                
-               e = new Entity(p, maxHealth, currentHealth, level, controlable, null);
+               e = new Entity(p, name, maxHealth, currentHealth, level, controlable, null);
             		   
                if(type.matches("Unit") || type.matches("Warrior")) {
             	   int baseDamage = Integer.parseInt(eElement.getElementsByTagName(BASE_DAMAGE).item(0).getTextContent());
             	   int movementRange = Integer.parseInt(eElement.getElementsByTagName(MOVEMENT_RANGE).item(0).getTextContent());
             	   
-            	   e = new Unit(p, maxHealth, currentHealth, level, controlable, baseDamage, movementRange, new ArrayList<>());
+            	   e = new Unit(p, name, maxHealth, currentHealth, level, controlable, baseDamage, movementRange, new ArrayList<>());
             	   
             	   if(type.matches("Warrior")) {
-            		   e = new Warrior(p, currentHealth, level, controlable);
+            		   e = new Warrior(p, name, currentHealth, level, controlable);
             	   }
                }
                if(type.matches("Building")) {

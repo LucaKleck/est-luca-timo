@@ -18,7 +18,6 @@ import com.sun.javafx.geom.Point2D;
 
 import abilities.Ability;
 import abilities.Move;
-import core.Core;
 import entity.Entity;
 
 public class Unit extends Entity {
@@ -27,29 +26,26 @@ public class Unit extends Entity {
 	private int movementRange;
 	private Ability move = new Move();
 
-	public Unit(Point2D pointXY, int maxHealth, int currentHealth, int level, boolean controlable,  int baseDamage,  int movementRange, ArrayList<Ability> abilities) {
+	public Unit(Point2D pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable,  int baseDamage,  int movementRange, ArrayList<Ability> abilities) {
 
-		super(pointXY, maxHealth, currentHealth, level, controlable, abilities);
+		super(pointXY, name, maxHealth, currentHealth, level, controlable, abilities);
 		
 		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder builder = null;
 		try {
 			builder = factory.newDocumentBuilder();
 		} catch (ParserConfigurationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Document document = null;
 		try {
-			document = builder.parse(new File(Core.GAME_PATH_NAMES));
+			document = builder.parse(new File("/resources/names.xml"));
 		} catch (SAXException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		Element rootElement = document.getDocumentElement();
-		String name = getString("name", rootElement);
 		
-		this.setName(name);
+		this.setName(getString("name", rootElement));
 		abilities.add(0, move);
 		this.baseDamage = baseDamage;
 		this.movementRange = movementRange;

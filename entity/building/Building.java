@@ -21,7 +21,7 @@ public class Building extends Entity {
 	private int efficiency;
 	
 	public Building(Point2D pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
-		super(pointXY, maxHealth, currentHealth, level, controlable, abilities);
+		super(pointXY, name, maxHealth, currentHealth, level, controlable, abilities);
 		ressources = new BuildingRessources (getXPos(), getYPos(), name);
 	}
 	

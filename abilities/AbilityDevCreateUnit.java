@@ -15,7 +15,7 @@ public class AbilityDevCreateUnit extends Ability {
 	@Override
 	public void applyAbility(Entity source, Entity target) {
 		Point2D p = new Point2D((float) GameInfo.getObjectMap().getSelected().getSelectedMapTile().getXPos(), (float) GameInfo.getObjectMap().getSelected().getSelectedMapTile().getYPos());
-		GameInfo.getObjectMap().getEntityMap().add(new Warrior(p, 3, 1, true));
+		GameInfo.getObjectMap().getEntityMap().add(new Warrior(p, name,  3, 1, true));
 	}
 
 }
