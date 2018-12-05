@@ -9,7 +9,6 @@ import java.util.concurrent.Executors;
 import javax.swing.JButton;
 
 import frame.gamePanels.MapPanel;
-import map.ObjectMap;
 
 public class NextRoundActionListener implements ActionListener, Runnable {
 	private static final ExecutorService EXS = Executors.newFixedThreadPool(1); 
@@ -25,7 +24,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 	}
 	@Override
 	public void run() {
-		ObjectMap.getSelected().removeSelected();
+		GameInfo.getObjectMap().getSelected().removeSelected();
 		for (Iterator<Event> iterator = GameInfo.getRoundInfo().getEventList().iterator(); iterator.hasNext();) {
 			Event e = iterator.next();
 			System.out.println("----------");

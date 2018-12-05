@@ -86,7 +86,7 @@ public class XMLSaveAndLoad {
 			Document saveDoc = dBuilder.parse(save);
 			saveDoc.getDocumentElement().normalize();
 			
-			new GameInfo(new ObjectMap(loadMap(saveDoc),loadEntityMap(saveDoc)), loadPlayerStats(saveDoc));
+			new GameInfo( new ObjectMap(loadMap(saveDoc),loadEntityMap(saveDoc)), loadPlayerStats(saveDoc));
 			
 			
 			try {
@@ -327,61 +327,61 @@ public class XMLSaveAndLoad {
 	private static Element saveMapTileMap(Document save) {
 		Element map = save.createElement("map");
 	    Attr mapSize = save.createAttribute(MAP_SIZE);
-        mapSize.setValue(""+ObjectMap.getMap().length);
+        mapSize.setValue(""+GameInfo.getObjectMap().getMap().length);
         map.setAttributeNode(mapSize);
         
-	    for(int x = 0; x < ObjectMap.getMap().length; x++) {
-	    	for(int y = 0; y < ObjectMap.getMap()[x].length; y++) {
+	    for(int x = 0; x < GameInfo.getObjectMap().getMap().length; x++) {
+	    	for(int y = 0; y < GameInfo.getObjectMap().getMap()[x].length; y++) {
 			    
 			    Element mapTile = save.createElement("mapTile");
 			    map.appendChild(mapTile);
 			    
 			    Element xPos = save.createElement(X_POS);
-			    xPos.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getXPos()) );
+			    xPos.appendChild(save.createTextNode(""+GameInfo.getObjectMap().getMap()[x][y].getXPos()) );
 			    mapTile.appendChild(xPos);
 			    
 			    Element yPos = save.createElement(Y_POS);
-			    yPos.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getYPos()) );
+			    yPos.appendChild(save.createTextNode(""+GameInfo.getObjectMap().getMap()[x][y].getYPos()) );
 			    mapTile.appendChild(yPos);
 			    
 			    Element type = save.createElement(TYPE);
-			    type.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getType()) );
+			    type.appendChild(save.createTextNode(""+GameInfo.getObjectMap().getMap()[x][y].getType()) );
 			    mapTile.appendChild(type);
 			    
 			    Element name = save.createElement(NAME);
-			    name.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getName()) );
+			    name.appendChild(save.createTextNode(""+GameInfo.getObjectMap().getMap()[x][y].getName()) );
 			    mapTile.appendChild(name);
 			    
 			    Element mapTileResources = save.createElement("mapTileResources");
 
 			    Element gold = save.createElement(GOLD);
-			    gold.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getMapTileResources().getGoldPercent()));
+			    gold.appendChild(save.createTextNode(""+GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getGoldPercent()));
 			    mapTileResources.appendChild(gold);
 			    
 			    Element food = save.createElement(FOOD);
-			    food.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getMapTileResources().getFoodPercent()));
+			    food.appendChild(save.createTextNode(""+GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getFoodPercent()));
 			    mapTileResources.appendChild(food);
 			    
 			    Element wood = save.createElement(WOOD);
-			    wood.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getMapTileResources().getWoodPercent()));
+			    wood.appendChild(save.createTextNode(""+GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getWoodPercent()));
 			    mapTileResources.appendChild(wood);
 			    
 			    Element stone = save.createElement(STONE);
-			    stone.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getMapTileResources().getStonePercent()));
+			    stone.appendChild(save.createTextNode(""+GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getStonePercent()));
 			    mapTileResources.appendChild(stone);
 			    
 			    Element metal = save.createElement(METAL);
-			    metal.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getMapTileResources().getMetalPercent()));
+			    metal.appendChild(save.createTextNode(""+GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getMetalPercent()));
 			    mapTileResources.appendChild(metal);
 			    
 			    Element manaStone = save.createElement(MANA_STONE);
-			    manaStone.appendChild(save.createTextNode(""+ObjectMap.getMap()[x][y].getMapTileResources().getManaStonePercent()));
+			    manaStone.appendChild(save.createTextNode(""+GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getManaStonePercent()));
 			    mapTileResources.appendChild(manaStone);
 			    
 			    mapTile.appendChild(mapTileResources);
 			    
 			    Element isRoad = save.createElement(IS_ROAD);
-			    isRoad.appendChild(save.createTextNode(new Boolean(ObjectMap.getMap()[x][y].isRoad()).toString() ) );
+			    isRoad.appendChild(save.createTextNode(new Boolean(GameInfo.getObjectMap().getMap()[x][y].isRoad()).toString() ) );
 			    mapTile.appendChild(isRoad);
 			    
 	    	}
@@ -392,59 +392,59 @@ public class XMLSaveAndLoad {
 	private static Element saveEntityMap(Document save) {
 		Element entityMap = save.createElement("entityMap");
         
-	    for(int i = 0; i < ObjectMap.getEntityMap().size(); i++) {
+	    for(int i = 0; i < GameInfo.getObjectMap().getEntityMap().size(); i++) {
 	    			Element entity = save.createElement("entity");
 	    			Attr className = save.createAttribute("type");
-	    			if(ObjectMap.getEntityMap().get(i) != null) {
-	    				className.setValue(ObjectMap.getEntityMap().get(i).getClass().getSimpleName());
+	    			if(GameInfo.getObjectMap().getEntityMap().get(i) != null) {
+	    				className.setValue(GameInfo.getObjectMap().getEntityMap().get(i).getClass().getSimpleName());
 	    				
 	    				// things every entity has
 	    				Element xPos = save.createElement(X_POS);
-					    xPos.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getPoint().x) );
+					    xPos.appendChild(save.createTextNode(""+GameInfo.getObjectMap().getEntityMap().get(i).getPoint().x) );
 					    entity.appendChild(xPos);
 					    
 					    Element yPos = save.createElement(Y_POS);
-					    yPos.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getPoint().y) );
+					    yPos.appendChild(save.createTextNode(""+GameInfo.getObjectMap().getEntityMap().get(i).getPoint().y) );
 					    entity.appendChild(yPos);
 					    
 					    Element name = save.createElement(NAME);
-					    name.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getName()) );
+					    name.appendChild(save.createTextNode(""+GameInfo.getObjectMap().getEntityMap().get(i).getName()) );
 					    entity.appendChild(name);
 					    
 					    Element maxHealth = save.createElement(MAX_HEALTH);
-					    maxHealth.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getMaxHealth()) );
+					    maxHealth.appendChild(save.createTextNode(""+GameInfo.getObjectMap().getEntityMap().get(i).getMaxHealth()) );
 					    entity.appendChild(maxHealth);
 					    
 					    Element currentHealth = save.createElement(CURRENT_HEALTH);
-					    currentHealth.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getCurrentHealth()) );
+					    currentHealth.appendChild(save.createTextNode(""+GameInfo.getObjectMap().getEntityMap().get(i).getCurrentHealth()) );
 					    entity.appendChild(currentHealth);
 
 					    Element level = save.createElement(LEVEL);
-					    level.appendChild(save.createTextNode(""+ObjectMap.getEntityMap().get(i).getLevel()) );
+					    level.appendChild(save.createTextNode(""+GameInfo.getObjectMap().getEntityMap().get(i).getLevel()) );
 					    entity.appendChild(level);
 
 					    Element controlable = save.createElement(CONTROLABLE);
-					    controlable.appendChild(save.createTextNode(new Boolean(ObjectMap.getEntityMap().get(i).isControlable()).toString()) );
+					    controlable.appendChild(save.createTextNode(new Boolean(GameInfo.getObjectMap().getEntityMap().get(i).isControlable()).toString()) );
 					    entity.appendChild(controlable);
 					    
 					    // things every unit has
-		    			if(ObjectMap.getEntityMap().get(i) instanceof Unit) {
+		    			if(GameInfo.getObjectMap().getEntityMap().get(i) instanceof Unit) {
 		    				Element damage = save.createElement(BASE_DAMAGE);
-		    				damage.appendChild(save.createTextNode(""+((Unit) ObjectMap.getEntityMap().get(i)).getBaseDamage() ) );
+		    				damage.appendChild(save.createTextNode(""+((Unit) GameInfo.getObjectMap().getEntityMap().get(i)).getBaseDamage() ) );
 						    entity.appendChild(damage);
 						    
 						    Element movementRange = save.createElement(MOVEMENT_RANGE);
-						    movementRange.appendChild(save.createTextNode(""+((Unit) ObjectMap.getEntityMap().get(i)).getMovementRange() ) );
+						    movementRange.appendChild(save.createTextNode(""+((Unit) GameInfo.getObjectMap().getEntityMap().get(i)).getMovementRange() ) );
 						    entity.appendChild(movementRange);
 						    
 						    // things every warrior has
-						    if(ObjectMap.getEntityMap().get(i) instanceof Warrior) {
+						    if(GameInfo.getObjectMap().getEntityMap().get(i) instanceof Warrior) {
 						    	
 						    }
 						    
 		    			}
 		    			// things every building has
-		    			if(ObjectMap.getEntityMap().get(i) instanceof Building) {
+		    			if(GameInfo.getObjectMap().getEntityMap().get(i) instanceof Building) {
 		    				
 		    			}
 		    			

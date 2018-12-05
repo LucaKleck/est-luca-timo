@@ -20,8 +20,8 @@ import abilities.AbilityDevCreateUnit;
 import core.ControlInput;
 import core.Core;
 import core.FullscreenActionListener;
+import core.GameInfo;
 import core.XMLSaveAndLoad;
-import map.ObjectMap;
 
 public class GameMenuPanel extends JPanel {
 	private static final long serialVersionUID = 122L;
@@ -118,8 +118,8 @@ public class GameMenuPanel extends JPanel {
 		mntmGenerateDefaultUnit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmGenerateDefaultUnit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ObjectMap.getSelected().removeSelected();
-				ObjectMap.getSelected().setSelectedAbility(new AbilityDevCreateUnit());
+				GameInfo.getObjectMap().getSelected().removeSelected();
+				GameInfo.getObjectMap().getSelected().setSelectedAbility(new AbilityDevCreateUnit());
 			}
 		});
 		mnDev.add(mntmGenerateDefaultUnit);
@@ -129,7 +129,7 @@ public class GameMenuPanel extends JPanel {
 		mntmGenerateDefaultBuilding.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mntmGenerateDefaultBuilding.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ObjectMap.getSelected().setSelectedAbility(new AbilityDevCreateBuilding());
+				GameInfo.getObjectMap().getSelected().setSelectedAbility(new AbilityDevCreateBuilding());
 			}
 		});
 		mnDev.add(mntmGenerateDefaultBuilding);
@@ -170,7 +170,7 @@ public class GameMenuPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				ObjectMap.remakeMap();
+				GameInfo.getObjectMap().remakeMap();
 			}
 
 		});

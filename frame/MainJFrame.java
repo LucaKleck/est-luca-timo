@@ -3,6 +3,7 @@ package frame;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
@@ -13,11 +14,10 @@ import javax.swing.Timer;
 
 import core.ControlInput;
 import core.Core;
+import core.GameInfo;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.SelectionPanel;
 import frame.menuPanels.MainMenuPanel;
-import map.ObjectMap;
-import java.awt.Toolkit;
 
 /**
  * Frame that is used to display all the content
@@ -65,7 +65,7 @@ public class MainJFrame extends JFrame implements ComponentListener {
 	public static void staticRepaint() {
 		try {
 			if(InteractionPanel.getCurrentPanel() != null && InteractionPanel.getCurrentPanel() instanceof SelectionPanel) {
-				InteractionPanel.setCurrentPanel(new SelectionPanel(ObjectMap.getSelected().getSelectedMapTile().getXPos(), ObjectMap.getSelected().getSelectedMapTile().getYPos()));
+				InteractionPanel.setCurrentPanel(new SelectionPanel(GameInfo.getObjectMap().getSelected().getSelectedMapTile().getXPos(), GameInfo.getObjectMap().getSelected().getSelectedMapTile().getYPos()));
 				System.gc();
 			}
 		} catch (NullPointerException nl) {

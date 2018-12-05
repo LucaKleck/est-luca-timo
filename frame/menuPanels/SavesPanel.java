@@ -18,10 +18,10 @@ import javax.swing.border.SoftBevelBorder;
 
 import core.ControlInput;
 import core.Core;
+import core.GameInfo;
 import core.XMLSaveAndLoad;
 import frame.gamePanels.InfoPanel;
 import frame.gamePanels.InteractionPanel;
-import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
 
 public class SavesPanel extends JScrollPane {
@@ -122,7 +122,7 @@ public class SavesPanel extends JScrollPane {
 					XMLSaveAndLoad.loadGame(save);
 					ControlInput.menuChanger.actionPerformed(new ActionEvent(this, 0, "frame.gamePanels.MainGamePanel"));
 					try {
-						ObjectMap.getSelected().removeSelected();
+						GameInfo.getObjectMap().getSelected().removeSelected();
 						InfoPanel.refresh();
 						InteractionPanel.setCurrentPanel(null);
 					} catch (NullPointerException nl) {

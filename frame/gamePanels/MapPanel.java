@@ -12,8 +12,8 @@ import java.util.concurrent.Executors;
 
 import javax.swing.JPanel;
 
+import core.GameInfo;
 import map.MapImage;
-import map.ObjectMap;
 
 /**
  * Contains and draws the MapImage, takes care of the displacement
@@ -181,7 +181,7 @@ public class MapPanel extends JPanel {
 		
 		@Override
 		public void run() {
-			ObjectMap.getSelected().clickedOnTile(x, y, isLeftClick);
+			GameInfo.getObjectMap().getSelected().clickedOnTile(x, y, isLeftClick);
 		}
 		
 	}

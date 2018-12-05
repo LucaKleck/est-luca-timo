@@ -7,7 +7,6 @@ import com.sun.javafx.geom.Point2D;
 import abilities.Ability;
 import core.Event;
 import core.GameInfo;
-import map.ObjectMap;
 
 public class Entity {
 	private static int entityCount;
@@ -104,11 +103,11 @@ public class Entity {
 
 		int i = 0;
 
-		while (ObjectMap.getEntityMap().get(i) != this) {
+		while (GameInfo.getObjectMap().getEntityMap().get(i) != this) {
 			i++;
 		}
 
-		ObjectMap.getEntityMap().remove(i);
+		GameInfo.getObjectMap().getEntityMap().remove(i);
 
 	}
 

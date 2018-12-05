@@ -103,7 +103,7 @@ public class MapImage {
 
 		imageWidth = width;
 		imageHeight = height;
-		mapTileSize = (int) (width / ObjectMap.getMap().length);
+		mapTileSize = (int) (width / GameInfo.getObjectMap().getMap().length);
 
 		mapTileLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
 		decalLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
@@ -125,9 +125,9 @@ public class MapImage {
 	
 	private void drawDecalLayer() {
 		Graphics2D g = getDecalLayer().createGraphics();
-		for (int x = 0; x < ObjectMap.getMap().length; x++) {
-			for (int y = 0; y < ObjectMap.getMap()[0].length; y++) {
-				if(ObjectMap.getMap()[x][y].isRoad()) {
+		for (int x = 0; x < GameInfo.getObjectMap().getMap().length; x++) {
+			for (int y = 0; y < GameInfo.getObjectMap().getMap()[0].length; y++) {
+				if(GameInfo.getObjectMap().getMap()[x][y].isRoad()) {
 					g.fillRect(x*mapTileSize, y*mapTileSize+27, mapTileSize, 10);
 				}
 			}
@@ -136,8 +136,8 @@ public class MapImage {
 	
 	private void drawMapTileLayer() {
 		Graphics2D g = getMapTileLayer().createGraphics();
-		for (int xRow = 0; xRow < ObjectMap.getMap().length; xRow++) {
-			for (int yColumn = 0; yColumn < ObjectMap.getMap()[0].length; yColumn++) {
+		for (int xRow = 0; xRow < GameInfo.getObjectMap().getMap().length; xRow++) {
+			for (int yColumn = 0; yColumn < GameInfo.getObjectMap().getMap()[0].length; yColumn++) {
 				try {
 					g.drawImage(getImageForTile(xRow, yColumn), xRow * mapTileSize, yColumn * mapTileSize, mapTileSize, mapTileSize, null);
 				} catch (NullPointerException e) {
@@ -153,13 +153,13 @@ public class MapImage {
 		g.setComposite(AlphaComposite.Clear);
 		g.fillRect(0, 0, imageWidth, imageHeight); 
 		g.setComposite(AlphaComposite.SrcOver);
-		ArrayList<Entity> e = ObjectMap.getEntityMap();
+		ArrayList<Entity> e = GameInfo.getObjectMap().getEntityMap();
 		for (Iterator<Entity> iterator = e.iterator(); iterator.hasNext();) {
 			Entity s = iterator.next();
 			if(s instanceof Unit) {
 				g.setColor(Color.BLUE);
-				if(ObjectMap.getSelected().getSelectedEntity() != null) {
-					if(ObjectMap.getSelected().getSelectedEntity().equals(s)) {
+				if(GameInfo.getObjectMap().getSelected().getSelectedEntity() != null) {
+					if(GameInfo.getObjectMap().getSelected().getSelectedEntity().equals(s)) {
 						g.setColor(Color.WHITE);
 					}
 				}
@@ -193,31 +193,31 @@ public class MapImage {
 		g.fillRect(0, 0, imageWidth, imageHeight); 
 		g.setComposite(AlphaComposite.SrcOver);
 		g.setColor(new Color(255, 0, 0, 120));
-		if(ObjectMap.getSelected().getSelectedMapTile() != null) {
-			g.fillRect(ObjectMap.getSelected().getSelectedMapTile().getXPos() * mapTileSize,
-					ObjectMap.getSelected().getSelectedMapTile().getYPos() * mapTileSize, mapTileSize, mapTileSize);
+		if(GameInfo.getObjectMap().getSelected().getSelectedMapTile() != null) {
+			g.fillRect(GameInfo.getObjectMap().getSelected().getSelectedMapTile().getXPos() * mapTileSize,
+					GameInfo.getObjectMap().getSelected().getSelectedMapTile().getYPos() * mapTileSize, mapTileSize, mapTileSize);
 		}
-		if(ObjectMap.getSelected().getSelectedEntity() != null) {
+		if(GameInfo.getObjectMap().getSelected().getSelectedEntity() != null) {
 			g.setColor(new Color(0,0,255,120));
-			g.fillRect(ObjectMap.getSelected().getSelectedEntity().getXPos() * mapTileSize,
-					ObjectMap.getSelected().getSelectedEntity().getYPos() * mapTileSize, mapTileSize, mapTileSize);
+			g.fillRect(GameInfo.getObjectMap().getSelected().getSelectedEntity().getXPos() * mapTileSize,
+					GameInfo.getObjectMap().getSelected().getSelectedEntity().getYPos() * mapTileSize, mapTileSize, mapTileSize);
 		}
 	}
 	
 	private BufferedImage getImageForTile(int x, int y) {
+		MapTile mapTile = GameInfo.getObjectMap().getMap()[x][y];
+		boolean top = checkTile(x, y, mapTile.getType(), TOP);
+		boolean right = checkTile(x, y, mapTile.getType(), RIGHT);
+		boolean bottom = checkTile(x, y, mapTile.getType(), BOTTOM);
+		boolean left = checkTile(x, y, mapTile.getType(), LEFT);
+		boolean topLeft = checkTile(x, y, mapTile.getType(), TOP_LEFT);
+		boolean topRight = checkTile(x, y, mapTile.getType(), TOP_RIGHT);
+		boolean bottomLeft = checkTile(x, y, mapTile.getType(), BOTTOM_LEFT);
+		boolean bottomRight = checkTile(x, y, mapTile.getType(), BOTTOM_RIGHT);
 		
-		boolean top = checkTile(x, y, ObjectMap.getMap()[x][y].getType(), TOP);
-		boolean right = checkTile(x, y, ObjectMap.getMap()[x][y].getType(), RIGHT);
-		boolean bottom = checkTile(x, y, ObjectMap.getMap()[x][y].getType(), BOTTOM);
-		boolean left = checkTile(x, y, ObjectMap.getMap()[x][y].getType(), LEFT);
-		boolean topLeft = checkTile(x, y, ObjectMap.getMap()[x][y].getType(), TOP_LEFT);
-		boolean topRight = checkTile(x, y, ObjectMap.getMap()[x][y].getType(), TOP_RIGHT);
-		boolean bottomLeft = checkTile(x, y, ObjectMap.getMap()[x][y].getType(), BOTTOM_LEFT);
-		boolean bottomRight = checkTile(x, y, ObjectMap.getMap()[x][y].getType(), BOTTOM_RIGHT);
-		
-		if (ObjectMap.getMap()[x][y].getName().matches("Plain")) {
+		if (mapTile.getName().matches("Plain")) {
 			return plainImage;
-		} else if (ObjectMap.getMap()[x][y].getName().matches("Forest") ) {
+		} else if (mapTile.getName().matches("Forest") ) {
 			//MIDDLE
 			if(top && right && bottom && left) {
 				return forestImage192.getSubimage(64, 64, 64, 64);
@@ -278,9 +278,9 @@ public class MapImage {
 				return forestImage;
 			}
 			return forestImage;
-		} else if (ObjectMap.getMap()[x][y].getName().matches("Mountain") ) {
+		} else if (mapTile.getName().matches("Mountain") ) {
 			return plainImage;
-		} else if (ObjectMap.getMap()[x][y].getName().matches("Water") ) {
+		} else if (mapTile.getName().matches("Water") ) {
 			return plainImage;
 		} else {
 			return plainImage;
@@ -290,7 +290,7 @@ public class MapImage {
 	private boolean checkTile(int x, int y, int type, int[] pos) {
 		boolean flag = false;
 		try {
-			if(ObjectMap.getMap()[(x + pos[0])][y + pos[1]].getType() == type) {
+			if(GameInfo.getObjectMap().getMap()[(x + pos[0])][y + pos[1]].getType() == type) {
 				flag = true;
 			}
 		} catch (IndexOutOfBoundsException iex) {

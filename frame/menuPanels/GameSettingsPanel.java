@@ -19,7 +19,6 @@ import core.XMLSaveAndLoad;
 import frame.gamePanels.InfoPanel;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.LogPanel;
-import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -55,7 +54,7 @@ public class GameSettingsPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
-					ObjectMap.getSelected().removeSelected();
+					GameInfo.getObjectMap().getSelected().removeSelected();
 					InteractionPanel.setCurrentPanel(null);
 					InfoPanel.refresh();
 					LogPanel.reset("This is the log, keeping track of all important events");

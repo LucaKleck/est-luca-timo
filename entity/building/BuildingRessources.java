@@ -1,6 +1,6 @@
 package entity.building;
 
-import map.ObjectMap;
+import core.GameInfo;
 
 public class BuildingRessources {
 
@@ -36,7 +36,7 @@ public class BuildingRessources {
 		for (int x = (xCenter - 1); x <= (xCenter + 1); x++) {
 			for (int y = (yCenter - 1); y <= (yCenter + 1); y++) {
 				try {
-					ressources += ObjectMap.getMap()[x][y].getMapTileResources().getGoldPercent();
+					ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getGoldPercent();
 				} catch (NullPointerException nl) {
 				}
 			}
@@ -50,7 +50,7 @@ public class BuildingRessources {
 		for (int x = (xCenter - 1); x <= (xCenter + 1); x++) {
 			for (int y = (yCenter - 1); y <= (yCenter + 1); y++) {
 				try {
-					ressources += ObjectMap.getMap()[x][y].getMapTileResources().getWoodPercent();
+					ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getWoodPercent();
 				} catch (NullPointerException nl) {
 				}
 			}
@@ -64,7 +64,7 @@ public class BuildingRessources {
 		for (int x = (xCenter - 1); x <= (xCenter + 1); x++) {
 			for (int y = (yCenter - 1); y <= (yCenter + 1); y++) {
 				try {
-					ressources += ObjectMap.getMap()[x][y].getMapTileResources().getFoodPercent();
+					ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getFoodPercent();
 				} catch (NullPointerException nl) {
 				}
 			}
@@ -78,7 +78,7 @@ public class BuildingRessources {
 		for (int x = (xCenter - 1); x <= (xCenter + 1); x++) {
 			for (int y = (yCenter - 1); y <= (yCenter + 1); y++) {
 				try {
-					ressources += ObjectMap.getMap()[x][y].getMapTileResources().getStonePercent();
+					ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getStonePercent();
 				} catch (NullPointerException nl) {
 				}
 			}
@@ -92,7 +92,7 @@ public class BuildingRessources {
 		for (int x = (xCenter - 1); x <= (xCenter + 1); x++) {
 			for (int y = (yCenter - 1); y <= (yCenter + 1); y++) {
 				try {
-					ressources += ObjectMap.getMap()[x][y].getMapTileResources().getMetalPercent();
+					ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getMetalPercent();
 				} catch (NullPointerException nl) {
 				}
 			}
@@ -106,7 +106,7 @@ public class BuildingRessources {
 		for (int x = (xCenter - 1); x <= (xCenter + 1); x++) {
 			for (int y = (yCenter - 1); y <= (yCenter + 1); y++) {
 				try {
-					ressources += ObjectMap.getMap()[x][y].getMapTileResources().getManaStonePercent();
+					ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getManaStonePercent();
 				} catch (NullPointerException nl) {
 				}
 			}

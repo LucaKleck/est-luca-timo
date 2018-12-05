@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 import abilities.Ability;
 import core.Core;
-import map.ObjectMap;
+import core.GameInfo;
 import net.miginfocom.swing.MigLayout;
 
 public class AbilityPanel extends JPanel {
@@ -27,11 +27,11 @@ public class AbilityPanel extends JPanel {
 
 
 	public static void checkAbilities() {
-		if(ObjectMap.getSelected().getSelectedEntity() != null) {
+		if(GameInfo.getObjectMap().getSelected().getSelectedEntity() != null) {
 			self.removeAll();
 			System.gc();
-			if(ObjectMap.getSelected().getSelectedEntity().hasAbility()) {
-				ArrayList<Ability> abList = ObjectMap.getSelected().getSelectedEntity().getAbilities();
+			if(GameInfo.getObjectMap().getSelected().getSelectedEntity().hasAbility()) {
+				ArrayList<Ability> abList = GameInfo.getObjectMap().getSelected().getSelectedEntity().getAbilities();
 				String columns = "";
 
 				for (int i = 0; i < abList.size(); i++) {
@@ -48,7 +48,7 @@ public class AbilityPanel extends JPanel {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							InteractionPanel.setCurrentPanel(null);
-							ObjectMap.getSelected().setSelectedAbility(abl);
+							GameInfo.getObjectMap().getSelected().setSelectedAbility(abl);
 						}
 					});
 					self.add(jButton, ("cell " + i + " 0, grow"));

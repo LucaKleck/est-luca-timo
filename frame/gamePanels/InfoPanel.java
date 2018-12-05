@@ -6,7 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import map.ObjectMap;
+import core.GameInfo;
 import net.miginfocom.swing.MigLayout;
 
 public class InfoPanel extends JScrollPane {
@@ -32,8 +32,8 @@ public class InfoPanel extends JScrollPane {
 
 	public static void refresh() {
 		try {
-			lblName.setText("Name: " + ObjectMap.getSelected().getSelectedEntity().getName());
-			lblHealth.setText("Health: " + ObjectMap.getSelected().getSelectedEntity().getCurrentHealth());
+			lblName.setText("Name: " + GameInfo.getObjectMap().getSelected().getSelectedEntity().getName());
+			lblHealth.setText("Health: " + GameInfo.getObjectMap().getSelected().getSelectedEntity().getCurrentHealth());
 		} catch (NullPointerException nl) {
 			lblName.setText("Name: ");
 			lblHealth.setText("Health: ");

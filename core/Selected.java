@@ -17,7 +17,6 @@ import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.MapPanel;
 import frame.gamePanels.SelectionPanel;
 import map.MapTile;
-import map.ObjectMap;
 
 /** Keeps track of the selected entities and handles the modes that define what actions a click will bring with it
  * @author Luca Kleck
@@ -54,7 +53,7 @@ public class Selected {
 			switch(selectionMode) {
 				case 0:
 					if(inBounds(x) && inBounds(y)){
-						selectedMapTile = ObjectMap.getMap()[x][y];
+						selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
 						if(isntEmpty(x, y)) {
 							InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
 						} else if(InteractionPanel.getCurrentPanel() instanceof SelectionPanel) {
@@ -67,7 +66,7 @@ public class Selected {
 				case 1: case 2: case 4:
 					if(inBounds(x) && inBounds(y)) {
 						if(!selectedMapTile.getXYPoint().equals(new Point(x, y))) {
-							selectedMapTile = ObjectMap.getMap()[x][y];
+							selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
 						}
 						selectedEntity = null;
 						if(isntEmpty(x, y)) {
@@ -81,7 +80,7 @@ public class Selected {
 				break;
 				case 3: case 5:
 					if(inBounds(x) && inBounds(y)){
-						selectedMapTile = ObjectMap.getMap()[x][y];
+						selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
 					} else {
 						break;
 					}
@@ -96,7 +95,7 @@ public class Selected {
 				// dev mode
 				case 69:
 					try {
-						selectedMapTile = ObjectMap.getMap()[x][y];
+						selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
 						selectedAbility.applyAbility(null, null);
 						setSelectedAbility(null);
 						InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
@@ -111,7 +110,7 @@ public class Selected {
 			}
 		} else {
 			InteractionPanel.setCurrentPanel(null);
-			ObjectMap.getSelected().removeSelected();
+			GameInfo.getObjectMap().getSelected().removeSelected();
 		}
 		
 		// mandatory stuff
@@ -127,7 +126,7 @@ public class Selected {
 	}
 	
 	private boolean inBounds(int c) {
-		if(c >= 0 && c < ObjectMap.getMap().length) {
+		if(c >= 0 && c < GameInfo.getObjectMap().getMap().length) {
 			return true;
 		}
 		return false;
@@ -211,9 +210,9 @@ public class Selected {
 	private boolean isntEmpty(int x, int y) {
 		boolean test = false;
 		try {
-			for (int i = 0; i < ObjectMap.getEntityMap().size(); i++) {
-				if (ObjectMap.getEntityMap().get(i).getXPos() == x && ObjectMap.getEntityMap().get(i).getYPos() == y) {
-					if(ObjectMap.getEntityMap().get(i) != null) {
+			for (int i = 0; i < GameInfo.getObjectMap().getEntityMap().size(); i++) {
+				if (GameInfo.getObjectMap().getEntityMap().get(i).getXPos() == x && GameInfo.getObjectMap().getEntityMap().get(i).getYPos() == y) {
+					if(GameInfo.getObjectMap().getEntityMap().get(i) != null) {
 						test = true;
 					}
 				}
