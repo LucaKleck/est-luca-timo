@@ -27,8 +27,6 @@ import javax.swing.border.TitledBorder;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
-import com.sun.javafx.geom.Point2D;
-
 import core.Event;
 import entity.Entity;
 import entity.building.Building;

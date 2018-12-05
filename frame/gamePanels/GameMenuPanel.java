@@ -1,5 +1,6 @@
 package frame.gamePanels;
 
+import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -54,7 +55,7 @@ public class GameMenuPanel extends JPanel {
 		chckbxmntmShowLog = new JCheckBoxMenuItem("show Log");
 		chckbxmntmShowLog.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		chckbxmntmShowLog.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK));
-		chckbxmntmShowLog.setSelected(MainGamePanel.getLogBackgroundPanel().isVisible());
+		chckbxmntmShowLog.setSelected(Boolean.parseBoolean(Core.getSetting(Core.SETTING_SHOW_LOG)));
 		mnOptions.add(chckbxmntmShowLog);
 
 		chckbxmntmEnableLogSelection = new JCheckBoxMenuItem("Enable Log selection (disables key-shortcuts)");
@@ -178,11 +179,10 @@ public class GameMenuPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					MainGamePanel.getLogBackgroundPanel()
-							.setVisible(!MainGamePanel.getLogBackgroundPanel().isVisible());
-					Core.saveSetting(Core.SETTING_SHOW_LOG, new Boolean(MainGamePanel.getLogBackgroundPanel().isVisible()).toString() );
-				} catch (NullPointerException nl) {
+				if(Core.getMainJFrame().getCurrentComponent() != null && Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+					Component c = ((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getLogBackgroundPanel();
+					c.setVisible(!c.isVisible());
+					Core.saveSetting(Core.SETTING_SHOW_LOG, new Boolean(c.isVisible()).toString());
 				}
 			}
 		});

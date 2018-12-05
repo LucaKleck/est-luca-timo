@@ -57,9 +57,7 @@ public class ControlInput {
 		@Override
 		public void actionPerformed(ActionEvent evt) {
 			try {
-				Core.getMainJFrame().getContentPane().removeAll();
-				Core.getMainJFrame().getContentPane().add(
-						(Component) ClassLoader.getSystemClassLoader().loadClass(evt.getActionCommand()).newInstance());
+				Core.getMainJFrame().setCurrentComponent( (Component) ClassLoader.getSystemClassLoader().loadClass(evt.getActionCommand()).newInstance() );
 				System.gc();
 			} catch (InstantiationException e) {
 				e.printStackTrace();

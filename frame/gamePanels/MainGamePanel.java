@@ -23,7 +23,7 @@ import net.miginfocom.swing.MigLayout;
  */
 public class MainGamePanel extends JLayeredPane {
 	private static final long serialVersionUID = 120L;
-	private static LogBackgroundPanel logBackgroundPanel;
+	private LogBackgroundPanel logBackgroundPanel;
 	private MapPanel mapPanel;
 	private AbilityPanel abilityPanel;
 	private InteractionPanel interactionPanel;
@@ -88,7 +88,7 @@ public class MainGamePanel extends JLayeredPane {
 
 	}
 
-	public synchronized static LogBackgroundPanel getLogBackgroundPanel() {
+	public synchronized LogBackgroundPanel getLogBackgroundPanel() {
 		return logBackgroundPanel;
 	}
 

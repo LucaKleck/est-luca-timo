@@ -1,6 +1,7 @@
 package frame;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,6 +29,8 @@ public class MainJFrame extends JFrame implements ComponentListener {
 	private static final long serialVersionUID = 110L;
 
 	private Timer recalculateTimer = new Timer(20, new resizeListener());
+	
+	private Component currentComponent;
 
 	public MainJFrame() {
 		setTitle("4x Game");
@@ -38,7 +41,8 @@ public class MainJFrame extends JFrame implements ComponentListener {
 		this.setMinimumSize(new Dimension((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2));
 		MainMenuPanel mainMenuPanel = new MainMenuPanel();
 		mainMenuPanel.setBackground(Color.DARK_GRAY);
-		getContentPane().add(mainMenuPanel);
+		currentComponent = mainMenuPanel;
+		getContentPane().add(currentComponent);
 		this.addMouseWheelListener(ControlInput.mouseWheeListener);
 		this.addComponentListener(this);
 		Refresh r = new Refresh();
@@ -122,5 +126,18 @@ public class MainJFrame extends JFrame implements ComponentListener {
 			}
 
 		}
+	}
+
+	public synchronized Component getCurrentComponent() {
+		return currentComponent;
+	}
+
+	public synchronized void setCurrentComponent(Component currentComponent) {
+		this.getContentPane().removeAll();
+		this.currentComponent = currentComponent;
+		System.out.println(currentComponent.getClass().getSimpleName());
+		this.add(currentComponent);
+		this.validate();
+		this.repaint();
 	}
 }
