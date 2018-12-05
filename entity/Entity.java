@@ -59,10 +59,6 @@ public class Entity {
 		return level;
 	}
 	
-	public void setControlable(boolean controlable) {
-		this.controlable = controlable;
-	}
-	
 	public boolean isControlable() {
 		return controlable;
 	}

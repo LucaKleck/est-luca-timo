@@ -16,10 +16,6 @@ public class SelectionPanelFilter {
 
 	public void sortEntityList(ArrayList<Entity> entityList) {
 		
-		Entity entity1 = entityList.get(0);
-		entity1.setControlable(false);
-		entityList.add(entity1);
-		
 		ArrayList<Entity> friendlyBuildingList = new ArrayList<>();
 		ArrayList<Entity> enemyBuildingList = new ArrayList<>();		
 		ArrayList<Entity> friendlyEntityList = new ArrayList<>();
