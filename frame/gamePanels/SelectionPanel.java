@@ -27,6 +27,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
+import com.sun.javafx.geom.Point2D;
+
 import core.Event;
 import entity.Entity;
 import entity.building.Building;
@@ -111,7 +113,9 @@ public class SelectionPanel extends JScrollPane {
 				selectedEntityList.add(ObjectMap.getEntityMap().get(i));
 			}
 		}
-
+		
+		new SelectionPanelFilter().sortEntityList(selectedEntityList);
+		
 		for (int i = 0; i < selectedEntityList.size(); i++) {
 			selectedEntityElementList.add(createEntityPane(selectedEntityList.get(i)));
 		}
@@ -207,9 +211,9 @@ public class SelectionPanel extends JScrollPane {
 			jBtn.addMouseListener(this);
 
 			this.jBtn.setPreferredSize(new Dimension(135, 23));
-			if( entity.getControlable() && ObjectMap.getSelected().getSelectionMode() != 3 && ObjectMap.getSelected().getSelectionMode() != 5 ) {
+			if( entity.isControlable() && ObjectMap.getSelected().getSelectionMode() != 3 && ObjectMap.getSelected().getSelectionMode() != 5 ) {
 				this.add(jBtn, "flowx,cell 0 3,grow");
-			} else if( !entity.getControlable() && ObjectMap.getSelected().getSelectionMode() == 3 || ObjectMap.getSelected().getSelectionMode() == 5) {
+			} else if( !entity.isControlable() && ObjectMap.getSelected().getSelectionMode() == 3 || ObjectMap.getSelected().getSelectionMode() == 5) {
 				this.add(jBtn, "flowx,cell 0 3,grow");
 			}
 			
@@ -251,7 +255,7 @@ public class SelectionPanel extends JScrollPane {
 
 		private Color getControllableColor() {
 			Color c;
-			if(entity.getControlable() == true) {
+			if(entity.isControlable() == true) {
 				c = new Color(0, 255, 0);
 			} else {
 				c = new Color(255, 0, 0);

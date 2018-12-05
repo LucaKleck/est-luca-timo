@@ -424,7 +424,7 @@ public class XMLSaveAndLoad {
 					    entity.appendChild(level);
 
 					    Element controlable = save.createElement(CONTROLABLE);
-					    controlable.appendChild(save.createTextNode(new Boolean(ObjectMap.getEntityMap().get(i).getControlable()).toString()) );
+					    controlable.appendChild(save.createTextNode(new Boolean(ObjectMap.getEntityMap().get(i).isControlable()).toString()) );
 					    entity.appendChild(controlable);
 					    
 					    // things every unit has
