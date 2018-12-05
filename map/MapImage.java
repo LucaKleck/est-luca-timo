@@ -15,12 +15,19 @@ import java.util.concurrent.locks.ReentrantLock;
 import javax.imageio.ImageIO;
 
 import core.Boot;
+import core.Core;
 import core.GameInfo;
 import entity.Entity;
 import entity.building.Building;
 import entity.unit.Unit;
 import entity.unit.Warrior;
+import frame.gamePanels.MainGamePanel;
 
+/**
+ * @author Luca Kleck
+ * @version 2
+ *
+ */
 public class MapImage {
 
 	private static final int IMAGE_TYPE = BufferedImage.TYPE_INT_ARGB;
@@ -70,9 +77,9 @@ public class MapImage {
 	
 	private BufferedImage combinedImage;
 
-	private boolean updateFlag = true;
-	
 	private static final ExecutorService redrawMapImageService = Executors.newFixedThreadPool(1);
+	
+	private boolean updateFlag = true;
 	
 	public MapImage(int width, int height) {
 		if(plainImage == null) {
@@ -116,10 +123,7 @@ public class MapImage {
 		
 		combinedImage = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
 		
-		redrawMapImageService.execute(new GraphicsTask());
-//		Timer graphicsTimer = new Timer("GraphicsThread");
-//		graphicsTimer.scheduleAtFixedRate(new GraphicsTask(), 10, 15);
-		
+		redrawMapImageService.execute(new GraphicsTask(this));
 
 	}
 	
@@ -377,10 +381,17 @@ public class MapImage {
 	}
 	
 	private class GraphicsTask implements Runnable{
-
+		
+		private boolean run = true;
+		private MapImage mapImage;
+		
+		public GraphicsTask(MapImage mapImage) {
+			this.mapImage = mapImage;
+		}
+		
 		@Override
 		public void run() {
-			while(true) {
+			while(run) {
 				if(updateFlag) {
 					mapImageLock.lock();
 					drawDecalLayer();
@@ -390,17 +401,18 @@ public class MapImage {
 					drawCombinedImage();
 					updateFlag = false;
 					mapImageLock.unlock();
-					try {
-						Thread.sleep(15);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
+				}
+				if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+					MainGamePanel mgf = (MainGamePanel) Core.getMainJFrame().getCurrentComponent();
+					if(!mgf.getMapPanel().getMapImage().equals(mapImage)) {
+						mapImage=null;
+						run=false;
 					}
-				} else {
-					try {
-						Thread.sleep(15);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
+				}
+				try {
+					Thread.sleep(15);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
 				}
 			}
 		}

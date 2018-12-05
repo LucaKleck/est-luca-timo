@@ -21,6 +21,7 @@ import map.MapImage;
  * 
  * @author Luca Kleck
  * @see MainGamePanel
+ * @version 3
  */
 public class MapPanel extends JPanel {
 	private static final long serialVersionUID = 121L;
@@ -49,22 +50,7 @@ public class MapPanel extends JPanel {
 		setBackground(new Color(0, 0, 0, 0));
 		mapTileLocal = mapImage.getMapTileLayer();
 		upperLayerLocal = mapImage.getCombinedImage();
-		MAP_REFRESH_THREAD.execute(new Runnable() {
-			
-			@Override
-			public void run() {
-				while(true) {
-					if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
-						((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().repaint();
-					}
-					try {
-						Thread.sleep(15);
-					} catch (InterruptedException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		});
+		MAP_REFRESH_THREAD.execute(new MapRefresh(this));
 		
 		this.addMouseListener(new MouseEventHandler());
 	}
@@ -140,6 +126,39 @@ public class MapPanel extends JPanel {
 		 boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
 		 WritableRaster raster = bi.copyData(null);
 		 return new BufferedImage(cm, raster, isAlphaPremultiplied, null);
+	}
+	
+	private class MapRefresh implements Runnable {
+		
+		private boolean run = true;
+		private MapPanel mapPanel;
+		
+		public MapRefresh(MapPanel mapPanel) {
+			this.mapPanel = mapPanel;
+		}
+		
+		@Override
+		public void run() {
+			while(run) {
+				if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+					((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().repaint();
+				}
+				if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+					MainGamePanel mgf = (MainGamePanel) Core.getMainJFrame().getCurrentComponent();
+					if(!mgf.getMapPanel().equals(mapPanel)) {
+						mapPanel=null;
+						mapImage=null;
+						run=false;
+					}
+				}
+				try {
+					Thread.sleep(15);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		
 	}
 	
 	private void mouseEventHandler(MouseEvent e) {
