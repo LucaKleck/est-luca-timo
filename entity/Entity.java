@@ -22,11 +22,11 @@ public class Entity {
 	private Event event = null;
 	private boolean controlable = false;
 	
-	public Entity(Point2D pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
+	public Entity(Point2D pointXY, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
 		entityCount++;
 		this.id = entityCount;
 		this.pointXY.setLocation(pointXY);
-		this.name = name;
+		this.name = "DEV";
 		this.maxHealth = maxHealth;
 		this.currentHealth = currentHealth;
 		this.level = level;
@@ -95,6 +95,10 @@ public class Entity {
 
 	}
 	
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public void addLevel() {
 		level ++;
 	}
