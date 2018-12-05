@@ -138,11 +138,7 @@ public class MapImage {
 		Graphics2D g = getMapTileLayer().createGraphics();
 		for (int xRow = 0; xRow < GameInfo.getObjectMap().getMap().length; xRow++) {
 			for (int yColumn = 0; yColumn < GameInfo.getObjectMap().getMap()[0].length; yColumn++) {
-				try {
-					g.drawImage(getImageForTile(xRow, yColumn), xRow * mapTileSize, yColumn * mapTileSize, mapTileSize, mapTileSize, null);
-				} catch (NullPointerException e) {
-					e.printStackTrace();
-				}
+				g.drawImage(getImageForTile(xRow, yColumn), xRow * mapTileSize, yColumn * mapTileSize, mapTileSize, mapTileSize, null);
 			}
 		}
 	}

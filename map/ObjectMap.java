@@ -9,7 +9,6 @@ import java.util.ArrayList;
 import core.MapCreator;
 import core.Selected;
 import entity.Entity;
-import frame.gamePanels.MapPanel;
 
 public class ObjectMap {
 
@@ -44,9 +43,5 @@ public class ObjectMap {
 	
 	public void remakeMap() {
 		map = MapCreator.createMap();
-		try {
-			MapPanel.getMapPanel().repaint();
-		} catch (NullPointerException nl) {
-		}
 	}
 }

@@ -2,6 +2,8 @@ package entity.unit;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -18,10 +20,13 @@ import com.sun.javafx.geom.Point2D;
 
 import abilities.Ability;
 import abilities.Move;
+import core.Boot;
 import entity.Entity;
 
 public class Unit extends Entity {
 
+	private static Document namesXML = null;
+	
 	private int baseDamage;
 	private int movementRange;
 	private Ability move = new Move();
@@ -30,20 +35,27 @@ public class Unit extends Entity {
 
 		super(pointXY, name, maxHealth, currentHealth, level, controlable, abilities);
 		
-		DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-		DocumentBuilder builder = null;
-		try {
-			builder = factory.newDocumentBuilder();
-		} catch (ParserConfigurationException e) {
-			e.printStackTrace();
+		if(namesXML == null) {
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = null;
+			try {
+				builder = factory.newDocumentBuilder();
+			} catch (ParserConfigurationException e) {
+				e.printStackTrace();
+			}
+			try {
+				URL names = Boot.class.getResource("/resources/names.xml");
+				
+				try {
+					namesXML = builder.parse(new File(names.toURI()));
+				} catch (URISyntaxException e) {
+					e.printStackTrace();
+				}
+			} catch (SAXException | IOException e) {
+				e.printStackTrace();
+			}
 		}
-		Document document = null;
-		try {
-			document = builder.parse(new File("/resources/names.xml"));
-		} catch (SAXException | IOException e) {
-			e.printStackTrace();
-		}
-		Element rootElement = document.getDocumentElement();
+		Element rootElement = namesXML.getDocumentElement();
 		
 		this.setName(getString("name", rootElement));
 		abilities.add(0, move);

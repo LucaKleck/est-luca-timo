@@ -8,7 +8,7 @@ import java.util.concurrent.Executors;
 
 import javax.swing.JButton;
 
-import frame.gamePanels.MapPanel;
+import frame.gamePanels.MainGamePanel;
 
 public class NextRoundActionListener implements ActionListener, Runnable {
 	private static final ExecutorService EXS = Executors.newFixedThreadPool(1); 
@@ -35,7 +35,9 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 			iterator.remove();
 			System.gc();
 		}
-		MapPanel.getMapImage().update();
+		if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+			((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
+		}
 		j.setEnabled(true);
 	}
 

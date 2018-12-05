@@ -46,9 +46,8 @@ public class MainGamePanel extends JLayeredPane {
 		resourcesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		lblResourcesLable = new JLabel("Resources");
-		try {
+		if(GameInfo.getPlayerStats().getPlayerResources() != null) {
 			lblResourcesLable.setText(GameInfo.getPlayerStats().getPlayerResources().toString());
-		} catch (NullPointerException nl) {
 		}
 		resourcesPanel.add(lblResourcesLable);
 

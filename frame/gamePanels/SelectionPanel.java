@@ -27,6 +27,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
+import core.Core;
 import core.Event;
 import core.GameInfo;
 import entity.Entity;
@@ -295,7 +296,9 @@ public class SelectionPanel extends JScrollPane {
 					}
 					GameInfo.getObjectMap().getSelected().setSelectedEntity(entity);
 				}
-				MapPanel.getMapImage().update();
+				if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+					((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
+				}
 			}
 		}
 

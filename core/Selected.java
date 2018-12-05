@@ -14,7 +14,7 @@ import frame.gamePanels.AbilityPanel;
 import frame.gamePanels.BuildingPanel;
 import frame.gamePanels.InfoPanel;
 import frame.gamePanels.InteractionPanel;
-import frame.gamePanels.MapPanel;
+import frame.gamePanels.MainGamePanel;
 import frame.gamePanels.SelectionPanel;
 import map.MapTile;
 
@@ -104,7 +104,9 @@ public class Selected {
 		changeSelectionMode();
 		AbilityPanel.checkAbilities();
 		InfoPanel.refresh();
-		MapPanel.getMapImage().update();
+		if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+			((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
+		}
 		System.gc();
 	}
 	

@@ -12,6 +12,7 @@ import java.util.concurrent.Executors;
 
 import javax.swing.JPanel;
 
+import core.Core;
 import core.GameInfo;
 import map.MapImage;
 
@@ -32,8 +33,7 @@ public class MapPanel extends JPanel {
 	private static final ExecutorService CLICK_THREAD = Executors.newFixedThreadPool(1);
 
 	private static double displacementMultiplier = DEFAULT_DISPLACEMENT;
-	private static MapImage mapImage;
-	private static MapPanel mapPanelSelf;
+	private MapImage mapImage;
 	private static int displacementX;
 	private static int displacementY;
 	
@@ -44,7 +44,6 @@ public class MapPanel extends JPanel {
 		this.setName("MapPanel");
 		this.setDoubleBuffered(true);
 		this.setOpaque(false);
-		mapPanelSelf = this;
 
 		mapImage = new MapImage(IMAGE_SIZE, IMAGE_SIZE);
 		setBackground(new Color(0, 0, 0, 0));
@@ -55,7 +54,9 @@ public class MapPanel extends JPanel {
 			@Override
 			public void run() {
 				while(true) {
-					MapPanel.getMapPanel().repaint();
+					if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+						((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().repaint();
+					}
 					try {
 						Thread.sleep(15);
 					} catch (InterruptedException e) {
@@ -88,27 +89,29 @@ public class MapPanel extends JPanel {
 	}
 
 	public static void addDisplacementX(int displacementX) {
-		if ((MapPanel.displacementX + displacementX) < (mapPanelSelf.getWidth() / (displacementMultiplier / 2 ) )
-				&& (MapPanel.displacementX + displacementX) > -(mapPanelSelf.getWidth() / 2 * displacementMultiplier * 1.75)) {
+		MapPanel mp = ((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel();
+		if ((MapPanel.displacementX + displacementX) < (mp.getWidth() / (displacementMultiplier / 2 ) )
+				&& (MapPanel.displacementX + displacementX) > -(mp.getWidth() / 2 * displacementMultiplier * 1.75)) {
 			MapPanel.displacementX += displacementX;
 		} else {
 			if (MapPanel.displacementX > 0) {
-				MapPanel.displacementX = (int) (mapPanelSelf.getWidth() / (displacementMultiplier / 2 ) );
+				MapPanel.displacementX = (int) (mp.getWidth() / (displacementMultiplier / 2 ) );
 			} else {
-				MapPanel.displacementX = (int) -(mapPanelSelf.getWidth() / 2 * displacementMultiplier * 1.75);
+				MapPanel.displacementX = (int) -(mp.getWidth() / 2 * displacementMultiplier * 1.75);
 			}
 		}
 	}
 
 	public static void addDisplacementY(int displacementY) {
-		if ((MapPanel.displacementY + displacementY) < (mapPanelSelf.getWidth() / 5.25 * displacementMultiplier)
-				&& (MapPanel.displacementY + displacementY) > -(mapPanelSelf.getWidth() / 2 * displacementMultiplier * 1.75)) {
+		MapPanel mp = ((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel();
+		if ((MapPanel.displacementY + displacementY) < (mp.getWidth() / 5.25 * displacementMultiplier)
+				&& (MapPanel.displacementY + displacementY) > -(mp.getWidth() / 2 * displacementMultiplier * 1.75)) {
 			MapPanel.displacementY += displacementY;
 		} else {
 			if (MapPanel.displacementY > 0) {
-				MapPanel.displacementY = (int) (mapPanelSelf.getWidth() / 5.25 * displacementMultiplier);
+				MapPanel.displacementY = (int) (mp.getWidth() / 5.25 * displacementMultiplier);
 			} else {
-				MapPanel.displacementY = (int) -(mapPanelSelf.getWidth() / 2 * displacementMultiplier * 1.75);
+				MapPanel.displacementY = (int) -(mp.getWidth() / 2 * displacementMultiplier * 1.75);
 			}
 		}
 	}
@@ -128,14 +131,10 @@ public class MapPanel extends JPanel {
 		MapPanel.displacementY = 0;
 	}
 	
-	public static MapImage getMapImage() {
+	public MapImage getMapImage() {
 		return mapImage;
 	}
 
-	public static MapPanel getMapPanel() {
-		return mapPanelSelf;
-	}
-	
 	static BufferedImage deepCopy(BufferedImage bi) {
 		 ColorModel cm = bi.getColorModel();
 		 boolean isAlphaPremultiplied = cm.isAlphaPremultiplied();
