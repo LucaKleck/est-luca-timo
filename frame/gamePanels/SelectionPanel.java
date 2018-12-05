@@ -28,11 +28,11 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import core.Event;
+import core.GameInfo;
 import entity.Entity;
 import entity.building.Building;
 import entity.unit.Unit;
 import entity.unit.Warrior;
-import map.ObjectMap;
 import net.miginfocom.swing.MigLayout;
 
 public class SelectionPanel extends JScrollPane {
@@ -79,7 +79,7 @@ public class SelectionPanel extends JScrollPane {
 		setBackground(Color.DARK_GRAY);
 		setBorder(null);
 		setAutoscrolls(true);
-
+		
 		this.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		this.getVerticalScrollBar().setUnitIncrement(16);
 		this.getVerticalScrollBar().setUI(new SelectionPanelScrollBarUI());
@@ -93,7 +93,7 @@ public class SelectionPanel extends JScrollPane {
 		setColumnHeaderView(headerPanel);
 
 		JLabel lblSelectMenu = new JLabel("Select Menu");
-		if(ObjectMap.getSelected().getSelectionMode() == 3 || ObjectMap.getSelected().getSelectionMode() == 5) {
+		if(GameInfo.getObjectMap().getSelected().getSelectionMode() == 3 || GameInfo.getObjectMap().getSelected().getSelectionMode() == 5) {
 			lblSelectMenu.setText("Select Target Menu");
 			// TODO remove currently selected entity from list
 			
@@ -106,9 +106,9 @@ public class SelectionPanel extends JScrollPane {
 		setViewportView(viewportPanel);
 		viewportPanel.setLayout(new MigLayout("", "[fill]", "[fill]"));
 
-		for (int i = 0; i < ObjectMap.getEntityMap().size(); i++) {
-			if (ObjectMap.getEntityMap().get(i).getXPos() == x && ObjectMap.getEntityMap().get(i).getYPos() == y) {
-				selectedEntityList.add(ObjectMap.getEntityMap().get(i));
+		for (int i = 0; i < GameInfo.getObjectMap().getEntityMap().size(); i++) {
+			if (GameInfo.getObjectMap().getEntityMap().get(i).getXPos() == x && GameInfo.getObjectMap().getEntityMap().get(i).getYPos() == y) {
+				selectedEntityList.add(GameInfo.getObjectMap().getEntityMap().get(i));
 			}
 		}
 		
@@ -209,9 +209,9 @@ public class SelectionPanel extends JScrollPane {
 			jBtn.addMouseListener(this);
 
 			this.jBtn.setPreferredSize(new Dimension(135, 23));
-			if( entity.isControlable() && ObjectMap.getSelected().getSelectionMode() != 3 && ObjectMap.getSelected().getSelectionMode() != 5 ) {
+			if( entity.isControlable() && GameInfo.getObjectMap().getSelected().getSelectionMode() != 3 && GameInfo.getObjectMap().getSelected().getSelectionMode() != 5 ) {
 				this.add(jBtn, "flowx,cell 0 3,grow");
-			} else if( !entity.isControlable() && ObjectMap.getSelected().getSelectionMode() == 3 || ObjectMap.getSelected().getSelectionMode() == 5) {
+			} else if( !entity.isControlable() && GameInfo.getObjectMap().getSelected().getSelectionMode() == 3 || GameInfo.getObjectMap().getSelected().getSelectionMode() == 5) {
 				this.add(jBtn, "flowx,cell 0 3,grow");
 			}
 			
@@ -282,9 +282,9 @@ public class SelectionPanel extends JScrollPane {
 		public void mouseReleased(MouseEvent e) {
 			if (jBtn.contains(e.getPoint())) {
 				// if it's with an ability create event with target (this entity and source current selected entity)
-				if(ObjectMap.getSelected().getSelectionMode() == 3 || ObjectMap.getSelected().getSelectionMode() == 5) {
-					ObjectMap.getSelected().getSelectedEntity().setEvent(new Event(ObjectMap.getSelected().getSelectedEntity(), entity, ObjectMap.getSelected().getSelectedAbility(), null));
-					ObjectMap.getSelected().removeSelected();
+				if(GameInfo.getObjectMap().getSelected().getSelectionMode() == 3 || GameInfo.getObjectMap().getSelected().getSelectionMode() == 5) {
+					GameInfo.getObjectMap().getSelected().getSelectedEntity().setEvent(new Event(GameInfo.getObjectMap().getSelected().getSelectedEntity(), entity, GameInfo.getObjectMap().getSelected().getSelectedAbility(), null));
+					GameInfo.getObjectMap().getSelected().removeSelected();
 					InteractionPanel.setCurrentPanel(null);
 				} // else just normal selection change
 				else {
@@ -293,7 +293,7 @@ public class SelectionPanel extends JScrollPane {
 					} else if(entity instanceof Building) {
 						InteractionPanel.setCurrentPanel(new BuildingPanel((Building) entity));
 					}
-					ObjectMap.getSelected().setSelectedEntity(entity);
+					GameInfo.getObjectMap().getSelected().setSelectedEntity(entity);
 				}
 				MapPanel.getMapImage().update();
 			}

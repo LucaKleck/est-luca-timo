@@ -13,9 +13,9 @@ import frame.gamePanels.MapPanel;
 
 public class ObjectMap {
 
-	private static Selected selected = new Selected();
-	private static MapTile[][] map;
-	private static ArrayList<Entity> entityMap;
+	private Selected selected = new Selected();
+	private MapTile[][] map;
+	private ArrayList<Entity> entityMap;
 	
 
 	public ObjectMap() {
@@ -25,24 +25,24 @@ public class ObjectMap {
 	}
 	
 	public ObjectMap(MapTile[][] map, ArrayList<Entity> entityMap) {
-		ObjectMap.map = map;
-		ObjectMap.entityMap = entityMap;
+		this.map = map;
+		this.entityMap = entityMap;
 		selected = new Selected();
 	}
 
-	public static MapTile[][] getMap() {
+	public MapTile[][] getMap() {
 		return map;
 	}
 
-	public static Selected getSelected() {
+	public Selected getSelected() {
 		return selected;
 	}
 
-	public static ArrayList<Entity> getEntityMap() {
+	public ArrayList<Entity> getEntityMap() {
 		return entityMap;
 	}
 	
-	public static void remakeMap() {
+	public void remakeMap() {
 		map = MapCreator.createMap();
 		try {
 			MapPanel.getMapPanel().repaint();
