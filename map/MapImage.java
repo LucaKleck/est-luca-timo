@@ -7,8 +7,8 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -71,7 +71,8 @@ public class MapImage {
 	private BufferedImage combinedImage;
 
 	private boolean updateFlag = true;
-
+	
+	private static final ExecutorService redrawMapImageService = Executors.newFixedThreadPool(1);
 	
 	public MapImage(int width, int height) {
 		if(plainImage == null) {
@@ -115,8 +116,9 @@ public class MapImage {
 		
 		combinedImage = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
 		
-		Timer graphicsTimer = new Timer("GraphicsThread");
-		graphicsTimer.scheduleAtFixedRate(new GraphicsTask(), 10, 15);
+		redrawMapImageService.execute(new GraphicsTask());
+//		Timer graphicsTimer = new Timer("GraphicsThread");
+//		graphicsTimer.scheduleAtFixedRate(new GraphicsTask(), 10, 15);
 		
 
 	}
@@ -378,19 +380,32 @@ public class MapImage {
 		return (ReentrantLock) mapImageLock;
 	}
 	
-	private class GraphicsTask extends TimerTask {
+	private class GraphicsTask implements Runnable{
 
 		@Override
 		public void run() {
-			if(updateFlag) {
-				mapImageLock.lock();
-				drawDecalLayer();
-				drawSelecionLayer();
-				drawUnitBuildingLayer();
-				drawEffectLayer();
-				drawCombinedImage();
-				updateFlag = false;
-				mapImageLock.unlock();
+			while(true) {
+				if(updateFlag) {
+					mapImageLock.lock();
+					drawDecalLayer();
+					drawSelecionLayer();
+					drawUnitBuildingLayer();
+					drawEffectLayer();
+					drawCombinedImage();
+					updateFlag = false;
+					mapImageLock.unlock();
+					try {
+						Thread.sleep(15);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				} else {
+					try {
+						Thread.sleep(15);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
 			}
 		}
 		
