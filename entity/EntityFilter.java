@@ -15,45 +15,22 @@ public class EntityFilter implements Comparable {
 	public Entity getBestEntityTarget(Entity entity) {
 
 		Entity bestEntity = null;
-		int distancePoints;
-		int healthPoints;
-		int priorityPoints;
-		int bestEntityPriorityPoints = 0;
-		int radius = entity.getMaxRange() / 2;
+//		int distancePoints;
+//		int healthPoints;
+//		int priorityPoints;
+//		int bestEntityPriorityPoints = 0;
+//		int radius = entity.getMaxRange() / 2;
 
-		try {
 
-			for (int x = 0 - radius; x < entity.getMaxRange() - radius; x++) {
-				for (int y = 0 - radius; y < entity.getMaxRange() - radius; y++) {
-					for (int z = 0; z < entityMap[0][1].length; z++) {
+//		distancePoints = 100 / (calculateDifference(entity.getXPos(), x)
+//				+ calculateDifference(entity.getYPos(), y) + 1);
+//		healthPoints = 500 / entityMap[x][y][z].getMaxHealth();
+//		priorityPoints = distancePoints + healthPoints;
 
-						try {
-							if (x > 0 && y > 0) {
-
-								distancePoints = 100 / (calculateDifference(entity.getXPos(), x)
-										+ calculateDifference(entity.getYPos(), y) + 1);
-								healthPoints = 500 / entityMap[x][y][z].getMaxHealth();
-								priorityPoints = distancePoints + healthPoints;
-
-								if (priorityPoints > bestEntityPriorityPoints && x != entity.getXPos()
-										&& y != entity.getYPos()) {
-									bestEntityPriorityPoints = priorityPoints;
-									bestEntity = entityMap[x][y][z];
-								}
-
-							}
-						} catch (java.lang.NullPointerException e) {
-
-						}
-
-					}
-				}
-			}
-
-		} catch (IndexOutOfBoundsException e) {
-
-		}
-
+//		if (priorityPoints > bestEntityPriorityPoints) {
+//			bestEntityPriorityPoints = priorityPoints;
+//			bestEntity = GameInfo.getObjectMap().getEntityMap().get(0);
+//		}
 		return bestEntity;
 	}
 

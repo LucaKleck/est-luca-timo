@@ -68,18 +68,16 @@ public class LogPanel extends JScrollPane {
 
 	public static void appendNewLine(String line) {
 		String time = ""+Calendar.getInstance().get(Calendar.HOUR_OF_DAY)+":"+Calendar.getInstance().get(Calendar.MINUTE)+" - ";
-		try {
+		if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
 			LogPanel.getLog().append(System.lineSeparator() + time + line);
 			LogPanel.getLog().setCaretPosition(LogPanel.getLog().getDocument().getLength());
-		} catch (NullPointerException nl) {
 		}
 	}
 	
 	public static void reset(String textAfterReset) {
-		try {
+		if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
 			log.setText(textAfterReset);
 			self.removeAll();
-		} catch (NullPointerException nl) {
 		}
 	}
 	

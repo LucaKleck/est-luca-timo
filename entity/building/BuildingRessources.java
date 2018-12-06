@@ -1,6 +1,7 @@
 package entity.building;
 
 import core.GameInfo;
+import map.ObjectMap;
 
 public class BuildingRessources {
 
@@ -15,103 +16,37 @@ public class BuildingRessources {
 	 * 				6 - Manastone
 	  */
 
-	public BuildingRessources(int y, int x, String name) {
-		if (name.matches(Building.GOLD_GETTER)) {
-			collectableRessources = getGold(x, y);
-		} else if (name.matches(Building.WOOD_GETTER)) {
-			collectableRessources = getWood(x, y);
-		} else if (name.matches(Building.FOOD_GETTER)) {
-			collectableRessources = getFood(x, y);
-		} else if (name.matches(Building.STONE_GETTER)) {
-			collectableRessources = getStone(x, y);
-		} else if (name.matches(Building.METAL_GETTER)) {
-			collectableRessources = getMetal(x, y);
-		} else if (name.matches(Building.MANA_GETTER)) {
-			collectableRessources = getManaStone(x, y);
-		}
+	public BuildingRessources(int x, int y, String name) {
+		collectableRessources = getRessources(x, y, name);
 	}
 	
-	private int getGold(int xCenter, int yCenter) {
+	private int getRessources(int xCenter, int yCenter, String name) {
 		int ressources = 0;
 		for (int x = (xCenter - 1); x <= (xCenter + 1); x++) {
 			for (int y = (yCenter - 1); y <= (yCenter + 1); y++) {
-				try {
-					ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getGoldPercent();
-				} catch (NullPointerException nl) {
+				if(ObjectMap.inBounds(x, y)) {
+					if (name.matches(Building.GOLD_GETTER)) {
+						ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getGoldPercent();
+						type = 1;
+					} else if (name.matches(Building.WOOD_GETTER)) {
+						ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getWoodPercent();
+						type = 2;
+					} else if (name.matches(Building.FOOD_GETTER)) {
+						ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getFoodPercent();
+						type = 3;
+					} else if (name.matches(Building.STONE_GETTER)) {
+						ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getStonePercent();
+						type = 4;
+					} else if (name.matches(Building.METAL_GETTER)) {
+						ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getMetalPercent();
+						type = 5;
+					} else if (name.matches(Building.MANA_GETTER)) {
+						ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getManaStonePercent();
+						type = 6;
+					}
 				}
 			}
 		}
-		type = 1;
-		return ressources;
-	}
-
-	private int getWood(int xCenter, int yCenter) {
-		int ressources = 0;
-		for (int x = (xCenter - 1); x <= (xCenter + 1); x++) {
-			for (int y = (yCenter - 1); y <= (yCenter + 1); y++) {
-				try {
-					ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getWoodPercent();
-				} catch (NullPointerException nl) {
-				}
-			}
-		}
-		type = 2;
-		return ressources;
-	}
-
-	private int getFood(int xCenter, int yCenter) {
-		int ressources = 0;
-		for (int x = (xCenter - 1); x <= (xCenter + 1); x++) {
-			for (int y = (yCenter - 1); y <= (yCenter + 1); y++) {
-				try {
-					ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getFoodPercent();
-				} catch (NullPointerException nl) {
-				}
-			}
-		}
-		type = 3;
-		return ressources;
-	}
-
-	private int getStone(int xCenter, int yCenter) {
-		int ressources = 0;
-		for (int x = (xCenter - 1); x <= (xCenter + 1); x++) {
-			for (int y = (yCenter - 1); y <= (yCenter + 1); y++) {
-				try {
-					ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getStonePercent();
-				} catch (NullPointerException nl) {
-				}
-			}
-		}
-		type = 4;
-		return ressources;
-	}
-
-	private int getMetal(int xCenter, int yCenter) {
-		int ressources = 0;
-		for (int x = (xCenter - 1); x <= (xCenter + 1); x++) {
-			for (int y = (yCenter - 1); y <= (yCenter + 1); y++) {
-				try {
-					ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getMetalPercent();
-				} catch (NullPointerException nl) {
-				}
-			}
-		}
-		type = 5;
-		return ressources;
-	}
-
-	private int getManaStone(int xCenter, int yCenter) {
-		int ressources = 0;
-		for (int x = (xCenter - 1); x <= (xCenter + 1); x++) {
-			for (int y = (yCenter - 1); y <= (yCenter + 1); y++) {
-				try {
-					ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getManaStonePercent();
-				} catch (NullPointerException nl) {
-				}
-			}
-		}
-		type = 6;
 		return ressources;
 	}
 

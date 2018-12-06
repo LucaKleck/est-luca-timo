@@ -16,7 +16,7 @@ public class Entity {
 	private String name;
 	private int maxHealth;
 	private int currentHealth;
-	private ArrayList<Ability> abilities;
+	private ArrayList<Ability> abilities = new ArrayList<>();
 	private int level = 1;
 	private int maxRange = 5; // Will be calculated via the abilities in the future
 	private Event event = null;
@@ -124,14 +124,11 @@ public class Entity {
 
 	public boolean hasAbility() {
 		boolean has = false;
-		try {
-			for (int i = 0; i < abilities.size(); i++) {
-				if (abilities.get(i) != null) {
-					has = true;
-					return has;
-				}
+		for (int i = 0; i < abilities.size(); i++) {
+			if (abilities.get(i) != null) {
+				has = true;
+				return has;
 			}
-		} catch (NullPointerException nl) {
 		}
 		return has;
 	}

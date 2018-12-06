@@ -89,10 +89,7 @@ public class XMLSaveAndLoad {
 			new GameInfo( new ObjectMap(loadMap(saveDoc),loadEntityMap(saveDoc)), loadPlayerStats(saveDoc));
 			
 			
-			try {
-				LogPanel.reset(saveDoc.getElementsByTagName("gameLog").item(0).getTextContent());
-			} catch (NullPointerException nl) {
-			}	
+			LogPanel.reset(saveDoc.getElementsByTagName("gameLog").item(0).getTextContent());
 		} catch (ParserConfigurationException | SAXException | IOException e1) {
 			e1.printStackTrace();
 		}

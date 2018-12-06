@@ -6,6 +6,7 @@ package map;
 
 import java.util.ArrayList;
 
+import core.GameInfo;
 import core.MapCreator;
 import core.Selected;
 import entity.Entity;
@@ -43,5 +44,19 @@ public class ObjectMap {
 	
 	public void remakeMap() {
 		map = MapCreator.createMap();
+	}
+	
+	public static boolean inBounds(int c) {
+		if(c >= 0 && c < GameInfo.getObjectMap().getMap().length) {
+			return true;
+		}
+		return false;
+	}
+	
+	public static boolean inBounds(int x, int y) {
+		if(inBounds(x) && inBounds(y)) {
+			return true;
+		}
+		return false;
 	}
 }

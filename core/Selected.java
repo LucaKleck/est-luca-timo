@@ -17,6 +17,7 @@ import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.MainGamePanel;
 import frame.gamePanels.SelectionPanel;
 import map.MapTile;
+import map.ObjectMap;
 
 /** Keeps track of the selected entities and handles the modes that define what actions a click will bring with it
  * @author Luca Kleck
@@ -49,7 +50,7 @@ public class Selected {
 		int x = (int) xD;
 		int y = (int) yD;
 		System.out.println("SelectionModeStart["+selectionMode+"]");
-		if(!inBounds(x, y)) {
+		if(!ObjectMap.inBounds(x, y)) {
 			removeSelected();
 		} else {
 			if(isLeftClick) {
@@ -110,20 +111,6 @@ public class Selected {
 		System.gc();
 	}
 	
-	private boolean inBounds(int c) {
-		if(c >= 0 && c < GameInfo.getObjectMap().getMap().length) {
-			return true;
-		}
-		return false;
-	}
-	
-	private boolean inBounds(int x, int y) {
-		if(inBounds(x) && inBounds(y)) {
-			return true;
-		}
-		return false;
-	}
-
 	/**
 	 * Changes the selectionMode depending on what current states the selections hold<br>
 	 * <br>

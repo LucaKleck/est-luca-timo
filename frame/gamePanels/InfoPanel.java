@@ -31,10 +31,10 @@ public class InfoPanel extends JScrollPane {
 	}
 
 	public static void refresh() {
-		try {
+		if(GameInfo.getObjectMap().getSelected().getSelectedEntity() != null) {
 			lblName.setText("Name: " + GameInfo.getObjectMap().getSelected().getSelectedEntity().getName());
 			lblHealth.setText("Health: " + GameInfo.getObjectMap().getSelected().getSelectedEntity().getCurrentHealth());
-		} catch (NullPointerException nl) {
+		} else {
 			lblName.setText("Name: ");
 			lblHealth.setText("Health: ");
 		}

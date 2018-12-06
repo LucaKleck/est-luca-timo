@@ -16,6 +16,7 @@ import core.ControlInput;
 import core.Core;
 import core.GameInfo;
 import frame.gamePanels.InteractionPanel;
+import frame.gamePanels.MainGamePanel;
 import frame.gamePanels.SelectionPanel;
 import frame.menuPanels.MainMenuPanel;
 
@@ -63,12 +64,11 @@ public class MainJFrame extends JFrame implements ComponentListener {
 	}
 
 	public static void staticRepaint() {
-		try {
+		if(Core.getMainJFrame().currentComponent instanceof MainGamePanel) {
 			if(InteractionPanel.getCurrentPanel() != null && InteractionPanel.getCurrentPanel() instanceof SelectionPanel) {
 				InteractionPanel.setCurrentPanel(new SelectionPanel(GameInfo.getObjectMap().getSelected().getSelectedMapTile().getXPos(), GameInfo.getObjectMap().getSelected().getSelectedMapTile().getYPos()));
 				System.gc();
 			}
-		} catch (NullPointerException nl) {
 		}
 		Core.getMainJFrame().repaint();
 	}
@@ -117,11 +117,8 @@ public class MainJFrame extends JFrame implements ComponentListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					if (!Core.getMainJFrame().isValid()) {
-						Core.getMainJFrame().validate();
-					}
-				} catch (NullPointerException s) {
+				if (!Core.getMainJFrame().isValid()) {
+					Core.getMainJFrame().validate();
 				}
 			}
 

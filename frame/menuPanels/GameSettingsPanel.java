@@ -16,8 +16,6 @@ import javax.swing.text.DocumentFilter;
 import core.ControlInput;
 import core.GameInfo;
 import core.XMLSaveAndLoad;
-import frame.gamePanels.InfoPanel;
-import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.LogPanel;
 import net.miginfocom.swing.MigLayout;
 
@@ -53,14 +51,7 @@ public class GameSettingsPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				try {
-					GameInfo.getObjectMap().getSelected().removeSelected();
-					InteractionPanel.setCurrentPanel(null);
-					InfoPanel.refresh();
-					LogPanel.reset("This is the log, keeping track of all important events");
-				} catch (NullPointerException nl) {
-					
-				}
+				LogPanel.reset("This is the log, keeping track of all important events");
 				new XMLSaveAndLoad(txtNewGame.getText());
 				new GameInfo();
 			}
