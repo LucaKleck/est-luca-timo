@@ -1,6 +1,8 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 @SuppressWarnings("rawtypes")
 public class EntityFilter implements Comparable {
@@ -14,24 +16,8 @@ public class EntityFilter implements Comparable {
 
 	public Entity getBestEntityTarget(Entity entity) {
 
-		Entity bestEntity = null;
-//		int distancePoints;
-//		int healthPoints;
-//		int priorityPoints;
-//		int bestEntityPriorityPoints = 0;
-//		int radius = entity.getMaxRange() / 2;
+		return null;
 
-
-//		distancePoints = 100 / (calculateDifference(entity.getXPos(), x)
-//				+ calculateDifference(entity.getYPos(), y) + 1);
-//		healthPoints = 500 / entityMap[x][y][z].getMaxHealth();
-//		priorityPoints = distancePoints + healthPoints;
-
-//		if (priorityPoints > bestEntityPriorityPoints) {
-//			bestEntityPriorityPoints = priorityPoints;
-//			bestEntity = GameInfo.getObjectMap().getEntityMap().get(0);
-//		}
-		return bestEntity;
 	}
 
 	public static Entity[][][] getEntityMap() {
@@ -41,55 +27,32 @@ public class EntityFilter implements Comparable {
 	public static void setUnitMap(Entity[][][] entityMap) {
 		EntityFilter.entityMap = entityMap;
 	}
-	/*
-	 * Old Sorting Algorithm - Saving for future if needed
-	 * 
-	 * public void sort(int xPosition, int yPosition) {
-	 * 
-	 * sortedUnitList.clear(); int distancePoints; int healthPoints; int deltaX; int
-	 * deltaY; int index = 0;
-	 * 
-	 * for (int row = 0; row < entityMap.length; row++) { for (int column = 0;
-	 * column < entityMap[row].length; column++) {
-	 * 
-	 * try {
-	 * 
-	 * deltaX = calculateDifference(xPosition, row); deltaY =
-	 * calculateDifference(yPosition, column);
-	 * 
-	 * distancePoints = 100 / (deltaX + deltaY + 1); healthPoints = 100 /
-	 * entityMap[row][column].getHealth();
-	 * 
-	 * entityMap[row][column].setPriorityPoints(distancePoints + healthPoints);
-	 * sortedUnitList.add(entityMap[row][column]);
-	 * System.out.println(sortedUnitList.get(index).toString()); index++;
-	 * 
-	 * } catch (java.lang.NullPointerException e) {
-	 * 
-	 * }
-	 * 
-	 * }
-	 * 
-	 * }
-	 * 
-	 * System.out.println();
-	 * 
-	 * Collections.sort(sortedUnitList, new Comparator<Entity>() {
-	 * 
-	 * @Override public int compare(Entity entity1, Entity entity2) {
-	 * 
-	 * int value1 = entity1.getPriorityPoints(); int value2 =
-	 * entity2.getPriorityPoints();
-	 * 
-	 * return Integer.compare(value1, value2); } });
-	 * 
-	 * for (int i = 0; i < sortedUnitList.size(); i++) {
-	 * System.out.println(sortedUnitList.get(i).toString()); }
-	 * 
-	 * }
-	 */
 
-	public int calculateDifference(int x1, int x2) {
+	public void sortEntityList(ArrayList<Entity> entityList, Entity sourceEntity) {
+		Collections.sort(entityList, new Comparator<Entity>() {
+
+			@Override
+			public int compare(Entity entity1, Entity entity2) {
+
+				Integer priorityPointsEntity1 = calculatePriorityPoints(entity1, sourceEntity);
+				Integer priorityPointsEntity2 = calculatePriorityPoints(entity2, sourceEntity);
+
+				return priorityPointsEntity1.compareTo(priorityPointsEntity2);
+			}
+		});
+
+	}
+
+	private int calculatePriorityPoints(Entity targetEntity, Entity sourceEntity) {
+
+		int healthPoints = (100 / targetEntity.getCurrentHealth());
+		int distancePoints = calculateDifference(targetEntity.getXPos(), sourceEntity.getXPos())
+				+ calculateDifference(targetEntity.getYPos(), sourceEntity.getYPos());
+		return healthPoints + distancePoints;
+
+	}
+
+	private int calculateDifference(int x1, int x2) {
 
 		int difference;
 
