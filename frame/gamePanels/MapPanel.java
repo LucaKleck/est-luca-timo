@@ -62,7 +62,6 @@ public class MapPanel extends JPanel {
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		
-		
 		// backdrop
 		g.drawImage(mapTileLocal, (int) (displacementX), (int) (displacementY),
 				(int) (this.getWidth() * displacementMultiplier), (int) (this.getWidth() * displacementMultiplier),
@@ -141,7 +140,10 @@ public class MapPanel extends JPanel {
 		public void run() {
 			while(run) {
 				if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+					while(mapImage.getMapImageLock().isLocked());
+					mapImage.getMapImageLock().lock();
 					((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().repaint();
+					mapImage.getMapImageLock().unlock();
 				}
 				if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
 					MainGamePanel mgf = (MainGamePanel) Core.getMainJFrame().getCurrentComponent();

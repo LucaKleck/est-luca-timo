@@ -393,14 +393,15 @@ public class MapImage {
 		public void run() {
 			while(run) {
 				if(updateFlag) {
-					mapImageLock.lock();
 					drawDecalLayer();
 					drawSelecionLayer();
 					drawUnitBuildingLayer();
 					drawEffectLayer();
+					while(((ReentrantLock) mapImageLock).isLocked());
+					mapImageLock.lock();
 					drawCombinedImage();
-					updateFlag = false;
 					mapImageLock.unlock();
+					updateFlag = false;
 				}
 				if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
 					MainGamePanel mgf = (MainGamePanel) Core.getMainJFrame().getCurrentComponent();

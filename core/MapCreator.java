@@ -33,13 +33,21 @@ public class MapCreator {
 	 */
 	public static MapTile[][] createMap() {
 		MapTile[][] map = new MapTile[49][49];
+		
 		createTiles(map);
 		plantTrees(map);
-
 //		letTimePass(map); // this makes the map more varied.. make GoL here
 //		smashContinentalPlatesTogether(map); // this creates Mountains, not sure how to do it yet
-//		floodTheLand(map); // this puts in all the bodies of water etc.
+		floodTheLand(map); // this puts in all the bodies of water etc.
+		
 		return map;
+	}
+	/**
+	 * This will put in rivers and other bodies of water
+	 * @param map - the map that will be changed
+	 */
+	private static void floodTheLand(MapTile[][] map) {
+		
 	}
 	/**
 	 * plantTrees works like this: <br>
