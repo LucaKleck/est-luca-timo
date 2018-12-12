@@ -55,8 +55,9 @@ public class MapImage {
 	
 	// external resources
 	// Map Tiles
-	// Forest
 	private static BufferedImage plainImage;
+	
+	// Forest
 	private static BufferedImage forestImage;
 	private static BufferedImage forestImage192;
 
@@ -68,6 +69,12 @@ public class MapImage {
 	private static BufferedImage forestImageEndTop;
 	private static BufferedImage forestImageEndRight;
 
+	//River
+	private static BufferedImage riverImage;
+	private static BufferedImage riverImage192;
+	
+	private static BufferedImage riverH;
+	private static BufferedImage riverV;
 	
 	//Buildings
 	private static BufferedImage buildingImage;
@@ -97,6 +104,13 @@ public class MapImage {
 				forestImageEndLeft = ImageIO.read( Boot.class.getResource("/resources/forestEndLeft.png") );
 				forestImageEndTop = ImageIO.read( Boot.class.getResource("/resources/forestEndTop.png") );
 				forestImageEndRight = ImageIO.read( Boot.class.getResource("/resources/forestEndRight.png") );
+				
+				// River
+				riverImage = ImageIO.read( Boot.class.getResource("/resources/pond.png") );
+				riverImage192 = ImageIO.read( Boot.class.getResource("/resources/pond192.png") );
+				
+				riverH = ImageIO.read( Boot.class.getResource("/resources/riverH.png") );
+				riverV = ImageIO.read( Boot.class.getResource("/resources/riverV.png") );
 				
 				// Buildings
 				buildingImage = ImageIO.read( Boot.class.getResource("/resources/building.png") );
@@ -215,9 +229,9 @@ public class MapImage {
 		boolean bottomLeft = checkTile(x, y, mapTile.getType(), BOTTOM_LEFT);
 		boolean bottomRight = checkTile(x, y, mapTile.getType(), BOTTOM_RIGHT);
 		
-		if (mapTile.getName().matches("Plain")) {
+		if (mapTile.getName().matches(MapTile.NAME_PLAIN)) {
 			return plainImage;
-		} else if (mapTile.getName().matches("Forest") ) {
+		} else if (mapTile.getName().matches(MapTile.NAME_FOREST) ) {
 			//MIDDLE
 			if(top && right && bottom && left) {
 				return forestImage192.getSubimage(64, 64, 64, 64);
@@ -278,10 +292,69 @@ public class MapImage {
 				return forestImage;
 			}
 			return forestImage;
-		} else if (mapTile.getName().matches("Mountain") ) {
+		} else if (mapTile.getName().matches(MapTile.NAME_MOUNTAIN) ) {
 			return plainImage;
-		} else if (mapTile.getName().matches("Water") ) {
-			return plainImage;
+		} else if (mapTile.getName().matches(MapTile.NAME_RIVER) ) {
+			//MIDDLE
+			if(top && right && bottom && left) {
+				return riverImage192.getSubimage(64, 64, 64, 64);
+			}
+			
+			//CORNERS
+			if(!top && right && bottom && !left) {
+				return riverImage192.getSubimage(0, 0, 64, 64);
+			}
+			if(!top && !right && bottom && left) {
+				return riverImage192.getSubimage(128, 0, 64, 64);
+			}
+			if(top && !right && !bottom && left) {
+				return riverImage192.getSubimage(128, 128, 64, 64);
+			}
+			if(top && right && !bottom && !left) {
+				return riverImage192.getSubimage(0, 128, 64, 64);
+			}
+			
+			//RIGHT, LEFT, TOP, BOTTOM
+			if(top && right && bottom && !left) {
+				return riverImage192.getSubimage(0, 64, 64, 64);
+			}
+			if(!top && right && bottom && left) {
+				return riverImage192.getSubimage(64, 0, 64, 64);
+			}
+			if(top && !right && bottom && left) {
+				return riverImage192.getSubimage(128, 64, 64, 64);
+			}
+			if(top && right && !bottom && left) {
+				return riverImage192.getSubimage(64, 128, 64, 64);
+			}
+			
+			//LEFT TO RIGHT
+			/*if(!top && right && !bottom && !left) {
+				return forestImageEndLeft;
+			}
+			if(!top && !right && !bottom && left) {
+				return forestImageEndRight;
+			}*/
+			if(!top && right && !bottom && left) {
+				return riverH;
+			}
+			
+			//TOP TO BOTTOM
+			/*if(!top && !right && bottom && !left) {
+				return forestImageEndTop;
+			}
+			if(top && !right && !bottom && !left) {
+				return forestImageEndBottom;
+			}*/
+			if(top && !right && bottom && !left) {
+				return riverV;
+			}
+			
+			//DEFAULT
+			if(!top && !right && !bottom && !left && !topLeft && !topRight && !bottomLeft && !bottomRight) {
+				return riverImage;
+			}
+			return riverImage;
 		} else {
 			return plainImage;
 		}

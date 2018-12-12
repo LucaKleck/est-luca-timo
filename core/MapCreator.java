@@ -13,8 +13,7 @@ public class MapCreator {
 
 	// map building constants
 	private static int forestCount = 25; // make a pre-game setting
-	@SuppressWarnings("unused")
-	private static int riverCount = 3; // make a pre-game setting
+	private static int riverCount = 7; // make a pre-game setting
 	private static final int COMMON_RADIUS = 7; // this is the radius that most methods will use to determine the sizes
 	private static final Random RAND = new Random();
 
@@ -44,10 +43,55 @@ public class MapCreator {
 	}
 	/**
 	 * This will put in rivers and other bodies of water
-	 * @param map - the map that will be changed
+	 * @param map - 2D array of @see {@link MapTile}
 	 */
 	private static void floodTheLand(MapTile[][] map) {
-		
+		int minRiverLength=12;
+		for(int i=0; i < riverCount; i++) {
+			boolean riverCreated = false;
+			while(!riverCreated) {
+				for(int y = 0; y <map[0].length; y++) {
+					if( 1 > RAND.nextInt(1000) ) {
+						for(int x = 0; x < map.length; x++) {
+							if( 333 > RAND.nextInt(1000) ) {
+								// Up
+								if(inBounds(map, x, y)) {
+									map[x][y] = new MapTile(x, y, MapTile.TYPE_LIQUID, MapTile.NAME_RIVER);
+								}
+								y++;
+								
+							} else if( 333 > RAND.nextInt(1000) ) {
+								// Down
+								if(inBounds(map, x, y)) {
+									map[x][y] = new MapTile(x, y, MapTile.TYPE_LIQUID, MapTile.NAME_RIVER);
+								}
+								y--;
+							}
+							if(inBounds(map, x, y)) {
+								System.out.println("x="+x+" y="+y);
+								map[x][y] = new MapTile(x, y, MapTile.TYPE_LIQUID, MapTile.NAME_RIVER);
+							} else {
+								if(x<minRiverLength) {
+									i--;
+								}
+								break;
+							}
+						}
+						riverCreated=true;
+						break;
+					}
+				}
+			}
+		}
+	}
+	private static boolean inBounds(MapTile[][] map, int x, int y) {
+		boolean isInBounds = false;
+		if(x >= 0 && y >= 0) {
+			if(x < map.length && y < map[0].length) {
+				isInBounds = true;
+			}
+		}
+		return isInBounds;
 	}
 	/**
 	 * plantTrees works like this: <br>
