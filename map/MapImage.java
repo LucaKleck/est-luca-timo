@@ -367,6 +367,7 @@ public class MapImage {
 				flag = true;
 			}
 		} catch (IndexOutOfBoundsException iex) {
+			flag = true;
 		}
 		return flag;
 	}

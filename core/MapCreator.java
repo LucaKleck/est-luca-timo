@@ -68,8 +68,10 @@ public class MapCreator {
 								y--;
 							}
 							if(inBounds(map, x, y)) {
-								System.out.println("x="+x+" y="+y);
 								map[x][y] = new MapTile(x, y, MapTile.TYPE_LIQUID, MapTile.NAME_RIVER);
+//								if(inBounds(map, x, y+1)) {
+//									map[x][y+1] = new MapTile(x, y, MapTile.TYPE_LIQUID, MapTile.NAME_RIVER);
+//								}
 							} else {
 								if(x<minRiverLength) {
 									i--;
