@@ -69,6 +69,10 @@ public class MapImage {
 	private static BufferedImage forestImageEndTop;
 	private static BufferedImage forestImageEndRight;
 
+	//Mountain
+	private static BufferedImage mountainImage;
+	private static BufferedImage mountainImage192;
+	
 	//River
 	private static BufferedImage riverImage;
 	private static BufferedImage riverImage192;
@@ -93,7 +97,7 @@ public class MapImage {
 			try {
 				plainImage = ImageIO.read( Boot.class.getResource("/resources/plain.png") );
 				
-				// Forest
+				//Forest
 				forestImage = ImageIO.read( Boot.class.getResource("/resources/forest.png") );
 				forestImage192 = ImageIO.read( Boot.class.getResource("/resources/forest192.png") );
 				
@@ -105,14 +109,18 @@ public class MapImage {
 				forestImageEndTop = ImageIO.read( Boot.class.getResource("/resources/forestEndTop.png") );
 				forestImageEndRight = ImageIO.read( Boot.class.getResource("/resources/forestEndRight.png") );
 				
-				// River
+				//Mountain
+				mountainImage = ImageIO.read( Boot.class.getResource("/resources/mountain.png") );
+				mountainImage192 = ImageIO.read( Boot.class.getResource("/resources/mountain192.png") );
+				
+				//River
 				riverImage = ImageIO.read( Boot.class.getResource("/resources/pond.png") );
 				riverImage192 = ImageIO.read( Boot.class.getResource("/resources/pond192.png") );
 				
 				riverH = ImageIO.read( Boot.class.getResource("/resources/riverH.png") );
 				riverV = ImageIO.read( Boot.class.getResource("/resources/riverV.png") );
 				
-				// Buildings
+				//Buildings
 				buildingImage = ImageIO.read( Boot.class.getResource("/resources/building.png") );
 				
 				//Units
@@ -293,7 +301,66 @@ public class MapImage {
 			}
 			return forestImage;
 		} else if (mapTile.getName().matches(MapTile.NAME_MOUNTAIN) ) {
-			return plainImage;
+			//MIDDLE
+			if(top && right && bottom && left) {
+				return mountainImage192.getSubimage(64, 64, 64, 64);
+			}
+			
+			//CORNERS
+			if(!top && right && bottom && !left) {
+				return mountainImage192.getSubimage(0, 0, 64, 64);
+			}
+			if(!top && !right && bottom && left) {
+				return mountainImage192.getSubimage(128, 0, 64, 64);
+			}
+			if(top && !right && !bottom && left) {
+				return mountainImage192.getSubimage(128, 128, 64, 64);
+			}
+			if(top && right && !bottom && !left) {
+				return mountainImage192.getSubimage(0, 128, 64, 64);
+			}
+			
+			//RIGHT, LEFT, TOP, BOTTOM
+			if(top && right && bottom && !left) {
+				return mountainImage192.getSubimage(0, 64, 64, 64);
+			}
+			if(!top && right && bottom && left) {
+				return mountainImage192.getSubimage(64, 0, 64, 64);
+			}
+			if(top && !right && bottom && left) {
+				return mountainImage192.getSubimage(128, 64, 64, 64);
+			}
+			if(top && right && !bottom && left) {
+				return mountainImage192.getSubimage(64, 128, 64, 64);
+			}
+			
+			//LEFT TO RIGHT
+			/*if(!top && right && !bottom && !left) {
+				return forestImageEndLeft;
+			}
+			if(!top && !right && !bottom && left) {
+				return forestImageEndRight;
+			}*/
+//			if(!top && right && !bottom && left) {
+//				return riverH;
+//			}
+			
+			//TOP TO BOTTOM
+			/*if(!top && !right && bottom && !left) {
+				return forestImageEndTop;
+			}
+			if(top && !right && !bottom && !left) {
+				return forestImageEndBottom;
+			}*/
+//			if(top && !right && bottom && !left) {
+//				return riverV;
+//			}
+			
+			//DEFAULT
+			if(!top && !right && !bottom && !left && !topLeft && !topRight && !bottomLeft && !bottomRight) {
+				return mountainImage;
+			}
+			return mountainImage;
 		} else if (mapTile.getName().matches(MapTile.NAME_RIVER) ) {
 			//MIDDLE
 			if(top && right && bottom && left) {

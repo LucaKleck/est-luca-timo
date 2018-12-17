@@ -13,7 +13,8 @@ public class MapCreator {
 
 	// map building constants
 	private static int forestCount = 25; // make a pre-game setting
-	private static int riverCount = 7; // make a pre-game setting
+	private static int riverCount = 5; // make a pre-game setting
+	private static int mountainCount = 10; // make a pre-game setting
 	private static final int COMMON_RADIUS = 7; // this is the radius that most methods will use to determine the sizes
 	private static final Random RAND = new Random();
 
@@ -36,10 +37,27 @@ public class MapCreator {
 		createTiles(map);
 		plantTrees(map);
 //		letTimePass(map); // this makes the map more varied.. make GoL here
-//		smashContinentalPlatesTogether(map); // this creates Mountains, not sure how to do it yet
+		smashContinentalPlatesTogether(map); // this creates Mountains, not sure how to do it yet
 		floodTheLand(map); // this puts in all the bodies of water etc.
 		
 		return map;
+	}
+	/**
+	 * This will put in mountains.
+	 * @param map - 2D array of @see {@link MapTile}
+	 */
+	private static void smashContinentalPlatesTogether(MapTile[][] map) {
+		for(int i=0; i < mountainCount; i++) {
+			int x = RAND.nextInt(map.length);
+			int y = RAND.nextInt(map[0].length);
+			for(int xRow = 0; xRow < 12; xRow++) {
+				for(int yCol = 0; yCol < 6; yCol++) {
+					if(inBounds(map, xRow+x, yCol+y)) {
+						map[xRow+x][yCol+y] = new MapTile( (xRow+x), (yCol+y), MapTile.TYPE_MOUNTAIN, MapTile.NAME_MOUNTAIN);
+					}
+				}
+			}
+		}
 	}
 	/**
 	 * This will put in rivers and other bodies of water
@@ -152,7 +170,7 @@ public class MapCreator {
 				}
 				if (isInBounds(xFinal, yFinal, map.length, map[0].length)) {
 					if (RAND.nextInt(100) + 1 < 65) {
-						map[xFinal][yFinal] = createForest(xFinal, yFinal);
+						map[xFinal][yFinal] = new MapTile(xFinal, yFinal, type, name);
 					}
 				}
 			}
@@ -179,11 +197,6 @@ public class MapCreator {
 	private static MapTile createPlain(int xPos, int yPos) {
 		MapTile plane = new MapTile(xPos, yPos, MapTile.TYPE_PLAIN, MapTile.NAME_PLAIN);
 		return plane;
-	}
-
-	private static MapTile createForest(int xPos, int yPos) {
-		MapTile forest = new MapTile(xPos, yPos, MapTile.TYPE_FOREST, MapTile.NAME_FOREST);
-		return forest;
 	}
 
 	public static void setForestCount(int count) {
