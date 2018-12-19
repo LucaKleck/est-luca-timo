@@ -7,9 +7,7 @@ package map;
 
 import java.awt.Point;
 
-import entity.Target;
-
-public class MapTile extends Target {
+public class MapTile {
 	public static final int TYPE_PLAIN = 0;
 	public static final int TYPE_FOREST = 1;
 	public static final int TYPE_MOUNTAIN = 2;
@@ -23,6 +21,9 @@ public class MapTile extends Target {
 	private int type;
 	private boolean isRoad;
 
+	private int xPos;
+	private int yPos;
+	
 	private String name;
 	private MapTileResources mapTileResources;
 //	private BuildingEffect buildingEffect = null;
