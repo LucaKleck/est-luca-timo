@@ -21,7 +21,8 @@ public class AbilityPanel extends JPanel {
 	public AbilityPanel() {
 		setLayout(new MigLayout("insets 0 0 0 0, gap 0px 0px", "[]", "[]"));
 		this.setMinimumSize(new Dimension(40, 40));
-		this.setBackground(Color.DARK_GRAY);
+		setOpaque(false);
+		setBackground(new Color(0, 0, 0, 0));
 		self = this;
 	}
 

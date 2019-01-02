@@ -51,14 +51,15 @@ public class MainGamePanel extends JLayeredPane {
 		
 		abilityPanel = new AbilityPanel();
 		setLayer(abilityPanel, 2);
-		uiPanel.add(abilityPanel, "flowx,cell 3 8 5 1,grow");
+		uiPanel.add(abilityPanel, "flowx,cell 3 8 5 1,alignx left,aligny bottom");
 		
 		
 		resourcesPanel = new JPanel();
 		setLayer(resourcesPanel, 1);
 		resourcesPanel.setBorder(UIManager.getBorder("MenuBar.border"));
-		resourcesPanel.setBackground(UIManager.getColor("MenuBar.background"));
-		resourcesPanel.setEnabled(false);
+		resourcesPanel.setOpaque(false);
+		resourcesPanel.setBackground(new Color(0,0,0,0));
+		
 		uiPanel.add(resourcesPanel, "cell 1 0 7 1,alignx left,aligny center");
 		
 		lblResourcesLable = new JLabel("Resources");
@@ -66,7 +67,7 @@ public class MainGamePanel extends JLayeredPane {
 		
 		logBackgroundPanel = new LogBackgroundPanel();
 		setLayer(logBackgroundPanel, 1);
-		uiPanel.add(logBackgroundPanel, "cell 0 9 8 2,grow");
+		uiPanel.add(logBackgroundPanel, "cell 0 9 11 2,grow");
 		logBackgroundPanel.setLayout(new BorderLayout(0, 0));
 
 		LogPanel logPanel = new LogPanel();
@@ -74,7 +75,7 @@ public class MainGamePanel extends JLayeredPane {
 		interactionPanel = new InteractionPanel();
 		
 		setLayer(interactionPanel, 2);
-		uiPanel.add(interactionPanel, "cell 8 1 3 10,grow");
+		uiPanel.add(interactionPanel, "cell 8 1 3 8,grow");
 
 		infoPanel = new InfoPanel();
 		
@@ -83,7 +84,7 @@ public class MainGamePanel extends JLayeredPane {
 		btnNextRound.setForeground(Color.LIGHT_GRAY);
 		btnNextRound.setBackground(Color.DARK_GRAY);
 		btnNextRound.addActionListener(new NextRoundActionListener());
-		uiPanel.add(btnNextRound, "cell 1 8 2 1");
+		uiPanel.add(btnNextRound, "cell 1 8 2 1,growx,aligny bottom");
 
 		mapPanel = new MapPanel();
 		mapPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);

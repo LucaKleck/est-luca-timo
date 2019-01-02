@@ -58,18 +58,12 @@ public class SelectionPanel extends JScrollPane {
 				JViewport viewPort = InteractionPanel.getCurrentPanel().getViewport();
 				if (viewPort != null) {
 					int deltaY = origin.y - e.getY();
-					System.out.println(deltaY);
 					Point p = new Point();
 					p.setLocation(viewPort.getViewPosition().getX(), viewPort.getViewPosition().getY()+deltaY);
 					if(p.getY() < 0) {
 						p.setLocation(p.getX(), 0);
 					}
-					System.out.println(viewPort.getHeight());
-					if(p.getY() > viewPort.getHeight()) {
-						
-					}
 					viewPort.setViewPosition(p);
-					
 				}
 			}
 		}
