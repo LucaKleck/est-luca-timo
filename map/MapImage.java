@@ -7,8 +7,10 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -534,10 +536,53 @@ public class MapImage {
 		public void run() {
 			while(run) {
 				if(updateFlag) {
-					drawDecalLayer();
-					drawSelecionLayer();
-					drawUnitBuildingLayer();
-					drawEffectLayer();
+//					long start = System.nanoTime();
+					ExecutorService drawWorkers = Executors.newCachedThreadPool();
+					Future<String> decalDrawing = drawWorkers.submit(new Callable<String>() {
+
+						@Override
+						public String call() throws Exception {
+							drawDecalLayer();
+							return null;
+						}
+					});
+					
+					Future<String> selectionDrawing = drawWorkers.submit(new Callable<String>() {
+
+						@Override
+						public String call() throws Exception {
+							drawSelecionLayer();
+							return null;
+						}
+					});
+					
+					Future<String> unitBuildingDrawing = drawWorkers.submit(new Callable<String>() {
+
+						@Override
+						public String call() throws Exception {
+							drawUnitBuildingLayer();
+							return null;
+						}
+					});
+					
+					Future<String> effectDrawing = drawWorkers.submit(new Callable<String>() {
+
+						@Override
+						public String call() throws Exception {
+							drawEffectLayer();
+							return null;
+						}
+					});
+					
+					while(!decalDrawing.isDone());
+					while(!selectionDrawing.isDone());
+					while(!unitBuildingDrawing.isDone());
+					while(!effectDrawing.isDone());
+					
+					drawWorkers.shutdown();
+					
+//					System.out.println((System.nanoTime()-start)/100000+"ms");
+					
 					while(((ReentrantLock) mapImageLock).isLocked());
 					mapImageLock.lock();
 					drawCombinedImage();
