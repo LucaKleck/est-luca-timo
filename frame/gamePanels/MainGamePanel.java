@@ -2,7 +2,7 @@ package frame.gamePanels;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FlowLayout;
+import java.awt.Component;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -32,59 +32,67 @@ public class MainGamePanel extends JLayeredPane {
 	private GameMenuPanel menuPanel;
 	private JLabel lblResourcesLable;
 	private JButton btnNextRound;
-
+	private static final MigLayout layout = new MigLayout("insets 0 0 0 0, gap 0px 0px", "[0px][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%]", "[:20px:20px][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%]");
+	private JLayeredPane uiPanel;
+	
 	public MainGamePanel() { // x // y
-		// 0 1 0 1 2 3
-		setLayout(new MigLayout("insets 0 0 0 0, gap 0px 0px", "[70%,grow][30%,grow]", "[25px:n,grow,fill][75%][20%,fill][grow,fill]"));
+		// Contains the map and the UI. has 2x cells, 1 of them is just for enabling overlaying the panels
+		setLayout(new MigLayout("insets 0 0 0 0, gap 0px 0px", "[0px][100%]", "[100%]"));
 		this.setDoubleBuffered(true);
 		
+		uiPanel = new JLayeredPane();
+		uiPanel.setOpaque(false);
+		uiPanel.setLayout(layout);
+		add(uiPanel, "cell 1 0,grow");
+		
+		menuPanel = new GameMenuPanel();
+		setLayer(menuPanel, 3);
+		uiPanel.add(menuPanel, "cell 8 0 3 1,grow");
+		
+		abilityPanel = new AbilityPanel();
+		setLayer(abilityPanel, 2);
+		uiPanel.add(abilityPanel, "flowx,cell 3 8 5 1,grow");
+		
+		
 		resourcesPanel = new JPanel();
+		setLayer(resourcesPanel, 1);
 		resourcesPanel.setBorder(UIManager.getBorder("MenuBar.border"));
 		resourcesPanel.setBackground(UIManager.getColor("MenuBar.background"));
 		resourcesPanel.setEnabled(false);
-		add(resourcesPanel, "cell 0 0,grow");
-		resourcesPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		uiPanel.add(resourcesPanel, "cell 1 0 7 1,alignx left,aligny center");
 		
 		lblResourcesLable = new JLabel("Resources");
-		if(GameInfo.getPlayerStats().getPlayerResources() != null) {
-			lblResourcesLable.setText(GameInfo.getPlayerStats().getPlayerResources().toString());
-		}
 		resourcesPanel.add(lblResourcesLable);
-
-		LogPanel logPanel = new LogPanel();
 		
 		logBackgroundPanel = new LogBackgroundPanel();
 		setLayer(logBackgroundPanel, 1);
-		add(logBackgroundPanel, "flowx,cell 0 2,grow");
+		uiPanel.add(logBackgroundPanel, "cell 0 9 8 2,grow");
 		logBackgroundPanel.setLayout(new BorderLayout(0, 0));
-		logBackgroundPanel.add(logPanel);
 
-		menuPanel = new GameMenuPanel();
-		setLayer(menuPanel, 3);
-		add(menuPanel, "cell 1 0,grow");
-		
-		mapPanel = new MapPanel();
-		setLayer(mapPanel, 0);
-		add(mapPanel, "cell 0 1 1 2,grow");
-
-		abilityPanel = new AbilityPanel();
-		setLayer(abilityPanel, 2);
-		add(abilityPanel, "flowx,cell 0 3,grow");
+		LogPanel logPanel = new LogPanel();
+		logBackgroundPanel.add(logPanel, BorderLayout.CENTER);
 		interactionPanel = new InteractionPanel();
 		
 		setLayer(interactionPanel, 2);
-		add(interactionPanel, "cell 1 1, grow");
+		uiPanel.add(interactionPanel, "cell 8 1 3 10,grow");
 
 		infoPanel = new InfoPanel();
-		setLayer(infoPanel, 2);
-		add(infoPanel, "cell 1 2 1 2,grow");
 		
 		btnNextRound = new JButton("Next Round");
+		setLayer(btnNextRound, 1);
 		btnNextRound.setForeground(Color.LIGHT_GRAY);
 		btnNextRound.setBackground(Color.DARK_GRAY);
 		btnNextRound.addActionListener(new NextRoundActionListener());
-		infoPanel.setRowHeaderView(btnNextRound);
+		uiPanel.add(btnNextRound, "cell 1 8 2 1");
 
+		mapPanel = new MapPanel();
+		mapPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
+		setLayer(mapPanel, 0);
+		add(mapPanel, "cell 0 0 2 1,grow");
+		
+		if(GameInfo.getPlayerStats().getPlayerResources() != null) {
+			lblResourcesLable.setText(GameInfo.getPlayerStats().getPlayerResources().toString());
+		}
 	}
 
 	public synchronized LogBackgroundPanel getLogBackgroundPanel() {

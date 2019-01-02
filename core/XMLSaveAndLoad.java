@@ -78,9 +78,9 @@ public class XMLSaveAndLoad {
     	xmlFilePath += File.separator + saveName+".xml";
 	}
 	public static void loadGame(File save) {
-		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder dBuilder = null;
 		try {
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder dBuilder = null;
 			new XMLSaveAndLoad(save.getName().substring(0, save.getName().length()-4));
 			dBuilder = dbFactory.newDocumentBuilder();
 			Document saveDoc = dBuilder.parse(save);

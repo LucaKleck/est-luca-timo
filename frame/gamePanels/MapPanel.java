@@ -2,8 +2,9 @@ package frame.gamePanels;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.Point;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
@@ -21,7 +22,7 @@ import map.MapImage;
  * 
  * @author Luca Kleck
  * @see MainGamePanel
- * @version 3
+ * @version 4
  */
 public class MapPanel extends JPanel {
 	private static final long serialVersionUID = 121L;
@@ -38,6 +39,44 @@ public class MapPanel extends JPanel {
 	private static int displacementX;
 	private static int displacementY;
 	
+	private MouseAdapter ma = new MouseAdapter() {
+
+		private Point origin;
+		private boolean moved = false;
+		
+		@Override
+		public void mousePressed(MouseEvent e) {
+			moved = false;
+			origin = new Point(e.getPoint());
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			if(!moved) {
+				mouseEventHandler(e);
+			}
+			
+		}
+
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			if (origin != null) {
+				int deltaX = origin.x - e.getX();
+				int deltaY = origin.y - e.getY();
+				if(deltaX >= 3 || deltaX <= 3) {
+					if(deltaY >= 3 || deltaY <= -3) {
+						moved = true;
+						origin = new Point(e.getPoint());
+						addDisplacementX(-deltaX);
+						addDisplacementY(-deltaY);
+					}
+				}
+				
+			}
+		}
+
+	};
+	
 	private BufferedImage mapTileLocal;
 	private BufferedImage upperLayerLocal;
 
@@ -52,7 +91,13 @@ public class MapPanel extends JPanel {
 		upperLayerLocal = mapImage.getCombinedImage();
 		MAP_REFRESH_THREAD.execute(new MapRefresh(this));
 		
-		this.addMouseListener(new MouseEventHandler());
+		addMouseMotionListener(ma);
+		addMouseListener(ma);
+	}
+	
+	@Override
+	public void update(Graphics g) {
+		paint(g);
 	}
 	@Override
 	public void paint(Graphics g) {
@@ -145,6 +190,7 @@ public class MapPanel extends JPanel {
 					((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().repaint();
 					mapImage.getMapImageLock().unlock();
 				}
+				// Check if game ended
 				if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
 					MainGamePanel mgf = (MainGamePanel) Core.getMainJFrame().getCurrentComponent();
 					if(!mgf.getMapPanel().equals(mapPanel)) {
@@ -206,28 +252,4 @@ public class MapPanel extends JPanel {
 		
 	}
 	
-	private class MouseEventHandler implements MouseListener {
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			mouseEventHandler(e);
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-		}
-
-	}
 }

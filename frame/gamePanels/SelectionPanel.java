@@ -6,7 +6,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
-import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -58,13 +57,19 @@ public class SelectionPanel extends JScrollPane {
 			if (origin != null) {
 				JViewport viewPort = InteractionPanel.getCurrentPanel().getViewport();
 				if (viewPort != null) {
-					int deltaX = origin.x - e.getX();
 					int deltaY = origin.y - e.getY();
-
-					Rectangle view = viewPort.getViewRect();
-					view.x += deltaX;
-					view.y += deltaY;
-					InteractionPanel.getCurrentPanel().getViewport().scrollRectToVisible(view);
+					System.out.println(deltaY);
+					Point p = new Point();
+					p.setLocation(viewPort.getViewPosition().getX(), viewPort.getViewPosition().getY()+deltaY);
+					if(p.getY() < 0) {
+						p.setLocation(p.getX(), 0);
+					}
+					System.out.println(viewPort.getHeight());
+					if(p.getY() > viewPort.getHeight()) {
+						
+					}
+					viewPort.setViewPosition(p);
+					
 				}
 			}
 		}
@@ -80,6 +85,8 @@ public class SelectionPanel extends JScrollPane {
 		setBackground(Color.DARK_GRAY);
 		setBorder(null);
 		setAutoscrolls(true);
+		addMouseListener(ma);
+		addMouseMotionListener(ma);
 		
 		this.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		this.getVerticalScrollBar().setUnitIncrement(16);
@@ -142,8 +149,6 @@ public class SelectionPanel extends JScrollPane {
 
 	private SelectionPaneElement createEntityPane(Entity entity) {
 		SelectionPaneElement e = new SelectionPaneElement(entity);
-		e.addMouseListener(ma);
-		e.addMouseMotionListener(ma);
 		return e;
 	}
 
@@ -198,7 +203,7 @@ public class SelectionPanel extends JScrollPane {
 			setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			this.entity = entity;
 			MigLayout miglay = new MigLayout("insets 4 5 2 5, gap 4px 0px",
-					"[135px][" + (InteractionPanel.getInteractionPanel().getWidth() - 207) + ",fill]",
+					"[135px][" + (InteractionPanel.getInteractionPanel().getWidth() - 192) + ",fill]",
 					"[fill][fill][fill][fill]");
 			miglay.preferredLayoutSize(InteractionPanel.getInteractionPanel());
 			setLayout(miglay);

@@ -19,7 +19,7 @@ public class InteractionPanel extends JPanel {
 		setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
 		selfInteractionPanel = this;
 		this.setBackground(Color.LIGHT_GRAY);
-		setLayout(new MigLayout("", "[100%,fill]", "[100%,fill]"));
+		setLayout(new MigLayout("insets 0 0 0 0, gap 0px 0px", "[100%,fill]", "[100%,fill]"));
 	}
 
 	public static void setCurrentPanel(JScrollPane currentPanel) {
