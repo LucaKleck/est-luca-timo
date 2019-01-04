@@ -8,7 +8,7 @@ public class Move extends Ability {
 	private Point2D moveToPoint = new Point2D();
 	
 	public Move() {
-		super(Ability.ABILITY_MOVE);
+		super(Ability.ABILITY_MOVE, Ability.ABILITY_DESC_MOVE);
 	}
 
 	@Override

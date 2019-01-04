@@ -27,9 +27,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 		GameInfo.getObjectMap().getSelected().removeSelected();
 		for (Iterator<Event> iterator = GameInfo.getRoundInfo().getEventList().iterator(); iterator.hasNext();) {
 			Event e = iterator.next();
-			System.out.println("----------");
 			System.out.println(e);
-			System.out.println("----------");
 			e.run();
 			e.getSource().removeEvent();
 			iterator.remove();

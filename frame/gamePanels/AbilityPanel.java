@@ -21,13 +21,14 @@ public class AbilityPanel extends JPanel {
 	public AbilityPanel() {
 		setLayout(new MigLayout("insets 0 0 0 0, gap 0px 0px", "[]", "[]"));
 		this.setMinimumSize(new Dimension(40, 40));
+		setDoubleBuffered(true);
 		setOpaque(false);
 		setBackground(new Color(0, 0, 0, 0));
 		self = this;
 	}
 
 
-	public static void checkAbilities() {
+	public void update() {
 		if(GameInfo.getObjectMap().getSelected().getSelectedEntity() != null) {
 			self.removeAll();
 			System.gc();
@@ -44,6 +45,7 @@ public class AbilityPanel extends JPanel {
 				for (int i = 0; i < abList.size(); i++) {
 					JButton jButton = new JButton(abList.get(i).getName() );
 					Ability abl = abList.get(i);
+					jButton.setToolTipText(abl.getDescription());
 					jButton.addActionListener(new ActionListener() {
 						
 						@Override

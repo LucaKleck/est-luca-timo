@@ -51,7 +51,7 @@ public class MainGamePanel extends JLayeredPane {
 		
 		abilityPanel = new AbilityPanel();
 		setLayer(abilityPanel, 2);
-		uiPanel.add(abilityPanel, "flowx,cell 3 8 5 1,alignx left,aligny bottom");
+		uiPanel.add(abilityPanel, "flowx,cell 3 8 5 1,alignx right,aligny bottom");
 		
 		
 		resourcesPanel = new JPanel();
@@ -67,24 +67,27 @@ public class MainGamePanel extends JLayeredPane {
 		
 		logBackgroundPanel = new LogBackgroundPanel();
 		setLayer(logBackgroundPanel, 1);
-		uiPanel.add(logBackgroundPanel, "cell 0 9 11 2,grow");
+		uiPanel.add(logBackgroundPanel, "cell 0 9 8 2,grow");
 		logBackgroundPanel.setLayout(new BorderLayout(0, 0));
 
 		LogPanel logPanel = new LogPanel();
 		logBackgroundPanel.add(logPanel, BorderLayout.CENTER);
 		interactionPanel = new InteractionPanel();
+		uiPanel.setLayer(interactionPanel, 1);
 		
 		setLayer(interactionPanel, 2);
 		uiPanel.add(interactionPanel, "cell 8 1 3 8,grow");
 
 		infoPanel = new InfoPanel();
+		uiPanel.add(infoPanel, "cell 8 9 3 2,grow");
 		
 		btnNextRound = new JButton("Next Round");
-		setLayer(btnNextRound, 1);
+		uiPanel.setLayer(btnNextRound, 3);
+		setLayer(btnNextRound, 3);
 		btnNextRound.setForeground(Color.LIGHT_GRAY);
 		btnNextRound.setBackground(Color.DARK_GRAY);
 		btnNextRound.addActionListener(new NextRoundActionListener());
-		uiPanel.add(btnNextRound, "cell 1 8 2 1,growx,aligny bottom");
+		uiPanel.add(btnNextRound, "cell 8 8 3 1,alignx left,aligny bottom");
 
 		mapPanel = new MapPanel();
 		mapPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
@@ -130,6 +133,14 @@ public class MainGamePanel extends JLayeredPane {
 
 	public synchronized JButton getBtnNextRound() {
 		return btnNextRound;
+	}
+	
+	public void updateUI() {
+		if(GameInfo.getPlayerStats().getPlayerResources() != null) {
+			lblResourcesLable.setText(GameInfo.getPlayerStats().getPlayerResources().toString());
+		}
+		infoPanel.update();
+		abilityPanel.update();
 	}
 	
 }

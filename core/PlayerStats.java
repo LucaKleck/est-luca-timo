@@ -1,5 +1,6 @@
 package core;
 
+import frame.MainJFrame;
 
 /**
  * @author Luca Kleck
@@ -168,7 +169,7 @@ public class PlayerStats {
 
 		@Override
 		public String toString() {
-			return "PlayerResources [gold=" + gold + ", food=" + food + ", wood=" + wood + ", stone=" + stone
+			return MainJFrame.makeCssStyle("padding:3px; background-color: #FFFFFF; color: #121212")+"PlayerResources [gold=" + gold + ", food=" + food + ", wood=" + wood + ", stone=" + stone
 					+ ", metal=" + metal + ", manaStone=" + manaStone + "]";
 		}
 		

@@ -7,7 +7,7 @@ public class Melee extends Ability {
 	private static final int BASE_DAMAGE = 2;
 	
 	public Melee() {
-		super("Melee");
+		super(Ability.ABILITY_MELEE, Ability.ABILITY_DESC_MELEE);
 	}
 
 	@Override

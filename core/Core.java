@@ -3,6 +3,9 @@ package core;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JOptionPane;
 import javax.xml.parsers.DocumentBuilder;
@@ -28,7 +31,8 @@ import frame.MainJFrame;
  * @author Luca Kleck
  */
 public class Core {
-
+	public static final Logger GAME_LOGGER = Logger.getLogger("gameLogger");
+	
 	public static final String GAME_PATH = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "EST-SCHULPROJEKT";
 	public static final String GAME_PATH_SAVES = GAME_PATH + File.separator + "saves";
 	public static final String GAME_PATH_SETTINGS = GAME_PATH + File.separator + "settings.xml";
@@ -124,12 +128,15 @@ public class Core {
 				e.printStackTrace();
 			}
 		}
+		try {
+			FileHandler logFileHandler = new FileHandler(GAME_PATH+File.separator+"gameLog.log");
+			GAME_LOGGER.addHandler(logFileHandler);
+			GAME_LOGGER.setLevel(Level.ALL);
+		} catch (SecurityException | IOException e) {
+			e.printStackTrace();
+		}
 		Core.controlInput = new ControlInput();
 		Core.mainJFrame = new MainJFrame();
-    	
-		
-//		Set<Thread> threadSet = Thread.getAllStackTraces().keySet();
-//		System.out.println(threadSet.toString());
 	}
 
 	public static MainJFrame getMainJFrame() {
@@ -166,7 +173,7 @@ public class Core {
 		} catch (ParserConfigurationException | SAXException | IOException e1) {
 			e1.printStackTrace();
 		}
-		System.out.println("Load["+settingName+"="+settingString+"]");
+		GAME_LOGGER.log(Level.CONFIG, "Load["+settingName+"="+settingString+"]");
 		return settingString;
 	}
 	
@@ -185,7 +192,7 @@ public class Core {
 			
 			Node node = settingsDoc.getElementsByTagName(settingName).item(0);
 			node.setTextContent(state);
-			System.out.println("save["+settingName+"="+state+"]");
+			GAME_LOGGER.log(Level.CONFIG, "save["+settingName+"="+state+"]");
 			settingsDoc.normalizeDocument();
 			
 		    TransformerFactory transformerFactory = TransformerFactory.newInstance();

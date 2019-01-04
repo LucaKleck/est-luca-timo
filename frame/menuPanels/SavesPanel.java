@@ -19,7 +19,6 @@ import javax.swing.border.SoftBevelBorder;
 import core.ControlInput;
 import core.Core;
 import core.XMLSaveAndLoad;
-import frame.gamePanels.InfoPanel;
 import net.miginfocom.swing.MigLayout;
 
 public class SavesPanel extends JScrollPane {
@@ -119,7 +118,6 @@ public class SavesPanel extends JScrollPane {
 					new XMLSaveAndLoad(save.getName().substring(0, save.getName().length()-4));
 					XMLSaveAndLoad.loadGame(save);
 					ControlInput.menuChanger.actionPerformed(new ActionEvent(this, 0, "frame.gamePanels.MainGamePanel"));
-					InfoPanel.refresh();
 				}
 			});
 			add(btnLoad, "cell 0 3,grow");

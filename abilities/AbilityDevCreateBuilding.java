@@ -9,7 +9,7 @@ import entity.building.Building;
 public class AbilityDevCreateBuilding extends Ability {
 
 	public AbilityDevCreateBuilding() {
-		super(Ability.ABILITY_DEV_CREATE_BUILDING);
+		super(Ability.ABILITY_DEV_CREATE_BUILDING, Ability.ABILITY_DESC_DEV_CREATE_BUILDING);
 	}
 
 	@Override

@@ -7,8 +7,8 @@ public class FireBall extends Ability {
 
 	private static final int BASE_DAMAGE = 1;
 	
-	public FireBall(String name) {
-		super(name);
+	public FireBall() {
+		super(Ability.ABILITY_FIRE_BALL, Ability.ABILITY_DESC_FIRE_BALL);
 	}
 	
 	@Override

@@ -10,9 +10,7 @@ import effects.MoveEffect;
 import entity.Entity;
 import entity.building.Building;
 import entity.unit.Unit;
-import frame.gamePanels.AbilityPanel;
 import frame.gamePanels.BuildingPanel;
-import frame.gamePanels.InfoPanel;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.MainGamePanel;
 import frame.gamePanels.SelectionPanel;
@@ -49,7 +47,7 @@ public class Selected {
 	public void clickedOnTile(float xD, float yD, boolean isLeftClick) {
 		int x = (int) xD;
 		int y = (int) yD;
-		System.out.println("SelectionModeStart["+selectionMode+"]");
+//		System.out.println("SelectionModeStart["+selectionMode+"]");
 		if(!ObjectMap.inBounds(x, y)) {
 			removeSelected();
 		} else {
@@ -103,10 +101,9 @@ public class Selected {
 		
 		// mandatory stuff
 		changeSelectionMode();
-		AbilityPanel.checkAbilities();
-		InfoPanel.refresh();
 		if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
 			((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
+			((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).updateUI();
 		}
 		System.gc();
 	}
@@ -133,22 +130,22 @@ public class Selected {
 				InteractionPanel.setCurrentPanel(new BuildingPanel ((Building) selectedEntity));
 				if(selectedAbility == null) {
 					selectionMode = 4;
-					System.out.println("ChangeSelectionMode["+selectionMode+"]");
+//					System.out.println("ChangeSelectionMode["+selectionMode+"]");
 					return;
 				} else {
 					selectionMode = 5;
-					System.out.println("ChangeSelectionMode["+selectionMode+"]");
+//					System.out.println("ChangeSelectionMode["+selectionMode+"]");
 					return;
 				}
 			}
 			if(selectedEntity instanceof Unit) {
 				if(selectedAbility == null) {
 					selectionMode = 2;
-					System.out.println("ChangeSelectionMode["+selectionMode+"]");
+//					System.out.println("ChangeSelectionMode["+selectionMode+"]");
 					return;
 				} else {
 					selectionMode = 3;
-					System.out.println("ChangeSelectionMode["+selectionMode+"]");
+//					System.out.println("ChangeSelectionMode["+selectionMode+"]");
 					return;
 				}
 			}
@@ -162,7 +159,7 @@ public class Selected {
 		} else {
 			selectionMode = 10;
 		}
-		System.out.println("ChangeSelectionMode["+selectionMode+"]");
+//		System.out.println("ChangeSelectionMode["+selectionMode+"]");
 	}
 
 	public MapTile getSelectedMapTile() {
@@ -208,8 +205,9 @@ public class Selected {
 	
 	public void setSelectedEntity(Entity toBeSelected) {
 		this.selectedEntity = toBeSelected;
-		InfoPanel.refresh();
-		AbilityPanel.checkAbilities();
+		if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+			((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).updateUI();
+		}
 		changeSelectionMode();
 	}
 
@@ -217,9 +215,10 @@ public class Selected {
 		this.selectedAbility = null;
 		this.selectedEntity = null;
 		this.selectedMapTile = null;
-		AbilityPanel.checkAbilities();
+		if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+			((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).updateUI();
+		}
 		InteractionPanel.setCurrentPanel(null);
-		InfoPanel.refresh();
 		// TODO make some refresh or something
 		changeSelectionMode();
 	}

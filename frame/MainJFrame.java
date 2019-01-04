@@ -28,6 +28,7 @@ import frame.menuPanels.MainMenuPanel;
  */
 public class MainJFrame extends JFrame implements ComponentListener {
 	private static final long serialVersionUID = 110L;
+	public static final String htmlStyleDefault = "<html><p style=\"padding: 1px; color: #121212\">";
 
 	private Timer recalculateTimer = new Timer(20, new resizeListener());
 	
@@ -136,5 +137,9 @@ public class MainJFrame extends JFrame implements ComponentListener {
 		this.add(currentComponent);
 		this.validate();
 		this.repaint();
+	}
+	
+	public static String makeCssStyle(String style) {
+		return "<html><p style=\"" + style + "\">";
 	}
 }

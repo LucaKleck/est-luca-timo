@@ -7,6 +7,7 @@ import com.sun.javafx.geom.Point2D;
 import abilities.Ability;
 import core.Event;
 import core.GameInfo;
+import statusEffects.StatusEffect;
 
 public class Entity {
 	private static int entityCount;
@@ -17,6 +18,7 @@ public class Entity {
 	private int maxHealth;
 	private int currentHealth;
 	private ArrayList<Ability> abilities;
+	private ArrayList<StatusEffect> statusEffects = new ArrayList<>(); // maybe add to constructor for permanent effects
 	private int level = 1;
 	private int maxRange = 5; // Will be calculated via the abilities in the future
 	private Event event = null;
@@ -26,7 +28,7 @@ public class Entity {
 		entityCount++;
 		this.id = entityCount;
 		this.pointXY.setLocation(pointXY);
-		this.name = "DEV";
+		this.name = name;
 		this.maxHealth = maxHealth;
 		this.currentHealth = currentHealth;
 		this.level = level;
@@ -144,6 +146,10 @@ public class Entity {
 
 	public void removeEvent() {
 		this.event = null;
+	}
+	
+	public ArrayList<StatusEffect> getStatusEffects() {
+		return statusEffects;
 	}
 
 }
