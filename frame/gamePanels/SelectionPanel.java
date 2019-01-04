@@ -6,11 +6,16 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -21,11 +26,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JViewport;
 import javax.swing.LookAndFeel;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.Timer;
 import javax.swing.border.EtchedBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
+import core.Boot;
 import core.Core;
 import core.Event;
 import core.GameInfo;
@@ -36,6 +43,7 @@ import entity.unit.Warrior;
 import net.miginfocom.swing.MigLayout;
 
 public class SelectionPanel extends JScrollPane {
+	private static BufferedImage background;
 	private static final long serialVersionUID = 126L;
 	private ArrayList<Entity> selectedEntityList = new ArrayList<>();
 	private ArrayList<SelectionPaneElement> selectedEntityElementList = new ArrayList<>();
@@ -75,8 +83,14 @@ public class SelectionPanel extends JScrollPane {
 	 * @param y
 	 */
 	public SelectionPanel(int x, int y) {
+		if(background == null) {
+			try {
+				background = ImageIO.read( Boot.class.getResource("/resources/selectionPanelBackground.png") );
+			} catch (IOException e) {
+			}
+		}
+		setBackground(new Color(0,0,0,0));
 		setDoubleBuffered(true);
-		setBackground(Color.DARK_GRAY);
 		setBorder(null);
 		setAutoscrolls(true);
 		addMouseListener(ma);
@@ -85,13 +99,13 @@ public class SelectionPanel extends JScrollPane {
 		this.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		this.getVerticalScrollBar().setUnitIncrement(16);
 		this.getVerticalScrollBar().setUI(new SelectionPanelScrollBarUI());
-
+		this.getVerticalScrollBar().setBackground(new Color(0,0,0,0));
+		
 		this.getHorizontalScrollBar().setUnitIncrement(16);
 		this.getHorizontalScrollBar().setUI(new SelectionPanelScrollBarUI());
 
-		JPanel headerPanel = new JPanel();
+		JPanel headerPanel = new ViewportPanel();
 		headerPanel.setForeground(Color.LIGHT_GRAY);
-		headerPanel.setBackground(Color.DARK_GRAY);
 		setColumnHeaderView(headerPanel);
 
 		JLabel lblSelectMenu = new JLabel("Select Menu");
@@ -103,7 +117,7 @@ public class SelectionPanel extends JScrollPane {
 		lblSelectMenu.setForeground(Color.LIGHT_GRAY);
 		lblSelectMenu.setFont(new Font("MS PGothic", Font.BOLD, 13));
 
-		JPanel viewportPanel = new JPanel();
+		JPanel viewportPanel = new ViewportPanel();
 		viewportPanel.setBorder(new EtchedBorder(EtchedBorder.LOWERED, null, null));
 		setViewportView(viewportPanel);
 		viewportPanel.setLayout(new MigLayout("", "[fill]", "[fill]"));
@@ -135,9 +149,25 @@ public class SelectionPanel extends JScrollPane {
 		}
 
 	}
+	
+	private class ViewportPanel extends JPanel {
+		private static final long serialVersionUID = 1L;
+		
+		public ViewportPanel() {
+			this.setBackground(new Color(0,0,0,0));
+		}
+		
+		@Override
+		public void paint(Graphics g) {
+			g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
+			super.paint(g);
+		}
+		
+	}
 
 	@Override
 	public void paint(Graphics g) {
+		g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
 		super.paint(g);
 	}
 
@@ -188,8 +218,11 @@ public class SelectionPanel extends JScrollPane {
 	/**
 	 * @author Luca Kleck
 	 */
-	public class SelectionPaneElement extends JPanel implements MouseListener {
+	public class SelectionPaneElement extends JPanel implements MouseListener, ActionListener {
 		private static final long serialVersionUID = 128L;
+		
+		Timer creationAnimationTimer = new Timer(20, this);
+		
 		private JButton jBtn;
 		private Entity entity;
 
@@ -307,6 +340,11 @@ public class SelectionPanel extends JScrollPane {
 
 		@Override
 		public void mouseExited(MouseEvent e) {
+		}
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			
 		}
 	}
 }

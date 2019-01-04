@@ -133,7 +133,6 @@ public class MainJFrame extends JFrame implements ComponentListener {
 	public synchronized void setCurrentComponent(Component currentComponent) {
 		this.getContentPane().removeAll();
 		this.currentComponent = currentComponent;
-		System.out.println(currentComponent.getClass().getSimpleName());
 		this.add(currentComponent);
 		this.validate();
 		this.repaint();

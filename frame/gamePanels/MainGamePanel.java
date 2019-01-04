@@ -81,7 +81,7 @@ public class MainGamePanel extends JLayeredPane {
 		infoPanel = new InfoPanel();
 		uiPanel.add(infoPanel, "cell 8 9 3 2,grow");
 		
-		btnNextRound = new JButton("Next Round");
+		btnNextRound = new JButton(MainJFrame.makeCssStyle("padding: 4px")+"Next Round");
 		uiPanel.setLayer(btnNextRound, 3);
 		setLayer(btnNextRound, 3);
 		btnNextRound.setForeground(Color.LIGHT_GRAY);

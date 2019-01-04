@@ -128,7 +128,6 @@ public class ControlInput {
 				public void actionPerformed(ActionEvent e) {
 					shiftPressed = checkForShift();
 					for (int i = 0; i < keyCodeList.size(); i++) {
-//						System.out.println(keyCodeList.toString());
 						if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
 							checkForUp(i);
 							checkForDown(i);

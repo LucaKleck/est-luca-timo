@@ -45,6 +45,7 @@ public class Selected {
 	 * @param isLeftClick
 	 */
 	public void clickedOnTile(float xD, float yD, boolean isLeftClick) {
+		long start = System.nanoTime();
 		int x = (int) xD;
 		int y = (int) yD;
 //		System.out.println("SelectionModeStart["+selectionMode+"]");
@@ -106,6 +107,7 @@ public class Selected {
 			((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).updateUI();
 		}
 		System.gc();
+		System.out.println((System.nanoTime()-start)/1000000+"ms");
 	}
 	
 	/**

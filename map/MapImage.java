@@ -536,7 +536,6 @@ public class MapImage {
 		public void run() {
 			while(run) {
 				if(updateFlag) {
-//					long start = System.nanoTime();
 					ExecutorService drawWorkers = Executors.newCachedThreadPool();
 					Future<String> decalDrawing = drawWorkers.submit(new Callable<String>() {
 
@@ -581,7 +580,6 @@ public class MapImage {
 					
 					drawWorkers.shutdown();
 					
-//					System.out.println((System.nanoTime()-start)/100000+"ms");
 					
 					while(((ReentrantLock) mapImageLock).isLocked());
 					mapImageLock.lock();

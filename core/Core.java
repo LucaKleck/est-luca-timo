@@ -1,5 +1,7 @@
 package core;
 
+import java.awt.Color;
+import java.awt.Insets;
 import java.awt.Toolkit;
 import java.io.File;
 import java.io.IOException;
@@ -7,7 +9,9 @@ import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.swing.BorderFactory;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -53,6 +57,7 @@ public class Core {
 	private static ControlInput controlInput;
 	
 	public Core() {
+		setCustomUI();
 		File game_directory = new File(GAME_PATH);
 
     	if (game_directory.exists()) {
@@ -212,5 +217,44 @@ public class Core {
 		} catch (NullPointerException nl) {
 			
 		}
+	}
+	/*
+	 * @author Luca Kleck
+	 */
+	private void setCustomUI() {
+		Color menuBgColor = new Color(80,80,80);
+		// Button
+		UIManager.getDefaults().put("Button.border", BorderFactory.createLineBorder(Color.BLACK, 1));
+		UIManager.getDefaults().put("Button.background", Color.GRAY);
+		UIManager.getDefaults().put("Button.foreground", Color.DARK_GRAY);
+		
+		UIManager.getDefaults().put("Button.select", Color.LIGHT_GRAY);
+		UIManager.getDefaults().put("Button.focus", Color.DARK_GRAY);
+		UIManager.getDefaults().put("Button.select", Color.LIGHT_GRAY);
+		
+		UIManager.getDefaults().put("Button.light", Color.DARK_GRAY);
+		UIManager.getDefaults().put("Button.highlight", Color.DARK_GRAY);
+		
+		UIManager.getDefaults().put("Button.shadow", Color.WHITE);
+		UIManager.getDefaults().put("Button.darkShadow", Color.GRAY);
+		
+		// Menu Item
+		UIManager.getDefaults().put("MenuItem.background", menuBgColor);
+		UIManager.getDefaults().put("MenuItem.foreground", Color.WHITE);
+		UIManager.getDefaults().put("MenuItem.selectionBackground", Color.LIGHT_GRAY);
+		UIManager.getDefaults().put("MenuItem.selectionForeground", new Color(60,40,40));
+		UIManager.getDefaults().put("MenuItem.acceleratorForeground", Color.LIGHT_GRAY);
+		UIManager.getDefaults().put("MenuItem.border", BorderFactory.createLineBorder(Color.DARK_GRAY, 2, false));
+		UIManager.getDefaults().put("MenuItem.margin", new Insets(5, 5, 5, 5));
+		
+		// Menu Check Box
+		UIManager.getDefaults().put("CheckBoxMenuItem.background", menuBgColor);
+		UIManager.getDefaults().put("CheckBoxMenuItem.foreground", Color.WHITE);
+		UIManager.getDefaults().put("CheckBoxMenuItem.selectionBackground", Color.LIGHT_GRAY);
+		UIManager.getDefaults().put("CheckBoxMenuItem.selectionForeground", new Color(60,40,40));
+		UIManager.getDefaults().put("CheckBoxMenuItem.acceleratorForeground", Color.LIGHT_GRAY);
+		UIManager.getDefaults().put("CheckBoxMenuItem.border", BorderFactory.createLineBorder(Color.DARK_GRAY, 2, false));
+		UIManager.getDefaults().put("CheckBoxMenuItem.margin", new Insets(5, 5, 5, 5));
+		
 	}
 }

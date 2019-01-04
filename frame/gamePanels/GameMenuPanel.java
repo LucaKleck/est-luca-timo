@@ -1,5 +1,6 @@
 package frame.gamePanels;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.GridLayout;
@@ -7,6 +8,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
@@ -41,10 +44,12 @@ public class GameMenuPanel extends JPanel {
 	public GameMenuPanel() {
 		setLayout(new GridLayout(0, 1, 0, 0));
 		menuBar = new JMenuBar();
+		setOpaque(true);
+		menuBar.setBackground(Color.WHITE);
 		add(menuBar);
 
 		mnOptions = new JMenu("Options");
-		mnOptions.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		mnOptions.setBackground(Color.LIGHT_GRAY);
 		menuBar.add(mnOptions);
 
 		mntmSave = new JMenuItem("Save");
@@ -96,9 +101,8 @@ public class GameMenuPanel extends JPanel {
 		mntmExitGame.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		mnOptions.add(mntmExitGame);
 
-		mnDev = new JMenu("dev");
+		mnDev = createMenu("dev");
 		mnDev.setFocusTraversalKeysEnabled(false);
-		mnDev.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		if(new Boolean(Core.getSetting(Core.SETTING_DEV))) menuBar.add(mnDev);
 
 		mntmRemakeMap = new JMenuItem("Remake Map");
@@ -186,6 +190,45 @@ public class GameMenuPanel extends JPanel {
 				}
 			}
 		});
+	}
+
+	private JMenu createMenu(String name) {
+		JMenu menu = new JMenu(name);
+		menu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		menu.addMouseListener(new MouseOverMenu(menu));
+		return menu;
+	}
+	
+	private class MouseOverMenu implements MouseListener {
+		private JMenu menu;
+		public MouseOverMenu(JMenu menu) {
+			this.menu = menu;
+		}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			menu.setBackground(Color.LIGHT_GRAY);
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			menu.setBackground(Color.LIGHT_GRAY);
+		}
 	}
 
 }
