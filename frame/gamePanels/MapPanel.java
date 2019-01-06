@@ -3,6 +3,8 @@ package frame.gamePanels;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
@@ -13,6 +15,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import javax.swing.JPanel;
+import javax.swing.Timer;
 
 import core.Core;
 import core.GameInfo;
@@ -26,9 +29,8 @@ import map.ObjectMap;
  * @see MainGamePanel
  * @version 4
  */
-public class MapPanel extends JPanel implements MouseMotionListener {
+public class MapPanel extends JPanel implements MouseMotionListener, ActionListener {
 	private static final long serialVersionUID = 121L;
-	
 	private static final int IMAGE_SIZE = 3136;
 	private static final int DEFAULT_DISPLACEMENT = 4;
 	private static final float MAX_ZOOM = 5;
@@ -41,46 +43,12 @@ public class MapPanel extends JPanel implements MouseMotionListener {
 	private static int displacementX;
 	private static int displacementY;
 	
-	private MouseAdapter ma = new MouseAdapter() {
-
-		private Point origin;
-		private boolean moved = false;
-		
-		@Override
-		public void mousePressed(MouseEvent e) {
-			moved = false;
-			origin = new Point(e.getPoint());
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			if(!moved) {
-				mouseEventHandler(e);
-			}
-			
-		}
-
-		@Override
-		public void mouseDragged(MouseEvent e) {
-			if (origin != null) {
-				int deltaX = origin.x - e.getX();
-				int deltaY = origin.y - e.getY();
-				if(deltaX >= 3 || deltaX <= 3) {
-					if(deltaY >= 3 || deltaY <= -3) {
-						moved = true;
-						origin = new Point(e.getPoint());
-						addDisplacementX(-deltaX);
-						addDisplacementY(-deltaY);
-					}
-				}
-				
-			}
-		}
-
-	};
+	private Timer mouseHoverUpdateTimer = new Timer(500, this);
 	
 	private BufferedImage mapTileLocal;
 	private BufferedImage upperLayerLocal;
+	private Point lastMousePoint;
+	private boolean mouseMoved = false;
 
 	public MapPanel() {
 		setLayout(null);
@@ -98,6 +66,8 @@ public class MapPanel extends JPanel implements MouseMotionListener {
 		addMouseMotionListener(ma);
 		addMouseListener(ma);
 		
+		mouseHoverUpdateTimer.setRepeats(true);
+		mouseHoverUpdateTimer.start();
 	}
 	
 	@Override
@@ -215,28 +185,30 @@ public class MapPanel extends JPanel implements MouseMotionListener {
 	}
 	
 	private void mouseEventHandler(MouseEvent e) {
-		float x = -1;
-		double factorX = (double) this.getWidth() / (double) MapImage.getImageWidth();
-		float  y = -1;
-		double factorY = (double) this.getWidth() / (double) MapImage.getImageHeight();
-		// X
-		if((((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize()) >= 0) {
-			x = (float) (((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize());
+		if(mouseMoved) {
+			float x = -1;
+			double factorX = (double) this.getWidth() / (double) MapImage.getImageWidth();
+			float  y = -1;
+			double factorY = (double) this.getWidth() / (double) MapImage.getImageHeight();
+			// X
+			if((((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize()) >= 0) {
+				x = (float) (((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize());
+			}
+			// Y
+			if((((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize()) >= 0) {
+				y = (float) (((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
+			}
+			// 
+			boolean isLeftClick = false;
+			if(e.getButton() == 1) {
+				isLeftClick = true;
+			} else {
+				isLeftClick = false;
+			}
+			ClickOnTileHandler clickOnTileHandler = new ClickOnTileHandler(x,y,isLeftClick);
+			CLICK_THREAD.execute(clickOnTileHandler);
+			System.gc();
 		}
-		// Y
-		if((((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize()) >= 0) {
-			y = (float) (((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
-		}
-		// 
-		boolean isLeftClick = false;
-		if(e.getButton() == 1) {
-			isLeftClick = true;
-		} else {
-			isLeftClick = false;
-		}
-		ClickOnTileHandler clickOnTileHandler = new ClickOnTileHandler(x,y,isLeftClick);
-		CLICK_THREAD.execute(clickOnTileHandler);
-		System.gc();
 	}
 	
 	private class ClickOnTileHandler implements Runnable {
@@ -265,24 +237,74 @@ public class MapPanel extends JPanel implements MouseMotionListener {
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		removeAll();
+		if(lastMousePoint == null) {
+			lastMousePoint = e.getPoint();
+		}
+		if(e.getPoint().x - lastMousePoint.x >= 5 || e.getPoint().x - lastMousePoint.x <= -5 && e.getPoint().y - lastMousePoint.y >= 5 || e.getPoint().y - lastMousePoint.y <= -5) {
+			removeAll();
+			System.gc();
+			mouseMoved  = true;
+			lastMousePoint = e.getPoint();
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
 		float x = -1;
 		double factorX = (double) this.getWidth() / (double) MapImage.getImageWidth();
 		float  y = -1;
 		double factorY = (double) this.getWidth() / (double) MapImage.getImageHeight();
 		// X
-		if((((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize()) >= 0) {
-			x = (float) (((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize());
+		if((((lastMousePoint.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize()) >= 0) {
+			x = (float) (((lastMousePoint.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize());
 		}
 		// Y
-		if((((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize()) >= 0) {
-			y = (float) (((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
+		if((((lastMousePoint.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize()) >= 0) {
+			y = (float) (((lastMousePoint.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
 		}
 		if(ObjectMap.inBounds((int) x,(int) y)) {
 			JPanel mapTileInfoPanel = new MapTileInfoPanel(GameInfo.getObjectMap().getMap()[(int) x][(int) y]);
-			mapTileInfoPanel.setBounds(e.getPoint().x, e.getPoint().y, mapTileInfoPanel.getPreferredSize().width, mapTileInfoPanel.getPreferredSize().height);
+			mapTileInfoPanel.setBounds(lastMousePoint.x, lastMousePoint.y, mapTileInfoPanel.getPreferredSize().width, mapTileInfoPanel.getPreferredSize().height);
 			add(mapTileInfoPanel);
 		}
-		System.gc();
+		mouseMoved=false;
 	}
+	
+	private MouseAdapter ma = new MouseAdapter() {
+
+		private Point origin;
+		private boolean moved = false;
+		
+		@Override
+		public void mousePressed(MouseEvent e) {
+			moved = false;
+			origin = new Point(e.getPoint());
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			if(!moved) {
+				mouseEventHandler(e);
+			}
+			
+		}
+
+		@Override
+		public void mouseDragged(MouseEvent e) {
+			if (origin != null) {
+				int deltaX = origin.x - e.getX();
+				int deltaY = origin.y - e.getY();
+				if(deltaX >= 3 || deltaX <= 3) {
+					if(deltaY >= 3 || deltaY <= -3) {
+						moved = true;
+						origin = new Point(e.getPoint());
+						addDisplacementX(-deltaX);
+						addDisplacementY(-deltaY);
+					}
+				}
+				
+			}
+		}
+
+	};
 }
