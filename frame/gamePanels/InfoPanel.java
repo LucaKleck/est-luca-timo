@@ -28,11 +28,12 @@ public class InfoPanel extends JScrollPane {
 	public InfoPanel() {
 		if(background == null) {
 			try {
-				background = ImageIO.read( Boot.class.getResource("/resources/selectionPanelBackground.png") );
+				background = ImageIO.read( Boot.class.getResource("/resources/selectionPanelElementBackground.png") );
 			} catch (IOException e) {
 			}
 		}
 		setBackground(new Color(0,0,0,0));
+		setForeground(Color.YELLOW);
 		setOpaque(false);
 		setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		
@@ -45,8 +46,8 @@ public class InfoPanel extends JScrollPane {
 
 		viewportPanel.add(lblHealth, "cell 0 1");
 
-		JLabel lblCurrentlySelected = new JLabel(MainJFrame.htmlStyleDefault+"Currently Selected");
-		setColumnHeaderView(lblCurrentlySelected);
+//		JLabel lblCurrentlySelected = new JLabel(MainJFrame.htmlStyleDefault+"Currently Selected");
+//		setColumnHeaderView(lblCurrentlySelected);
 		
 		healthStatus = new JProgressBar();
 		healthStatus.setMaximum(0);

@@ -44,12 +44,10 @@ public class GameMenuPanel extends JPanel {
 	public GameMenuPanel() {
 		setLayout(new GridLayout(0, 1, 0, 0));
 		menuBar = new JMenuBar();
-		setOpaque(true);
-		menuBar.setBackground(Color.WHITE);
 		add(menuBar);
 
-		mnOptions = new JMenu("Options");
-		mnOptions.setBackground(Color.LIGHT_GRAY);
+		mnOptions = createMenu("Options");
+		mnOptions.addMouseListener(new MouseOverMenu(mnOptions));
 		menuBar.add(mnOptions);
 
 		mntmSave = new JMenuItem("Save");

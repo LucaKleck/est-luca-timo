@@ -32,7 +32,7 @@ import frame.gamePanels.MainGamePanel;
  */
 public class MapImage {
 
-	private static final int IMAGE_TYPE = BufferedImage.TYPE_INT_ARGB;
+	public static final int IMAGE_TYPE = BufferedImage.TYPE_INT_ARGB;
 	
 	private static final int[] TOP_LEFT = {-1, -1};
 	private static final int[] TOP = {0, -1};

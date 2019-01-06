@@ -44,6 +44,7 @@ import net.miginfocom.swing.MigLayout;
 
 public class SelectionPanel extends JScrollPane {
 	private static BufferedImage background;
+	private static BufferedImage elementBackground;
 	private static final long serialVersionUID = 126L;
 	private ArrayList<Entity> selectedEntityList = new ArrayList<>();
 	private ArrayList<SelectionPaneElement> selectedEntityElementList = new ArrayList<>();
@@ -72,6 +73,7 @@ public class SelectionPanel extends JScrollPane {
 						p.setLocation(p.getX(), 0);
 					}
 					viewPort.setViewPosition(p);
+					origin = new Point(e.getPoint());
 				}
 			}
 		}
@@ -227,16 +229,29 @@ public class SelectionPanel extends JScrollPane {
 		private Entity entity;
 
 		public SelectionPaneElement(Entity entity) {
+			if(elementBackground == null) {
+				try {
+					elementBackground = ImageIO.read( Boot.class.getResource("/resources/selectionPanelElementBackground.png") );
+				} catch (IOException e) {
+				}
+			}
 			setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			this.entity = entity;
+			this.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
+			this.setBackground(new Color(0, 0, 0, 0));
+			this.setOpaque(false);
+			
 			MigLayout miglay = new MigLayout("insets 4 5 2 5, gap 4px 0px",
 					"[135px][" + (InteractionPanel.getInteractionPanel().getWidth() - 192) + ",fill]",
 					"[fill][fill][fill][fill]");
+			
 			miglay.preferredLayoutSize(InteractionPanel.getInteractionPanel());
+			
 			setLayout(miglay);
 			this.jBtn = new JButton("Select");
+			jBtn.setOpaque(false);
 			jBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			jBtn.setBackground(Color.GRAY);
+			jBtn.setBackground(new Color(0,0,0,120));
 			jBtn.setForeground(Color.WHITE);
 			jBtn.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			jBtn.addMouseListener(this);
@@ -248,14 +263,13 @@ public class SelectionPanel extends JScrollPane {
 				this.add(jBtn, "flowx,cell 0 3,grow");
 			}
 			
-			this.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
-			this.setBackground(new Color(0, 0, 0, 0));
-			this.setOpaque(false);
 
 			JLabel lblName = new JLabel(entity.getName());
+			lblName.setForeground(Color.YELLOW);
 			add(lblName, "cell 0 0 2 1,alignx left,aligny center");
 
 			JLabel lblDamage = new JLabel("Level: " + entity.getLevel());
+			lblDamage.setForeground(Color.YELLOW);
 			add(lblDamage, "cell 0 2 2 1,alignx left,aligny center");
 
 			JLabel lblHealth = new JLabel("");
@@ -273,8 +287,9 @@ public class SelectionPanel extends JScrollPane {
 		}
 		
 		public void paint(Graphics g) {
-			g.setColor(Color.LIGHT_GRAY);
-			g.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
+			g.drawImage(elementBackground, 0, 0, getWidth(), getHeight(), null);
+//			g.setColor(Color.LIGHT_GRAY);
+//			g.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
 			g.setColor(getControllableColor());
 			g.fillRoundRect(0, 0, 5, getHeight(), 10, 10);
 			g.setColor(getColorFromClass());

@@ -5,6 +5,7 @@ import java.awt.Graphics;
 import java.awt.Point;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorModel;
 import java.awt.image.WritableRaster;
@@ -16,6 +17,7 @@ import javax.swing.JPanel;
 import core.Core;
 import core.GameInfo;
 import map.MapImage;
+import map.ObjectMap;
 
 /**
  * Contains and draws the MapImage, takes care of the displacement
@@ -24,7 +26,7 @@ import map.MapImage;
  * @see MainGamePanel
  * @version 4
  */
-public class MapPanel extends JPanel {
+public class MapPanel extends JPanel implements MouseMotionListener {
 	private static final long serialVersionUID = 121L;
 	
 	private static final int IMAGE_SIZE = 3136;
@@ -81,9 +83,10 @@ public class MapPanel extends JPanel {
 	private BufferedImage upperLayerLocal;
 
 	public MapPanel() {
-		this.setName("MapPanel");
-		this.setDoubleBuffered(true);
-		this.setOpaque(false);
+		setLayout(null);
+		setName("MapPanel");
+		setDoubleBuffered(true);
+		setOpaque(false);
 
 		mapImage = new MapImage(IMAGE_SIZE, IMAGE_SIZE);
 		setBackground(new Color(0, 0, 0, 0));
@@ -91,8 +94,10 @@ public class MapPanel extends JPanel {
 		upperLayerLocal = mapImage.getCombinedImage();
 		MAP_REFRESH_THREAD.execute(new MapRefresh(this));
 		
+		addMouseMotionListener(this);
 		addMouseMotionListener(ma);
 		addMouseListener(ma);
+		
 	}
 	
 	@Override
@@ -101,21 +106,21 @@ public class MapPanel extends JPanel {
 	}
 	@Override
 	public void paint(Graphics g) {
-		super.paint(g);
-
 		// Draw background
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		
-		// backdrop
+		// world
 		g.drawImage(mapTileLocal, (int) (displacementX), (int) (displacementY),
 				(int) (this.getWidth() * displacementMultiplier), (int) (this.getWidth() * displacementMultiplier),
 				this);
 		
-		// draw map image with displacement & multiplier
+		// Entities and other
 		g.drawImage(upperLayerLocal, (int) (displacementX), (int) (displacementY),
 				(int) (this.getWidth() * displacementMultiplier), (int) (this.getWidth() * displacementMultiplier),
 				this);
+		
+		super.paint(g);
 	}
 
 	public static void addDisplacementX(int displacementX) {
@@ -251,5 +256,33 @@ public class MapPanel extends JPanel {
 		}
 		
 	}
-	
+
+	@Override
+	public void mouseDragged(MouseEvent e) {
+		removeAll();
+		System.gc();
+	}
+
+	@Override
+	public void mouseMoved(MouseEvent e) {
+		removeAll();
+		float x = -1;
+		double factorX = (double) this.getWidth() / (double) MapImage.getImageWidth();
+		float  y = -1;
+		double factorY = (double) this.getWidth() / (double) MapImage.getImageHeight();
+		// X
+		if((((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize()) >= 0) {
+			x = (float) (((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize());
+		}
+		// Y
+		if((((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize()) >= 0) {
+			y = (float) (((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
+		}
+		if(ObjectMap.inBounds((int) x,(int) y)) {
+			JPanel mapTileInfoPanel = new MapTileInfoPanel(GameInfo.getObjectMap().getMap()[(int) x][(int) y]);
+			mapTileInfoPanel.setBounds(e.getPoint().x, e.getPoint().y, mapTileInfoPanel.getPreferredSize().width, mapTileInfoPanel.getPreferredSize().height);
+			add(mapTileInfoPanel);
+		}
+		System.gc();
+	}
 }

@@ -218,7 +218,7 @@ public class Core {
 			
 		}
 	}
-	/*
+	/**
 	 * @author Luca Kleck
 	 */
 	private void setCustomUI() {

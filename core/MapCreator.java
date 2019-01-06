@@ -8,6 +8,7 @@ import map.MapTile;
  * MapCreator.java - Contains all the methods used to create a new map
  * 
  * @author Luca Kleck
+ * @version 3
  */
 public class MapCreator {
 
@@ -19,6 +20,7 @@ public class MapCreator {
 	private static final Random RAND = new Random();
 
 	/**
+	 * not implemented yet
 	 * the top of the map is cold the middle is tropic the bottom cold again<br>
 	 *<br>
 	 * variations are not types just names, but they can still change the way<br>
