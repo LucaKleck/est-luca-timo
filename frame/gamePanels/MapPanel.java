@@ -185,30 +185,28 @@ public class MapPanel extends JPanel implements MouseMotionListener, ActionListe
 	}
 	
 	private void mouseEventHandler(MouseEvent e) {
-		if(mouseMoved) {
-			float x = -1;
-			double factorX = (double) this.getWidth() / (double) MapImage.getImageWidth();
-			float  y = -1;
-			double factorY = (double) this.getWidth() / (double) MapImage.getImageHeight();
-			// X
-			if((((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize()) >= 0) {
-				x = (float) (((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize());
-			}
-			// Y
-			if((((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize()) >= 0) {
-				y = (float) (((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
-			}
-			// 
-			boolean isLeftClick = false;
-			if(e.getButton() == 1) {
-				isLeftClick = true;
-			} else {
-				isLeftClick = false;
-			}
-			ClickOnTileHandler clickOnTileHandler = new ClickOnTileHandler(x,y,isLeftClick);
-			CLICK_THREAD.execute(clickOnTileHandler);
-			System.gc();
+		float x = -1;
+		double factorX = (double) this.getWidth() / (double) MapImage.getImageWidth();
+		float  y = -1;
+		double factorY = (double) this.getWidth() / (double) MapImage.getImageHeight();
+		// X
+		if((((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize()) >= 0) {
+			x = (float) (((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize());
 		}
+		// Y
+		if((((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize()) >= 0) {
+			y = (float) (((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
+		}
+		// 
+		boolean isLeftClick = false;
+		if(e.getButton() == 1) {
+			isLeftClick = true;
+		} else {
+			isLeftClick = false;
+		}
+		ClickOnTileHandler clickOnTileHandler = new ClickOnTileHandler(x,y,isLeftClick);
+		CLICK_THREAD.execute(clickOnTileHandler);
+		System.gc();
 	}
 	
 	private class ClickOnTileHandler implements Runnable {
@@ -250,24 +248,26 @@ public class MapPanel extends JPanel implements MouseMotionListener, ActionListe
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		float x = -1;
-		double factorX = (double) this.getWidth() / (double) MapImage.getImageWidth();
-		float  y = -1;
-		double factorY = (double) this.getWidth() / (double) MapImage.getImageHeight();
-		// X
-		if((((lastMousePoint.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize()) >= 0) {
-			x = (float) (((lastMousePoint.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize());
+		if(mouseMoved) {
+			float x = -1;
+			double factorX = (double) this.getWidth() / (double) MapImage.getImageWidth();
+			float  y = -1;
+			double factorY = (double) this.getWidth() / (double) MapImage.getImageHeight();
+			// X
+			if((((lastMousePoint.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize()) >= 0) {
+				x = (float) (((lastMousePoint.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize());
+			}
+			// Y
+			if((((lastMousePoint.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize()) >= 0) {
+				y = (float) (((lastMousePoint.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
+			}
+			if(ObjectMap.inBounds((int) x,(int) y)) {
+				JPanel mapTileInfoPanel = new MapTileInfoPanel(GameInfo.getObjectMap().getMap()[(int) x][(int) y]);
+				mapTileInfoPanel.setBounds(lastMousePoint.x, lastMousePoint.y, mapTileInfoPanel.getPreferredSize().width, mapTileInfoPanel.getPreferredSize().height);
+				add(mapTileInfoPanel);
+			}
+			mouseMoved=false;
 		}
-		// Y
-		if((((lastMousePoint.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize()) >= 0) {
-			y = (float) (((lastMousePoint.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
-		}
-		if(ObjectMap.inBounds((int) x,(int) y)) {
-			JPanel mapTileInfoPanel = new MapTileInfoPanel(GameInfo.getObjectMap().getMap()[(int) x][(int) y]);
-			mapTileInfoPanel.setBounds(lastMousePoint.x, lastMousePoint.y, mapTileInfoPanel.getPreferredSize().width, mapTileInfoPanel.getPreferredSize().height);
-			add(mapTileInfoPanel);
-		}
-		mouseMoved=false;
 	}
 	
 	private MouseAdapter ma = new MouseAdapter() {
