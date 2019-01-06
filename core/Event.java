@@ -42,6 +42,6 @@ public class Event implements Runnable {
 
 	@Override
 	public String toString() {
-		return "Event [source=" + source + ", target=" + target + ", ability=" + ability + ", effect=" + effect + "]";
+		return "Event [source=" + source.getName() + ", target=" + target.getName() + ", ability=" + ability + ", effect=" + effect + "]";
 	}
 }

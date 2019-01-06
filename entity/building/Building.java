@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.sun.javafx.geom.Point2D;
 
 import abilities.Ability;
+import abilities.CollectResources;
 import entity.Entity;
 
 public class Building extends Entity {
@@ -22,11 +23,13 @@ public class Building extends Entity {
 	
 	public Building(Point2D pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
 		super(pointXY, name, maxHealth, currentHealth, level, controlable, abilities);
+		efficiency = level*12;
 		ressources = new BuildingRessources (getXPos(), getYPos(), name);
+		abilities.add(new CollectResources(this));
 	}
 	
 	
-	public int getEfficiency(int xPos, int yPos) {
+	public int getEfficiency() {
 		return efficiency;
 	}
 	public BuildingRessources getRessources() {

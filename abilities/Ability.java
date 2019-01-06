@@ -22,7 +22,8 @@ public abstract class Ability {
 	public static final String ABILITY_DESC_MOVE = "Moves to targeted spot";
 	
 	// Building Abilities
-	public static final String ABILITY_COLLECT_RESOURCES = "Collect Resources";
+	public static final String ABILITY_COLLECT_RESOURCES = "Collect resources";
+	public static final String ABILITY_DESC_COLLECT_RESOURCES = "Collects resources at the end of the round";
 	
 	private String name;
 	private String description;
@@ -41,5 +42,10 @@ public abstract class Ability {
 	}
 	
 	public abstract void applyAbility(Entity source, Entity target);
+	
+	@Override
+	public String toString() {
+		return name;
+	}
 	
 }

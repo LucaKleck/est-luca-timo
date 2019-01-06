@@ -113,6 +113,10 @@ public class Entity {
 			i++;
 		}
 
+		if(this.event != null) {
+			GameInfo.getRoundInfo().getEventList().remove(this.event);
+			this.event = null;
+		}
 		GameInfo.getObjectMap().getEntityMap().remove(i);
 
 	}
@@ -144,7 +148,10 @@ public class Entity {
 		this.event = event;
 	}
 
-	public void removeEvent() {
+	/**
+	 * This is needed for when the round end iterates through all the Events
+	 */
+	public void removeEventWithoutRemovingFromList() {
 		this.event = null;
 	}
 	

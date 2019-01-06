@@ -238,11 +238,11 @@ public class MapPanel extends JPanel implements MouseMotionListener, ActionListe
 		if(lastMousePoint == null) {
 			lastMousePoint = e.getPoint();
 		}
-		if(e.getPoint().x - lastMousePoint.x >= 5 || e.getPoint().x - lastMousePoint.x <= -5 && e.getPoint().y - lastMousePoint.y >= 5 || e.getPoint().y - lastMousePoint.y <= -5) {
+		if(e.getPoint().x - lastMousePoint.x >= 5 || e.getPoint().x - lastMousePoint.x <= -5 && e.getPoint().y - lastMousePoint.y >= 5 || e.getPoint().y - lastMousePoint.y <= -5 && mouseMoved==false) {
 			removeAll();
 			System.gc();
-			mouseMoved  = true;
 			lastMousePoint = e.getPoint();
+			mouseMoved  = true;
 		}
 	}
 

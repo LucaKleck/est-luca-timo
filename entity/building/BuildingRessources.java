@@ -8,12 +8,13 @@ public class BuildingRessources {
 	private int collectableRessources;
 	private int type;
 	
-	/*Types are: 	1 - Gold
-	 * 				2 - Wood
-	 * 				3 - Food
-	 * 				4 - Stone
-	 * 				5 - Metal
-	 * 				6 - Manastone
+	/*Types are: 	</br>
+	 * 				1 - Gold</br>
+	 * 				2 - Wood</br>
+	 * 				3 - Food</br>
+	 * 				4 - Stone</br>
+	 * 				5 - Metal</br>
+	 * 				6 - Manastone</br>
 	  */
 
 	public BuildingRessources(int x, int y, String name) {
@@ -43,7 +44,7 @@ public class BuildingRessources {
 					} else if (name.matches(Building.MANA_GETTER)) {
 						ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getManaStonePercent();
 						type = 6;
-					}
+					} else type=-1;
 				}
 			}
 		}

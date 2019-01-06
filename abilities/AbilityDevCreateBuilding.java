@@ -1,5 +1,7 @@
 package abilities;
 
+import java.util.ArrayList;
+
 import com.sun.javafx.geom.Point2D;
 
 import core.GameInfo;
@@ -17,7 +19,7 @@ public class AbilityDevCreateBuilding extends Ability {
 		int level = 1;
 		int hp = 10;
 		Point2D p = new Point2D((float) GameInfo.getObjectMap().getSelected().getSelectedMapTile().getXPos(), (float) GameInfo.getObjectMap().getSelected().getSelectedMapTile().getYPos());
-		GameInfo.getObjectMap().getEntityMap().add(new Building(p, "Building", hp, hp, level, true, null));
+		GameInfo.getObjectMap().getEntityMap().add(new Building(p, Building.WOOD_GETTER, hp, hp, level, true, new ArrayList<>()));
 	}
 
 }
