@@ -118,8 +118,10 @@ public class MainJFrame extends JFrame implements ComponentListener {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (!Core.getMainJFrame().isValid()) {
-					Core.getMainJFrame().validate();
+				if(Core.getMainJFrame() != null) {
+					if (!Core.getMainJFrame().isValid()) {
+						Core.getMainJFrame().validate();
+					}
 				}
 			}
 

@@ -43,6 +43,9 @@ public abstract class Ability {
 	
 	public abstract void applyAbility(Entity source, Entity target);
 	
+	protected boolean rangeCheck(Entity source, Entity target) {
+		return false;
+	}
 	@Override
 	public String toString() {
 		return name;
