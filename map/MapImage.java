@@ -48,6 +48,7 @@ public class MapImage {
 	private BufferedImage unitBuildingLayer; // draw Units and buildings
 	private BufferedImage decalLayer; // draw map tile overlays
 	private BufferedImage mapTileLayer; // draw map tiles
+	private BufferedImage abilityLayer;
 
 	
 	private static final Lock mapImageLock = new ReentrantLock();
@@ -144,6 +145,7 @@ public class MapImage {
 		unitBuildingLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
 		effectLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
 		selectionLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
+		abilityLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
 		
 		combinedImage = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
 		
@@ -211,7 +213,22 @@ public class MapImage {
 		}
 	}
 	
-	private void drawSelecionLayer() {
+	public void drawAbilityLayer(int range, int x, int y) {
+		int totalRange = (range + range + 1);
+		
+		Graphics2D g = getAbilityLayer().createGraphics();
+		g.setComposite(AlphaComposite.Clear);
+		g.fillRect(0, 0, imageWidth, imageHeight); 
+		g.setComposite(AlphaComposite.SrcOver);
+		g.setColor(new Color(0, 255, 255, 120));
+		for(int row = 0; row < totalRange; row++) {
+			for(int col = 0; col < totalRange; col++) {
+				g.fillRect((x-range+col) * mapTileSize, (y-range+row) * mapTileSize, mapTileSize, mapTileSize);
+			}
+		}
+	}
+	
+	private void drawSelectionLayer() {
 		Graphics2D g = getSelectionLayer().createGraphics();
 		g.setComposite(AlphaComposite.Clear);
 		g.fillRect(0, 0, imageWidth, imageHeight); 
@@ -222,7 +239,7 @@ public class MapImage {
 					GameInfo.getObjectMap().getSelected().getSelectedMapTile().getYPos() * mapTileSize, mapTileSize, mapTileSize);
 		}
 		if(GameInfo.getObjectMap().getSelected().getSelectedEntity() != null) {
-			g.setColor(new Color(0,0,255,120));
+			g.setColor(new Color(0, 0, 255, 120));
 			g.fillRect(GameInfo.getObjectMap().getSelected().getSelectedEntity().getXPos() * mapTileSize,
 					GameInfo.getObjectMap().getSelected().getSelectedEntity().getYPos() * mapTileSize, mapTileSize, mapTileSize);
 		}
@@ -468,12 +485,13 @@ public class MapImage {
 		}
 	}
 	
-	private void drawCombinedImage() {
+	public void drawCombinedImage() {
 		Graphics2D g = getCombinedImage().createGraphics();
 		g.setComposite(AlphaComposite.Clear);
 		g.fillRect(0, 0, imageWidth, imageHeight); 
 		g.setComposite(AlphaComposite.SrcOver);
 		g.drawImage(getDecalLayer(), 0, 0, null);
+		g.drawImage(getAbilityLayer(), 0, 0, null);
 		g.drawImage(getSelectionLayer(), 0, 0, null);
 		g.drawImage(getUnitBuildingLayer(), 0, 0, null);
 		g.drawImage(getEffectLayer(), 0, 0, null);
@@ -481,6 +499,10 @@ public class MapImage {
 	
 	public synchronized BufferedImage getSelectionLayer() {
 		return selectionLayer;
+	}
+	
+	public synchronized BufferedImage getAbilityLayer() {
+		return abilityLayer;
 	}
 
 	public synchronized BufferedImage getEffectLayer() {
@@ -550,7 +572,7 @@ public class MapImage {
 
 						@Override
 						public String call() throws Exception {
-							drawSelecionLayer();
+							drawSelectionLayer();
 							return null;
 						}
 					});

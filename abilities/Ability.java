@@ -27,6 +27,7 @@ public abstract class Ability {
 	
 	private String name;
 	private String description;
+	private int MAX_RANGE = 2;
 	
 	public Ability(String name, String description) {
 		this.name = name;
@@ -51,4 +52,7 @@ public abstract class Ability {
 		return name;
 	}
 	
+	public int getMaxRange() {
+		return MAX_RANGE;
+	}
 }

@@ -76,11 +76,16 @@ public class Selected {
 				case 3: case 5:
 					selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
 					if(selectedAbility instanceof Move) {
-						((Unit)this.getSelectedEntity()).getMove().setMoveToPoint(new Point2D(xD, yD));
-						this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, new MoveEffect((Unit) selectedEntity, (Unit) selectedEntity, (Move) selectedAbility)));
-						removeSelected();
-						break;
+						if((isInRange(selectedAbility.getMaxRange(), selectedEntity.getXPos(), selectedEntity.getYPos(), selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
+							((Unit)this.getSelectedEntity()).getMove().setMoveToPoint(new Point2D(xD, yD));
+							this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, new MoveEffect((Unit) selectedEntity, (Unit) selectedEntity, (Move) selectedAbility)));
+							removeSelected();
+							((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().drawAbilityLayer(0,-1,-1);
+							break;
+						}
+						((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().drawAbilityLayer(0,-1,-1);
 					}
+					removeSelected();
 					InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
 					break;
 					// dev mode
@@ -224,4 +229,14 @@ public class Selected {
 		// TODO make some refresh or something
 		changeSelectionMode();
 	}
+	
+	private boolean isInRange(int range, int unitX, int unitY, int mapTileX, int mapTileY) {
+		
+		if(mapTileX >= unitX - range && mapTileX <= unitX + range && mapTileY >= unitY - range && mapTileY <= unitY + range) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 }

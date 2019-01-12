@@ -6,6 +6,7 @@ import entity.Entity;
 
 public class Move extends Ability {
 	private Point2D moveToPoint = new Point2D();
+	private final static int MAX_RANGE = 3;
 	
 	public Move() {
 		super(Ability.ABILITY_MOVE, Ability.ABILITY_DESC_MOVE);
@@ -29,6 +30,10 @@ public class Move extends Ability {
 	@Override
 	public String toString() {
 		return "Move [moveToPoint=" + moveToPoint + "]";
+	}
+	
+	public int getMaxRange() {
+		return MAX_RANGE;
 	}
 	
 }

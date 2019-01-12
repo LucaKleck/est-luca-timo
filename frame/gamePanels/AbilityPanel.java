@@ -17,7 +17,7 @@ import net.miginfocom.swing.MigLayout;
 public class AbilityPanel extends JPanel {
 	private static final long serialVersionUID = 129L;
 	private static AbilityPanel self;
-	
+
 	public AbilityPanel() {
 		setLayout(new MigLayout("insets 0 0 0 0, gap 0px 0px", "[]", "[]"));
 		this.setMinimumSize(new Dimension(40, 40));
@@ -27,12 +27,11 @@ public class AbilityPanel extends JPanel {
 		self = this;
 	}
 
-
 	public void update() {
-		if(GameInfo.getObjectMap().getSelected().getSelectedEntity() != null) {
+		if (GameInfo.getObjectMap().getSelected().getSelectedEntity() != null) {
 			self.removeAll();
 			System.gc();
-			if(GameInfo.getObjectMap().getSelected().getSelectedEntity().hasAbility()) {
+			if (GameInfo.getObjectMap().getSelected().getSelectedEntity().hasAbility()) {
 				ArrayList<Ability> abList = GameInfo.getObjectMap().getSelected().getSelectedEntity().getAbilities();
 				String columns = "";
 
@@ -41,16 +40,21 @@ public class AbilityPanel extends JPanel {
 				}
 
 				self.setLayout(new MigLayout("", columns, "[fill]"));
-				
+
 				for (int i = 0; i < abList.size(); i++) {
-					JButton jButton = new JButton(abList.get(i).getName() );
+					JButton jButton = new JButton(abList.get(i).getName());
 					Ability abl = abList.get(i);
 					jButton.setToolTipText(abl.getDescription());
 					jButton.addActionListener(new ActionListener() {
-						
+
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							InteractionPanel.setCurrentPanel(null);
+							((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
+									.drawAbilityLayer(abl.getMaxRange(),
+											GameInfo.getObjectMap().getSelected().getSelectedEntity().getXPos(),
+											GameInfo.getObjectMap().getSelected().getSelectedEntity().getYPos());
+							((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().drawCombinedImage();
 							GameInfo.getObjectMap().getSelected().setSelectedAbility(abl);
 						}
 					});
@@ -66,7 +70,7 @@ public class AbilityPanel extends JPanel {
 			self.getParent().repaint();
 			System.gc();
 		}
-			
+
 	}
-	
+
 }
