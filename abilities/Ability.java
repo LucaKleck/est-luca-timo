@@ -27,7 +27,7 @@ public abstract class Ability {
 	
 	private String name;
 	private String description;
-	private int MAX_RANGE = 2;
+	private final static int MAX_RANGE = 3;
 	
 	public Ability(String name, String description) {
 		this.name = name;
@@ -44,8 +44,12 @@ public abstract class Ability {
 	
 	public abstract void applyAbility(Entity source, Entity target);
 	
-	protected boolean rangeCheck(Entity source, Entity target) {
-		return false;
+	public boolean rangeCheck(int unitX, int unitY, int mapTileX, int mapTileY) {
+		if(mapTileX >= unitX - MAX_RANGE && mapTileX <= unitX + MAX_RANGE && mapTileY >= unitY - MAX_RANGE && mapTileY <= unitY + MAX_RANGE) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	@Override
 	public String toString() {
