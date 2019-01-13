@@ -220,10 +220,12 @@ public class MapImage {
 		g.setComposite(AlphaComposite.Clear);
 		g.fillRect(0, 0, imageWidth, imageHeight); 
 		g.setComposite(AlphaComposite.SrcOver);
-		g.setColor(new Color(0, 255, 255, 120));
+		g.setColor(new Color(255, 255, 0, 120));
 		for(int row = 0; row < totalRange; row++) {
 			for(int col = 0; col < totalRange; col++) {
-				g.fillRect((x-range+col) * mapTileSize, (y-range+row) * mapTileSize, mapTileSize, mapTileSize);
+				if(!((x-range+col) == x && (y-range+row) == y)) {
+					g.fillRect((x-range+col) * mapTileSize, (y-range+row) * mapTileSize, mapTileSize, mapTileSize);
+				}
 			}
 		}
 	}

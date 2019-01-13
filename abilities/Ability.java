@@ -8,6 +8,9 @@ public abstract class Ability {
 	public static final String ABILITY_DEV_CREATE_UNIT = "devCreateUnit";
 	public static final String ABILITY_DESC_DEV_CREATE_UNIT = "devCreateUnit";
 	
+	public static final String ABILITY_DEV_CREATE_BUILDER = "devCreateBuilder";
+	public static final String ABILITY_DESC_DEV_CREATE_BUILDER = "devCreateBuilder";
+	
 	public static final String ABILITY_DEV_CREATE_BUILDING = "devCreateBuilding";
 	public static final String ABILITY_DESC_DEV_CREATE_BUILDING = "devCreateBuilding";
 	
@@ -20,6 +23,9 @@ public abstract class Ability {
 	
 	public static final String ABILITY_MOVE = "Move";
 	public static final String ABILITY_DESC_MOVE = "Moves to targeted spot";
+	
+	public static final String ABILITY_BUILD = "Build";
+	public static final String ABILITY_DESC_BUILD = "Builds at targeted spot";
 	
 	// Building Abilities
 	public static final String ABILITY_COLLECT_RESOURCES = "Collect resources";
@@ -45,6 +51,9 @@ public abstract class Ability {
 	public abstract void applyAbility(Entity source, Entity target);
 	
 	public boolean rangeCheck(int unitX, int unitY, int mapTileX, int mapTileY) {
+		if(mapTileX == unitX && mapTileY == unitY) {
+			return false;
+		}
 		if(mapTileX >= unitX - MAX_RANGE && mapTileX <= unitX + MAX_RANGE && mapTileY >= unitY - MAX_RANGE && mapTileY <= unitY + MAX_RANGE) {
 			return true;
 		} else {

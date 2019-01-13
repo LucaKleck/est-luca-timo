@@ -18,6 +18,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import abilities.AbilityDevCreateBuilder;
 import abilities.AbilityDevCreateBuilding;
 import abilities.AbilityDevCreateUnit;
 import core.ControlInput;
@@ -37,6 +38,7 @@ public class GameMenuPanel extends JPanel {
 	private JMenuItem mntmExitGame;
 	private JMenuItem mntmExitToMain;
 	private JMenuItem mntmGenerateDefaultUnit;
+	private JMenuItem mntmGenerateBuilder;
 	private JMenuItem mntmRemakeMap;
 	private JMenuItem mntmSave;
 	private JMenuItem mntmSendLogLine;
@@ -126,6 +128,16 @@ public class GameMenuPanel extends JPanel {
 		});
 		mnDev.add(mntmGenerateDefaultUnit);
 		
+		mntmGenerateBuilder = new JMenuItem("generate builder ability");
+		mntmGenerateBuilder.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
+		mntmGenerateBuilder.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		mntmGenerateBuilder.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GameInfo.getObjectMap().getSelected().removeSelected();
+				GameInfo.getObjectMap().getSelected().setSelectedAbility(new AbilityDevCreateBuilder());
+			}
+		});
+		mnDev.add(mntmGenerateBuilder);
 		
 		JMenuItem mntmGenerateDefaultBuilding = new JMenuItem("generate default building ability");
 		mntmGenerateDefaultBuilding.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

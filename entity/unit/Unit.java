@@ -18,7 +18,7 @@ public class Unit extends Entity {
 
 		super(pointXY, name, maxHealth, currentHealth, level, controlable, abilities);
 		
-		abilities.add(0, move);
+		abilities.add(move);
 		this.baseDamage = baseDamage;
 		this.movementRange = movementRange;
 	}

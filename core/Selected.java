@@ -5,10 +5,12 @@ import java.awt.Point;
 import com.sun.javafx.geom.Point2D;
 
 import abilities.Ability;
+import abilities.Build;
 import abilities.Move;
 import effects.MoveEffect;
 import entity.Entity;
 import entity.building.Building;
+import entity.unit.Builder;
 import entity.unit.Unit;
 import frame.gamePanels.BuildingPanel;
 import frame.gamePanels.InteractionPanel;
@@ -79,6 +81,16 @@ public class Selected {
 						if((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(), selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
 							((Unit)this.getSelectedEntity()).getMove().setMoveToPoint(new Point2D(xD, yD));
 							this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, new MoveEffect((Unit) selectedEntity, (Unit) selectedEntity, (Move) selectedAbility)));
+							removeSelected();
+							((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().drawAbilityLayer(0,-1,-1);
+							break;
+						}
+						((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().drawAbilityLayer(0,-1,-1);
+					}
+					if(selectedAbility instanceof Build) {
+						if((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(), selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
+							((Builder)this.getSelectedEntity()).getBuild().setBuildPoint(new Point2D(xD, yD));
+							this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, null));
 							removeSelected();
 							((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().drawAbilityLayer(0,-1,-1);
 							break;

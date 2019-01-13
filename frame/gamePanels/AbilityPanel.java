@@ -42,6 +42,7 @@ public class AbilityPanel extends JPanel {
 				self.setLayout(new MigLayout("", columns, "[fill]"));
 
 				for (int i = 0; i < abList.size(); i++) {
+					System.out.println(abList.get(i).getName());
 					JButton jButton = new JButton(abList.get(i).getName());
 					Ability abl = abList.get(i);
 					jButton.setToolTipText(abl.getDescription());
