@@ -27,6 +27,7 @@ import com.sun.javafx.geom.Point2D;
 import core.PlayerStats.PlayerResources;
 import entity.Entity;
 import entity.building.Building;
+import entity.unit.Builder;
 import entity.unit.Unit;
 import entity.unit.Warrior;
 import frame.gamePanels.LogPanel;
@@ -149,14 +150,17 @@ public class XMLSaveAndLoad {
                
                e = new Entity(p, name, maxHealth, currentHealth, level, controlable, null);
             		   
-               if(type.matches("Unit") || type.matches("Warrior")) {
+               if(type.matches("Unit") || type.matches("Warrior") || type.matches("Builder")) {
             	   int baseDamage = Integer.parseInt(eElement.getElementsByTagName(BASE_DAMAGE).item(0).getTextContent());
             	   int movementRange = Integer.parseInt(eElement.getElementsByTagName(MOVEMENT_RANGE).item(0).getTextContent());
             	   
             	   e = new Unit(p, name, maxHealth, currentHealth, level, controlable, baseDamage, movementRange, new ArrayList<>());
             	   
             	   if(type.matches("Warrior")) {
-            		   e = new Warrior(p, name, currentHealth, level, controlable);
+            		   e = new Warrior(p, name, currentHealth, level, controlable, new ArrayList<>());
+            	   }
+            	   if(type.matches("Builder")) {
+            		   e = new Builder(p, name, currentHealth, level, controlable, new ArrayList<>());
             	   }
                }
                if(type.matches("Building")) {
