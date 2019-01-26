@@ -7,6 +7,7 @@ import com.sun.javafx.geom.Point2D;
 import abilities.Ability;
 import abilities.Build;
 import abilities.CollectResources;
+import abilities.FireBall;
 import abilities.Melee;
 import abilities.Move;
 import effects.MoveEffect;
@@ -105,7 +106,7 @@ public class Selected {
 						}
 						mapImage.clearAbilityLayer();
 					}
-					if(selectedAbility instanceof Melee) {
+					if(selectedAbility instanceof Melee || selectedAbility instanceof FireBall) {
 						if((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(), selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
 							if(isntEmpty(x, y)) {
 								InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));

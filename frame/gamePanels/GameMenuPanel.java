@@ -21,6 +21,7 @@ import javax.swing.KeyStroke;
 import abilities.AbilityDevCreateBuilder;
 import abilities.AbilityDevCreateBuilding;
 import abilities.AbilityDevCreateEnemyUnit;
+import abilities.AbilityDevCreateMage;
 import abilities.AbilityDevCreateUnit;
 import core.ControlInput;
 import core.Core;
@@ -39,6 +40,7 @@ public class GameMenuPanel extends JPanel {
 	private JMenuItem mntmExitGame;
 	private JMenuItem mntmExitToMain;
 	private JMenuItem mntmGenerateDefaultUnit;
+	private JMenuItem mntmGenerateMage;
 	private JMenuItem mntmGenerateEnemyUnit;
 	private JMenuItem mntmGenerateBuilder;
 	private JMenuItem mntmRemakeMap;
@@ -129,6 +131,17 @@ public class GameMenuPanel extends JPanel {
 			}
 		});
 		mnDev.add(mntmGenerateDefaultUnit);
+		
+		mntmGenerateMage = new JMenuItem("generate mage ability");
+		mntmGenerateMage.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
+		mntmGenerateMage.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		mntmGenerateMage.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GameInfo.getObjectMap().getSelected().removeSelected();
+				GameInfo.getObjectMap().getSelected().setSelectedAbility(new AbilityDevCreateMage());
+			}
+		});
+		mnDev.add(mntmGenerateMage);
 		
 		mntmGenerateEnemyUnit = new JMenuItem("generate enemy warrior ability");
 		mntmGenerateEnemyUnit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
