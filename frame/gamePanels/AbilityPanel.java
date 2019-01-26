@@ -11,7 +11,9 @@ import javax.swing.JPanel;
 
 import abilities.Ability;
 import abilities.CollectResources;
+import abilities.CreateUnit;
 import core.Core;
+import core.Event;
 import core.GameInfo;
 import net.miginfocom.swing.MigLayout;
 
@@ -51,7 +53,7 @@ public class AbilityPanel extends JPanel {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							InteractionPanel.setCurrentPanel(null);
-							if (!(abl instanceof CollectResources)) {
+							if (!(abl instanceof CollectResources) && !(abl instanceof CreateUnit)) {
 								((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
 										.drawAbilityLayer(abl.maxRange,
 												GameInfo.getObjectMap().getSelected().getSelectedEntity().getXPos(),
@@ -59,7 +61,15 @@ public class AbilityPanel extends JPanel {
 								((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
 										.drawCombinedImage();
 							}
-							GameInfo.getObjectMap().getSelected().setSelectedAbility(abl);
+							if(abl instanceof CreateUnit) {
+								GameInfo.getObjectMap().getSelected().getSelectedEntity().setEvent(new Event(GameInfo.getObjectMap().getSelected().getSelectedEntity(), GameInfo.getObjectMap().getSelected().getSelectedEntity(), abl, null));
+								GameInfo.getObjectMap().getSelected().setSelectedAbility(abl);
+								GameInfo.getObjectMap().getSelected().removeSelected();
+								((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
+							}
+							if(!(abl instanceof CreateUnit)) {
+								GameInfo.getObjectMap().getSelected().setSelectedAbility(abl);
+							}
 						}
 					});
 					self.add(jButton, ("cell " + i + " 0, grow"));

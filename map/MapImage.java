@@ -581,6 +581,7 @@ public class MapImage {
 						@Override
 						public String call() throws Exception {
 							drawSelectionLayer();
+							clearAbilityLayer();
 							return null;
 						}
 					});

@@ -6,7 +6,8 @@ import com.sun.javafx.geom.Point2D;
 
 import core.GameInfo;
 import entity.Entity;
-import entity.building.Building;
+import entity.building.Lumberjack;
+import entity.building.RessourceBuilding;
 
 public class Build extends Ability {
 	
@@ -20,11 +21,11 @@ public class Build extends Ability {
 	public void applyAbility(Entity source, Entity target) {
 		int level = 1;
 		int hp = 10;
-		GameInfo.getObjectMap().getEntityMap().add(new Building(buildPoint, Building.WOOD_GETTER, hp, hp, level, true, new ArrayList<>()));
+		GameInfo.getObjectMap().getEntityMap().add(new Lumberjack(buildPoint, RessourceBuilding.WOOD_GETTER, hp, hp, level, true, new ArrayList<>()));
 	}
 	
-	public void setBuildPoint(Point2D moveToPoint) {
-		this.buildPoint.setLocation(moveToPoint);
+	public void setBuildPoint(Point2D buildPoint) {
+		this.buildPoint.setLocation(buildPoint);
 	}
 	
 	public Point2D getBuildPoint() {

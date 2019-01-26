@@ -2,7 +2,7 @@ package abilities;
 
 import core.GameInfo;
 import entity.Entity;
-import entity.building.Building;
+import entity.building.RessourceBuilding;
 
 public class CollectResources extends Ability {
 
@@ -14,8 +14,8 @@ public class CollectResources extends Ability {
 	 * 				5 - Metal</br>
 	 * 				6 - Manastone</br>
 	  */
-	private Building b;
-	public CollectResources(Building b) {
+	private RessourceBuilding b;
+	public CollectResources(RessourceBuilding b) {
 		super(ABILITY_COLLECT_RESOURCES, ABILITY_DESC_COLLECT_RESOURCES);
 		this.b = b;
 	}
