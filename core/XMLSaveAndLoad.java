@@ -29,6 +29,7 @@ import entity.Entity;
 import entity.building.Building;
 import entity.building.TownCenter;
 import entity.unit.Builder;
+import entity.unit.Mage;
 import entity.unit.Unit;
 import entity.unit.Warrior;
 import frame.gamePanels.LogPanel;
@@ -166,6 +167,9 @@ public class XMLSaveAndLoad {
 					}
 					if (type.matches("Builder")) {
 						e = new Builder(p, name, currentHealth, level, controlable, new ArrayList<>());
+					}
+					if (type.matches("Mage")) {
+						e = new Mage(p, name, currentHealth, level, controlable, new ArrayList<>());
 					}
 				}
 				if (type.matches("TownCenter")) {
