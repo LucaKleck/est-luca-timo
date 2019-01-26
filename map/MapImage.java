@@ -21,6 +21,8 @@ import core.Core;
 import core.GameInfo;
 import entity.Entity;
 import entity.building.Building;
+import entity.building.Lumberjack;
+import entity.building.TownCenter;
 import entity.unit.Unit;
 import entity.unit.Warrior;
 import frame.gamePanels.MainGamePanel;
@@ -85,6 +87,7 @@ public class MapImage {
 	
 	//Buildings
 	private static BufferedImage buildingImage;
+	private static BufferedImage townCenterImage;
 	
 	//Units
 	private static BufferedImage warriorImage;
@@ -125,6 +128,7 @@ public class MapImage {
 				
 				//Buildings
 				buildingImage = ImageIO.read( Boot.class.getResource("/resources/building.png") );
+				townCenterImage = ImageIO.read( Boot.class.getResource("/resources/towncenter.png") );
 				
 				//Units
 				warriorImage = ImageIO.read( Boot.class.getResource("/resources/warrior.png") );
@@ -194,8 +198,13 @@ public class MapImage {
 					g.drawImage(warriorImage, (int) (s.getPoint().x*mapTileSize)-8, (int) (s.getPoint().y*mapTileSize)-8, null);
 				}
 			} else if(s instanceof Building) {
-				// if instance of other building
-				g.drawImage(buildingImage, s.getXPos()*mapTileSize, s.getYPos()*mapTileSize, null);
+				if(s instanceof Lumberjack) {
+					g.drawImage(buildingImage, s.getXPos()*mapTileSize, s.getYPos()*mapTileSize, null);
+				} else if(s instanceof TownCenter) {
+					g.drawImage(townCenterImage, s.getXPos()*mapTileSize, s.getYPos()*mapTileSize, null);
+				} else {
+					g.drawImage(buildingImage, s.getXPos()*mapTileSize, s.getYPos()*mapTileSize, null);
+				}
 			}
 		}
 	}
