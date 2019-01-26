@@ -33,7 +33,7 @@ public abstract class Ability {
 	
 	private String name;
 	private String description;
-	private final static int MAX_RANGE = 3;
+	public int maxRange = 3;
 	
 	public Ability(String name, String description) {
 		this.name = name;
@@ -54,7 +54,7 @@ public abstract class Ability {
 		if(mapTileX == unitX && mapTileY == unitY) {
 			return false;
 		}
-		if(mapTileX >= unitX - MAX_RANGE && mapTileX <= unitX + MAX_RANGE && mapTileY >= unitY - MAX_RANGE && mapTileY <= unitY + MAX_RANGE) {
+		if(mapTileX >= unitX - maxRange && mapTileX <= unitX + maxRange && mapTileY >= unitY - maxRange && mapTileY <= unitY + maxRange) {
 			return true;
 		} else {
 			return false;
@@ -65,7 +65,4 @@ public abstract class Ability {
 		return name;
 	}
 	
-	public int getMaxRange() {
-		return MAX_RANGE;
-	}
 }

@@ -10,6 +10,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import abilities.Ability;
+import abilities.CollectResources;
 import core.Core;
 import core.GameInfo;
 import net.miginfocom.swing.MigLayout;
@@ -42,7 +43,6 @@ public class AbilityPanel extends JPanel {
 				self.setLayout(new MigLayout("", columns, "[fill]"));
 
 				for (int i = 0; i < abList.size(); i++) {
-					System.out.println(abList.get(i).getName());
 					JButton jButton = new JButton(abList.get(i).getName());
 					Ability abl = abList.get(i);
 					jButton.setToolTipText(abl.getDescription());
@@ -51,11 +51,14 @@ public class AbilityPanel extends JPanel {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							InteractionPanel.setCurrentPanel(null);
-							((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
-									.drawAbilityLayer(abl.getMaxRange(),
-											GameInfo.getObjectMap().getSelected().getSelectedEntity().getXPos(),
-											GameInfo.getObjectMap().getSelected().getSelectedEntity().getYPos());
-							((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().drawCombinedImage();
+							if (!(abl instanceof CollectResources)) {
+								((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
+										.drawAbilityLayer(abl.maxRange,
+												GameInfo.getObjectMap().getSelected().getSelectedEntity().getXPos(),
+												GameInfo.getObjectMap().getSelected().getSelectedEntity().getYPos());
+								((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
+										.drawCombinedImage();
+							}
 							GameInfo.getObjectMap().getSelected().setSelectedAbility(abl);
 						}
 					});

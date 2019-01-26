@@ -230,6 +230,12 @@ public class MapImage {
 		}
 	}
 	
+	public void clearAbilityLayer() {
+
+		drawAbilityLayer(0,-1,-1);
+
+	}
+	
 	private void drawSelectionLayer() {
 		Graphics2D g = getSelectionLayer().createGraphics();
 		g.setComposite(AlphaComposite.Clear);

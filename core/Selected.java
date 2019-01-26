@@ -6,6 +6,7 @@ import com.sun.javafx.geom.Point2D;
 
 import abilities.Ability;
 import abilities.Build;
+import abilities.CollectResources;
 import abilities.Melee;
 import abilities.Move;
 import effects.MoveEffect;
@@ -13,11 +14,11 @@ import entity.Entity;
 import entity.building.Building;
 import entity.unit.Builder;
 import entity.unit.Unit;
-import entity.unit.Warrior;
 import frame.gamePanels.BuildingPanel;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.MainGamePanel;
 import frame.gamePanels.SelectionPanel;
+import map.MapImage;
 import map.MapTile;
 import map.ObjectMap;
 
@@ -79,37 +80,44 @@ public class Selected {
 					break;
 				case 3: case 5:
 					selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
+					MapImage mapImage = ((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage();
 					if(selectedAbility instanceof Move) {
 						if((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(), selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
 							((Unit)this.getSelectedEntity()).getMove().setMoveToPoint(new Point2D(xD, yD));
 							this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, new MoveEffect((Unit) selectedEntity, (Unit) selectedEntity, (Move) selectedAbility)));
 							removeSelected();
-							((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().drawAbilityLayer(0,-1,-1);
+							mapImage.clearAbilityLayer();
 							break;
 						}
-						((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().drawAbilityLayer(0,-1,-1);
+						mapImage.clearAbilityLayer();
+					}
+					if(selectedAbility instanceof CollectResources) {
+						removeSelected();
+						break;
 					}
 					if(selectedAbility instanceof Build) {
 						if((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(), selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
 							((Builder)this.getSelectedEntity()).getBuild().setBuildPoint(new Point2D(xD, yD));
 							this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, null));
 							removeSelected();
-							((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().drawAbilityLayer(0,-1,-1);
+							mapImage.clearAbilityLayer();
 							break;
 						}
-						((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().drawAbilityLayer(0,-1,-1);
+						mapImage.clearAbilityLayer();
 					}
 					if(selectedAbility instanceof Melee) {
 						if((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(), selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
-							((Warrior)this.getSelectedEntity()).getMelee().setAttackPoint(new Point2D(xD, yD));
-							this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, null));
-							removeSelected();
-							((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().drawAbilityLayer(0,-1,-1);
+							if(isntEmpty(x, y)) {
+								InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
+							} else {
+								InteractionPanel.setCurrentPanel(null);
+							}
+							mapImage.clearAbilityLayer();
 							break;
 						}
-						((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().drawAbilityLayer(0,-1,-1);
+						mapImage.clearAbilityLayer();
 					}
-					((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().drawAbilityLayer(0,-1,-1);
+					mapImage.clearAbilityLayer();
 					removeSelected();
 					InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
 					break;

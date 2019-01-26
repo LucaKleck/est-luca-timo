@@ -5,11 +5,18 @@ import com.sun.javafx.geom.Point2D;
 import entity.Entity;
 
 public class Move extends Ability {
+	
 	private Point2D moveToPoint = new Point2D();
-	private final static int MAX_RANGE = 3;
+	private static final int DEFAULT_MAX_RANGE = 2;
 	
 	public Move() {
 		super(Ability.ABILITY_MOVE, Ability.ABILITY_DESC_MOVE);
+		super.maxRange = DEFAULT_MAX_RANGE;
+	}
+	
+	public Move(int maxRange) {
+		super(Ability.ABILITY_MOVE, Ability.ABILITY_DESC_MOVE);
+		super.maxRange = maxRange;
 	}
 
 	@Override
@@ -31,10 +38,7 @@ public class Move extends Ability {
 	public String toString() {
 		return "Move [moveToPoint=" + moveToPoint + "]";
 	}
-	
-	public int getMaxRange() {
-		return MAX_RANGE;
-	}
+
 	
 }
 
