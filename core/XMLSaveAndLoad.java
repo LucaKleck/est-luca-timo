@@ -27,6 +27,7 @@ import com.sun.javafx.geom.Point2D;
 import core.PlayerStats.PlayerResources;
 import entity.Entity;
 import entity.building.Building;
+import entity.building.Lumberjack;
 import entity.building.TownCenter;
 import entity.unit.Builder;
 import entity.unit.Mage;
@@ -153,7 +154,7 @@ public class XMLSaveAndLoad {
 
 				e = new Entity(p, name, maxHealth, currentHealth, level, controlable, null);
 
-				if (type.matches("Unit") || type.matches("Warrior") || type.matches("Builder")) {
+				if (type.matches("Unit")) {
 					int baseDamage = Integer
 							.parseInt(eElement.getElementsByTagName(BASE_DAMAGE).item(0).getTextContent());
 					int movementRange = Integer
@@ -172,8 +173,13 @@ public class XMLSaveAndLoad {
 						e = new Mage(p, name, currentHealth, level, controlable, new ArrayList<>());
 					}
 				}
-				if (type.matches("TownCenter")) {
-					e = new TownCenter(p, name, maxHealth, currentHealth, level, controlable, new ArrayList<>());
+				if (type.matches("Building")) {
+					if (type.matches("TownCenter")) {
+						e = new TownCenter(p, name, maxHealth, currentHealth, level, controlable, new ArrayList<>());
+					}
+					if (type.matches("Lumberjack")) {
+						e = new Lumberjack(p, name, maxHealth, currentHealth, level, controlable, new ArrayList<>());
+					}
 				}
 				entityMap.add(e);
 			}
