@@ -11,7 +11,7 @@ import abilities.CreateUnit;
 import abilities.FireBall;
 import abilities.Melee;
 import abilities.Move;
-import effects.MoveEffect;
+import effects.AbilityEffect;
 import entity.Entity;
 import entity.building.Building;
 import entity.unit.Builder;
@@ -84,7 +84,7 @@ public class Selected {
 					if(selectedAbility instanceof Move) {
 						if((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(), selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
 							((Unit)this.getSelectedEntity()).getMove().setMoveToPoint(new Point2D(xD, yD));
-							this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, new MoveEffect((Unit) selectedEntity, (Unit) selectedEntity, (Move) selectedAbility)));
+							this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, new AbilityEffect((Unit) selectedEntity, (Unit) selectedEntity, selectedAbility)));
 							removeSelected();
 							break;
 						}
@@ -94,10 +94,19 @@ public class Selected {
 						removeSelected();
 						break;
 					}
+					if(selectedAbility instanceof CreateUnit) {
+						if((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(), selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
+							selectedEntity.setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, null));
+							removeSelected();
+							break;
+							
+						}
+						removeSelected();
+					}					
 					if(selectedAbility instanceof Build) {
 						if((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(), selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
 							((Builder)this.getSelectedEntity()).getBuild().setBuildPoint(new Point2D(xD, yD));
-							this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, null));
+							this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, new AbilityEffect((Unit) selectedEntity, (Unit) selectedEntity, selectedAbility)));
 							removeSelected();
 							break;
 						}

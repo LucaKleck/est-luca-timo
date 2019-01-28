@@ -13,7 +13,6 @@ import abilities.Ability;
 import abilities.CollectResources;
 import abilities.CreateUnit;
 import core.Core;
-import core.Event;
 import core.GameInfo;
 import net.miginfocom.swing.MigLayout;
 
@@ -62,9 +61,8 @@ public class AbilityPanel extends JPanel {
 										.drawCombinedImage();
 							}
 							if(abl instanceof CreateUnit) {
-								GameInfo.getObjectMap().getSelected().getSelectedEntity().setEvent(new Event(GameInfo.getObjectMap().getSelected().getSelectedEntity(), GameInfo.getObjectMap().getSelected().getSelectedEntity(), abl, null));
 								GameInfo.getObjectMap().getSelected().setSelectedAbility(abl);
-								GameInfo.getObjectMap().getSelected().removeSelected();
+								GameInfo.getObjectMap().getSelected().clickedOnTile(0, 0, true);
 								((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
 							}
 							if(!(abl instanceof CreateUnit)) {
