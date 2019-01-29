@@ -150,9 +150,12 @@ public class MapImage {
 				mountainImage192 = ImageIO.read(Boot.class.getResource("/resources/mountain192.png"));
 
 				mountainImageTopLeftNotch = ImageIO.read(Boot.class.getResource("/resources/mountainTopLeftNotch.png"));
-				mountainImageBottomLeftNotch = ImageIO.read(Boot.class.getResource("/resources/mountainBottomLeftNotch.png"));
-				mountainImageTopRightNotch = ImageIO.read(Boot.class.getResource("/resources/mountainTopRightNotch.png"));
-				mountainImageBottomRightNotch = ImageIO.read(Boot.class.getResource("/resources/mountainBottomRightNotch.png"));
+				mountainImageBottomLeftNotch = ImageIO
+						.read(Boot.class.getResource("/resources/mountainBottomLeftNotch.png"));
+				mountainImageTopRightNotch = ImageIO
+						.read(Boot.class.getResource("/resources/mountainTopRightNotch.png"));
+				mountainImageBottomRightNotch = ImageIO
+						.read(Boot.class.getResource("/resources/mountainBottomRightNotch.png"));
 
 				// River
 				riverImage = ImageIO.read(Boot.class.getResource("/resources/pond.png"));
@@ -383,7 +386,7 @@ public class MapImage {
 			}
 			return forestImage;
 		} else if (mapTile.getName().matches(MapTile.NAME_MOUNTAIN)) {
-			//Notches
+			// Notches
 			if (top && right && bottom && left && topRight && !topLeft && bottomRight && bottomLeft) {
 				return mountainImageTopLeftNotch;
 			}
@@ -677,7 +680,6 @@ public class MapImage {
 						@Override
 						public String call() throws Exception {
 							drawSelectionLayer();
-							clearAbilityLayer();
 							return null;
 						}
 					});

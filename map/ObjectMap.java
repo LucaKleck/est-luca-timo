@@ -15,6 +15,8 @@ import entity.Entity;
 import entity.building.EconomyBuilding;
 import entity.building.TownCenter;
 import entity.unit.Builder;
+import entity.unit.Unit;
+import entity.unit.Warrior;
 
 public class ObjectMap {
 
@@ -28,7 +30,8 @@ public class ObjectMap {
 		selected = new Selected();
 		entityMap = new ArrayList<>();
 		entityMap.add(new TownCenter(new Point2D(3, 3), EconomyBuilding.TOWN_CENTER, 15, 15, 1, true, new ArrayList<>()));
-		entityMap.add(new Builder(new Point2D(5, 5), "DEV",  3, 1, true, new ArrayList<>()));
+		entityMap.add(new Builder(new Point2D(5, 5), Unit.UNIT_BUILDER,  3, 1, true, new ArrayList<>()));
+		entityMap.add(new Warrior(new Point2D(5, 3), Unit.UNIT_WARRIOR,  3, 1, false, new ArrayList<>()));
 	}
 	
 	public ObjectMap(MapTile[][] map, ArrayList<Entity> entityMap) {

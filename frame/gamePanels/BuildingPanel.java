@@ -24,34 +24,28 @@ public class BuildingPanel extends JScrollPane {
 		setViewportView(panel);
 		panel.setLayout(new MigLayout("", "[][][][][][][]", "[][][][][][][][][][][][]"));
 
-		JLabel lblBuildingName = new JLabel("Name");
+		JLabel lblBuildingName = new JLabel("Name: " + building.getName());
 		panel.add(lblBuildingName, "cell 0 0");
-
-		JLabel lblNewLabel = new JLabel(building.getName());
-		panel.add(lblNewLabel, "cell 1 0");
 
 		JLabel lblLevel = new JLabel("Level:" + this.building.getLevel());
 		panel.add(lblLevel, "cell 0 1");
 
-		JLabel lblNewLabel_1 = new JLabel(Integer.toString(building.getLevel()));
-		panel.add(lblNewLabel_1, "cell 1 1");
-
 		JButton btnLevelUp = new JButton("Level Up");
-		panel.add(btnLevelUp, "cell 0 3,alignx center,aligny bottom");
+		panel.add(btnLevelUp, "cell 0 3");
 
 		JLabel lblCost = new JLabel("Cost: ");
-		panel.add(lblCost, "cell 1 3");
+		panel.add(lblCost, "cell 0 3");
 
 		if (this.building.getEvent() != null) {
 			lblNextEvent = new JLabel("Event: " + this.building.getEvent().getAbility().getName());
-			panel.add(lblNextEvent, "cell 2 3");
+			panel.add(lblNextEvent, "cell 0 4");
 		} else {
 			lblNextEvent = new JLabel("Event: " + "No Event");
-			panel.add(lblNextEvent, "cell 2 3");
+			panel.add(lblNextEvent, "cell 0 4");
 		}
 
 	}
-	
+
 	public void updateEventText(String eventText) {
 		if (eventText != null) {
 			lblNextEvent.setText("Event: " + eventText);

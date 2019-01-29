@@ -59,9 +59,9 @@ public class AbilityPanel extends JPanel {
 								((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
 										.drawCombinedImage();
 							}
-							if (abl instanceof CreateUnit) {
+							if (abl instanceof CreateUnit) { 
 								GameInfo.getObjectMap().getSelected().setSelectedAbility(abl);
-								((BuildingPanel)InteractionPanel.getCurrentPanel()).updateEventText(abl.getName());
+								((BuildingPanel) InteractionPanel.getCurrentPanel()).updateEventText(abl.getName());
 								GameInfo.getObjectMap().getSelected().clickedOnTile(0, 0, true);
 							}
 							if (!(abl instanceof CreateUnit)) {
