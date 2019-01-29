@@ -51,7 +51,6 @@ public class AbilityPanel extends JPanel {
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							InteractionPanel.setCurrentPanel(null);
 							if (!(abl instanceof CollectResources) && !(abl instanceof CreateUnit)) {
 								((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
 										.drawAbilityLayer(abl.maxRange,
@@ -60,12 +59,12 @@ public class AbilityPanel extends JPanel {
 								((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
 										.drawCombinedImage();
 							}
-							if(abl instanceof CreateUnit) {
+							if (abl instanceof CreateUnit) {
 								GameInfo.getObjectMap().getSelected().setSelectedAbility(abl);
+								((BuildingPanel)InteractionPanel.getCurrentPanel()).updateEventText(abl.getName());
 								GameInfo.getObjectMap().getSelected().clickedOnTile(0, 0, true);
-								((MainGamePanel)Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
 							}
-							if(!(abl instanceof CreateUnit)) {
+							if (!(abl instanceof CreateUnit)) {
 								GameInfo.getObjectMap().getSelected().setSelectedAbility(abl);
 							}
 						}

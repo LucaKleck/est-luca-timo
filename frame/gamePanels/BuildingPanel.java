@@ -13,6 +13,7 @@ public class BuildingPanel extends JScrollPane {
 	private static final long serialVersionUID = 1L;
 
 	private Building building;
+	private JLabel lblNextEvent;
 
 	public BuildingPanel(Building building) {
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -40,7 +41,23 @@ public class BuildingPanel extends JScrollPane {
 
 		JLabel lblCost = new JLabel("Cost: ");
 		panel.add(lblCost, "cell 1 3");
-		
+
+		if (this.building.getEvent() != null) {
+			lblNextEvent = new JLabel("Event: " + this.building.getEvent().getAbility().getName());
+			panel.add(lblNextEvent, "cell 2 3");
+		} else {
+			lblNextEvent = new JLabel("Event: " + "No Event");
+			panel.add(lblNextEvent, "cell 2 3");
+		}
+
+	}
+	
+	public void updateEventText(String eventText) {
+		if (eventText != null) {
+			lblNextEvent.setText("Event: " + eventText);
+		} else {
+			lblNextEvent.setText("Event: " + "No Event");
+		}
 	}
 
 }
