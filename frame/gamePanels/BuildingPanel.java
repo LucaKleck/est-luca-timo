@@ -6,6 +6,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import abilities.Ability;
 import entity.building.Building;
 import net.miginfocom.swing.MigLayout;
 
@@ -39,9 +40,11 @@ public class BuildingPanel extends JScrollPane {
 		if (this.building.getEvent() != null) {
 			lblNextEvent = new JLabel("Event: " + this.building.getEvent().getAbility().getName());
 			panel.add(lblNextEvent, "cell 0 4");
-		} else {
-			lblNextEvent = new JLabel("Event: " + "No Event");
+		} else if((building.getName().matches(Building.WOOD_GETTER))){
+			lblNextEvent = new JLabel("Event: " + Ability.ABILITY_COLLECT_RESOURCES);
 			panel.add(lblNextEvent, "cell 0 4");
+		} else {
+			lblNextEvent =  new JLabel("Event: " + "No Event");
 		}
 
 	}
@@ -49,6 +52,8 @@ public class BuildingPanel extends JScrollPane {
 	public void updateEventText(String eventText) {
 		if (eventText != null) {
 			lblNextEvent.setText("Event: " + eventText);
+		} else if(!(building.getName().matches(Building.WOOD_GETTER))){
+			lblNextEvent.setText("Event: " + Ability.ABILITY_COLLECT_RESOURCES);
 		} else {
 			lblNextEvent.setText("Event: " + "No Event");
 		}

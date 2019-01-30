@@ -103,12 +103,7 @@ public class Selected {
 						break;
 					}
 					if (selectedAbility instanceof CreateUnit) {
-						if ((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(),
-								selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
-							selectedEntity.setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, null));
-							removeSelected();
-
-						}
+						this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, null));
 						removeSelected();
 						break;
 					}

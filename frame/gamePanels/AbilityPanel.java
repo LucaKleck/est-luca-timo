@@ -44,6 +44,8 @@ public class AbilityPanel extends JPanel {
 				self.setLayout(new MigLayout("", columns, "[fill]"));
 
 				for (int i = 0; i < abList.size(); i++) {
+					if(!(abList.get(i) instanceof CollectResources)) {
+						
 					JButton jButton = new JButton(abList.get(i).getName());
 					Ability abl = abList.get(i);
 					jButton.setToolTipText(abl.getDescription());
@@ -59,17 +61,15 @@ public class AbilityPanel extends JPanel {
 								((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
 										.drawCombinedImage();
 							}
+							GameInfo.getObjectMap().getSelected().setSelectedAbility(abl);
 							if (abl instanceof CreateUnit) { 
-								GameInfo.getObjectMap().getSelected().setSelectedAbility(abl);
 								((BuildingPanel) InteractionPanel.getCurrentPanel()).updateEventText(abl.getName());
 								GameInfo.getObjectMap().getSelected().clickedOnTile(0, 0, true);
-							}
-							if (!(abl instanceof CreateUnit)) {
-								GameInfo.getObjectMap().getSelected().setSelectedAbility(abl);
 							}
 						}
 					});
 					self.add(jButton, ("cell " + i + " 0, grow"));
+					}
 				}
 				self.repaint();
 				self.getParent().repaint();
