@@ -56,8 +56,8 @@ public class AbilityEffect extends MapImageEffect {
 				g.setStroke(new BasicStroke(3f));
 				g.drawLine((int) (source.getPoint().x * mi.getMapTileSize()),
 						(int) (((Builder)source).getPoint().y * mi.getMapTileSize()),
-						(int) (((Builder)source).getBuild().getBuildPoint().x * mi.getMapTileSize()),
-						(int) (((Builder)source).getBuild().getBuildPoint().y * mi.getMapTileSize()));
+						(int) (((Builder)source).getBuildPoint().x * mi.getMapTileSize()),
+						(int) (((Builder)source).getBuildPoint().y * mi.getMapTileSize()));
 			}
 		}
 	}

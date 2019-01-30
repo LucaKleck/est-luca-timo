@@ -6,8 +6,7 @@ import com.sun.javafx.geom.Point2D;
 
 import core.GameInfo;
 import entity.Entity;
-import entity.building.EconomyBuilding;
-import entity.building.TownCenter;
+import entity.building.ProductionBuilding;
 
 public class AbilityDevCreateBuilding extends Ability {
 
@@ -20,7 +19,7 @@ public class AbilityDevCreateBuilding extends Ability {
 		int level = 1;
 		int hp = 10;
 		Point2D p = new Point2D((float) GameInfo.getObjectMap().getSelected().getSelectedMapTile().getXPos(), (float) GameInfo.getObjectMap().getSelected().getSelectedMapTile().getYPos());
-		GameInfo.getObjectMap().getEntityMap().add(new TownCenter(p, EconomyBuilding.TOWN_CENTER, hp, hp, level, true, new ArrayList<>()));
+		GameInfo.getObjectMap().getEntityMap().add(new ProductionBuilding(p, ProductionBuilding.TOWN_CENTER, hp, hp, level, true, new ArrayList<>()));
 	}
 
 }

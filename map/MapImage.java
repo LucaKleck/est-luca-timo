@@ -21,8 +21,9 @@ import core.Core;
 import core.GameInfo;
 import entity.Entity;
 import entity.building.Building;
-import entity.building.Lumberjack;
-import entity.building.TownCenter;
+import entity.building.ProductionBuilding;
+import entity.building.RessourceBuilding;
+import entity.unit.Builder;
 import entity.unit.Mage;
 import entity.unit.Unit;
 import entity.unit.Warrior;
@@ -106,6 +107,7 @@ public class MapImage {
 	// Units
 	private static BufferedImage warriorImage;
 	private static BufferedImage mageImage;
+	private static BufferedImage builderImage;
 
 	private BufferedImage combinedImage;
 
@@ -171,6 +173,7 @@ public class MapImage {
 				// Units
 				warriorImage = ImageIO.read(Boot.class.getResource("/resources/warrior.png"));
 				mageImage = ImageIO.read(Boot.class.getResource("/resources/mage.png"));
+				builderImage = ImageIO.read(Boot.class.getResource("/resources/builder.png"));
 
 			} catch (IOException e) {
 			}
@@ -242,13 +245,24 @@ public class MapImage {
 					g.drawImage(mageImage, (int) (s.getPoint().x * mapTileSize) - 8,
 							(int) (s.getPoint().y * mapTileSize) - 8, null);
 				}
+				if (s instanceof Builder) {
+					g.drawImage(builderImage, (int) (s.getPoint().x * mapTileSize) - 8,
+							(int) (s.getPoint().y * mapTileSize) - 8, null);
+				}
 			} else if (s instanceof Building) {
-				if (s instanceof Lumberjack) {
-					g.drawImage(buildingImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
-				} else if (s instanceof TownCenter) {
-					g.drawImage(townCenterImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
-				} else {
-					g.drawImage(buildingImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+				if (s instanceof RessourceBuilding) {
+					if (s.getName().matches(Building.WOOD_GETTER)) {
+						g.drawImage(buildingImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+					} else {
+						g.drawImage(buildingImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+					}
+				}
+				if (s instanceof ProductionBuilding) {
+					if (s.getName().matches(Building.TOWN_CENTER)) {
+						g.drawImage(townCenterImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+					} else {
+						g.drawImage(townCenterImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+					}
 				}
 			}
 		}

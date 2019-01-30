@@ -10,9 +10,9 @@ import entity.Entity;
 
 public class Unit extends Entity {
 	
-	public static final String UNIT_MAGE = "mage";
-	public static final String UNIT_BUILDER = "builder";
-	public static final String UNIT_WARRIOR = "warrior";
+	public static final String UNIT_MAGE = "Mage";
+	public static final String UNIT_BUILDER = "Builder";
+	public static final String UNIT_WARRIOR = "Warrior";
 	
 	private int baseDamage;
 	private int movementRange;

@@ -115,7 +115,7 @@ public class Selected {
 					if (selectedAbility instanceof Build) {
 						if ((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(),
 								selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
-							((Builder) this.getSelectedEntity()).getBuild().setBuildPoint(new Point2D(xD, yD));
+							((Builder) this.getSelectedEntity()).setBuildPoint(new Point2D(xD, yD));
 							this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility,
 									new AbilityEffect((Unit) selectedEntity, (Unit) selectedEntity, selectedAbility)));
 							removeSelected();

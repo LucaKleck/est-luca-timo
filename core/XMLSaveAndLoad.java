@@ -27,8 +27,8 @@ import com.sun.javafx.geom.Point2D;
 import core.PlayerStats.PlayerResources;
 import entity.Entity;
 import entity.building.Building;
-import entity.building.Lumberjack;
-import entity.building.TownCenter;
+import entity.building.ProductionBuilding;
+import entity.building.RessourceBuilding;
 import entity.unit.Builder;
 import entity.unit.Mage;
 import entity.unit.Unit;
@@ -175,10 +175,10 @@ public class XMLSaveAndLoad {
 				}
 				if (type.matches("Building")) {
 					if (type.matches("TownCenter")) {
-						e = new TownCenter(p, name, maxHealth, currentHealth, level, controlable, new ArrayList<>());
+						e = new ProductionBuilding(p, name, maxHealth, currentHealth, level, controlable, new ArrayList<>());
 					}
 					if (type.matches("Lumberjack")) {
-						e = new Lumberjack(p, name, maxHealth, currentHealth, level, controlable, new ArrayList<>());
+						e = new RessourceBuilding(p, name, maxHealth, currentHealth, level, controlable, new ArrayList<>());
 					}
 				}
 				entityMap.add(e);

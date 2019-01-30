@@ -24,8 +24,15 @@ public abstract class Ability {
 	public static final String ABILITY_MOVE = "Move";
 	public static final String ABILITY_DESC_MOVE = "Moves to targeted spot";
 
-	public static final String ABILITY_BUILD = "Build";
-	public static final String ABILITY_DESC_BUILD = "Builds at targeted spot";
+	//Build Abilities
+	public static final String ABILITY_BUILD_LUMBERJACK = "Build Lumberjack";
+	public static final String ABILITY_DESC_BUILD_LUMBERJACK = "Builds a lumberjack at targeted spot";
+	
+	public static final String ABILITY_BUILD_TOWN_CENTER = "Build Town Center";
+	public static final String ABILITY_DESC_BUILD_TOWN_CENTER = "Builds a town center at targeted spot";
+	
+	public static final String ABILITY_BUILD_BARRACKS = "Build Barracks";
+	public static final String ABILITY_DESC_BUILD_BARRACKS = "Builds barracks at targeted spot";
 
 	// Building Abilities
 	public static final String ABILITY_COLLECT_RESOURCES = "Collect resources";
