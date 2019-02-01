@@ -21,6 +21,7 @@ public class Builder extends Unit {
 		abilities.add(new Build(Building.BARRACKS, Ability.ABILITY_BUILD_BARRACKS, Ability.ABILITY_DESC_BUILD_BARRACKS, this));
 		abilities.add(new Build(Building.TOWN_CENTER, Ability.ABILITY_BUILD_TOWN_CENTER, Ability.ABILITY_DESC_BUILD_TOWN_CENTER, this));
 		abilities.add(new Build(Building.WOOD_GETTER, Ability.ABILITY_BUILD_LUMBERJACK, Ability.ABILITY_DESC_BUILD_LUMBERJACK, this));
+		abilities.add(new Build(Building.STONE_GETTER, Ability.ABILITY_BUILD_QUARRY, Ability.ABILITY_DESC_BUILD_QUARRY, this));
 	}
 	
 	public void setBuildPoint(Point2D buildPoint) {

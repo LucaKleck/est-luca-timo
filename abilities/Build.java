@@ -36,6 +36,9 @@ public class Build extends Ability {
 		if(type.matches(Building.WOOD_GETTER)) {
 			GameInfo.getObjectMap().getEntityMap().add(new RessourceBuilding(buildPoint, Building.WOOD_GETTER, 10, 10, 1, true, new ArrayList<>()));		
 		}
+		if(type.matches(Building.STONE_GETTER)) {
+			GameInfo.getObjectMap().getEntityMap().add(new RessourceBuilding(buildPoint, Building.STONE_GETTER, 10, 10, 1, true, new ArrayList<>()));		
+		}
 	}
 
 }

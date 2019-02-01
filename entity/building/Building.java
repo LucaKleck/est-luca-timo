@@ -12,10 +12,10 @@ public abstract class Building extends Entity {
 	private int efficiency;
 	
 	public static final String WOOD_GETTER = "Lumberjack";
-	public static final String FOOD_GETTER = "Farmer";
-	public static final String GOLD_GETTER = "Goldminer";
+	public static final String FOOD_GETTER = "Farm";
+	public static final String GOLD_GETTER = "Goldmine";
 	public static final String METAL_GETTER = "Metalforge";
-	public static final String STONE_GETTER = "Stonemason";
+	public static final String STONE_GETTER = "Quarry";
 	public static final String MANA_GETTER = "Manastonecollector";
 	
 	public static final String TOWN_CENTER = "Town Center";

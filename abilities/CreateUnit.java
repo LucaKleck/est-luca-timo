@@ -18,6 +18,7 @@ public class CreateUnit extends Ability {
 
 	public CreateUnit(Point2D pointXY, String type, String name, String description) {
 		super(name, description);
+		super.maxRange = 0;
 		this.type = type;
 		this.pointXY = pointXY;
 	}

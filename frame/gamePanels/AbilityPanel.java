@@ -53,7 +53,7 @@ public class AbilityPanel extends JPanel {
 
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if (!(abl instanceof CollectResources) && !(abl instanceof CreateUnit)) {
+							if (abl.maxRange > 0) {
 								((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
 										.drawAbilityLayer(abl.maxRange,
 												GameInfo.getObjectMap().getSelected().getSelectedEntity().getXPos(),

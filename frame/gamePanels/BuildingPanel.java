@@ -45,6 +45,7 @@ public class BuildingPanel extends JScrollPane {
 			panel.add(lblNextEvent, "cell 0 4");
 		} else {
 			lblNextEvent =  new JLabel("Event: " + "No Event");
+			panel.add(lblNextEvent, "cell 0 4");
 		}
 
 	}
@@ -57,6 +58,8 @@ public class BuildingPanel extends JScrollPane {
 		} else {
 			lblNextEvent.setText("Event: " + "No Event");
 		}
+		InteractionPanel.getCurrentPanel().repaint();
+		InteractionPanel.getCurrentPanel().revalidate();
 	}
 
 }

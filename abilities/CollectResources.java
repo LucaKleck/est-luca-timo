@@ -17,6 +17,7 @@ public class CollectResources extends Ability {
 	private RessourceBuilding b;
 	public CollectResources(RessourceBuilding b) {
 		super(ABILITY_COLLECT_RESOURCES, ABILITY_DESC_COLLECT_RESOURCES);
+		super.maxRange = 0;
 		this.b = b;
 	}
 

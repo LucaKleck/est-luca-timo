@@ -22,23 +22,23 @@ public class InteractionPanel extends JPanel {
 	}
 
 	public static void setCurrentPanel(JScrollPane currentPanel) {
-		if(InteractionPanel.currentPanel!=null) {
+		if (InteractionPanel.currentPanel != null) {
 			selfInteractionPanel.removeAll();
 			InteractionPanel.currentPanel = null;
 			System.gc();
 		}
 		InteractionPanel.currentPanel = currentPanel;
-		if(currentPanel!=null) {
+		if (currentPanel != null) {
 			selfInteractionPanel.add(currentPanel, "cell 0 0");
 		}
 		selfInteractionPanel.validate();
 		selfInteractionPanel.repaint();
 	}
-	
+
 	public static InteractionPanel getInteractionPanel() {
 		return selfInteractionPanel;
 	}
-	
+
 	public static JScrollPane getCurrentPanel() {
 		return currentPanel;
 	}

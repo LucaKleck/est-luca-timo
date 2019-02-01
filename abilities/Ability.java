@@ -25,6 +25,9 @@ public abstract class Ability {
 	public static final String ABILITY_DESC_MOVE = "Moves to targeted spot";
 
 	//Build Abilities
+	public static final String ABILITY_BUILD_QUARRY = "Build Quarry";
+	public static final String ABILITY_DESC_BUILD_QUARRY = "Builds a quarry at targeted spot";
+	
 	public static final String ABILITY_BUILD_LUMBERJACK = "Build Lumberjack";
 	public static final String ABILITY_DESC_BUILD_LUMBERJACK = "Builds a lumberjack at targeted spot";
 	

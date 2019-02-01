@@ -26,22 +26,22 @@ public class BuildingRessources {
 		for (int x = (xCenter - 1); x <= (xCenter + 1); x++) {
 			for (int y = (yCenter - 1); y <= (yCenter + 1); y++) {
 				if(ObjectMap.inBounds(x, y)) {
-					if (name.matches(RessourceBuilding.GOLD_GETTER)) {
+					if (name.matches(Building.GOLD_GETTER)) {
 						ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getGoldPercent();
 						type = 1;
-					} else if (name.matches(RessourceBuilding.WOOD_GETTER)) {
+					} else if (name.matches(Building.WOOD_GETTER)) {
 						ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getWoodPercent();
 						type = 2;
-					} else if (name.matches(RessourceBuilding.FOOD_GETTER)) {
+					} else if (name.matches(Building.FOOD_GETTER)) {
 						ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getFoodPercent();
 						type = 3;
-					} else if (name.matches(RessourceBuilding.STONE_GETTER)) {
+					} else if (name.matches(Building.STONE_GETTER)) {
 						ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getStonePercent();
 						type = 4;
-					} else if (name.matches(RessourceBuilding.METAL_GETTER)) {
+					} else if (name.matches(Building.METAL_GETTER)) {
 						ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getMetalPercent();
 						type = 5;
-					} else if (name.matches(RessourceBuilding.MANA_GETTER)) {
+					} else if (name.matches(Building.MANA_GETTER)) {
 						ressources += GameInfo.getObjectMap().getMap()[x][y].getMapTileResources().getManaStonePercent();
 						type = 6;
 					} else type=-1;
