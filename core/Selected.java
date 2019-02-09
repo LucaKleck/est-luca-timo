@@ -16,7 +16,7 @@ import entity.Entity;
 import entity.building.Building;
 import entity.unit.Builder;
 import entity.unit.Unit;
-import frame.gamePanels.BuildingPanel;
+import frame.gamePanels.EntityPanel;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.MainGamePanel;
 import frame.gamePanels.SelectionPanel;
@@ -186,7 +186,7 @@ public class Selected {
 		if (selectedMapTile != null) {
 			selectionMode = 1;
 			if (selectedEntity instanceof Building) {
-				InteractionPanel.setCurrentPanel(new BuildingPanel((Building) selectedEntity));
+				InteractionPanel.setCurrentPanel(new EntityPanel(selectedEntity));
 				if (selectedAbility == null) {
 					selectionMode = 4;
 //					System.out.println("ChangeSelectionMode["+selectionMode+"]");

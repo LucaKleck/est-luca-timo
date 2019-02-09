@@ -41,7 +41,6 @@ import core.Event;
 import core.GameInfo;
 import effects.AbilityEffect;
 import entity.Entity;
-import entity.building.Building;
 import entity.unit.Unit;
 import entity.unit.Warrior;
 import net.miginfocom.swing.MigLayout;
@@ -362,11 +361,7 @@ public class SelectionPanel extends JScrollPane {
 					InteractionPanel.setCurrentPanel(null);
 				} // else just normal selection change
 				else {
-					if (entity instanceof Unit) {
-						InteractionPanel.setCurrentPanel(null);
-					} else if (entity instanceof Building) {
-						InteractionPanel.setCurrentPanel(new BuildingPanel((Building) entity));
-					}
+					InteractionPanel.setCurrentPanel(new EntityPanel(entity));
 					GameInfo.getObjectMap().getSelected().setSelectedEntity(entity);
 				}
 				if (Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {

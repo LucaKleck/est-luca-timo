@@ -25,7 +25,6 @@ public class MainGamePanel extends JLayeredPane {
 	private static final long serialVersionUID = 120L;
 	private LogBackgroundPanel logBackgroundPanel;
 	private MapPanel mapPanel;
-	private AbilityPanel abilityPanel;
 	private InteractionPanel interactionPanel;
 	private InfoPanel infoPanel;
 	private JPanel resourcesPanel;
@@ -47,12 +46,7 @@ public class MainGamePanel extends JLayeredPane {
 		
 		menuPanel = new GameMenuPanel();
 		setLayer(menuPanel, 3);
-		uiPanel.add(menuPanel, "cell 8 0 3 1,grow");
-		
-		abilityPanel = new AbilityPanel();
-		setLayer(abilityPanel, 2);
-		uiPanel.add(abilityPanel, "flowx,cell 3 8 5 1,alignx right,aligny bottom");
-		
+		uiPanel.add(menuPanel, "cell 8 0 3 1,grow");		
 		
 		resourcesPanel = new JPanel();
 		setLayer(resourcesPanel, 1);
@@ -107,10 +101,6 @@ public class MainGamePanel extends JLayeredPane {
 		return mapPanel;
 	}
 
-	public synchronized AbilityPanel getAbilityPanel() {
-		return abilityPanel;
-	}
-
 	public synchronized InteractionPanel getInteractionPanel() {
 		return interactionPanel;
 	}
@@ -140,7 +130,6 @@ public class MainGamePanel extends JLayeredPane {
 			lblResourcesLable.setText(GameInfo.getPlayerStats().getPlayerResources().toString());
 		}
 		infoPanel.update();
-		abilityPanel.update();
 	}
 	
 }
