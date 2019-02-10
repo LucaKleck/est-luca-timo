@@ -11,11 +11,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -36,18 +33,16 @@ import abilities.Ability;
 import abilities.FireBall;
 import abilities.MeleeAttack;
 import abilities.RangedAttack;
-import core.Boot;
 import core.Core;
 import core.Event;
 import core.GameInfo;
+import core.ResourceManager;
 import effects.AbilityEffect;
 import entity.Entity;
 import entity.unit.Warrior;
 import net.miginfocom.swing.MigLayout;
 
 public class SelectionPanel extends JScrollPane {
-	private static BufferedImage background;
-	private static BufferedImage elementBackground;
 	private static final long serialVersionUID = 126L;
 	private ArrayList<Entity> selectedEntityList = new ArrayList<>();
 	private ArrayList<SelectionPaneElement> selectedEntityElementList = new ArrayList<>();
@@ -88,12 +83,6 @@ public class SelectionPanel extends JScrollPane {
 	 * @param y
 	 */
 	public SelectionPanel(int x, int y) {
-		if (background == null) {
-			try {
-				background = ImageIO.read(Boot.class.getResource("/resources/selectionPanelBackground.png"));
-			} catch (IOException e) {
-			}
-		}
 		setBackground(new Color(0, 0, 0, 0));
 		setDoubleBuffered(true);
 		setBorder(null);
@@ -166,7 +155,7 @@ public class SelectionPanel extends JScrollPane {
 
 		@Override
 		public void paint(Graphics g) {
-			g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
+			g.drawImage(ResourceManager.getBackgroundWoodVertical(), 0, 0, getWidth(), getHeight(), null);
 			super.paint(g);
 		}
 
@@ -174,7 +163,7 @@ public class SelectionPanel extends JScrollPane {
 
 	@Override
 	public void paint(Graphics g) {
-		g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
+		g.drawImage(ResourceManager.getBackgroundWoodVertical(), 0, 0, getWidth(), getHeight(), null);
 		super.paint(g);
 	}
 
@@ -234,13 +223,6 @@ public class SelectionPanel extends JScrollPane {
 		private Entity entity;
 
 		public SelectionPaneElement(Entity entity) {
-			if (elementBackground == null) {
-				try {
-					elementBackground = ImageIO
-							.read(Boot.class.getResource("/resources/selectionPanelElementBackground.png"));
-				} catch (IOException e) {
-				}
-			}
 			setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			this.entity = entity;
 			this.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
@@ -294,7 +276,7 @@ public class SelectionPanel extends JScrollPane {
 		}
 
 		public void paint(Graphics g) {
-			g.drawImage(elementBackground, 0, 0, getWidth(), getHeight(), null);
+			g.drawImage(ResourceManager.getBackgroundWoodHorizontal(), 0, 0, getWidth(), getHeight(), null);
 			// g.setColor(Color.LIGHT_GRAY);
 			// g.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
 			g.setColor(getControllableColor());

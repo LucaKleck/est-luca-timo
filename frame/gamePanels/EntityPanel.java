@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -31,10 +32,12 @@ public class EntityPanel extends JScrollPane {
 
 	public EntityPanel(Entity entity) {
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-
+		
+		setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
+		
 		this.entity = entity;
 
-		JPanel panel = new JPanel();
+		JPanel panel = new PanelWithVerticalBackground();
 		setViewportView(panel);
 		panel.setLayout(new MigLayout("", "[][][][][][][]", "[][][][][][][][][][][][]"));
 		panel.setFont(font);
@@ -118,7 +121,6 @@ public class EntityPanel extends JScrollPane {
 			component.setFont(font);
 
 		}
-
 	}
 
 	public void updateEventText(String eventText) {

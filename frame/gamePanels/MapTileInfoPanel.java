@@ -1,35 +1,24 @@
 package frame.gamePanels;
 
-import javax.swing.JPanel;
-
-import core.Boot;
-import frame.MainJFrame;
-import map.MapTile;
-import net.miginfocom.swing.MigLayout;
-
-import javax.imageio.ImageIO;
-import javax.swing.JLabel;
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
+
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+import core.ResourceManager;
+import frame.MainJFrame;
+import map.MapTile;
+import net.miginfocom.swing.MigLayout;
 
 public class MapTileInfoPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	@SuppressWarnings("unused")
 	private MapTile m;
-	private BufferedImage elementBackground;
 	private String cssSmall = MainJFrame.makeCssStyle("color: #F0F900; font-size: 8px");
 	
 	public MapTileInfoPanel(MapTile m) {
-		if(elementBackground == null) {
-			try {
-				elementBackground = ImageIO.read( Boot.class.getResource("/resources/selectionPanelElementBackground.png") );
-			} catch (IOException e) {
-			}
-		}
 		setDoubleBuffered(true);
 		setBackground(new Color(0,0,0,0));
 		setOpaque(false);
@@ -64,7 +53,7 @@ public class MapTileInfoPanel extends JPanel {
 	
 	@Override
 	public void paint(Graphics g) {
-		g.drawImage(elementBackground, 0, 0, getWidth(), getHeight(), null);
+		g.drawImage(ResourceManager.getBackgroundWoodHorizontal(), 0, 0, getWidth(), getHeight(), null);
 		super.paint(g);
 	}
 	

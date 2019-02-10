@@ -2,18 +2,15 @@ package frame.gamePanels;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
 
-import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.JScrollPane;
 
-import core.Boot;
 import core.GameInfo;
+import core.ResourceManager;
 import frame.MainJFrame;
 import net.miginfocom.swing.MigLayout;
 
@@ -22,16 +19,9 @@ public class InfoPanel extends JScrollPane {
 	private JLabel lblHealth = new JLabel(style+"Health: ");
 	private JLabel lblName = new JLabel(style+"Name: ");
 	private JProgressBar healthStatus;
-	private static BufferedImage background;
 	private static final String style = MainJFrame.makeCssStyle("color: black;");
 
 	public InfoPanel() {
-		if(background == null) {
-			try {
-				background = ImageIO.read( Boot.class.getResource("/resources/selectionPanelElementBackground.png") );
-			} catch (IOException e) {
-			}
-		}
 		setBackground(new Color(0,0,0,0));
 		setForeground(Color.YELLOW);
 		setOpaque(false);
@@ -80,7 +70,7 @@ public class InfoPanel extends JScrollPane {
 	
 	@Override
 	public void paint(Graphics g) {
-		g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
+		g.drawImage(ResourceManager.getBackgroundWoodHorizontal(), 0, 0, getWidth(), getHeight(), null);
 		super.paint(g);
 	}
 }
