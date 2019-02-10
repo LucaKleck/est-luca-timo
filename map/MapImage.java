@@ -301,11 +301,78 @@ public class MapImage {
 		g.fillRect(0, 0, imageWidth, imageHeight);
 		g.setComposite(AlphaComposite.SrcOver);
 		g.setColor(new Color(255, 255, 0, 120));
+
+		boolean[][] rangeArray = new boolean[totalRange][totalRange];
+
+		for (Entity entity : GameInfo.getObjectMap().getEntityMap()) {
+			if (entity instanceof DefenseBuilding && entity.isControlable() == false) {
+				if (entity.getXPos() <= (x + range) && entity.getXPos() >= (x - range)
+						&& entity.getYPos() <= (y + range) && entity.getYPos() >= (y - range)) {
+
+					rangeArray[entity.getYPos() - (y - range)][entity.getXPos() - (x - range)] = true;
+
+				}
+			}
+		}
+		/* Work in progress
+		for (int i = 0; i < 4; i++) {
+			int selectedCase = 0;
+			switch (i) {
+			case 0:
+				selectedCase = 0;
+				break;
+			case 1:
+				selectedCase = 1;
+				break;
+			case 2:
+				selectedCase = 2;
+				break;
+			case 3:
+				selectedCase = 3;
+				break;
+			}
+
+			for (int j = 0; j < 3; j++) {
+
+				if (selectedCase == 0) {
+					if(rangeArray[range][range + j] == true) {
+						for(int c = 0; c < range - 1; c++) {
+							rangeArray[range - c][range + j] = true;
+						}
+					}
+				}
+				if (selectedCase == 1) {
+					if(rangeArray[range][range - j] == true) {
+						for(int c = 0; c < range - 1; c++) {
+							rangeArray[range - c][range - j] = true;
+						}
+					}
+				}
+				if (selectedCase == 2) {
+					if(rangeArray[range + j][range] == true) {
+						for(int c = 0; c < range - 1; c++) {
+							rangeArray[range  + j][range - c] = true;
+						}
+					}
+				}
+				if (selectedCase == 3) {
+					if(rangeArray[range - j][range] == true) {
+						for(int c = 0; c < range - 1; c++) {
+							rangeArray[range - j][range + c] = true;
+						}
+					}
+				}	
+
+			}
+		}
+		*/
 		for (int row = 0; row < totalRange; row++) {
 			for (int col = 0; col < totalRange; col++) {
 				if (!((x - range + col) == x && (y - range + row) == y)) {
-					g.fillRect((x - range + col) * mapTileSize, (y - range + row) * mapTileSize, mapTileSize,
-							mapTileSize);
+					if (!(rangeArray[row][col])) {
+						g.fillRect((x - range + col) * mapTileSize, (y - range + row) * mapTileSize, mapTileSize,
+								mapTileSize);
+					}
 				}
 			}
 		}
@@ -313,7 +380,11 @@ public class MapImage {
 
 	public void clearAbilityLayer() {
 
-		drawAbilityLayer(0, -1, -1);
+		Graphics2D g = getAbilityLayer().createGraphics();
+		g.setComposite(AlphaComposite.Clear);
+		g.fillRect(0, 0, imageWidth, imageHeight);
+		g.setComposite(AlphaComposite.SrcOver);
+		g.setColor(new Color(255, 255, 0, 120));
 
 	}
 

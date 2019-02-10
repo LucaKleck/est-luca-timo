@@ -50,15 +50,17 @@ public class Selected {
 	 * controls player-input acts on last selectionMode and then changes it to what
 	 * it would be after changes
 	 * 
-	 * @param x           position on the map
-	 * @param y           position on the map
+	 * @param x
+	 *            position on the map
+	 * @param y
+	 *            position on the map
 	 * @param isLeftClick
 	 */
 	public void clickedOnTile(float xD, float yD, boolean isLeftClick) {
 		long start = System.nanoTime();
 		int x = (int) xD;
 		int y = (int) yD;
-//		System.out.println("SelectionModeStart["+selectionMode+"]");
+		// System.out.println("SelectionModeStart["+selectionMode+"]");
 		if (!ObjectMap.inBounds(x, y)) {
 			removeSelected();
 		} else {
@@ -103,7 +105,8 @@ public class Selected {
 						break;
 					}
 					if (selectedAbility instanceof CreateUnit) {
-						this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, null));
+						this.getSelectedEntity()
+								.setEvent(new Event(selectedEntity, selectedEntity, selectedAbility, null));
 						removeSelected();
 						break;
 					}
@@ -118,7 +121,8 @@ public class Selected {
 						removeSelected();
 						break;
 					}
-					if (selectedAbility instanceof MeleeAttack || selectedAbility instanceof FireBall || selectedAbility instanceof RangedAttack) {
+					if (selectedAbility instanceof MeleeAttack || selectedAbility instanceof FireBall
+							|| selectedAbility instanceof RangedAttack) {
 						if ((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(),
 								selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
 							if (isntEmpty(x, y)) {
@@ -188,22 +192,22 @@ public class Selected {
 			if (selectedEntity instanceof Building) {
 				if (selectedAbility == null) {
 					selectionMode = 4;
-//					System.out.println("ChangeSelectionMode["+selectionMode+"]");
+					// System.out.println("ChangeSelectionMode["+selectionMode+"]");
 					return;
 				} else {
 					selectionMode = 5;
-//					System.out.println("ChangeSelectionMode["+selectionMode+"]");
+					// System.out.println("ChangeSelectionMode["+selectionMode+"]");
 					return;
 				}
 			}
 			if (selectedEntity instanceof Unit) {
 				if (selectedAbility == null) {
 					selectionMode = 2;
-//					System.out.println("ChangeSelectionMode["+selectionMode+"]");
+					// System.out.println("ChangeSelectionMode["+selectionMode+"]");
 					return;
 				} else {
 					selectionMode = 3;
-//					System.out.println("ChangeSelectionMode["+selectionMode+"]");
+					// System.out.println("ChangeSelectionMode["+selectionMode+"]");
 					return;
 				}
 			}
@@ -217,7 +221,7 @@ public class Selected {
 		} else {
 			selectionMode = 10;
 		}
-//		System.out.println("ChangeSelectionMode["+selectionMode+"]");
+		// System.out.println("ChangeSelectionMode["+selectionMode+"]");
 	}
 
 	public MapTile getSelectedMapTile() {
@@ -239,8 +243,10 @@ public class Selected {
 	/**
 	 * checks if there is an entity at that spot
 	 * 
-	 * @param x coordinate of the map to be checked
-	 * @param y coordinate of the map to be checked
+	 * @param x
+	 *            coordinate of the map to be checked
+	 * @param y
+	 *            coordinate of the map to be checked
 	 * @return
 	 */
 	private boolean isntEmpty(int x, int y) {
