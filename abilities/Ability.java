@@ -74,6 +74,9 @@ public abstract class Ability {
 
 	public static final String ABILITY_CREATE_BUILDER = "Create Builder";
 	public static final String ABILITY_DESC_CREATE_BUILDER = "Creates new Builder at the end of the round";
+	
+	public static final String ABILITY_CREATE_ARCHER = "Create Archer";
+	public static final String ABILITY_DESC_CREATE_ARCHER = "Creates new Archer at the end of the round";
 
 	// Other Abilities
 	public static final String ABILITY_LEVEL_UP = "Level Up";

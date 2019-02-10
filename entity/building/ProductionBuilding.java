@@ -18,6 +18,7 @@ public class ProductionBuilding extends Building {
 		if(name.equals(Building.BARRACKS)) {
 			abilities.add(new CreateUnit(pointXY, Unit.UNIT_WARRIOR, Ability.ABILITY_CREATE_WARRIOR, Ability.ABILITY_DESC_CREATE_WARRIOR));
 			abilities.add(new CreateUnit(pointXY, Unit.UNIT_MAGE, Ability.ABILITY_CREATE_MAGE, Ability.ABILITY_DESC_CREATE_MAGE));
+			abilities.add(new CreateUnit(pointXY, Unit.UNIT_ARCHER, Ability.ABILITY_CREATE_ARCHER, Ability.ABILITY_DESC_CREATE_ARCHER));
 		}
 	}
 	

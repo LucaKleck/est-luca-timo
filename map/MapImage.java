@@ -243,12 +243,13 @@ public class MapImage {
 				if (s instanceof Warrior) {
 					g.drawImage(warriorImage, (int) (s.getPoint().x * mapTileSize) - 8,
 							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				}
-				if (s instanceof Mage) {
+				} else if (s instanceof Mage) {
 					g.drawImage(mageImage, (int) (s.getPoint().x * mapTileSize) - 8,
 							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				}
-				if (s instanceof Builder) {
+				} else if (s instanceof Builder) {
+					g.drawImage(builderImage, (int) (s.getPoint().x * mapTileSize) - 8,
+							(int) (s.getPoint().y * mapTileSize) - 8, null);
+				} else {
 					g.drawImage(builderImage, (int) (s.getPoint().x * mapTileSize) - 8,
 							(int) (s.getPoint().y * mapTileSize) - 8, null);
 				}

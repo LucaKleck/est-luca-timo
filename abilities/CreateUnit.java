@@ -6,6 +6,7 @@ import com.sun.javafx.geom.Point2D;
 
 import core.GameInfo;
 import entity.Entity;
+import entity.unit.Archer;
 import entity.unit.Builder;
 import entity.unit.Mage;
 import entity.unit.Unit;
@@ -25,14 +26,17 @@ public class CreateUnit extends Ability {
 
 	@Override
 	public void applyAbility(Entity source, Entity target) {
-		if(type.matches(Unit.UNIT_BUILDER)) {
+		if(type.equals(Unit.UNIT_BUILDER)) {
 			GameInfo.getObjectMap().getEntityMap().add(new Builder(pointXY, "Builder", 3, 1, true, new ArrayList<>()));
 		}
-		if(type.matches(Unit.UNIT_WARRIOR)) {
+		if(type.equals(Unit.UNIT_WARRIOR)) {
 			GameInfo.getObjectMap().getEntityMap().add(new Warrior(pointXY, "Warrior", 3, 1, true, new ArrayList<>()));
 		}
-		if(type.matches(Unit.UNIT_MAGE)) {
+		if(type.equals(Unit.UNIT_MAGE)) {
 			GameInfo.getObjectMap().getEntityMap().add(new Mage(pointXY, "Mage", 3, 1, true, new ArrayList<>()));
+		}
+		if(type.equals(Unit.UNIT_ARCHER)) {
+			GameInfo.getObjectMap().getEntityMap().add(new Archer(pointXY, "Archer", 3, 1, true, new ArrayList<>()));
 		}
 	}
 

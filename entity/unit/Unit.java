@@ -13,6 +13,7 @@ public class Unit extends Entity {
 	public static final String UNIT_MAGE = "Mage";
 	public static final String UNIT_BUILDER = "Builder";
 	public static final String UNIT_WARRIOR = "Warrior";
+	public static final String UNIT_ARCHER = "Archer";
 	
 	private int baseDamage;
 	private int movementRange;
