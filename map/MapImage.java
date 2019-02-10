@@ -21,8 +21,9 @@ import core.Core;
 import core.GameInfo;
 import entity.Entity;
 import entity.building.Building;
+import entity.building.DefenseBuilding;
 import entity.building.ProductionBuilding;
-import entity.building.RessourceBuilding;
+import entity.building.ResourceBuilding;
 import entity.unit.Builder;
 import entity.unit.Mage;
 import entity.unit.Unit;
@@ -102,6 +103,7 @@ public class MapImage {
 
 	// Buildings
 	private static BufferedImage buildingImage;
+	private static BufferedImage archerTowerImage;
 	private static BufferedImage townCenterImage;
 
 	// Units
@@ -168,6 +170,7 @@ public class MapImage {
 
 				// Buildings
 				buildingImage = ImageIO.read(Boot.class.getResource("/resources/building.png"));
+				archerTowerImage = ImageIO.read(Boot.class.getResource("/resources/archer_tower.png"));
 				townCenterImage = ImageIO.read(Boot.class.getResource("/resources/towncenter.png"));
 
 				// Units
@@ -250,7 +253,7 @@ public class MapImage {
 							(int) (s.getPoint().y * mapTileSize) - 8, null);
 				}
 			} else if (s instanceof Building) {
-				if (s instanceof RessourceBuilding) {
+				if (s instanceof ResourceBuilding) {
 					if (s.getName().matches(Building.WOOD_GETTER)) {
 						g.drawImage(buildingImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					} else {
@@ -262,6 +265,13 @@ public class MapImage {
 						g.drawImage(townCenterImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					} else {
 						g.drawImage(townCenterImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+					}
+				}
+				if (s instanceof DefenseBuilding) {
+					if (s.getName().matches(Building.ARCHER_TOWER)) {
+						g.drawImage(archerTowerImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+					} else {
+						g.drawImage(archerTowerImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					}
 				}
 			}

@@ -12,7 +12,6 @@ import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import abilities.Ability;
-import abilities.CollectResources;
 import abilities.CreateUnit;
 import abilities.LevelUp;
 import core.Core;
@@ -26,7 +25,8 @@ public class EntityPanel extends JScrollPane {
 
 	private Entity entity;
 	private JLabel lblNextEvent;
-	private String lblCostText = "Cost: ";
+	//Just in Development
+	private String lblCostText = "Cost: 30 Food";
 	private Font font = new Font("MS PGothic", Font.BOLD, 16);
 
 	public EntityPanel(Entity entity) {
@@ -60,6 +60,11 @@ public class EntityPanel extends JScrollPane {
 		if (entity.getLevel() == 3) {
 			btnLevelUp.setEnabled(false);
 			lblCostText = "Max Level Reached!";
+		} 
+		//Just in Development
+		else if (GameInfo.getPlayerStats().getPlayerResources().getFood() <= 30) {
+			btnLevelUp.setEnabled(false);
+			lblCostText = "Cost: 30 Food";
 		}
 		panel.add(btnLevelUp, "cell 0 3");
 
@@ -79,8 +84,6 @@ public class EntityPanel extends JScrollPane {
 		int index = 6;
 
 		for (Ability ability : entity.getAbilities()) {
-			if (!(ability instanceof CollectResources)) {
-
 				JButton jButton = new JButton(ability.getName());
 				jButton.setToolTipText(ability.getDescription());
 				jButton.addActionListener(new ActionListener() {
@@ -103,8 +106,10 @@ public class EntityPanel extends JScrollPane {
 						}
 					}
 				});
+				if(entity.getLevel() < ability.getAbilityMinimumLevel()) {
+					jButton.setEnabled(false);
+				}
 				panel.add(jButton, ("cell 0 " + index + ", grow"));
-			}
 			index++;
 		}
 

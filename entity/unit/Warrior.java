@@ -6,7 +6,7 @@ import com.sun.javafx.geom.Point2D;
 
 import abilities.Ability;
 import abilities.FireBall;
-import abilities.Melee;
+import abilities.MeleeAttack;
 
 public class Warrior extends Unit {
 
@@ -16,7 +16,7 @@ public class Warrior extends Unit {
 
 	public Warrior(Point2D pointXY, String name, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
 		super(pointXY, name, BASE_MAX_HEALTH, currentHealth, level, controlable, BASE_DAMAGE, MOVEMENT_RANGE, abilities);
-		abilities.add(new Melee());
+		abilities.add(new MeleeAttack());
 		abilities.add(new FireBall());
 	}
 

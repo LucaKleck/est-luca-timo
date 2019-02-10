@@ -28,7 +28,7 @@ import core.PlayerStats.PlayerResources;
 import entity.Entity;
 import entity.building.Building;
 import entity.building.ProductionBuilding;
-import entity.building.RessourceBuilding;
+import entity.building.ResourceBuilding;
 import entity.unit.Builder;
 import entity.unit.Mage;
 import entity.unit.Unit;
@@ -178,7 +178,7 @@ public class XMLSaveAndLoad {
 						e = new ProductionBuilding(p, name, maxHealth, currentHealth, level, controlable, new ArrayList<>());
 					}
 					if (type.matches("Lumberjack")) {
-						e = new RessourceBuilding(p, name, maxHealth, currentHealth, level, controlable, new ArrayList<>());
+						e = new ResourceBuilding(p, name, maxHealth, currentHealth, level, controlable, new ArrayList<>());
 					}
 				}
 				entityMap.add(e);

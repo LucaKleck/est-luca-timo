@@ -18,10 +18,20 @@ public class Builder extends Unit {
 	
 	public Builder(Point2D pointXY, String name, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
 		super(pointXY, name, BASE_MAX_HEALTH, currentHealth, level, controlable, BASE_DAMAGE, MOVEMENT_RANGE, abilities);
+		//Production Buildings
 		abilities.add(new Build(Building.BARRACKS, Ability.ABILITY_BUILD_BARRACKS, Ability.ABILITY_DESC_BUILD_BARRACKS, this));
 		abilities.add(new Build(Building.TOWN_CENTER, Ability.ABILITY_BUILD_TOWN_CENTER, Ability.ABILITY_DESC_BUILD_TOWN_CENTER, this));
-		abilities.add(new Build(Building.WOOD_GETTER, Ability.ABILITY_BUILD_LUMBERJACK, Ability.ABILITY_DESC_BUILD_LUMBERJACK, this));
-		abilities.add(new Build(Building.STONE_GETTER, Ability.ABILITY_BUILD_QUARRY, Ability.ABILITY_DESC_BUILD_QUARRY, this));
+		//Resource Buildings
+		abilities.add(new Build(Building.WOOD_GETTER, Ability.ABILITY_BUILD_WOOD_GETTER, Ability.ABILITY_DESC_BUILD_WOOD_GETTER, this));
+		abilities.add(new Build(Building.STONE_GETTER, Ability.ABILITY_BUILD_STONE_GETTER, Ability.ABILITY_DESC_BUILD_STONE_GETTER, this));
+		abilities.add(new Build(Building.FOOD_GETTER, Ability.ABILITY_BUILD_FOOD_GETTER, Ability.ABILITY_DESC_BUILD_FOOD_GETTER, this));
+		abilities.add(new Build(Building.METAL_GETTER, Ability.ABILITY_BUILD_METAL_GETTER, Ability.ABILITY_DESC_BUILD_METAL_GETTER, this));
+		abilities.add(new Build(Building.GOLD_GETTER, Ability.ABILITY_BUILD_GOLD_GETTER, Ability.ABILITY_DESC_BUILD_GOLD_GETTER, this));
+		abilities.add(new Build(Building.MANA_GETTER, Ability.ABILITY_BUILD_MANA_GETTER, Ability.ABILITY_DESC_BUILD_MANA_GETTER, this));
+		//Defense Buildings
+		abilities.add(new Build(Building.WALL, Ability.ABILITY_BUILD_WALL, Ability.ABILITY_DESC_BUILD_WALL, this));
+		abilities.add(new Build(Building.ARCHER_TOWER, Ability.ABILITY_BUILD_ARCHER_TOWER, Ability.ABILITY_DESC_BUILD_ARCHER_TOWER, this));
+		
 	}
 	
 	public void setBuildPoint(Point2D buildPoint) {

@@ -11,7 +11,7 @@ import entity.unit.Warrior;
 public class AbilityDevCreateEnemyUnit extends Ability {
 
 	public AbilityDevCreateEnemyUnit() {
-		super(Ability.ABILITY_DEV_CREATE_UNIT, Ability.ABILITY_DESC_DEV_CREATE_UNIT);
+		super(Ability.ABILITY_DEV_CREATE_UNIT, Ability.ABILITY_DESC_DEV_CREATE_UNIT, Ability.ABILITY_TYPE_PRODUCE);
 	}
 
 	@Override

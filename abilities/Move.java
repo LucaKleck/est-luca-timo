@@ -10,12 +10,12 @@ public class Move extends Ability {
 	private static final int DEFAULT_MAX_RANGE = 2;
 	
 	public Move() {
-		super(Ability.ABILITY_MOVE, Ability.ABILITY_DESC_MOVE);
+		super(Ability.ABILITY_MOVE, Ability.ABILITY_DESC_MOVE, Ability.ABILITY_TYPE_MOVEMENT);
 		super.maxRange = DEFAULT_MAX_RANGE;
 	}
 	
 	public Move(int maxRange) {
-		super(Ability.ABILITY_MOVE, Ability.ABILITY_DESC_MOVE);
+		super(Ability.ABILITY_MOVE, Ability.ABILITY_DESC_MOVE, Ability.ABILITY_TYPE_MOVEMENT);
 		super.maxRange = maxRange;
 	}
 

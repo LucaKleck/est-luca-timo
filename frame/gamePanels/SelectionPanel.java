@@ -34,14 +34,14 @@ import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import abilities.Ability;
 import abilities.FireBall;
-import abilities.Melee;
+import abilities.MeleeAttack;
+import abilities.RangedAttack;
 import core.Boot;
 import core.Core;
 import core.Event;
 import core.GameInfo;
 import effects.AbilityEffect;
 import entity.Entity;
-import entity.unit.Unit;
 import entity.unit.Warrior;
 import net.miginfocom.swing.MigLayout;
 
@@ -295,8 +295,8 @@ public class SelectionPanel extends JScrollPane {
 
 		public void paint(Graphics g) {
 			g.drawImage(elementBackground, 0, 0, getWidth(), getHeight(), null);
-//			g.setColor(Color.LIGHT_GRAY);
-//			g.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
+			// g.setColor(Color.LIGHT_GRAY);
+			// g.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
 			g.setColor(getControllableColor());
 			g.fillRoundRect(0, 0, 5, getHeight(), 10, 10);
 			g.setColor(getColorFromClass());
@@ -341,21 +341,26 @@ public class SelectionPanel extends JScrollPane {
 				if (GameInfo.getObjectMap().getSelected().getSelectionMode() == 3
 						|| GameInfo.getObjectMap().getSelected().getSelectionMode() == 5) {
 					Ability abl = GameInfo.getObjectMap().getSelected().getSelectedAbility();
-					if (abl instanceof Melee) {
+					if (abl instanceof MeleeAttack) {
 						GameInfo.getObjectMap().getSelected().getSelectedEntity()
 								.setEvent(new Event(GameInfo.getObjectMap().getSelected().getSelectedEntity(), entity,
 										abl,
-										new AbilityEffect(
-												(Unit) GameInfo.getObjectMap().getSelected().getSelectedEntity(),
-												(Unit) entity, abl)));
+										new AbilityEffect(GameInfo.getObjectMap().getSelected().getSelectedEntity(),
+												entity, abl)));
+					}
+					if (abl instanceof RangedAttack) {
+						GameInfo.getObjectMap().getSelected().getSelectedEntity()
+								.setEvent(new Event(GameInfo.getObjectMap().getSelected().getSelectedEntity(), entity,
+										abl,
+										new AbilityEffect(GameInfo.getObjectMap().getSelected().getSelectedEntity(),
+												entity, abl)));
 					}
 					if (abl instanceof FireBall) {
 						GameInfo.getObjectMap().getSelected().getSelectedEntity()
 								.setEvent(new Event(GameInfo.getObjectMap().getSelected().getSelectedEntity(), entity,
 										abl,
-										new AbilityEffect(
-												(Unit) GameInfo.getObjectMap().getSelected().getSelectedEntity(),
-												(Unit) entity, abl)));
+										new AbilityEffect(GameInfo.getObjectMap().getSelected().getSelectedEntity(),
+												entity, abl)));
 					}
 					GameInfo.getObjectMap().getSelected().removeSelected();
 					InteractionPanel.setCurrentPanel(null);

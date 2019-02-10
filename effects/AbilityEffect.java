@@ -7,9 +7,11 @@ import java.awt.Graphics2D;
 import abilities.Ability;
 import abilities.Build;
 import abilities.FireBall;
-import abilities.Melee;
+import abilities.MeleeAttack;
 import abilities.Move;
+import abilities.RangedAttack;
 import core.Core;
+import entity.Entity;
 import entity.unit.Builder;
 import entity.unit.Unit;
 import frame.gamePanels.MainGamePanel;
@@ -17,9 +19,9 @@ import map.MapImage;
 
 public class AbilityEffect extends MapImageEffect {
 
-	Color buildColor = new Color(139,69,19);
+	Color buildColor = new Color(139, 69, 19);
 	
-	public AbilityEffect(Unit source, Unit target, Ability ability) {
+	public AbilityEffect(Entity source, Entity target, Ability ability) {
 		super(source, target, ability);
 		MapImage mi = null;
 		if (Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
@@ -32,10 +34,10 @@ public class AbilityEffect extends MapImageEffect {
 				g.setStroke(new BasicStroke(3f));
 				g.drawLine((int) (source.getPoint().x * mi.getMapTileSize()),
 						(int) (source.getPoint().y * mi.getMapTileSize()),
-						(int) (source.getMove().getMoveToPoint().x * mi.getMapTileSize()),
-						(int) (source.getMove().getMoveToPoint().y * mi.getMapTileSize()));
+						(int) (((Unit)source).getMove().getMoveToPoint().x * mi.getMapTileSize()),
+						(int) (((Unit)source).getMove().getMoveToPoint().y * mi.getMapTileSize()));
 			} 
-			if (ability instanceof Melee) {
+			if (ability instanceof MeleeAttack) {
 				g.setColor(Color.BLACK);
 				g.setStroke(new BasicStroke(3f));
 				g.drawLine((int) (source.getPoint().x * mi.getMapTileSize()),
@@ -45,6 +47,14 @@ public class AbilityEffect extends MapImageEffect {
 			}
 			if (ability instanceof FireBall) {
 				g.setColor(Color.ORANGE);
+				g.setStroke(new BasicStroke(3f));
+				g.drawLine((int) (source.getPoint().x * mi.getMapTileSize()),
+						(int) (source.getPoint().y * mi.getMapTileSize()),
+						(int) (target.getPoint().x * mi.getMapTileSize()),
+						(int) (target.getPoint().y * mi.getMapTileSize()));
+			}
+			if (ability instanceof RangedAttack) {
+				g.setColor(Color.RED);
 				g.setStroke(new BasicStroke(3f));
 				g.drawLine((int) (source.getPoint().x * mi.getMapTileSize()),
 						(int) (source.getPoint().y * mi.getMapTileSize()),
