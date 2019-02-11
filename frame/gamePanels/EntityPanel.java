@@ -1,5 +1,6 @@
 package frame.gamePanels;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import core.Core;
 import core.Event;
 import core.GameInfo;
 import entity.Entity;
+import frame.MainJFrame;
 import net.miginfocom.swing.MigLayout;
 
 public class EntityPanel extends JScrollPane {
@@ -29,6 +31,7 @@ public class EntityPanel extends JScrollPane {
 	//Just in Development
 	private String lblCostText = "Cost: 30 Food";
 	private Font font = new Font("MS PGothic", Font.BOLD, 16);
+	private String cssYellow = MainJFrame.makeCssStyle("color: #F0F900;");
 
 	public EntityPanel(Entity entity) {
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -42,32 +45,34 @@ public class EntityPanel extends JScrollPane {
 		panel.setLayout(new MigLayout("", "[][][][][][][]", "[][][][][][][][][][][][]"));
 		panel.setFont(font);
 
-		JLabel lblEntityName = new JLabel("Name: " + entity.getName());
+		JLabel lblEntityName = new JLabel(cssYellow+"Name: " + entity.getName());
 		panel.add(lblEntityName, "cell 0 0");
 
-		JLabel lblLevel = new JLabel("Level: " + this.entity.getLevel());
+		JLabel lblLevel = new JLabel(cssYellow+"Level: " + this.entity.getLevel());
 		panel.add(lblLevel, "cell 0 1");
 
-		JButton btnLevelUp = new JButton("Level Up");
+		setForeground(Color.yellow);
+		panel.setForeground(Color.yellow);
+		JButton btnLevelUp = new JButton(cssYellow+"Level Up");
 		btnLevelUp.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 
 				entity.setEvent(new Event(entity, entity, new LevelUp(), null));
-				lblNextEvent.setText("Event: " + "Level Up");
+				lblNextEvent.setText(cssYellow+"Event: " + "Level Up");
 
 			}
 
 		});
 		if (entity.getLevel() == 3) {
 			btnLevelUp.setEnabled(false);
-			lblCostText = "Max Level Reached!";
+			lblCostText = cssYellow+"Max Level Reached!";
 		} 
 		//Just in Development
 		else if (GameInfo.getPlayerStats().getPlayerResources().getFood() <= 30) {
 			btnLevelUp.setEnabled(false);
-			lblCostText = "Cost: 30 Food";
+			lblCostText = cssYellow+"Cost: 30 Food";
 		}
 		panel.add(btnLevelUp, "cell 0 3");
 
@@ -75,25 +80,25 @@ public class EntityPanel extends JScrollPane {
 		panel.add(lblCost, "cell 0 3");
 
 		if (this.entity.getEvent() != null) {
-			lblNextEvent = new JLabel("Event: " + this.entity.getEvent().getAbility().getName());
+			lblNextEvent = new JLabel(cssYellow+"Event: " + this.entity.getEvent().getAbility().getName());
 		} else {
-			lblNextEvent = new JLabel("Event: " + "No Event");
+			lblNextEvent = new JLabel(cssYellow+"Event: " + "No Event");
 		}
 		panel.add(lblNextEvent, "cell 0 4");
 
-		JLabel lblAbilities = new JLabel("Abilities: ");
+		JLabel lblAbilities = new JLabel(cssYellow+"Abilities: ");
 		panel.add(lblAbilities, "cell 0 5");
 
 		int index = 6;
 
 		for (Ability ability : entity.getAbilities()) {
-				JButton jButton = new JButton(ability.getName());
+				JButton jButton = new JButton(cssYellow+ability.getName());
 				jButton.setToolTipText(ability.getDescription());
 				jButton.addActionListener(new ActionListener() {
 
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						lblNextEvent.setText("Event: " + ability.getName());
+						lblNextEvent.setText(cssYellow+"Event: " + ability.getName());
 						if (ability.maxRange > 0) {
 							((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
 									.drawAbilityLayer(ability.maxRange,
@@ -125,9 +130,9 @@ public class EntityPanel extends JScrollPane {
 
 	public void updateEventText(String eventText) {
 		if (eventText != null) {
-			lblNextEvent.setText("Event: " + eventText);
+			lblNextEvent.setText(cssYellow+"Event: " + eventText);
 		} else {
-			lblNextEvent.setText("Event: " + "No Event");
+			lblNextEvent.setText(cssYellow+"Event: " + "No Event");
 		}
 		InteractionPanel.getCurrentPanel().repaint();
 		InteractionPanel.getCurrentPanel().revalidate();

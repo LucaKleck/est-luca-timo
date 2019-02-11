@@ -41,11 +41,13 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 			if(b instanceof Building) {
 				for(Ability ab : b.getAbilities()) {
 					if(ab instanceof CollectResources) {
+						if(GameInfo.getRoundInfo().getNewBuildings().contains(b)) break;
 						if(b.getEvent() == null) b.setEvent(new Event(b, b, ab, null));
 					}
 				}
 			}
 		}
+		GameInfo.getRoundInfo().getNewBuildings().clear();
 		goThroughEventList();
 		
 		System.out.println("Round x end");
