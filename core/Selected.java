@@ -39,7 +39,6 @@ public class Selected {
 	 * selectionMode = 4 = mapTile and building are selected<br>
 	 * selectionMode = 5 = mapTile, building and ability are selected<br>
 	 * selectionMode = 10 = illegal state<br>
-	 * selectionMode = 69 = ability and map tile (dev mode stuff);<br>
 	 */
 	private int selectionMode = 0;
 	private MapTile selectedMapTile = null;
@@ -142,13 +141,6 @@ public class Selected {
 						InteractionPanel.setCurrentPanel(null);
 					}
 					break;
-				// dev mode
-				case 69:
-					selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
-					selectedAbility.applyAbility(null, null);
-					setSelectedAbility(null);
-					InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
-					break;
 				default: // == 10 (reset everything)
 					removeSelected();
 					break;
@@ -180,8 +172,6 @@ public class Selected {
 	 * 1 1 0 1 3<br>
 	 * 1 0 1 0 4<br>
 	 * 1 0 1 1 5<br>
-	 * 1 0 0 1 69<br>
-	 * 0 0 0 1 69<br>
 	 * Other states will result in selectionMode = 10 <br>
 	 * 
 	 * @author Luca Kleck
@@ -211,13 +201,8 @@ public class Selected {
 					return;
 				}
 			}
-			if (selectedAbility != null) {
-				selectionMode = 69;
-			}
 		} else if (selectedAbility == null && selectedEntity == null) {
 			selectionMode = 0;
-		} else if (selectedAbility != null && selectedEntity == null) {
-			selectionMode = 69;
 		} else {
 			selectionMode = 10;
 		}

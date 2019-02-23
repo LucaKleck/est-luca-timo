@@ -18,8 +18,6 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
-import abilities.AbilityDevCreateBuilding;
-import abilities.AbilityDevCreateEnemyUnit;
 import core.ControlInput;
 import core.Core;
 import core.FullscreenActionListener;
@@ -36,7 +34,6 @@ public class GameMenuPanel extends JPanel {
 	private JMenu mnOptions;
 	private JMenuItem mntmExitGame;
 	private JMenuItem mntmExitToMain;
-	private JMenuItem mntmGenerateEnemyUnit;
 	private JMenuItem mntmRemakeMap;
 	private JMenuItem mntmSave;
 	private JMenuItem mntmSendLogLine;
@@ -114,26 +111,6 @@ public class GameMenuPanel extends JPanel {
 		mntmSendLogLine
 				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mnDev.add(mntmSendLogLine);
-		
-		mntmGenerateEnemyUnit = new JMenuItem("generate enemy warrior ability");
-		mntmGenerateEnemyUnit.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_V, InputEvent.CTRL_MASK));
-		mntmGenerateEnemyUnit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		mntmGenerateEnemyUnit.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				GameInfo.getObjectMap().getSelected().removeSelected();
-				GameInfo.getObjectMap().getSelected().setSelectedAbility(new AbilityDevCreateEnemyUnit());
-			}
-		});
-		mnDev.add(mntmGenerateEnemyUnit);
-		
-		JMenuItem mntmGenerateDefaultBuilding = new JMenuItem("generate default building ability");
-		mntmGenerateDefaultBuilding.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		mntmGenerateDefaultBuilding.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				GameInfo.getObjectMap().getSelected().setSelectedAbility(new AbilityDevCreateBuilding());
-			}
-		});
-		mnDev.add(mntmGenerateDefaultBuilding);
 		
 		mntmSave.addActionListener(new ActionListener() {
 
