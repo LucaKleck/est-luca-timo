@@ -41,6 +41,7 @@ public class MapCreator {
 //		letTimePass(map); // this makes the map more varied.. make GoL here
 		smashContinentalPlatesTogether(map); // this creates Mountains, not sure how to do it yet
 		floodTheLand(map); // this puts in all the bodies of water etc.
+		buildRoads(map);
 		
 		return map;
 	}
@@ -106,6 +107,42 @@ public class MapCreator {
 			}
 		}
 	}
+	
+	/**
+	 * This will put in roads
+	 * @param map - 2D array of @see {@link MapTile}
+	 */
+	private static void buildRoads(MapTile[][] map) {
+		map[3][3].setRoad(true);
+		map[4][4].setRoad(true);
+		Random r = new Random();
+
+		int column = 5;
+		int row = 5;
+
+		for(int index  = 3; index < 44; index++) {
+
+			map[row][column].setRoad(true);
+			row++;
+			column++;
+
+		}
+
+		column = 3;
+		row = 4;
+
+		for(int index  = 3; index < 45; index++) {
+
+			if(r.nextBoolean()) {
+				map[row][column].setRoad(true);
+			} else {
+				map[row-1][column+1].setRoad(true);
+			}
+			row++;
+			column++;
+		}
+	}
+	
 	private static boolean inBounds(MapTile[][] map, int x, int y) {
 		boolean isInBounds = false;
 		if(x >= 0 && y >= 0) {

@@ -101,6 +101,16 @@ public class MapImage {
 	private static BufferedImage riverH;
 	private static BufferedImage riverV;
 
+	//Road
+	private static BufferedImage roadH;
+	private static BufferedImage roadV;
+	
+	private static BufferedImage roadTopLeft;
+	private static BufferedImage roadTopRight;
+	private static BufferedImage roadBottomLeft;
+	private static BufferedImage roadBottomRight;
+	
+	
 	// Buildings
 	private static BufferedImage buildingImage;
 	private static BufferedImage archerTowerImage;
@@ -168,6 +178,16 @@ public class MapImage {
 				riverH = ImageIO.read(Boot.class.getResource("/resources/riverH.png"));
 				riverV = ImageIO.read(Boot.class.getResource("/resources/riverV.png"));
 
+				//Road
+				
+				roadH = ImageIO.read(Boot.class.getResource("/resources/roadH.png"));
+				roadV = ImageIO.read(Boot.class.getResource("/resources/roadV.png"));
+				
+				roadTopLeft = ImageIO.read(Boot.class.getResource("/resources/roadTopLeft.png"));
+				roadTopRight = ImageIO.read(Boot.class.getResource("/resources/roadTopRight.png"));
+				roadBottomLeft = ImageIO.read(Boot.class.getResource("/resources/roadBottomLeft.png"));
+				roadBottomRight = ImageIO.read(Boot.class.getResource("/resources/roadBottomRight.png"));
+				
 				// Buildings
 				buildingImage = ImageIO.read(Boot.class.getResource("/resources/building.png"));
 				archerTowerImage = ImageIO.read(Boot.class.getResource("/resources/archer_tower.png"));
@@ -207,7 +227,8 @@ public class MapImage {
 		for (int x = 0; x < GameInfo.getObjectMap().getMap().length; x++) {
 			for (int y = 0; y < GameInfo.getObjectMap().getMap()[0].length; y++) {
 				if (GameInfo.getObjectMap().getMap()[x][y].isRoad()) {
-					g.fillRect(x * mapTileSize, y * mapTileSize + 27, mapTileSize, 10);
+					g.drawImage(getRoadImageForTile(x, y), x * mapTileSize, y * mapTileSize, mapTileSize,
+							mapTileSize, null);
 				}
 			}
 		}
@@ -405,6 +426,30 @@ public class MapImage {
 					GameInfo.getObjectMap().getSelected().getSelectedEntity().getYPos() * mapTileSize, mapTileSize,
 					mapTileSize);
 		}
+	}
+	
+	private BufferedImage getRoadImageForTile(int x, int y) {
+		boolean top = checkRoad(x, y, TOP);
+		boolean right = checkRoad(x, y, RIGHT);
+		boolean bottom = checkRoad(x, y, BOTTOM);
+		boolean left = checkRoad(x, y, LEFT);
+
+		if(left && top) {
+			return roadBottomRight;	
+		} else if(left && bottom) {
+			return roadTopRight;
+		} else if(top && right) {
+			return roadBottomLeft;
+		} else if(bottom && right) {
+			return roadTopLeft;
+		} else if(top || bottom) {
+			return roadV;
+		} else if(left || right) {
+			return roadH;
+		} else {
+			return roadH;
+		}
+		
 	}
 
 	private BufferedImage getImageForTile(int x, int y) {
@@ -650,15 +695,24 @@ public class MapImage {
 	}
 
 	private boolean checkTile(int x, int y, int type, int[] pos) {
-		boolean flag = false;
 		try {
 			if (GameInfo.getObjectMap().getMap()[(x + pos[0])][y + pos[1]].getType() == type) {
-				flag = true;
+				return true;
 			}
 		} catch (IndexOutOfBoundsException iex) {
-			flag = true;
+			return true;
 		}
-		return flag;
+		return false;
+	}
+	
+	private boolean checkRoad(int x, int y, int[] pos) {
+		try {
+			if (GameInfo.getObjectMap().getMap()[(x + pos[0])][y + pos[1]].isRoad()) {
+				return true;
+			}
+		} catch (IndexOutOfBoundsException iex) {
+		}
+		return false;
 	}
 
 	public void redrawArea(int xStart, int xEnd, int yStart, int yEnd) {

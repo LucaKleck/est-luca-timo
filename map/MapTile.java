@@ -77,6 +77,10 @@ public class MapTile {
 		return isRoad;
 	}
 	
+	public void setRoad(boolean isRoad) {
+		this.isRoad = isRoad;
+	}
+	
 	public Point getXYPoint() {
 		return new Point(xPos,yPos);
 	}
