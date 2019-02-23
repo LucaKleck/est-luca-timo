@@ -12,13 +12,11 @@ public class MapTile {
 	public static final int TYPE_FOREST = 1;
 	public static final int TYPE_MOUNTAIN = 2;
 	public static final int TYPE_LIQUID = 3;
-	public static final int TYPE_ROAD = 4;
 	
 	public static final String NAME_PLAIN = "Plain";
 	public static final String NAME_FOREST = "Forest";
 	public static final String NAME_MOUNTAIN = "Mountain";
 	public static final String NAME_RIVER = "River";
-	public static final String NAME_ROAD = "Road";
 	
 	private int type;
 	private boolean isRoad;

@@ -54,13 +54,6 @@ public class MapTileResources {
 		} else if (type == 3) {
 			manaStone = 70;
 			food = 70;
-		} else if(type == 4) {
-			gold = 0;
-			food = 0;
-			metal = 0;
-			stone = 0;
-			manaStone = 0;
-			wood = 0;
 		}
 	}
 	public MapTileResources(int gold,int food, int wood, int stone, int metal, int manaStone) {

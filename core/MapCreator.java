@@ -3,7 +3,6 @@ package core;
 import java.util.Random;
 
 import map.MapTile;
-import map.MapTileResources;
 
 /**
  * MapCreator.java - Contains all the methods used to create a new map
@@ -42,7 +41,6 @@ public class MapCreator {
 //		letTimePass(map); // this makes the map more varied.. make GoL here
 		smashContinentalPlatesTogether(map); // this creates Mountains, not sure how to do it yet
 		floodTheLand(map); // this puts in all the bodies of water etc.
-		buildRoads(map);
 		
 		return map;
 	}
@@ -62,39 +60,6 @@ public class MapCreator {
 				}
 			}
 		}
-	}
-	
-	private static void buildRoads(MapTile[][] map) {
-		
-		map[3][3] = new MapTile(4, 4, MapTile.TYPE_ROAD, MapTile.NAME_ROAD, new MapTileResources(4), true);
-		map[4][4] = new MapTile(4, 4, MapTile.TYPE_ROAD, MapTile.NAME_ROAD, new MapTileResources(4), true);
-		Random r = new Random();
-		
-		int column = 5;
-		int row = 5;
-		
-		for(int index  = 3; index < 44; index++) {
-
-			map[row][column] = new MapTile((row), (column), MapTile.TYPE_ROAD, MapTile.NAME_ROAD, new MapTileResources(4), true);
-			row++;
-			column++;
-			
-		}
-		
-		column = 3;
-		row = 4;
-		
-		for(int index  = 3; index < 45; index++) {
-			
-			if(r.nextBoolean()) {
-				map[row][column] = new MapTile((row), (column), MapTile.TYPE_ROAD, MapTile.NAME_ROAD, new MapTileResources(4), true);
-			} else {
-				map[row-1][column+1] = new MapTile((row), (column), MapTile.TYPE_ROAD, MapTile.NAME_ROAD, new MapTileResources(4), true);
-			}
-			row++;
-			column++;
-		}
-		
 	}
 	/**
 	 * This will put in rivers and other bodies of water
