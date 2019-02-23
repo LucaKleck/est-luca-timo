@@ -38,7 +38,7 @@ public class MapTileInfoPanel extends JPanel {
 		JLabel lblWoodPercent = new ChangedJLable(cssSmall+"Wood Percent: "+m.getMapTileResources().getWoodPercent());
 		add(lblWoodPercent, "cell 0 3");
 		
-		JLabel lblStonePercent = new ChangedJLable(cssSmall+"Stone Percent: "+m.getMapTileResources().getManaStonePercent());
+		JLabel lblStonePercent = new ChangedJLable(cssSmall+"Stone Percent: "+m.getMapTileResources().getStonePercent());
 		add(lblStonePercent, "cell 0 4");
 		
 		JLabel lblMetalPercent = new ChangedJLable(cssSmall+"Metal Percent: "+m.getMapTileResources().getMetalPercent());

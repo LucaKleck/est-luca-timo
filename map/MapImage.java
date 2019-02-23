@@ -101,6 +101,15 @@ public class MapImage {
 	private static BufferedImage riverH;
 	private static BufferedImage riverV;
 
+	//Road
+	private static BufferedImage roadH;
+	private static BufferedImage roadV;
+	
+	private static BufferedImage roadBottomLeft;
+	private static BufferedImage roadBottomRight;
+	private static BufferedImage roadTopLeft;
+	private static BufferedImage roadTopRight;
+	
 	// Buildings
 	private static BufferedImage buildingImage;
 	private static BufferedImage archerTowerImage;
@@ -168,6 +177,15 @@ public class MapImage {
 				riverH = ImageIO.read(Boot.class.getResource("/resources/riverH.png"));
 				riverV = ImageIO.read(Boot.class.getResource("/resources/riverV.png"));
 
+				//Road
+				roadH = ImageIO.read(Boot.class.getResource("/resources/roadH.png"));
+				roadV = ImageIO.read(Boot.class.getResource("/resources/roadV.png"));
+				
+				roadBottomLeft = ImageIO.read(Boot.class.getResource("/resources/roadBottomLeft.png"));
+				roadBottomRight = ImageIO.read(Boot.class.getResource("/resources/roadBottomRight.png"));
+				roadTopLeft = ImageIO.read(Boot.class.getResource("/resources/roadTopLeft.png"));
+				roadTopRight = ImageIO.read(Boot.class.getResource("/resources/roadTopRight.png"));
+				
 				// Buildings
 				buildingImage = ImageIO.read(Boot.class.getResource("/resources/building.png"));
 				archerTowerImage = ImageIO.read(Boot.class.getResource("/resources/archer_tower.png"));
@@ -189,7 +207,6 @@ public class MapImage {
 		mapTileLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
 		decalLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
 		drawMapTileLayer();
-		drawDecalLayer();
 
 		unitBuildingLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
 		effectLayer = new BufferedImage(imageWidth, imageHeight, IMAGE_TYPE);
@@ -200,17 +217,6 @@ public class MapImage {
 
 		redrawMapImageService.execute(new GraphicsTask(this));
 
-	}
-
-	private void drawDecalLayer() {
-		Graphics2D g = getDecalLayer().createGraphics();
-		for (int x = 0; x < GameInfo.getObjectMap().getMap().length; x++) {
-			for (int y = 0; y < GameInfo.getObjectMap().getMap()[0].length; y++) {
-				if (GameInfo.getObjectMap().getMap()[x][y].isRoad()) {
-					g.fillRect(x * mapTileSize, y * mapTileSize + 27, mapTileSize, 10);
-				}
-			}
-		}
 	}
 
 	private void drawMapTileLayer() {
@@ -644,7 +650,35 @@ public class MapImage {
 				return riverImage;
 			}
 			return riverImage;
-		} else {
+		} else if (mapTile.getName().matches(MapTile.NAME_ROAD)) {
+			if(left && right) {
+				return roadH;
+			}
+			if(top && bottom) {
+				return roadV;
+			}
+			
+			if(top && left) {
+				return roadBottomRight;
+			}
+			if(top && right) {
+				return roadBottomLeft;
+			}
+			if(bottom && right) {
+				return roadTopLeft;
+			}
+			if(bottom && left) {
+				return roadTopRight;
+			}
+			if(top || bottom) {
+				return roadV;
+			}
+			if(right || left) {
+				return roadH;
+			}
+			return roadH;
+		}
+		else {
 			return plainImage;
 		}
 	}
@@ -762,14 +796,6 @@ public class MapImage {
 			while (run) {
 				if (updateFlag) {
 					ExecutorService drawWorkers = Executors.newCachedThreadPool();
-					Future<String> decalDrawing = drawWorkers.submit(new Callable<String>() {
-
-						@Override
-						public String call() throws Exception {
-							drawDecalLayer();
-							return null;
-						}
-					});
 
 					Future<String> selectionDrawing = drawWorkers.submit(new Callable<String>() {
 
@@ -797,9 +823,6 @@ public class MapImage {
 							return null;
 						}
 					});
-
-					while (!decalDrawing.isDone())
-						;
 					while (!selectionDrawing.isDone())
 						;
 					while (!unitBuildingDrawing.isDone())
