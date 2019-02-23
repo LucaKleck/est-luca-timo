@@ -1,5 +1,6 @@
 package abilities;
 
+import core.GameInfo;
 import entity.Entity;
 
 public abstract class Ability {
@@ -114,6 +115,13 @@ public abstract class Ability {
 	public boolean rangeCheck(int unitX, int unitY, int mapTileX, int mapTileY) {
 		if (mapTileX == unitX && mapTileY == unitY) {
 			return false;
+		}
+		for(Entity entity: GameInfo.getObjectMap().getEntityMap()) {
+			if(entity.isControlable() == false) {
+				if(entity.getXPos() == mapTileX && entity.getYPos() == mapTileY) {
+					return false;
+				}
+			}
 		}
 		if (mapTileX >= unitX - maxRange && mapTileX <= unitX + maxRange && mapTileY >= unitY - maxRange
 				&& mapTileY <= unitY + maxRange) {

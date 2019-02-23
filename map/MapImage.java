@@ -24,6 +24,7 @@ import entity.building.Building;
 import entity.building.DefenseBuilding;
 import entity.building.ProductionBuilding;
 import entity.building.ResourceBuilding;
+import entity.unit.Archer;
 import entity.unit.Builder;
 import entity.unit.Mage;
 import entity.unit.Unit;
@@ -122,6 +123,7 @@ public class MapImage {
 	private static BufferedImage warriorImage;
 	private static BufferedImage mageImage;
 	private static BufferedImage builderImage;
+	private static BufferedImage archerImage;
 
 	private BufferedImage combinedImage;
 
@@ -201,6 +203,7 @@ public class MapImage {
 				warriorImage = ImageIO.read(Boot.class.getResource("/resources/warrior.png"));
 				mageImage = ImageIO.read(Boot.class.getResource("/resources/mage.png"));
 				builderImage = ImageIO.read(Boot.class.getResource("/resources/builder.png"));
+				archerImage = ImageIO.read(Boot.class.getResource("/resources/archer.png"));
 
 			} catch (IOException e) {
 			}
@@ -274,7 +277,11 @@ public class MapImage {
 				} else if (s instanceof Builder) {
 					g.drawImage(builderImage, (int) (s.getPoint().x * mapTileSize) - 8,
 							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				} else {
+				} else if (s instanceof Archer) {
+					g.drawImage(archerImage, (int) (s.getPoint().x * mapTileSize) - 8,
+							(int) (s.getPoint().y * mapTileSize) - 8, null);
+				}
+				else {
 					g.drawImage(builderImage, (int) (s.getPoint().x * mapTileSize) - 8,
 							(int) (s.getPoint().y * mapTileSize) - 8, null);
 				}
@@ -331,74 +338,23 @@ public class MapImage {
 		g.setComposite(AlphaComposite.SrcOver);
 		g.setColor(new Color(255, 255, 0, 120));
 
-		boolean[][] rangeArray = new boolean[totalRange][totalRange];
+		boolean[][] rangeField = new boolean[totalRange][totalRange];
 
 		for (Entity entity : GameInfo.getObjectMap().getEntityMap()) {
 			if (entity instanceof DefenseBuilding && entity.isControlable() == false) {
 				if (entity.getXPos() <= (x + range) && entity.getXPos() >= (x - range)
 						&& entity.getYPos() <= (y + range) && entity.getYPos() >= (y - range)) {
 
-					rangeArray[entity.getYPos() - (y - range)][entity.getXPos() - (x - range)] = true;
+					rangeField[entity.getYPos() - (y - range)][entity.getXPos() - (x - range)] = true;
 
 				}
 			}
-		}
-		/* Work in progress
-		for (int i = 0; i < 4; i++) {
-			int selectedCase = 0;
-			switch (i) {
-			case 0:
-				selectedCase = 0;
-				break;
-			case 1:
-				selectedCase = 1;
-				break;
-			case 2:
-				selectedCase = 2;
-				break;
-			case 3:
-				selectedCase = 3;
-				break;
-			}
-
-			for (int j = 0; j < 3; j++) {
-
-				if (selectedCase == 0) {
-					if(rangeArray[range][range + j] == true) {
-						for(int c = 0; c < range - 1; c++) {
-							rangeArray[range - c][range + j] = true;
-						}
-					}
-				}
-				if (selectedCase == 1) {
-					if(rangeArray[range][range - j] == true) {
-						for(int c = 0; c < range - 1; c++) {
-							rangeArray[range - c][range - j] = true;
-						}
-					}
-				}
-				if (selectedCase == 2) {
-					if(rangeArray[range + j][range] == true) {
-						for(int c = 0; c < range - 1; c++) {
-							rangeArray[range  + j][range - c] = true;
-						}
-					}
-				}
-				if (selectedCase == 3) {
-					if(rangeArray[range - j][range] == true) {
-						for(int c = 0; c < range - 1; c++) {
-							rangeArray[range - j][range + c] = true;
-						}
-					}
-				}	
-
-			}
-		}
-		*/
+		}		
+		
 		for (int row = 0; row < totalRange; row++) {
 			for (int col = 0; col < totalRange; col++) {
 				if (!((x - range + col) == x && (y - range + row) == y)) {
-					if (!(rangeArray[row][col])) {
+					if (!(rangeField[row][col])) {
 						g.fillRect((x - range + col) * mapTileSize, (y - range + row) * mapTileSize, mapTileSize,
 								mapTileSize);
 					}

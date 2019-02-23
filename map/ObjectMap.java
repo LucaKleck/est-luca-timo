@@ -30,6 +30,10 @@ public class ObjectMap {
 		map = MapCreator.createMap();
 		selected = new Selected();
 		entityMap = new ArrayList<>();
+		setInitalState();
+	}
+	
+	private void setInitalState() {
 		entityMap.add(new ProductionBuilding(new Point2D(3, 3), ProductionBuilding.TOWN_CENTER, 15, 15, 1, true, new ArrayList<>()));
 		entityMap.add(new ProductionBuilding(new Point2D(45, 45), ProductionBuilding.TOWN_CENTER, 15, 15, 1, false, new ArrayList<>()));
 		entityMap.add(new DefenseBuilding(new Point2D(7, 3), Building.WALL, 15, 15, 1, false, new ArrayList<>()));
