@@ -20,6 +20,7 @@ public abstract class Building extends Entity {
 	//Production Buildings	
 	public static final String TOWN_CENTER = "Town Center";
 	public static final String BARRACKS = "Barracks";
+	public static final String SIEGE_WORKSHOP = "Siege-Workshop";
 	//Defense Buildings
 	public static final String WALL = "Wall";
 	public static final String ARCHER_TOWER = "Archer Tower";

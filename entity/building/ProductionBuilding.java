@@ -20,6 +20,9 @@ public class ProductionBuilding extends Building {
 			abilities.add(new CreateUnit(pointXY, Unit.UNIT_MAGE, Ability.ABILITY_CREATE_MAGE, Ability.ABILITY_DESC_CREATE_MAGE));
 			abilities.add(new CreateUnit(pointXY, Unit.UNIT_ARCHER, Ability.ABILITY_CREATE_ARCHER, Ability.ABILITY_DESC_CREATE_ARCHER));
 		}
+		if(name.equals(Building.SIEGE_WORKSHOP)) {
+			abilities.add(new CreateUnit(pointXY, Unit.UNIT_TREBUCHET, Ability.ABILITY_CREATE_TREBUCHET, Ability.ABILITY_DESC_CREATE_TREBUCHET));
+		}
 	}
 	
 }

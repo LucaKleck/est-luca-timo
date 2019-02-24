@@ -2,6 +2,7 @@ package abilities;
 
 import core.GameInfo;
 import entity.Entity;
+import entity.building.DefenseBuilding;
 
 public abstract class Ability {
 	// DAMAGE will be searched and replaced by the actual damage the unit will deal
@@ -24,6 +25,9 @@ public abstract class Ability {
 
 	public static final String ABILITY_RANGED_ATTACK = "Ranged";
 	public static final String ABILITY_DESC_RANGED_ATTACK = "Fires an arrow on target for DAMAGE damage";
+	
+	public static final String ABILITY_SIEGE_ATTACK = "Siege";
+	public static final String ABILITY_DESC_SIEGE_ATTACK = "Deals extra damage to Buildings for DAMAGE damage";
 
 	public static final String ABILITY_MOVE = "Move";
 	public static final String ABILITY_DESC_MOVE = "Moves to targeted spot";
@@ -53,6 +57,9 @@ public abstract class Ability {
 
 	public static final String ABILITY_BUILD_BARRACKS = "Build Barracks";
 	public static final String ABILITY_DESC_BUILD_BARRACKS = "Builds barracks at targeted spot";
+	
+	public static final String ABILITY_BUILD_SIEGE_WORKSHOP = "Build Siege-Workshop";
+	public static final String ABILITY_DESC_BUILD_SIEGE_WORKSHOP = "Builds siege-workshop at targeted spot";
 	// Defense Buildings
 	public static final String ABILITY_BUILD_WALL = "Build Wall";
 	public static final String ABILITY_DESC_BUILD_WALL = "Builds a wall at targeted spot";
@@ -78,6 +85,9 @@ public abstract class Ability {
 	
 	public static final String ABILITY_CREATE_ARCHER = "Create Archer";
 	public static final String ABILITY_DESC_CREATE_ARCHER = "Creates new Archer at the end of the round";
+	
+	public static final String ABILITY_CREATE_TREBUCHET = "Create Trebuchet";
+	public static final String ABILITY_DESC_CREATE_TREBUCHET = "Creates new Trebuchet at the end of the round";
 
 	// Other Abilities
 	public static final String ABILITY_LEVEL_UP = "Level Up";
@@ -117,9 +127,11 @@ public abstract class Ability {
 			return false;
 		}
 		for(Entity entity: GameInfo.getObjectMap().getEntityMap()) {
-			if(entity.isControlable() == false) {
-				if(entity.getXPos() == mapTileX && entity.getYPos() == mapTileY) {
-					return false;
+			if(this.type.equals(ABILITY_TYPE_DAMAGE) == false) {
+				if(entity.isControlable() == false && entity instanceof DefenseBuilding) {
+					if(entity.getXPos() == mapTileX && entity.getYPos() == mapTileY) {
+						return false;
+					}
 				}
 			}
 		}
@@ -144,6 +156,8 @@ public abstract class Ability {
 		case Ability.ABILITY_BUILD_TOWN_CENTER:
 			return 2;
 		case Ability.ABILITY_BUILD_BARRACKS:
+			return 2;
+		case Ability.ABILITY_BUILD_SIEGE_WORKSHOP:
 			return 2;
 		default:
 			return 1;

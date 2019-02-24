@@ -10,6 +10,7 @@ import abilities.FireBall;
 import abilities.MeleeAttack;
 import abilities.Move;
 import abilities.RangedAttack;
+import abilities.SiegeAttack;
 import core.Core;
 import entity.Entity;
 import entity.unit.Builder;
@@ -68,6 +69,14 @@ public class AbilityEffect extends MapImageEffect {
 						(int) (((Builder)source).getPoint().y * mi.getMapTileSize()),
 						(int) (((Builder)source).getBuildPoint().x * mi.getMapTileSize()),
 						(int) (((Builder)source).getBuildPoint().y * mi.getMapTileSize()));
+			}
+			if (ability instanceof SiegeAttack) {
+				g.setColor(Color.YELLOW);
+				g.setStroke(new BasicStroke(3f));
+				g.drawLine((int) (source.getPoint().x * mi.getMapTileSize()),
+						(int) (source.getPoint().y * mi.getMapTileSize()),
+						(int) (target.getPoint().x * mi.getMapTileSize()),
+						(int) (target.getPoint().y * mi.getMapTileSize()));
 			}
 		}
 	}

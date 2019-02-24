@@ -30,9 +30,6 @@ import javax.swing.plaf.basic.BasicArrowButton;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import abilities.Ability;
-import abilities.FireBall;
-import abilities.MeleeAttack;
-import abilities.RangedAttack;
 import core.Core;
 import core.Event;
 import core.GameInfo;
@@ -323,21 +320,7 @@ public class SelectionPanel extends JScrollPane {
 				if (GameInfo.getObjectMap().getSelected().getSelectionMode() == 3
 						|| GameInfo.getObjectMap().getSelected().getSelectionMode() == 5) {
 					Ability abl = GameInfo.getObjectMap().getSelected().getSelectedAbility();
-					if (abl instanceof MeleeAttack) {
-						GameInfo.getObjectMap().getSelected().getSelectedEntity()
-								.setEvent(new Event(GameInfo.getObjectMap().getSelected().getSelectedEntity(), entity,
-										abl,
-										new AbilityEffect(GameInfo.getObjectMap().getSelected().getSelectedEntity(),
-												entity, abl)));
-					}
-					if (abl instanceof RangedAttack) {
-						GameInfo.getObjectMap().getSelected().getSelectedEntity()
-								.setEvent(new Event(GameInfo.getObjectMap().getSelected().getSelectedEntity(), entity,
-										abl,
-										new AbilityEffect(GameInfo.getObjectMap().getSelected().getSelectedEntity(),
-												entity, abl)));
-					}
-					if (abl instanceof FireBall) {
+					if (abl.getType().equals(Ability.ABILITY_TYPE_DAMAGE)) {
 						GameInfo.getObjectMap().getSelected().getSelectedEntity()
 								.setEvent(new Event(GameInfo.getObjectMap().getSelected().getSelectedEntity(), entity,
 										abl,

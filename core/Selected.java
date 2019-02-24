@@ -8,10 +8,7 @@ import abilities.Ability;
 import abilities.Build;
 import abilities.CollectResources;
 import abilities.CreateUnit;
-import abilities.FireBall;
-import abilities.MeleeAttack;
 import abilities.Move;
-import abilities.RangedAttack;
 import effects.AbilityEffect;
 import entity.Entity;
 import entity.building.Building;
@@ -120,8 +117,7 @@ public class Selected {
 						removeSelected();
 						break;
 					}
-					if (selectedAbility instanceof MeleeAttack || selectedAbility instanceof FireBall
-							|| selectedAbility instanceof RangedAttack) {
+					if (selectedAbility.getType().equals(Ability.ABILITY_TYPE_DAMAGE)) {
 						if ((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(),
 								selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
 							if (isntEmpty(x, y)) {

@@ -37,6 +37,9 @@ public class Build extends Ability {
 		if(buildingType.equals(Building.TOWN_CENTER)) {
 			building = new ProductionBuilding(buildPoint, Building.TOWN_CENTER, 15, 15, 1, true, new ArrayList<>());		
 		}
+		if(buildingType.equals(Building.SIEGE_WORKSHOP)) {
+			building = new ProductionBuilding(buildPoint, Building.SIEGE_WORKSHOP, 10, 10, 1, true, new ArrayList<>());		
+		}
 		//Resource Building
 		if(buildingType.equals(Building.WOOD_GETTER)) {
 			building = new ResourceBuilding(buildPoint, Building.WOOD_GETTER, 10, 10, 1, true, new ArrayList<>());		

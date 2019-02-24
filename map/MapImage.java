@@ -16,6 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import javax.imageio.ImageIO;
 
+import abilities.Ability;
 import core.Boot;
 import core.Core;
 import core.GameInfo;
@@ -27,6 +28,7 @@ import entity.building.ResourceBuilding;
 import entity.unit.Archer;
 import entity.unit.Builder;
 import entity.unit.Mage;
+import entity.unit.Trebuchet;
 import entity.unit.Unit;
 import entity.unit.Warrior;
 import frame.gamePanels.MainGamePanel;
@@ -124,6 +126,7 @@ public class MapImage {
 	private static BufferedImage mageImage;
 	private static BufferedImage builderImage;
 	private static BufferedImage archerImage;
+	private static BufferedImage trebuchetImage;
 
 	private BufferedImage combinedImage;
 
@@ -204,6 +207,7 @@ public class MapImage {
 				mageImage = ImageIO.read(Boot.class.getResource("/resources/mage.png"));
 				builderImage = ImageIO.read(Boot.class.getResource("/resources/builder.png"));
 				archerImage = ImageIO.read(Boot.class.getResource("/resources/archer.png"));
+				trebuchetImage = ImageIO.read(Boot.class.getResource("/resources/trebuchet.png"));
 
 			} catch (IOException e) {
 			}
@@ -280,8 +284,10 @@ public class MapImage {
 				} else if (s instanceof Archer) {
 					g.drawImage(archerImage, (int) (s.getPoint().x * mapTileSize) - 8,
 							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				}
-				else {
+				} else if (s instanceof Trebuchet) {
+					g.drawImage(trebuchetImage, (int) (s.getPoint().x * mapTileSize) - 8,
+							(int) (s.getPoint().y * mapTileSize) - 8, null);
+				} else {
 					g.drawImage(builderImage, (int) (s.getPoint().x * mapTileSize) - 8,
 							(int) (s.getPoint().y * mapTileSize) - 8, null);
 				}
@@ -329,7 +335,8 @@ public class MapImage {
 		}
 	}
 
-	public void drawAbilityLayer(int range, int x, int y) {
+	public void drawAbilityLayer(Ability ability, int x, int y) {
+		int range = ability.maxRange;
 		int totalRange = (range + range + 1);
 
 		Graphics2D g = getAbilityLayer().createGraphics();
@@ -341,12 +348,14 @@ public class MapImage {
 		boolean[][] rangeField = new boolean[totalRange][totalRange];
 
 		for (Entity entity : GameInfo.getObjectMap().getEntityMap()) {
-			if (entity instanceof DefenseBuilding && entity.isControlable() == false) {
-				if (entity.getXPos() <= (x + range) && entity.getXPos() >= (x - range)
-						&& entity.getYPos() <= (y + range) && entity.getYPos() >= (y - range)) {
+			if(ability.getType().equals(Ability.ABILITY_TYPE_DAMAGE) == false) {
+				if (entity instanceof DefenseBuilding && entity.isControlable() == false) {
+					if (entity.getXPos() <= (x + range) && entity.getXPos() >= (x - range)
+							&& entity.getYPos() <= (y + range) && entity.getYPos() >= (y - range)) {
 
-					rangeField[entity.getYPos() - (y - range)][entity.getXPos() - (x - range)] = true;
+						rangeField[entity.getYPos() - (y - range)][entity.getXPos() - (x - range)] = true;
 
+					}
 				}
 			}
 		}		

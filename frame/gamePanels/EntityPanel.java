@@ -101,7 +101,7 @@ public class EntityPanel extends JScrollPane {
 						lblNextEvent.setText(cssYellow+"Event: " + ability.getName());
 						if (ability.maxRange > 0) {
 							((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
-									.drawAbilityLayer(ability.maxRange,
+									.drawAbilityLayer(ability,
 											GameInfo.getObjectMap().getSelected().getSelectedEntity().getXPos(),
 											GameInfo.getObjectMap().getSelected().getSelectedEntity().getYPos());
 							((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()

@@ -108,8 +108,8 @@ public class Entity {
 	private void destroy() {
 
 		int i = 0;
-
-		while (GameInfo.getObjectMap().getEntityMap().get(i) != this) {
+		
+		while (GameInfo.getObjectMap().getEntityMap().get(i) != this && i < GameInfo.getObjectMap().getEntityMap().size() - 1) {
 			i++;
 		}
 
@@ -117,7 +117,10 @@ public class Entity {
 			GameInfo.getRoundInfo().getEventList().remove(this.event);
 			this.event = null;
 		}
-		GameInfo.getObjectMap().getEntityMap().remove(i);
+		if(GameInfo.getObjectMap().getEntityMap().get(i) == this) {
+			GameInfo.getObjectMap().getEntityMap().remove(i);
+		}
+		
 
 	}
 
