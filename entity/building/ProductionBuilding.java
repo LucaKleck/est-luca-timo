@@ -23,6 +23,9 @@ public class ProductionBuilding extends Building {
 		if(name.equals(Building.SIEGE_WORKSHOP)) {
 			abilities.add(new CreateUnit(pointXY, Unit.UNIT_TREBUCHET, Ability.ABILITY_CREATE_TREBUCHET, Ability.ABILITY_DESC_CREATE_TREBUCHET, controlable));
 		}
+		if(name.equals(Building.PORTAL)) {
+			abilities.add(new CreateUnit(pointXY, Unit.UNIT_TREBUCHET, Ability.ABILITY_CREATE_TREBUCHET, Ability.ABILITY_DESC_CREATE_TREBUCHET, controlable));
+		}
 	}
 	
 }

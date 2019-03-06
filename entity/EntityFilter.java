@@ -21,10 +21,15 @@ public class EntityFilter {
 	public Ability getRandomAbility(Entity source) {
 		ArrayList<Ability> abilities = source.getAbilities();
 		Ability chosenAbility;
-		do {
-			chosenAbility = abilities.get(random.nextInt(abilities.size()));
-		} while(chosenAbility instanceof Move);
-		return chosenAbility;
+		if(abilities.size() > 0) {
+			do {
+				chosenAbility = abilities.get(random.nextInt(abilities.size()));
+			} while(chosenAbility instanceof Move);
+			return chosenAbility;
+		} else {
+			return null;
+		}
+		
 	}
 	
 	public Point2D getRandomBuildPoint(Builder builder) {
@@ -45,7 +50,7 @@ public class EntityFilter {
 		for(Entity entity: GameInfo.getObjectMap().getEntityMap()) {
 			
 			if(entity.isControlable()) {
-				if(bestTarget == null) {
+				if(bestTarget == null ) {
 					bestTarget = entity;
 					bestTargetPriorityPoints = calculatePriorityPoints(entity, source);
 				} else if(bestTargetPriorityPoints < calculatePriorityPoints(entity, source)) {

@@ -24,18 +24,19 @@ public class ObjectMap {
 	private Selected selected = new Selected();
 	private MapTile[][] map;
 	private ArrayList<Entity> entityMap;
-	
+	private Point2D portalPoint;
 
 	public ObjectMap() {
 		map = MapCreator.createMap();
 		selected = new Selected();
 		entityMap = new ArrayList<>();
+		portalPoint = new Point2D(45, 45);
 		setInitalState();
 	}
 	
 	private void setInitalState() {
 		entityMap.add(new ProductionBuilding(new Point2D(3, 3), ProductionBuilding.TOWN_CENTER, 15, 15, 1, true, new ArrayList<>()));
-		entityMap.add(new ProductionBuilding(new Point2D(45, 45), ProductionBuilding.TOWN_CENTER, 15, 15, 1, false, new ArrayList<>()));
+		entityMap.add(new ProductionBuilding(portalPoint, ProductionBuilding.PORTAL, 15, 15, 1, false, new ArrayList<>()));
 		entityMap.add(new DefenseBuilding(new Point2D(7, 3), Building.WALL, 15, 15, 1, false, new ArrayList<>()));
 		entityMap.add(new Builder(new Point2D(5, 5), Unit.UNIT_BUILDER,  3, 1, true, new ArrayList<>()));
 		entityMap.add(new Warrior(new Point2D(5, 3), Unit.UNIT_WARRIOR,  3, 1, false, new ArrayList<>()));
@@ -57,6 +58,10 @@ public class ObjectMap {
 
 	public ArrayList<Entity> getEntityMap() {
 		return entityMap;
+	}
+	
+	public Point2D getPortalPoint() {
+		return portalPoint;
 	}
 	
 	public void remakeMap() {

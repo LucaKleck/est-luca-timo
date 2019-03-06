@@ -20,32 +20,48 @@ import com.sun.javafx.geom.Point2D;
 
 import abilities.Ability;
 import core.Boot;
+import core.GameInfo;
 
-public class UnitFactory extends Unit {
+public class UnitFactory {
 
 	private static Document namesXML = null;
-	
-	//All Requirements 
-	public UnitFactory(Point2D pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable,  int baseDamage,  int movementRange, ArrayList<Ability> abilities) {
-		super(pointXY, name, maxHealth, currentHealth, level, controlable, baseDamage, movementRange, abilities);
-	}
-	
-	//No Requirement
+	private Random random;
+
 	public UnitFactory() {
-		super(new Point2D(0, 0), "RandomName", 5, 3, 1, true, 2, 3, new ArrayList<Ability>());
+		random = new Random();
 	}
-	
-	//Just Point
-	public UnitFactory(Point2D pointXY) {
-		super(pointXY, "RandomName", 5, 3, 1, true, 2, 3, new ArrayList<Ability>());
+
+	public Unit getNewPortalUnitByType(String type) {
+		return getNewUnit(GameInfo.getObjectMap().getPortalPoint(), 0, false, new ArrayList<Ability>(), type);
 	}
-	
-	//No Name
-	public UnitFactory(Point2D pointXY, int maxHealth, int currentHealth, int level, boolean controlable,  int baseDamage,  int movementRange, ArrayList<Ability> abilities) {
-		
-		super(pointXY, "", maxHealth, currentHealth, level, controlable, baseDamage, movementRange, abilities);
-		
-		if(namesXML == null) {
+
+	private Unit getNewUnit(Point2D pointXY, int level, boolean controlable, ArrayList<Ability> abilities,
+			String type) {
+
+		Unit unit;
+
+		switch (type) {
+		case Unit.UNIT_ARCHER:
+			unit = new Archer(pointXY, "", level, controlable, abilities);
+			break;
+		case Unit.UNIT_BUILDER:
+			unit = new Builder(pointXY, "", level, controlable, abilities);
+			break;
+		case Unit.UNIT_MAGE:
+			unit = new Mage(pointXY, "", level, controlable, abilities);
+			break;
+		case Unit.UNIT_TREBUCHET:
+			unit = new Trebuchet(pointXY, "", level, controlable, abilities);
+			break;
+		case Unit.UNIT_WARRIOR:
+			unit = new Warrior(pointXY, "", level, controlable, abilities);
+			break;
+		default:
+			unit = new Warrior(pointXY, "", level, controlable, abilities);
+			break;
+		}
+
+		if (namesXML == null) {
 			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder builder = null;
 			try {
@@ -55,7 +71,7 @@ public class UnitFactory extends Unit {
 			}
 			try {
 				URL names = Boot.class.getResource("/resources/names.xml");
-				
+
 				try {
 					namesXML = builder.parse(new File(names.toURI()));
 				} catch (URISyntaxException e) {
@@ -66,20 +82,21 @@ public class UnitFactory extends Unit {
 			}
 		}
 		Element rootElement = namesXML.getDocumentElement();
-		
-		super.setName(getString("name", rootElement));
-		
+
+		unit.setName(getString("name", rootElement));
+
+		return unit;
+
 	}
-	
+
 	private String getString(String tagName, Element element) {
-        NodeList list = element.getElementsByTagName(tagName);
-        int random = new Random().nextInt(list.getLength());
-        if (list != null && list.getLength() > 0) {
-            return list.item(random).getTextContent();
-        }
+		NodeList list = element.getElementsByTagName(tagName);
+		int randomInt = random.nextInt(list.getLength());
+		if (list != null && list.getLength() > 0) {
+			return list.item(randomInt).getTextContent();
+		}
 
-        return null;
-    }
-
+		return null;
+	}
 
 }

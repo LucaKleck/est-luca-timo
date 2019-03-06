@@ -119,7 +119,7 @@ public class MapImage {
 	private static BufferedImage archerTowerImage;
 	private static BufferedImage townCenterImage;
 	
-	private static BufferedImage enemyTownCenterImage;
+	private static BufferedImage portalImage;
 
 	// Units
 	private static BufferedImage warriorImage;
@@ -200,7 +200,7 @@ public class MapImage {
 				archerTowerImage = ImageIO.read(Boot.class.getResource("/resources/archer_tower.png"));
 				townCenterImage = ImageIO.read(Boot.class.getResource("/resources/towncenter.png"));
 				
-				enemyTownCenterImage = ImageIO.read(Boot.class.getResource("/resources/portal.png"));
+				portalImage = ImageIO.read(Boot.class.getResource("/resources/portal.png"));
 
 				// Units
 				warriorImage = ImageIO.read(Boot.class.getResource("/resources/warrior.png"));
@@ -301,11 +301,9 @@ public class MapImage {
 				}
 				if (s instanceof ProductionBuilding) {
 					if (s.getName().matches(Building.TOWN_CENTER)) {
-						if(s.isControlable() == true) {
-							g.drawImage(townCenterImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
-						} else {
-							g.drawImage(enemyTownCenterImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
-						}
+						g.drawImage(townCenterImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+					} else if(s.getName().matches(Building.PORTAL)) {
+						g.drawImage(portalImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					} else {
 						g.drawImage(townCenterImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					}

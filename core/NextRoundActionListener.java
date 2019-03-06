@@ -21,15 +21,21 @@ import entity.building.Building;
 import entity.building.ProductionBuilding;
 import entity.unit.Builder;
 import entity.unit.Unit;
+import entity.unit.UnitFactory;
 import frame.gamePanels.MainGamePanel;
 
 public class NextRoundActionListener implements ActionListener, Runnable {
 	private static final ExecutorService EXS = Executors.newFixedThreadPool(1); 
 	private JButton j; 
 	private EntityFilter entityFilter;
+	private int wave = 0;
+	private int waveCounter = 0;
+	private boolean newWave = true;
+	private UnitFactory uf;
 	
 	public NextRoundActionListener() {
 		entityFilter = new EntityFilter();
+		uf = new UnitFactory();
 	}
 	
 	@Override
@@ -41,6 +47,14 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 		// TODO Collect events from enemies, they should happen before the passive ones and after the player created events
 		// TODO make it so player can't use selected.clicked(x,y) while this is going down
 		EXS.execute(this);
+		waveCounter++;
+		if(waveCounter >= 3) {
+			wave++;
+			waveCounter = 0;
+			newWave = true;
+		} else {
+			newWave = false;
+		}
 	}
 	@Override
 	public void run() {
@@ -52,7 +66,6 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 		System.out.println("Round x start");
 		// player events
 		goThroughEventList();
-		// TODO add AI logic here and then add to event list
 		ArrayList<Entity> enemyEntities = new ArrayList<Entity>();
 		for(Entity entity: entityMap) {
 			if(entity.isControlable() == false) {
@@ -62,27 +75,50 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 		
 		for(Entity entity: enemyEntities) {
 			
-			System.out.println("Test");
 			Entity bestTarget = entityFilter.getBestEntityTarget(entity);
-			Ability ability = null;
+			Ability ability = entityFilter.getRandomAbility(entity);
 			if(entity instanceof Unit) {
-				if(bestTarget != null && bestTarget instanceof Builder == false) {
-					ability = entityFilter.getRandomAbility(entity);
+				if(bestTarget != null && entity instanceof Builder == false && ability.rangeCheck(entity.getXPos(), entity.getYPos(), bestTarget.getXPos(), bestTarget.getYPos())) {
 					entity.setEvent(new Event(entity, entityFilter.getBestEntityTarget(entity), ability, new AbilityEffect(entity, bestTarget, ability)));
 				} else if(entity instanceof Builder) {
 					ability = entityFilter.getRandomAbility(entity);
 					((Builder)entity).setBuildPoint(entityFilter.getRandomBuildPoint((Builder) entity)); 
 					entity.setEvent(new Event(entity, entity, ability, new AbilityEffect(entity, bestTarget, ability)));
 				} else {
-					ability = new Move();
-					((Move)ability).setMoveToPoint(new Point2D(10, 10));
-					entity.setEvent(new Event(entity, entity, ability, new AbilityEffect(entity, entity, ability)));
+					for(Ability abl: entity.getAbilities()) {
+						if(abl instanceof Move) {
+							ability = abl;
+						}
+					}
+					if(ability != null) {
+						if(entity.getXPos() > 24) {
+							((Move)ability).setMoveToPoint(new Point2D(entity.getXPos() - ability.maxRange, entity.getYPos()));
+						} else if(entity.getXPos() <= 24) {
+							((Move)ability).setMoveToPoint(new Point2D(entity.getXPos() + ability.maxRange, entity.getYPos()));
+						}
+						entity.setEvent(new Event(entity, entity, ability, new AbilityEffect(entity, entity, ability)));
+					}
+					
 				}
 			} else if (entity instanceof ProductionBuilding) {
-				ability = entityFilter.getRandomAbility(entity);
-				entity.setEvent(new Event(entity, entity, ability, null));
+				if(entity.getName().equals(Building.PORTAL)) {
+					if(newWave) {
+						switch(wave) {
+						
+							case 1: entityMap.add(uf.getNewPortalUnitByType(Unit.UNIT_ARCHER)); break;
+							case 2: entityMap.add(uf.getNewPortalUnitByType(Unit.UNIT_TREBUCHET)); break;
+							case 3: entityMap.add(uf.getNewPortalUnitByType(Unit.UNIT_MAGE)); break;
+							case 4: entityMap.add(uf.getNewPortalUnitByType(Unit.UNIT_BUILDER)); break;
+							case 5: entityMap.add(uf.getNewPortalUnitByType(Unit.UNIT_WARRIOR)); break;
+							default: break;
+						
+						}
+					}
+				} else {
+					ability = entityFilter.getRandomAbility(entity);
+					entity.setEvent(new Event(entity, entity, ability, null));
+				}
 			}
-			
 			
 		}
 		
@@ -102,6 +138,11 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 			((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).updateUI();
 			((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
 		}
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e1) {
+			e1.printStackTrace();
+		}
 		goThroughEventList();
 		
 		System.out.println("Round x end");
@@ -115,19 +156,34 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 	}
 	
 	private void goThroughEventList() {
-		for (Iterator<Event> iterator = GameInfo.getRoundInfo().getEventList().iterator(); iterator.hasNext();) {
+		for (Iterator<Event> iterator = GameInfo.getRoundInfo().getEventList().iterator(); iterator.hasNext();) {			
 			Event e = iterator.next();
+			if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+				MainGamePanel mp = (MainGamePanel) Core.getMainJFrame().getCurrentComponent();
+				mp.getMapPanel().setPosition(e.getSource().getXPos(), e.getSource().getYPos());
+			}
 			System.out.println(e);
-			e.run();
-			// due to concurrent modification issues iterator is used to remove the current item from the list and a helper method (removeEventWithoutRemovingFromList) is used to remove Events as intended
-			e.getSource().removeEventWithoutRemovingFromList();
-			iterator.remove();
-			System.gc();
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
+			e.run();
+			// due to concurrent modification issues iterator is used to remove the current item from the list and a helper method (removeEventWithoutRemovingFromList) is used to remove Events as intended
+			e.getSource().removeEventWithoutRemovingFromList();
+			iterator.remove();
+			System.gc();
+			if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+				MainGamePanel mp = (MainGamePanel) Core.getMainJFrame().getCurrentComponent();
+				mp.updateUI();
+				mp.getMapPanel().getMapImage().update();
+			}
+			try {
+				Thread.sleep(500);
+			} catch (InterruptedException e1) {
+				e1.printStackTrace();
+			}
+			
 		}
 	}
 }

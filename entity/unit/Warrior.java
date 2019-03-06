@@ -19,5 +19,11 @@ public class Warrior extends Unit {
 		abilities.add(new MeleeAttack());
 		abilities.add(new FireBall());
 	}
+	
+	public Warrior(Point2D pointXY, String name, int level, boolean controlable, ArrayList<Ability> abilities) {
+		super(pointXY, name, BASE_MAX_HEALTH, BASE_MAX_HEALTH, level, controlable, BASE_DAMAGE, MOVEMENT_RANGE, abilities);
+		abilities.add(new MeleeAttack());
+		abilities.add(new FireBall());
+	}
 
 }

@@ -17,5 +17,10 @@ public class Mage extends Unit {
 		super(pointXY, name, BASE_MAX_HEALTH, currentHealth, level, controlable, BASE_DAMAGE, MOVEMENT_RANGE, abilities);
 		abilities.add(new FireBall());
 	}
+	
+	public Mage(Point2D pointXY, String name, int level, boolean controlable, ArrayList<Ability> abilities) {
+		super(pointXY, name, BASE_MAX_HEALTH, BASE_MAX_HEALTH, level, controlable, BASE_DAMAGE, MOVEMENT_RANGE, abilities);
+		abilities.add(new FireBall());
+	}
 
 }

@@ -105,6 +105,7 @@ public class MapPanel extends JPanel implements MouseMotionListener, ActionListe
 				MapPanel.displacementX = (int) -(mp.getWidth() / 2 * displacementMultiplier * 1.75);
 			}
 		}
+		System.out.println("X: " + MapPanel.displacementX);
 	}
 
 	public static void addDisplacementY(int displacementY) {
@@ -119,8 +120,17 @@ public class MapPanel extends JPanel implements MouseMotionListener, ActionListe
 				MapPanel.displacementY = (int) -(mp.getWidth() / 2 * displacementMultiplier * 1.75);
 			}
 		}
+		System.out.println("Y: " + MapPanel.displacementY);
 	}
 
+	public void setPosition(int xPos, int yPos) {
+		MapPanel mp = ((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel();
+		int tileSize = (int) (mp.getWidth() * displacementMultiplier) / -49;
+		MapPanel.displacementX = (xPos-5)*tileSize;
+		MapPanel.displacementY = (yPos-3)*tileSize;
+		
+	}
+	
 	public static void addDisplacementMultiplier(double displacementMultiplier) {
 		if (MapPanel.displacementMultiplier + displacementMultiplier >= MIN_ZOOM
 				&& MapPanel.displacementMultiplier + displacementMultiplier < MAX_ZOOM) {
@@ -129,6 +139,7 @@ public class MapPanel extends JPanel implements MouseMotionListener, ActionListe
 			addDisplacementY(0);
 		}
 	}
+	
 
 	public static void reset() {
 		MapPanel.displacementMultiplier = DEFAULT_DISPLACEMENT;
