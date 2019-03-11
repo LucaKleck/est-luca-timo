@@ -256,6 +256,10 @@ public class Selected {
 		}
 		changeSelectionMode();
 	}
+	
+	public void setSelectedMapTile(int x, int y) {
+		selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
+	}
 
 	public void removeSelected() {
 		((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().clearAbilityLayer();

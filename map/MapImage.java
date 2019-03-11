@@ -20,6 +20,7 @@ import abilities.Ability;
 import core.Boot;
 import core.Core;
 import core.GameInfo;
+import core.ResourceManager;
 import entity.Entity;
 import entity.building.Building;
 import entity.building.DefenseBuilding;
@@ -121,13 +122,6 @@ public class MapImage {
 	
 	private static BufferedImage portalImage;
 
-	// Units
-	private static BufferedImage warriorImage;
-	private static BufferedImage mageImage;
-	private static BufferedImage builderImage;
-	private static BufferedImage archerImage;
-	private static BufferedImage trebuchetImage;
-
 	private BufferedImage combinedImage;
 
 	private static final ExecutorService redrawMapImageService = Executors.newFixedThreadPool(1);
@@ -202,13 +196,6 @@ public class MapImage {
 				
 				portalImage = ImageIO.read(Boot.class.getResource("/resources/portal.png"));
 
-				// Units
-				warriorImage = ImageIO.read(Boot.class.getResource("/resources/warrior.png"));
-				mageImage = ImageIO.read(Boot.class.getResource("/resources/mage.png"));
-				builderImage = ImageIO.read(Boot.class.getResource("/resources/builder.png"));
-				archerImage = ImageIO.read(Boot.class.getResource("/resources/archer.png"));
-				trebuchetImage = ImageIO.read(Boot.class.getResource("/resources/trebuchet.png"));
-
 			} catch (IOException e) {
 			}
 		}
@@ -273,22 +260,22 @@ public class MapImage {
 				g.fillRoundRect((int) (s.getPoint().x * mapTileSize) - 5, (int) (s.getPoint().y * mapTileSize) - 5, 10,
 						10, 10, 10);
 				if (s instanceof Warrior) {
-					g.drawImage(warriorImage, (int) (s.getPoint().x * mapTileSize) - 8,
+					g.drawImage(ResourceManager.getWarriorImage(), (int) (s.getPoint().x * mapTileSize) - 8,
 							(int) (s.getPoint().y * mapTileSize) - 8, null);
 				} else if (s instanceof Mage) {
-					g.drawImage(mageImage, (int) (s.getPoint().x * mapTileSize) - 8,
+					g.drawImage(ResourceManager.getMageImage(), (int) (s.getPoint().x * mapTileSize) - 8,
 							(int) (s.getPoint().y * mapTileSize) - 8, null);
 				} else if (s instanceof Builder) {
-					g.drawImage(builderImage, (int) (s.getPoint().x * mapTileSize) - 8,
+					g.drawImage(ResourceManager.getBuilderImage(), (int) (s.getPoint().x * mapTileSize) - 8,
 							(int) (s.getPoint().y * mapTileSize) - 8, null);
 				} else if (s instanceof Archer) {
-					g.drawImage(archerImage, (int) (s.getPoint().x * mapTileSize) - 8,
+					g.drawImage(ResourceManager.getArcherImage(), (int) (s.getPoint().x * mapTileSize) - 8,
 							(int) (s.getPoint().y * mapTileSize) - 8, null);
 				} else if (s instanceof Trebuchet) {
-					g.drawImage(trebuchetImage, (int) (s.getPoint().x * mapTileSize) - 8,
+					g.drawImage(ResourceManager.getTrebuchetImage(), (int) (s.getPoint().x * mapTileSize) - 8,
 							(int) (s.getPoint().y * mapTileSize) - 8, null);
 				} else {
-					g.drawImage(builderImage, (int) (s.getPoint().x * mapTileSize) - 8,
+					g.drawImage(ResourceManager.getBuilderImage(), (int) (s.getPoint().x * mapTileSize) - 8,
 							(int) (s.getPoint().y * mapTileSize) - 8, null);
 				}
 			} else if (s instanceof Building) {

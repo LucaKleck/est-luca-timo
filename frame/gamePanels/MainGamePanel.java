@@ -3,6 +3,7 @@ package frame.gamePanels;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -33,6 +34,7 @@ public class MainGamePanel extends JLayeredPane {
 	private JButton btnNextRound;
 	private static final MigLayout layout = new MigLayout("insets 0 0 0 0, gap 0px 0px", "[0px][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%]", "[:20px:20px][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%]");
 	private JLayeredPane uiPanel;
+	private EventlessSelectionQueue eventlessSelectionQueue;
 	
 	public MainGamePanel() { // x // y
 		// Contains the map and the UI. has 2x cells, 1 of them is just for enabling overlaying the panels
@@ -88,6 +90,19 @@ public class MainGamePanel extends JLayeredPane {
 		setLayer(mapPanel, 0);
 		add(mapPanel, "cell 0 0 2 1,grow");
 		
+		JButton zoomInBtn = new JButton("+");
+		zoomInBtn.setMinimumSize(new Dimension(30, 30));
+		zoomInBtn.addActionListener(e->MapPanel.addDisplacementMultiplier(0.1));
+		uiPanel.add(zoomInBtn, "cell 7 0");
+		
+		JButton zoomOutBtn = new JButton("-");
+		zoomOutBtn.setMinimumSize(new Dimension(30, 30));
+		zoomOutBtn.addActionListener(e->MapPanel.addDisplacementMultiplier(-0.1));
+		uiPanel.add(zoomOutBtn, "cell 7 0");
+		
+		eventlessSelectionQueue = new EventlessSelectionQueue();
+		uiPanel.add(eventlessSelectionQueue, "cell 6 1,grow");
+		
 		if(GameInfo.getPlayerStats().getPlayerResources() != null) {
 			lblResourcesLable.setText(GameInfo.getPlayerStats().getPlayerResources().toString());
 		}
@@ -130,6 +145,7 @@ public class MainGamePanel extends JLayeredPane {
 			lblResourcesLable.setText(GameInfo.getPlayerStats().getPlayerResources().toString());
 		}
 		infoPanel.update();
+		eventlessSelectionQueue.updateList();
 	}
 	
 }
