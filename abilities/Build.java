@@ -2,9 +2,8 @@ package abilities;
 
 import java.util.ArrayList;
 
-import com.sun.javafx.geom.Point2D;
-
 import core.GameInfo;
+import core.Point2DNoFxReq;
 import entity.Entity;
 import entity.building.Building;
 import entity.building.DefenseBuilding;
@@ -29,7 +28,7 @@ public class Build extends Ability {
 
 	@Override
 	public void applyAbility(Entity source, Entity target) {
-		Point2D buildPoint = builder.getBuildPoint();
+		Point2DNoFxReq buildPoint = builder.getBuildPoint();
 		Building building = null;
 		//Production Building
 		if(buildingType.equals(Building.BARRACKS)) {

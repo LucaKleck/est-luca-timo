@@ -16,11 +16,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.sun.javafx.geom.Point2D;
-
 import abilities.Ability;
 import core.Boot;
 import core.GameInfo;
+import core.Point2DNoFxReq;
 
 public class UnitFactory {
 
@@ -35,7 +34,7 @@ public class UnitFactory {
 		return getNewUnit(GameInfo.getObjectMap().getPortalPoint(), 0, false, new ArrayList<Ability>(), type);
 	}
 
-	private Unit getNewUnit(Point2D pointXY, int level, boolean controlable, ArrayList<Ability> abilities,
+	private Unit getNewUnit(Point2DNoFxReq pointXY, int level, boolean controlable, ArrayList<Ability> abilities,
 			String type) {
 
 		Unit unit;

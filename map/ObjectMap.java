@@ -6,10 +6,9 @@ package map;
 
 import java.util.ArrayList;
 
-import com.sun.javafx.geom.Point2D;
-
 import core.GameInfo;
 import core.MapCreator;
+import core.Point2DNoFxReq;
 import core.Selected;
 import entity.Entity;
 import entity.building.Building;
@@ -24,22 +23,22 @@ public class ObjectMap {
 	private Selected selected = new Selected();
 	private MapTile[][] map;
 	private ArrayList<Entity> entityMap;
-	private Point2D portalPoint;
+	private Point2DNoFxReq portalPoint;
 
 	public ObjectMap() {
 		map = MapCreator.createMap();
 		selected = new Selected();
 		entityMap = new ArrayList<>();
-		portalPoint = new Point2D(45, 45);
+		portalPoint = new Point2DNoFxReq(45, 45);
 		setInitalState();
 	}
 	
 	private void setInitalState() {
-		entityMap.add(new ProductionBuilding(new Point2D(3, 3), ProductionBuilding.TOWN_CENTER, 15, 15, 1, true, new ArrayList<>()));
+		entityMap.add(new ProductionBuilding(new Point2DNoFxReq(3, 3), ProductionBuilding.TOWN_CENTER, 15, 15, 1, true, new ArrayList<>()));
 		entityMap.add(new ProductionBuilding(portalPoint, ProductionBuilding.PORTAL, 15, 15, 1, false, new ArrayList<>()));
-		entityMap.add(new DefenseBuilding(new Point2D(7, 3), Building.WALL, 15, 15, 1, false, new ArrayList<>()));
-		entityMap.add(new Builder(new Point2D(5, 5), Unit.UNIT_BUILDER,  3, 1, true, new ArrayList<>()));
-		entityMap.add(new Warrior(new Point2D(5, 3), Unit.UNIT_WARRIOR,  3, 1, false, new ArrayList<>()));
+		entityMap.add(new DefenseBuilding(new Point2DNoFxReq(7, 3), Building.WALL, 15, 15, 1, false, new ArrayList<>()));
+		entityMap.add(new Builder(new Point2DNoFxReq(5, 5), Unit.UNIT_BUILDER,  3, 1, true, new ArrayList<>()));
+		entityMap.add(new Warrior(new Point2DNoFxReq(5, 3), Unit.UNIT_WARRIOR,  3, 1, false, new ArrayList<>()));
 	}
 	
 	public ObjectMap(MapTile[][] map, ArrayList<Entity> entityMap) {
@@ -60,7 +59,7 @@ public class ObjectMap {
 		return entityMap;
 	}
 	
-	public Point2D getPortalPoint() {
+	public Point2DNoFxReq getPortalPoint() {
 		return portalPoint;
 	}
 	

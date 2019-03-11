@@ -2,10 +2,9 @@ package entity.unit;
 
 import java.util.ArrayList;
 
-import com.sun.javafx.geom.Point2D;
-
 import abilities.Ability;
 import abilities.Build;
+import core.Point2DNoFxReq;
 import entity.building.Building;
 
 public class Builder extends Unit {
@@ -14,9 +13,9 @@ public class Builder extends Unit {
 	private static final int BASE_DAMAGE = 2;
 	private static final int MOVEMENT_RANGE = 2;
 
-	private Point2D buildPoint;
+	private Point2DNoFxReq buildPoint;
 	
-	public Builder(Point2D pointXY, String name, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
+	public Builder(Point2DNoFxReq pointXY, String name, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
 		super(pointXY, name, BASE_MAX_HEALTH, currentHealth, level, controlable, BASE_DAMAGE, MOVEMENT_RANGE, abilities);
 		//Production Buildings
 		abilities.add(new Build(Building.BARRACKS, Ability.ABILITY_BUILD_BARRACKS, Ability.ABILITY_DESC_BUILD_BARRACKS, this, controlable));
@@ -35,7 +34,7 @@ public class Builder extends Unit {
 		
 	}
 	
-	public Builder(Point2D pointXY, String name, int level, boolean controlable, ArrayList<Ability> abilities) {
+	public Builder(Point2DNoFxReq pointXY, String name, int level, boolean controlable, ArrayList<Ability> abilities) {
 		super(pointXY, name, BASE_MAX_HEALTH, BASE_MAX_HEALTH, level, controlable, BASE_DAMAGE, MOVEMENT_RANGE, abilities);
 		//Production Buildings
 		abilities.add(new Build(Building.BARRACKS, Ability.ABILITY_BUILD_BARRACKS, Ability.ABILITY_DESC_BUILD_BARRACKS, this, controlable));
@@ -54,11 +53,11 @@ public class Builder extends Unit {
 		
 	}
 	
-	public void setBuildPoint(Point2D buildPoint) {
+	public void setBuildPoint(Point2DNoFxReq buildPoint) {
 		this.buildPoint = buildPoint;
 	}
 
-	public Point2D getBuildPoint() {
+	public Point2DNoFxReq getBuildPoint() {
 		return buildPoint;
 	}
 	

@@ -9,8 +9,6 @@ import java.util.concurrent.Executors;
 
 import javax.swing.JButton;
 
-import com.sun.javafx.geom.Point2D;
-
 import abilities.Ability;
 import abilities.CollectResources;
 import abilities.Move;
@@ -92,9 +90,9 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 					}
 					if(ability != null) {
 						if(entity.getXPos() > 24) {
-							((Move)ability).setMoveToPoint(new Point2D(entity.getXPos() - ability.maxRange, entity.getYPos()));
+							((Move)ability).setMoveToPoint(new Point2DNoFxReq(entity.getXPos() - ability.maxRange, entity.getYPos()));
 						} else if(entity.getXPos() <= 24) {
-							((Move)ability).setMoveToPoint(new Point2D(entity.getXPos() + ability.maxRange, entity.getYPos()));
+							((Move)ability).setMoveToPoint(new Point2DNoFxReq(entity.getXPos() + ability.maxRange, entity.getYPos()));
 						}
 						entity.setEvent(new Event(entity, entity, ability, new AbilityEffect(entity, entity, ability)));
 					}

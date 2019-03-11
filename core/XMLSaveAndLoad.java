@@ -22,8 +22,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import com.sun.javafx.geom.Point2D;
-
 import core.PlayerStats.PlayerResources;
 import entity.Entity;
 import entity.building.Building;
@@ -146,7 +144,7 @@ public class XMLSaveAndLoad {
 
 				float xPos = Float.parseFloat(eElement.getElementsByTagName(X_POS).item(0).getTextContent());
 				float yPos = Float.parseFloat(eElement.getElementsByTagName(Y_POS).item(0).getTextContent());
-				Point2D p = new Point2D(xPos, yPos);
+				Point2DNoFxReq p = new Point2DNoFxReq(xPos, yPos);
 				String name = eElement.getElementsByTagName(NAME).item(0).getTextContent();
 				int currentHealth = Integer
 						.parseInt(eElement.getElementsByTagName(CURRENT_HEALTH).item(0).getTextContent());

@@ -2,9 +2,8 @@ package entity.building;
 
 import java.util.ArrayList;
 
-import com.sun.javafx.geom.Point2D;
-
 import abilities.Ability;
+import core.Point2DNoFxReq;
 import entity.Entity;
 
 public abstract class Building extends Entity {
@@ -26,7 +25,7 @@ public abstract class Building extends Entity {
 	public static final String WALL = "Wall";
 	public static final String ARCHER_TOWER = "Archer Tower";
 	
-	public Building(Point2D pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
+	public Building(Point2DNoFxReq pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
 		super(pointXY, name, maxHealth, currentHealth, level, controlable, abilities);
 		efficiency = level*12;
 	}

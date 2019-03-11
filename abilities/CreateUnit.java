@@ -2,9 +2,8 @@ package abilities;
 
 import java.util.ArrayList;
 
-import com.sun.javafx.geom.Point2D;
-
 import core.GameInfo;
+import core.Point2DNoFxReq;
 import entity.Entity;
 import entity.unit.Archer;
 import entity.unit.Builder;
@@ -15,11 +14,11 @@ import entity.unit.Warrior;
 
 public class CreateUnit extends Ability {
 
-	private Point2D pointXY;
+	private Point2DNoFxReq pointXY;
 	private String type;
 	private boolean controlable;
 
-	public CreateUnit(Point2D pointXY, String type, String name, String description, boolean controlable) {
+	public CreateUnit(Point2DNoFxReq pointXY, String type, String name, String description, boolean controlable) {
 		super(name, description, Ability.ABILITY_TYPE_PRODUCE);
 		super.maxRange = 0;
 		this.controlable = controlable;

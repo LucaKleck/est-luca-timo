@@ -2,15 +2,14 @@ package entity.building;
 
 import java.util.ArrayList;
 
-import com.sun.javafx.geom.Point2D;
-
 import abilities.Ability;
 import abilities.CreateUnit;
+import core.Point2DNoFxReq;
 import entity.unit.Unit;
 
 public class ProductionBuilding extends Building {
 	
-	public ProductionBuilding(Point2D pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
+	public ProductionBuilding(Point2DNoFxReq pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
 		super(pointXY, name, maxHealth, currentHealth, level, controlable, abilities);
 		if(name.equals(Building.TOWN_CENTER)) {
 			abilities.add(new CreateUnit(pointXY, Unit.UNIT_BUILDER, Ability.ABILITY_CREATE_BUILDER, Ability.ABILITY_DESC_CREATE_BUILDER, controlable));

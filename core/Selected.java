@@ -2,8 +2,6 @@ package core;
 
 import java.awt.Point;
 
-import com.sun.javafx.geom.Point2D;
-
 import abilities.Ability;
 import abilities.Build;
 import abilities.CollectResources;
@@ -89,7 +87,7 @@ public class Selected {
 					if (selectedAbility instanceof Move) {
 						if ((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(),
 								selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
-							((Unit) this.getSelectedEntity()).getMove().setMoveToPoint(new Point2D(xD, yD));
+							((Unit) this.getSelectedEntity()).getMove().setMoveToPoint(new Point2DNoFxReq(xD, yD));
 							this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility,
 									new AbilityEffect((Unit) selectedEntity, (Unit) selectedEntity, selectedAbility)));
 						}
@@ -109,7 +107,7 @@ public class Selected {
 					if (selectedAbility instanceof Build) {
 						if ((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(),
 								selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
-							((Builder) this.getSelectedEntity()).setBuildPoint(new Point2D(xD, yD));
+							((Builder) this.getSelectedEntity()).setBuildPoint(new Point2DNoFxReq(xD, yD));
 							this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility,
 									new AbilityEffect((Unit) selectedEntity, (Unit) selectedEntity, selectedAbility)));
 							removeSelected();

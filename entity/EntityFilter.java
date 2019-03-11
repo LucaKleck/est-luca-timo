@@ -3,11 +3,10 @@ package entity;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.sun.javafx.geom.Point2D;
-
 import abilities.Ability;
 import abilities.Move;
 import core.GameInfo;
+import core.Point2DNoFxReq;
 import entity.unit.Builder;
 
 public class EntityFilter {
@@ -32,12 +31,12 @@ public class EntityFilter {
 		
 	}
 	
-	public Point2D getRandomBuildPoint(Builder builder) {
+	public Point2DNoFxReq getRandomBuildPoint(Builder builder) {
 		
 		int xPos = builder.getXPos();
 		int yPos = builder.getYPos();
 		
-		return new Point2D(xPos + random.nextInt(7) - 3, yPos + random.nextInt(7) - 3);
+		return new Point2DNoFxReq(xPos + random.nextInt(7) - 3, yPos + random.nextInt(7) - 3);
 		
 		
 	}

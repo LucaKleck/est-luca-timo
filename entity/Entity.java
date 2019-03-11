@@ -2,18 +2,17 @@ package entity;
 
 import java.util.ArrayList;
 
-import com.sun.javafx.geom.Point2D;
-
 import abilities.Ability;
 import core.Event;
 import core.GameInfo;
+import core.Point2DNoFxReq;
 import statusEffects.StatusEffect;
 
 public class Entity {
 	private static int entityCount;
 	
 	private int id;
-	private Point2D pointXY = new Point2D();
+	private Point2DNoFxReq pointXY = new Point2DNoFxReq();
 	private String name;
 	private int maxHealth;
 	private int currentHealth;
@@ -24,7 +23,7 @@ public class Entity {
 	private Event event = null;
 	private boolean controlable = false;
 	
-	public Entity(Point2D pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
+	public Entity(Point2DNoFxReq pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
 		entityCount++;
 		this.id = entityCount;
 		this.pointXY.setLocation(pointXY);
@@ -80,11 +79,11 @@ public class Entity {
 		return (int) pointXY.y;
 	}
 	
-	public Point2D getPoint() {
+	public Point2DNoFxReq getPoint() {
 		return pointXY;
 	}
 	
-	public void setPoint(Point2D moveToPoint) {
+	public void setPoint(Point2DNoFxReq moveToPoint) {
 		this.pointXY.setLocation(moveToPoint);
 	}
 	

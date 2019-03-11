@@ -2,10 +2,9 @@ package entity.unit;
 
 import java.util.ArrayList;
 
-import com.sun.javafx.geom.Point2D;
-
 import abilities.Ability;
 import abilities.Move;
+import core.Point2DNoFxReq;
 import entity.Entity;
 
 public class Unit extends Entity {
@@ -20,7 +19,7 @@ public class Unit extends Entity {
 	private int movementRange;
 	private Ability move = new Move();
 
-	public Unit(Point2D pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable,  int baseDamage,  int movementRange, ArrayList<Ability> abilities) {
+	public Unit(Point2DNoFxReq pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable,  int baseDamage,  int movementRange, ArrayList<Ability> abilities) {
 
 		super(pointXY, name, maxHealth, currentHealth, level, controlable, abilities);
 		

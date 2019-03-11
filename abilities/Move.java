@@ -1,12 +1,11 @@
 package abilities;
 
-import com.sun.javafx.geom.Point2D;
-
+import core.Point2DNoFxReq;
 import entity.Entity;
 
 public class Move extends Ability {
 	
-	private Point2D moveToPoint = new Point2D();
+	private Point2DNoFxReq moveToPoint = new Point2DNoFxReq();
 	private static final int DEFAULT_MAX_RANGE = 2;
 	
 	public Move() {
@@ -26,11 +25,11 @@ public class Move extends Ability {
 		}
 	}
 	
-	public void setMoveToPoint(Point2D moveToPoint) {
+	public void setMoveToPoint(Point2DNoFxReq moveToPoint) {
 		this.moveToPoint.setLocation(moveToPoint);
 	}
 	
-	public Point2D getMoveToPoint() {
+	public Point2DNoFxReq getMoveToPoint() {
 		return moveToPoint;
 	}
 	
