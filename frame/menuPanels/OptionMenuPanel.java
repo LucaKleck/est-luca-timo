@@ -10,7 +10,6 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
@@ -22,6 +21,8 @@ import javax.swing.text.NumberFormatter;
 import core.ControlInput;
 import core.Core;
 import core.FullscreenActionListener;
+import frame.JButton_01;
+import frame.JPanelBg;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -30,14 +31,13 @@ import net.miginfocom.swing.MigLayout;
  * @author Luca Kleck
  * @see frame.MainJFrame
  */
-public class OptionMenuPanel extends JPanel {
+public class OptionMenuPanel extends JPanelBg {
 	private static final long serialVersionUID = 112L;
 
 	public OptionMenuPanel() {
-		setBackground(Color.DARK_GRAY);
 		setLayout(new MigLayout("", "[][][][60px:60px:60px][100%]", "[fill][fill][100%][10%][]"));
 
-		JButton btnBack = new JButton("Back");
+		JButton btnBack = new JButton_01("Back");
 		btnBack.setActionCommand("frame.menuPanels.MainMenuPanel");
 		btnBack.addActionListener(ControlInput.menuChanger);
 		

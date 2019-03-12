@@ -13,6 +13,7 @@ import javax.swing.UIManager;
 
 import core.GameInfo;
 import core.NextRoundActionListener;
+import frame.JButton_01;
 import frame.MainJFrame;
 import net.miginfocom.swing.MigLayout;
 
@@ -77,11 +78,9 @@ public class MainGamePanel extends JLayeredPane {
 		infoPanel = new InfoPanel();
 		uiPanel.add(infoPanel, "cell 8 9 3 2,grow");
 		
-		btnNextRound = new JButton(MainJFrame.makeCssStyle("padding: 4px")+"Next Round");
+		btnNextRound = new JButton_01("Next Round");
 		uiPanel.setLayer(btnNextRound, 3);
 		setLayer(btnNextRound, 3);
-		btnNextRound.setForeground(Color.LIGHT_GRAY);
-		btnNextRound.setBackground(Color.DARK_GRAY);
 		btnNextRound.addActionListener(new NextRoundActionListener());
 		uiPanel.add(btnNextRound, "cell 8 8 3 1,alignx left,aligny bottom");
 
@@ -90,18 +89,18 @@ public class MainGamePanel extends JLayeredPane {
 		setLayer(mapPanel, 0);
 		add(mapPanel, "cell 0 0 2 1,grow");
 		
-		JButton zoomInBtn = new JButton("+");
+		JButton zoomInBtn = new JButton_01("+");
 		zoomInBtn.setMinimumSize(new Dimension(30, 30));
 		zoomInBtn.addActionListener(e->MapPanel.addDisplacementMultiplier(0.1));
 		uiPanel.add(zoomInBtn, "cell 7 0");
 		
-		JButton zoomOutBtn = new JButton("-");
+		JButton zoomOutBtn = new JButton_01("-");
 		zoomOutBtn.setMinimumSize(new Dimension(30, 30));
 		zoomOutBtn.addActionListener(e->MapPanel.addDisplacementMultiplier(-0.1));
 		uiPanel.add(zoomOutBtn, "cell 7 0");
 		
 		eventlessSelectionQueue = new EventlessSelectionQueue();
-		uiPanel.add(eventlessSelectionQueue, "cell 6 1,grow");
+		uiPanel.add(eventlessSelectionQueue, "cell 1 1,grow");
 		
 		if(GameInfo.getPlayerStats().getPlayerResources() != null) {
 			lblResourcesLable.setText(GameInfo.getPlayerStats().getPlayerResources().toString());

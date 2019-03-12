@@ -1,12 +1,10 @@
 package frame.menuPanels;
 
-import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.text.AbstractDocument;
 import javax.swing.text.AttributeSet;
@@ -16,6 +14,8 @@ import javax.swing.text.DocumentFilter;
 import core.ControlInput;
 import core.GameInfo;
 import core.XMLSaveAndLoad;
+import frame.JButton_01;
+import frame.JPanelBg;
 import frame.gamePanels.LogPanel;
 import net.miginfocom.swing.MigLayout;
 
@@ -26,12 +26,11 @@ import net.miginfocom.swing.MigLayout;
  * @author Luca Kleck
  * @see frame.MainJFrame
  */
-public class GameSettingsPanel extends JPanel {
+public class GameSettingsPanel extends JPanelBg {
 	private static final long serialVersionUID = 113L;
 	private JTextField txtNewGame;
 
 	public GameSettingsPanel() {
-		this.setBackground(Color.LIGHT_GRAY);
 		setLayout(new MigLayout("", "[grow]", "[10%][3%][100%][fill]"));
 
 		JLabel lblGameName = new JLabel("Game Name");
@@ -44,7 +43,7 @@ public class GameSettingsPanel extends JPanel {
 		txtNewGame.setColumns(1);
 		((AbstractDocument)txtNewGame.getDocument()).setDocumentFilter(new SaveNameTextDocumentFilter());
 		
-		JButton btnStartGame = new JButton("Start Game");
+		JButton btnStartGame = new JButton_01("Start Game");
 		btnStartGame.setActionCommand("frame.gamePanels.MainGamePanel");
 		btnStartGame.addActionListener(ControlInput.menuChanger);
 		btnStartGame.addActionListener(new ActionListener() {
@@ -59,7 +58,7 @@ public class GameSettingsPanel extends JPanel {
 		});
 		add(btnStartGame, "cell 0 1");
 		
-		JButton btnBack = new JButton("Back");
+		JButton btnBack = new JButton_01("Back");
 		btnBack.setActionCommand("frame.menuPanels.MainMenuPanel");
 		btnBack.addActionListener(ControlInput.menuChanger);
 		add(btnBack, "cell 0 3");

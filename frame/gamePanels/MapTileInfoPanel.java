@@ -53,7 +53,7 @@ public class MapTileInfoPanel extends JPanel {
 	
 	@Override
 	public void paint(Graphics g) {
-		g.drawImage(ResourceManager.getBackgroundWoodHorizontal(), 0, 0, getWidth(), getHeight(), null);
+		g.drawImage(ResourceManager.getBackground_02(), 0, 0, getWidth(), getHeight(), null);
 		super.paint(g);
 	}
 	

@@ -196,28 +196,30 @@ public class MapPanel extends JPanel implements MouseMotionListener, ActionListe
 	}
 	
 	private void mouseEventHandler(MouseEvent e) {
-		float x = -1;
-		double factorX = (double) this.getWidth() / (double) MapImage.getImageWidth();
-		float  y = -1;
-		double factorY = (double) this.getWidth() / (double) MapImage.getImageHeight();
-		// X
-		if((((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize()) >= 0) {
-			x = (float) (((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize());
+		if(((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getBtnNextRound().isEnabled()) {
+			float x = -1;
+			double factorX = (double) this.getWidth() / (double) MapImage.getImageWidth();
+			float  y = -1;
+			double factorY = (double) this.getWidth() / (double) MapImage.getImageHeight();
+			// X
+			if((((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize()) >= 0) {
+				x = (float) (((e.getX() - displacementX) / displacementMultiplier) / factorX / mapImage.getMapTileSize());
+			}
+			// Y
+			if((((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize()) >= 0) {
+				y = (float) (((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
+			}
+			// 
+			boolean isLeftClick = false;
+			if(e.getButton() == 1) {
+				isLeftClick = true;
+			} else {
+				isLeftClick = false;
+			}
+			ClickOnTileHandler clickOnTileHandler = new ClickOnTileHandler(x,y,isLeftClick);
+			CLICK_THREAD.execute(clickOnTileHandler);
+			System.gc();
 		}
-		// Y
-		if((((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize()) >= 0) {
-			y = (float) (((e.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
-		}
-		// 
-		boolean isLeftClick = false;
-		if(e.getButton() == 1) {
-			isLeftClick = true;
-		} else {
-			isLeftClick = false;
-		}
-		ClickOnTileHandler clickOnTileHandler = new ClickOnTileHandler(x,y,isLeftClick);
-		CLICK_THREAD.execute(clickOnTileHandler);
-		System.gc();
 	}
 	
 	private class ClickOnTileHandler implements Runnable {

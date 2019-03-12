@@ -1,6 +1,7 @@
 package frame.gamePanels;
 
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Graphics;
@@ -15,6 +16,7 @@ import core.GameInfo;
 import core.ResourceManager;
 import entity.Entity;
 import entity.building.Building;
+import frame.MouseHoverListener;
 
 public class EventlessSelectionQueue extends JPanel {
 	private static final long serialVersionUID = 3364851222909630455L;
@@ -23,8 +25,10 @@ public class EventlessSelectionQueue extends JPanel {
 		setOpaque(false);
 		setDoubleBuffered(true);
 		setBackground(new Color(0, 0, 0, 0));
-		setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
-		setMinimumSize(new Dimension(200, 64));
+		setLayout(new FlowLayout(FlowLayout.LEFT, 20, 5));
+		setMinimumSize(new Dimension(280, 64));
+		setPreferredSize(new Dimension(280, 64));
+		setMaximumSize(new Dimension(280, 64));
 		updateList();
 	}
 	
@@ -35,7 +39,9 @@ public class EventlessSelectionQueue extends JPanel {
 		
 		public EventlessEntity(Entity e) {
 			setDoubleBuffered(true);
+			addMouseListener(new MouseHoverListener(this));
 			entity = e;
+			setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 			setOpaque(false);
 			setPreferredSize(new Dimension(64, 64));
 			setMinimumSize(new Dimension(64, 64));
@@ -57,7 +63,7 @@ public class EventlessSelectionQueue extends JPanel {
 				entityImage = ResourceManager.getTrebuchetImage();
 				break;
 			default:
-				entityImage = ResourceManager.getBackgroundWoodVertical();
+				entityImage = ResourceManager.getBackground_01();
 				break;
 			}
 			addMouseListener(new MouseListener() {
@@ -65,7 +71,7 @@ public class EventlessSelectionQueue extends JPanel {
 
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					if (contains(e.getPoint())) {
+					if (contains(e.getPoint()) && ((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getBtnNextRound().isEnabled()) {
 						GameInfo.getObjectMap().getSelected().removeSelected();
 						GameInfo.getObjectMap().getSelected().setSelectedMapTile(entity.getXPos(), entity.getYPos());
 						GameInfo.getObjectMap().getSelected().setSelectedEntity(entity);
@@ -100,15 +106,22 @@ public class EventlessSelectionQueue extends JPanel {
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			g.drawImage(entityImage, 0, 0, 64, 64, null);
+			g.drawImage(ResourceManager.getSlot(), 6, 6, 48, 48, null);
+			g.drawImage(entityImage, 16, 16, 32, 32, null);
 		}
+	}
+	
+	@Override
+	public void paint(Graphics g) {
+		g.drawImage(ResourceManager.getBackground_01(), 0, 0, getPreferredSize().width, getPreferredSize().height, null);
+		super.paint(g);
 	}
 	
 	public void updateList() {
 		removeAll();
 		int i = 0;
 		for(Entity e : GameInfo.getObjectMap().getEntityMap()) {
-			if(i > 3) break;
+			if(i > 5) break;
 			if(e.getEvent() == null && e.isControlable() && !(e instanceof Building)) {
 				i++;
 				add(new EventlessEntity(e));

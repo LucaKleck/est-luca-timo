@@ -1,6 +1,7 @@
 package frame.menuPanels;
 
 import java.awt.Color;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -11,32 +12,37 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.SoftBevelBorder;
 
 import core.ControlInput;
 import core.Core;
+import core.ResourceManager;
 import core.XMLSaveAndLoad;
+import frame.JButton_01;
+import frame.JScrollPaneBg;
 import net.miginfocom.swing.MigLayout;
 
-public class SavesPanel extends JScrollPane {
+public class SavesPanel extends JScrollPaneBg {
 	private static final long serialVersionUID = 6973604110107187761L;
 	private ArrayList<JPanel> saveList= new ArrayList<>();
 	private String filterString = "";
 	
 	public SavesPanel(JPanel container, String filterString) {
+		setBackground(new Color(0, 0, 0, 0));
 		this.filterString = filterString;
-		setBackground(Color.DARK_GRAY);
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		getVerticalScrollBar().setUnitIncrement(16);
 		setDoubleBuffered(true);
 		
 		JPanel viewport = new JPanel();
-		viewport.setBackground(Color.DARK_GRAY);
+		viewport.setBackground(new Color(0,0,0,0));
+		viewport.setOpaque(false);
 		viewport.setLayout(new MigLayout("", "[fill]", "[fill]"));
 		setViewportView(viewport);
+		getViewport().setOpaque(false);
+		getViewport().setBackground(new Color(0, 0, 0, 0));
 
 		File[] saves = saveGameSearcher(Core.GAME_PATH_SAVES);
 		String columns = "";
@@ -76,8 +82,9 @@ public class SavesPanel extends JScrollPane {
 		JButton btnLoad;
 
 		public SavesPanelElement(File save, JPanel savesPanelContainer) {
+			setOpaque(false);
+			setBackground(new Color(0,0,0,0));
 			setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
-			setBackground(Color.LIGHT_GRAY);
 			setDoubleBuffered(true);
 			MigLayout miglay = new MigLayout("insets 4 4 4 4, gap 4px 4px", "[135px]["+(savesPanelContainer.getWidth()-202)+",fill]", "[fill][fill][fill][fill]");
 			
@@ -86,7 +93,7 @@ public class SavesPanel extends JScrollPane {
 			JLabel lblSave = new JLabel("Save: "+save.getName().substring(0, (save.getName().length()-4)) );
 			add(lblSave, "cell 0 0 2 1");
 			
-			btnDelete = new JButton("Delete");
+			btnDelete = new JButton_01("Delete");
 			btnDelete.setBackground(Color.RED);
 			btnDelete.addActionListener(new ActionListener() {
 				
@@ -112,7 +119,7 @@ public class SavesPanel extends JScrollPane {
 			});
 			add(btnDelete, "cell 0 1,alignx left,aligny top");
 			
-			btnLoad = new JButton("Load");
+			btnLoad = new JButton_01("Load");
 			btnLoad.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					new XMLSaveAndLoad(save.getName().substring(0, save.getName().length()-4));
@@ -123,7 +130,11 @@ public class SavesPanel extends JScrollPane {
 			add(btnLoad, "cell 0 3,grow");
 			
 		}
-
+		@Override
+		public void paint(Graphics g) {
+			g.drawImage(ResourceManager.getBackground_02(), 0, 0, getWidth(), getHeight(), null);
+			super.paint(g);
+		}
 	}
 
 }

@@ -223,20 +223,21 @@ public class Core {
 	 */
 	private void setCustomUI() {
 		Color menuBgColor = new Color(80,80,80);
+		Color transparent = new Color(0,0,0,0);
 		// Button
-		UIManager.getDefaults().put("Button.border", BorderFactory.createLineBorder(Color.BLACK, 1));
-		UIManager.getDefaults().put("Button.background", Color.GRAY);
-		UIManager.getDefaults().put("Button.foreground", Color.DARK_GRAY);
+		UIManager.getDefaults().put("Button.border", BorderFactory.createEmptyBorder(3, 3, 3, 3));
+		UIManager.getDefaults().put("Button.background", transparent);
+		UIManager.getDefaults().put("Button.foreground", transparent);
 		
-		UIManager.getDefaults().put("Button.select", Color.LIGHT_GRAY);
-		UIManager.getDefaults().put("Button.focus", Color.DARK_GRAY);
-		UIManager.getDefaults().put("Button.select", Color.LIGHT_GRAY);
+		UIManager.getDefaults().put("Button.select", transparent);
+		UIManager.getDefaults().put("Button.focus", transparent);
+		UIManager.getDefaults().put("Button.select", transparent);
 		
-		UIManager.getDefaults().put("Button.light", Color.DARK_GRAY);
-		UIManager.getDefaults().put("Button.highlight", Color.DARK_GRAY);
+		UIManager.getDefaults().put("Button.light", transparent);
+		UIManager.getDefaults().put("Button.highlight", transparent);
 		
-		UIManager.getDefaults().put("Button.shadow", Color.WHITE);
-		UIManager.getDefaults().put("Button.darkShadow", Color.GRAY);
+		UIManager.getDefaults().put("Button.shadow", transparent);
+		UIManager.getDefaults().put("Button.darkShadow", transparent);
 		
 		// Menu Item
 		UIManager.getDefaults().put("MenuItem.background", menuBgColor);

@@ -20,6 +20,7 @@ import core.Core;
 import core.Event;
 import core.GameInfo;
 import entity.Entity;
+import frame.JButton_01;
 import frame.MainJFrame;
 import net.miginfocom.swing.MigLayout;
 
@@ -36,11 +37,15 @@ public class EntityPanel extends JScrollPane {
 	public EntityPanel(Entity entity) {
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		
+		setOpaque(false);
+		setBackground(new Color(0, 0, 0, 0));
+		setForeground(Color.yellow);
+		
 		setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		
 		this.entity = entity;
 
-		JPanel panel = new PanelWithVerticalBackground();
+		JPanel panel = new PanelWithBackground();
 		setViewportView(panel);
 		panel.setLayout(new MigLayout("", "[][][][][][][]", "[][][][][][][][][][][][]"));
 		panel.setFont(font);
@@ -51,9 +56,7 @@ public class EntityPanel extends JScrollPane {
 		JLabel lblLevel = new JLabel(cssYellow+"Level: " + this.entity.getLevel());
 		panel.add(lblLevel, "cell 0 1");
 
-		setForeground(Color.yellow);
-		panel.setForeground(Color.yellow);
-		JButton btnLevelUp = new JButton(cssYellow+"Level Up");
+		JButton btnLevelUp = new JButton_01(cssYellow+"Level Up");
 		btnLevelUp.addActionListener(new ActionListener() {
 
 			@Override
@@ -92,7 +95,7 @@ public class EntityPanel extends JScrollPane {
 		int index = 6;
 
 		for (Ability ability : entity.getAbilities()) {
-				JButton jButton = new JButton(cssYellow+ability.getName());
+				JButton jButton = new JButton_01(cssYellow+ability.getName());
 				jButton.setToolTipText(ability.getDescription());
 				jButton.addActionListener(new ActionListener() {
 

@@ -1,7 +1,6 @@
 package frame.gamePanels;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -37,6 +36,7 @@ import core.ResourceManager;
 import effects.AbilityEffect;
 import entity.Entity;
 import entity.unit.Warrior;
+import frame.JButton_01;
 import net.miginfocom.swing.MigLayout;
 
 public class SelectionPanel extends JScrollPane {
@@ -91,6 +91,7 @@ public class SelectionPanel extends JScrollPane {
 		this.getVerticalScrollBar().setUnitIncrement(16);
 		this.getVerticalScrollBar().setUI(new SelectionPanelScrollBarUI());
 		this.getVerticalScrollBar().setBackground(new Color(0, 0, 0, 0));
+		this.getVerticalScrollBar().setOpaque(false);
 
 		this.getHorizontalScrollBar().setUnitIncrement(16);
 		this.getHorizontalScrollBar().setUI(new SelectionPanelScrollBarUI());
@@ -152,7 +153,6 @@ public class SelectionPanel extends JScrollPane {
 
 		@Override
 		public void paint(Graphics g) {
-			g.drawImage(ResourceManager.getBackgroundWoodVertical(), 0, 0, getWidth(), getHeight(), null);
 			super.paint(g);
 		}
 
@@ -160,7 +160,7 @@ public class SelectionPanel extends JScrollPane {
 
 	@Override
 	public void paint(Graphics g) {
-		g.drawImage(ResourceManager.getBackgroundWoodVertical(), 0, 0, getWidth(), getHeight(), null);
+		g.drawImage(ResourceManager.getBackground_02(), 0, 0, getWidth(), getHeight(), null);
 		super.paint(g);
 	}
 
@@ -233,12 +233,7 @@ public class SelectionPanel extends JScrollPane {
 			miglay.preferredLayoutSize(InteractionPanel.getInteractionPanel());
 
 			setLayout(miglay);
-			this.jBtn = new JButton("Select");
-			jBtn.setOpaque(false);
-			jBtn.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-			jBtn.setBackground(new Color(0, 0, 0, 120));
-			jBtn.setForeground(Color.WHITE);
-			jBtn.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			this.jBtn = new JButton_01("Select");
 			jBtn.addMouseListener(this);
 
 			this.jBtn.setPreferredSize(new Dimension(135, 23));
@@ -273,7 +268,7 @@ public class SelectionPanel extends JScrollPane {
 		}
 
 		public void paint(Graphics g) {
-			g.drawImage(ResourceManager.getBackgroundWoodHorizontal(), 0, 0, getWidth(), getHeight(), null);
+			g.drawImage(ResourceManager.getBackground_01(), 0, 0, getWidth(), getHeight(), null);
 			// g.setColor(Color.LIGHT_GRAY);
 			// g.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
 			g.setColor(getControllableColor());

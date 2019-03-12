@@ -20,14 +20,17 @@ public class EntityFilter {
 	public Ability getRandomAbility(Entity source) {
 		ArrayList<Ability> abilities = source.getAbilities();
 		Ability chosenAbility;
-		if(abilities.size() > 0) {
-			do {
-				chosenAbility = abilities.get(random.nextInt(abilities.size()));
-			} while(chosenAbility instanceof Move);
-			return chosenAbility;
-		} else {
-			return null;
+		if(abilities != null) {
+			if(abilities.size() > 0) {
+				do {
+					chosenAbility = abilities.get(random.nextInt(abilities.size()));
+				} while(chosenAbility instanceof Move);
+				return chosenAbility;
+			} else {
+				return null;
+			}
 		}
+		return null;
 		
 	}
 	

@@ -11,17 +11,18 @@ import core.ResourceManager;
  * @author Luca Kleck
  * 
  */
-public class PanelWithVerticalBackground extends JPanel {
+public class PanelWithBackground extends JPanel {
 	private static final long serialVersionUID = 1L;
 
-	public PanelWithVerticalBackground() {
-		setBackground(new Color(0, 0, 0, 0));
+	public PanelWithBackground() {
+		setForeground(Color.yellow);
 		setOpaque(false);
+		setBackground(new Color(0, 0, 0, 0));
 	}
 	
 	@Override
 	public void paint(Graphics g) {
-		g.drawImage(ResourceManager.getBackgroundWoodVertical(), 0, 0, getWidth(), getHeight(), null);
+		g.drawImage(ResourceManager.getBackground_02(), 0, 0, getWidth(), getHeight(), null);
 		super.paint(g);
 	}
 }

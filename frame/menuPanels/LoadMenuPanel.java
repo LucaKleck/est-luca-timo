@@ -7,6 +7,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -15,8 +16,9 @@ import javax.swing.event.DocumentListener;
 
 import core.ControlInput;
 import core.Core;
+import frame.JButton_01;
+import frame.JPanelBg;
 import net.miginfocom.swing.MigLayout;
-import javax.swing.JCheckBox;
 
 /**
  * Here the user can load a save by typing the save-name and searching the save then/or clicking on a
@@ -25,18 +27,17 @@ import javax.swing.JCheckBox;
  * @author Luca Kleck
  * @see frame.MainJFrame
  */
-public class LoadMenuPanel extends JPanel implements ComponentListener, DocumentListener {
+public class LoadMenuPanel extends JPanelBg implements ComponentListener, DocumentListener {
 	private static final long serialVersionUID = 114L;
 	
 	private JTextField filterTextField;
 	private JPanel SavesPanelContainer;
 	
 	public LoadMenuPanel() {
-		this.setBackground(Color.GRAY);
 		setLayout(new MigLayout("", "[100%,grow]", "[100%,fill][fill][fill]"));
 		setDoubleBuffered(true);
 		
-		JButton btnBack = new JButton("Back");
+		JButton btnBack = new JButton_01("Back");
 		btnBack.setActionCommand("frame.menuPanels.MainMenuPanel");
 		btnBack.addActionListener(ControlInput.menuChanger);
 		
@@ -57,7 +58,7 @@ public class LoadMenuPanel extends JPanel implements ComponentListener, Document
 		
 		add(btnBack, "flowx,cell 0 2,alignx left,aligny center");
 		
-		JButton btnRefresh = new JButton("Refresh");
+		JButton btnRefresh = new JButton_01("Refresh");
 		add(btnRefresh, "cell 0 2");
 		
 		btnRefresh.addActionListener(new ActionListener() {
