@@ -1,7 +1,6 @@
 package abilities;
 
 import entity.Entity;
-import entity.unit.Mage;
 
 public class FireBall extends Ability {
 

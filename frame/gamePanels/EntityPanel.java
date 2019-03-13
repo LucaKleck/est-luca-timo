@@ -10,7 +10,6 @@ import java.awt.image.BufferedImage;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.ScrollPaneConstants;
 
 import abilities.Ability;
 import abilities.Build;
@@ -39,22 +38,23 @@ public class EntityPanel extends JScrollPaneBg {
 	private Font font = new Font("MS PGothic", Font.BOLD, 16);
 	private String cssYellow = MainJFrame.makeCssStyle("color: #F0F900;");
 
+	private JPanelCustomBg abilityPanel;
+
 	public EntityPanel(Entity entity) {
 		super(ResourceManager.getBackground_04(), true);
-		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
 		this.entity = entity;
-
-		JPanel panel = new JPanelCustomBg(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
-		setViewportView(panel);
-		panel.setLayout(new MigLayout("insets 12 12 3 0", "[fill]", "[][][][][][][]"));
-		panel.setFont(font);
+		JPanel jPanel = new JPanelCustomBg(new BufferedImage(9, 9, BufferedImage.TYPE_INT_ARGB));
+		getViewport().setView(jPanel);
+		
+		jPanel.setLayout(new MigLayout("insets 12 12 3 0", "[]", "[][][][][][][]"));
+		jPanel.setFont(font);
 
 		JLabel lblEntityName = new JLabel(cssYellow+"Name: " + entity.getName());
-		panel.add(lblEntityName, "cell 0 0");
+		jPanel.add(lblEntityName, "cell 0 0");
 
 		JLabel lblLevel = new JLabel(cssYellow+"Level: " + this.entity.getLevel());
-		panel.add(lblLevel, "cell 0 1");
+		jPanel.add(lblLevel, "cell 0 1");
 
 		JButton btnLevelUp = new JButton_01(cssYellow+"Level Up");
 		btnLevelUp.addActionListener(new ActionListener() {
@@ -77,28 +77,45 @@ public class EntityPanel extends JScrollPaneBg {
 			btnLevelUp.setEnabled(false);
 			lblCostText = cssYellow+"Cost: 30 Food";
 		}
-		panel.add(btnLevelUp, "cell 0 3");
+		jPanel.add(btnLevelUp, "cell 0 3");
 
 		JLabel lblCost = new JLabel(lblCostText);
-		panel.add(lblCost, "cell 0 3");
+		jPanel.add(lblCost, "cell 0 3");
 
 		if (this.entity.getEvent() != null) {
 			lblNextEvent = new JLabel(cssYellow+"Event: " + this.entity.getEvent().getAbility().getName());
 		} else {
 			lblNextEvent = new JLabel(cssYellow+"Event: " + "No Event");
 		}
-		panel.add(lblNextEvent, "cell 0 4");
+		jPanel.add(lblNextEvent, "cell 0 4");
 
 		JLabel lblAbilities = new JLabel(cssYellow+"Abilities: ");
 		if(!entity.getAbilities().isEmpty()) {
-			panel.add(lblAbilities, "cell 0 5");
+			jPanel.add(lblAbilities, "cell 0 5");
 		}
-		JPanel abilityPanel = new JPanelCustomBg(ResourceManager.getBackground_01());
+		abilityPanel = new JPanelCustomBg(ResourceManager.getBackground_01());
 		abilityPanel.setLayout(new MigLayout("insets 12 12 12 12 alignx left flowy", "[]", "[]"));
 		if(!entity.getAbilities().isEmpty()) {
-			panel.add(abilityPanel, "cell 0 6");
+			jPanel.add(abilityPanel, "cell 0 6");
 		}
 		
+		updateUserInterface();
+	}
+	
+	private static BufferedImage getAbilityImage(Ability ability) {
+		BufferedImage abilityImage = null;
+		if(ability instanceof Ability) abilityImage = ResourceManager.getSpellBook01_93();
+		if(ability instanceof Build) {
+			if(((Build) ability).getBuildingName().matches(Building.WALL)) abilityImage = ResourceManager.getSpellBook05_72();
+			else abilityImage = ResourceManager.getSpellBook01_67();
+			
+			
+		};
+		return abilityImage;
+	}
+	
+	public void updateUserInterface() {
+		abilityPanel.removeAll();
 		int i = 0;
 		for (Ability ability : entity.getAbilities()) {
 				i++;
@@ -107,6 +124,7 @@ public class EntityPanel extends JScrollPaneBg {
 				jButton.setToolTipText(ability.getDescription());
 				jButton.setPreferredSize(new Dimension(70, 70));
 				jButton.setMaximumSize(new Dimension(70, 70));
+				jButton.setMinimumSize(new Dimension(70, 70));
 				jButton.addActionListener(new ActionListener() {
 
 					@Override
@@ -130,30 +148,18 @@ public class EntityPanel extends JScrollPaneBg {
 				if(entity.getLevel() < ability.getAbilityMinimumLevel()) {
 					jButton.setEnabled(false);
 				}
-				if(i%3 == 0) {
+				if(i%2 == 0) {
 					abilityPanel.add(jButton, "wrap 5");
 				} else {
 					abilityPanel.add(jButton);
 				}
 		}
 
-		for (Component component : panel.getComponents()) {
+		for (Component component : getComponents()) {
 
 			component.setFont(font);
 
 		}
-	}
-
-	private BufferedImage getAbilityImage(Ability ability) {
-		BufferedImage abilityImage = null;
-		if(ability instanceof Ability) abilityImage = ResourceManager.getSpellBook01_93();
-		if(ability instanceof Build) {
-			if(((Build) ability).getBuildingName().matches(Building.WALL)) abilityImage = ResourceManager.getSpellBook05_72();
-			else abilityImage = ResourceManager.getSpellBook01_67();
-			
-			
-		};
-		return abilityImage;
 	}
 
 	public void updateEventText(String eventText) {

@@ -1,9 +1,9 @@
 package frame.gamePanels;
 
 import java.awt.Color;
+import java.awt.Component;
 
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import net.miginfocom.swing.MigLayout;
 
@@ -11,7 +11,7 @@ public class InteractionPanel extends JPanel {
 	private static final long serialVersionUID = 124L;
 
 	private static InteractionPanel selfInteractionPanel;
-	private static JScrollPane currentPanel;
+	private static Component currentPanel;
 
 	public InteractionPanel() {
 		setBorder(null);
@@ -21,7 +21,7 @@ public class InteractionPanel extends JPanel {
 		setLayout(new MigLayout("insets 0 0 0 0, gap 0px 0px", "[100%,fill]", "[100%,fill]"));
 	}
 
-	public static void setCurrentPanel(JScrollPane currentPanel) {
+	public static void setCurrentPanel(Component currentPanel) {
 		if (InteractionPanel.currentPanel != null) {
 			selfInteractionPanel.removeAll();
 			InteractionPanel.currentPanel = null;
@@ -39,7 +39,7 @@ public class InteractionPanel extends JPanel {
 		return selfInteractionPanel;
 	}
 
-	public static JScrollPane getCurrentPanel() {
+	public static Component getCurrentPanel() {
 		return currentPanel;
 	}
 }
