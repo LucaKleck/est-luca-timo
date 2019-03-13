@@ -2,7 +2,6 @@ package abilities;
 
 import entity.Entity;
 import entity.building.Building;
-import entity.unit.Unit;
 
 public class SiegeAttack extends Ability {
 
@@ -10,17 +9,19 @@ public class SiegeAttack extends Ability {
 	
 	public SiegeAttack() {
 		super(Ability.ABILITY_SIEGE_ATTACK, Ability.ABILITY_DESC_SIEGE_ATTACK, Ability.ABILITY_TYPE_DAMAGE);
+		this.setDamage(BASE_DAMAGE);
 	}
 	
 	public SiegeAttack(int maxRange) {
 		super(Ability.ABILITY_SIEGE_ATTACK, Ability.ABILITY_DESC_SIEGE_ATTACK, Ability.ABILITY_TYPE_DAMAGE);
 		super.maxRange = maxRange;
+		this.setDamage(BASE_DAMAGE);
 	}
 	
 	@Override
 	public void applyAbility(Entity source, Entity target) {
 		if(target instanceof Building) {
-			target.setCurrentHealth(target.getCurrentHealth() - (BASE_DAMAGE  + ((Unit) source).getBaseDamage()));
+			target.setCurrentHealth(target.getCurrentHealth() - (BASE_DAMAGE  + 3));
 		} else {
 			target.setCurrentHealth(target.getCurrentHealth() - BASE_DAMAGE);
 		}

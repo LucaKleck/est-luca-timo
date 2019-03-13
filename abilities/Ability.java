@@ -105,6 +105,7 @@ public abstract class Ability {
 	private String description;
 	public int maxRange = 3;
 	private String type = "default";
+	private int damage = 1;
 
 	public Ability(String name, String description, String type) {
 		this.name = name;
@@ -158,7 +159,7 @@ public abstract class Ability {
 		int deltaY = targetY - sourceY;
 		if(deltaY < 0) deltaY = -deltaY;
 		
-		if(deltaY < deltaX) {
+		if(deltaY > deltaX) {
 			return deltaY;
 		} else {
 			return deltaX;
@@ -211,6 +212,14 @@ public abstract class Ability {
 
 	public String getType() {
 		return type;
+	}
+
+	public int getDamage() {
+		return damage;
+	}
+
+	public void setDamage(int damage) {
+		this.damage = damage;
 	}
 
 	@Override

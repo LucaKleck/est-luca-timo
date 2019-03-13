@@ -10,16 +10,18 @@ public class RangedAttack extends Ability {
 	public RangedAttack() {
 		super(Ability.ABILITY_RANGED_ATTACK, Ability.ABILITY_DESC_RANGED_ATTACK, Ability.ABILITY_TYPE_DAMAGE);
 		super.maxRange = DEFAULT_MAX_RANGE;
+		this.setDamage(BASE_DAMAGE);
 	}
 	
 	public RangedAttack(int maxRange) {
 		super(Ability.ABILITY_RANGED_ATTACK, Ability.ABILITY_DESC_RANGED_ATTACK, Ability.ABILITY_TYPE_DAMAGE);
 		super.maxRange = maxRange;
+		this.setDamage(BASE_DAMAGE);
 	}
 
 	@Override
 	public void applyAbility(Entity source, Entity target) {
-		target.setCurrentHealth(target.getCurrentHealth() - BASE_DAMAGE);
+		target.setCurrentHealth(target.getCurrentHealth() - this.getDamage());
 	}	
 
 }

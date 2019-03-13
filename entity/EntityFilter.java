@@ -35,19 +35,23 @@ public class EntityFilter {
 	
 	public Ability getBestAbility(int rangeToTarget, Entity source) {
 		ArrayList<Ability> abilities = source.getAbilities();
-		Ability chosenAbility;
+		Ability chosenAbility = null;
 		if(abilities != null) {
 			if(abilities.size() > 0) {
-				do {
-					chosenAbility = abilities.get(random.nextInt(abilities.size()));
-				} while(chosenAbility instanceof Move && chosenAbility.maxRange < rangeToTarget);
-				return chosenAbility;
+				for(Ability abl: abilities) {
+					if(abl instanceof Move == false && abl.maxRange >= rangeToTarget) {
+						if(chosenAbility == null) {
+							chosenAbility = abl;
+						} else if(chosenAbility.getDamage() < abl.getDamage()) {
+							chosenAbility = abl;
+						}
+					}
+				}
 			} else {
 				return null;
 			}
-		}
-		return null;
-		
+		} 
+		return chosenAbility;
 	}
 	
 	public Point2DNoFxReq getRandomBuildPoint(Builder builder) {

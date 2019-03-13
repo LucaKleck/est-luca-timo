@@ -77,7 +77,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 			if(entity instanceof Unit) {
 				Entity bestTarget = entityFilter.getBestEntityTarget(entity);
 				ability = entityFilter.getBestAbility(ability.getRangeToTarget(entity, bestTarget), entity);					
-				if(ability != null && bestTarget != null && entity instanceof Builder == false && ability.rangeCheckEntity(entity, bestTarget)) {
+				if(ability != null && bestTarget != null && entity instanceof Builder == false) {
 					entity.setEvent(new Event(entity, bestTarget, ability, new AbilityEffect(entity, bestTarget, ability)));
 				} else if(entity instanceof Builder) {
 					ability = entityFilter.getRandomAbility(entity);

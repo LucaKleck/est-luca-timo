@@ -10,16 +10,18 @@ public class MeleeAttack extends Ability {
 	public MeleeAttack() {
 		super(Ability.ABILITY_MELEE_ATTACK, Ability.ABILITY_DESC_MELEE_ATTACK, Ability.ABILITY_TYPE_DAMAGE);
 		super.maxRange = DEFAULT_MAX_RANGE;
+		this.setDamage(BASE_DAMAGE);
 	}
 	
 	public MeleeAttack(int maxRange) {
 		super(Ability.ABILITY_MELEE_ATTACK, Ability.ABILITY_DESC_MELEE_ATTACK, Ability.ABILITY_TYPE_DAMAGE);
 		super.maxRange = maxRange;
+		this.setDamage(BASE_DAMAGE);
 	}
 
 	@Override
 	public void applyAbility(Entity source, Entity target) {
-		target.setCurrentHealth(target.getCurrentHealth() - BASE_DAMAGE);
+		target.setCurrentHealth(target.getCurrentHealth() - this.getDamage());
 	}	
 
 }

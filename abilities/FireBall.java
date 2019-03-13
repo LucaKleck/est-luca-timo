@@ -2,7 +2,6 @@ package abilities;
 
 import entity.Entity;
 import entity.unit.Mage;
-import entity.unit.Unit;
 
 public class FireBall extends Ability {
 
@@ -10,20 +9,23 @@ public class FireBall extends Ability {
 	
 	public FireBall() {
 		super(Ability.ABILITY_FIRE_BALL, Ability.ABILITY_DESC_FIRE_BALL, Ability.ABILITY_TYPE_DAMAGE);
+		this.setDamage(BASE_DAMAGE);
 	}
 	
 	public FireBall(int maxRange) {
 		super(Ability.ABILITY_FIRE_BALL, Ability.ABILITY_DESC_FIRE_BALL, Ability.ABILITY_TYPE_DAMAGE);
 		super.maxRange = maxRange;
+		this.setDamage(BASE_DAMAGE);
+	}
+	
+	public FireBall(boolean isMage) {
+		super(Ability.ABILITY_FIRE_BALL, Ability.ABILITY_DESC_FIRE_BALL, Ability.ABILITY_TYPE_DAMAGE);
+		this.setDamage(BASE_DAMAGE  + 2);
 	}
 	
 	@Override
 	public void applyAbility(Entity source, Entity target) {
-		if(source instanceof Mage) {
-			target.setCurrentHealth(target.getCurrentHealth() - (BASE_DAMAGE  + ((Unit) source).getBaseDamage()));
-		} else {
-			target.setCurrentHealth(target.getCurrentHealth() - BASE_DAMAGE);
-		}
+		target.setCurrentHealth(target.getCurrentHealth() - this.getDamage());
 	}
 
 }
