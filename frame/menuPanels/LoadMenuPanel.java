@@ -42,7 +42,8 @@ public class LoadMenuPanel extends JPanelBg implements ComponentListener, Docume
 		btnBack.addActionListener(ControlInput.menuChanger);
 		
 		SavesPanelContainer  = new JPanel();
-		SavesPanelContainer.setBackground(Color.DARK_GRAY);
+		SavesPanelContainer.setBackground(new Color(0,0,0,0));
+		SavesPanelContainer.setOpaque(false);
 		add(SavesPanelContainer, "cell 0 0,grow");
 		SavesPanelContainer.setLayout(new MigLayout("", "[100%,fill]", "[100%,fill]"));
 		

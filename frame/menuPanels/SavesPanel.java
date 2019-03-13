@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
@@ -30,6 +31,7 @@ public class SavesPanel extends JScrollPaneBg {
 	private String filterString = "";
 	
 	public SavesPanel(JPanel container, String filterString) {
+		super(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
 		setBackground(new Color(0, 0, 0, 0));
 		this.filterString = filterString;
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -41,8 +43,6 @@ public class SavesPanel extends JScrollPaneBg {
 		viewport.setOpaque(false);
 		viewport.setLayout(new MigLayout("", "[fill]", "[fill]"));
 		setViewportView(viewport);
-		getViewport().setOpaque(false);
-		getViewport().setBackground(new Color(0, 0, 0, 0));
 
 		File[] saves = saveGameSearcher(Core.GAME_PATH_SAVES);
 		String columns = "";

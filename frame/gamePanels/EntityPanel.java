@@ -1,16 +1,14 @@
 package frame.gamePanels;
 
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import abilities.Ability;
@@ -19,12 +17,15 @@ import abilities.LevelUp;
 import core.Core;
 import core.Event;
 import core.GameInfo;
+import core.ResourceManager;
 import entity.Entity;
 import frame.JButton_01;
+import frame.JPanelCustomBg;
+import frame.JScrollPaneBg;
 import frame.MainJFrame;
 import net.miginfocom.swing.MigLayout;
 
-public class EntityPanel extends JScrollPane {
+public class EntityPanel extends JScrollPaneBg {
 	private static final long serialVersionUID = 1L;
 
 	private Entity entity;
@@ -35,17 +36,12 @@ public class EntityPanel extends JScrollPane {
 	private String cssYellow = MainJFrame.makeCssStyle("color: #F0F900;");
 
 	public EntityPanel(Entity entity) {
+		super(ResourceManager.getBackground_02());
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		
-		setOpaque(false);
-		setBackground(new Color(0, 0, 0, 0));
-		setForeground(Color.yellow);
-		
-		setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
 		
 		this.entity = entity;
 
-		JPanel panel = new PanelWithBackground();
+		JPanel panel = new JPanelCustomBg(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
 		setViewportView(panel);
 		panel.setLayout(new MigLayout("", "[][][][][][][]", "[][][][][][][][][][][][]"));
 		panel.setFont(font);

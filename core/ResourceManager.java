@@ -9,14 +9,25 @@ public class ResourceManager {
 	// UI
 	private static BufferedImage background_01;
 	private static BufferedImage background_02;
+	private static BufferedImage background_03;
 	
 	private static BufferedImage frame;
+	private static BufferedImage frame_01_05;
+	
 	private static BufferedImage slot;
 	
 	private static BufferedImage button_01;
+
+	private static BufferedImage slider_01_01;
+	private static BufferedImage slider_01_02;
+	private static BufferedImage slider_02_01;
+	private static BufferedImage slider_02_03;
+	private static BufferedImage slider_02_04;
 	
 	private static BufferedImage button_04_bg;
 	private static BufferedImage button_04_frame;
+	
+	private static BufferedImage text_bg_02;
 	
 	// Units
 	private static BufferedImage warriorImage;
@@ -104,6 +115,17 @@ public class ResourceManager {
 		}
 		return background_02;
 	}
+	
+	public static BufferedImage getBackground_03() {
+		if(background_03 == null) {
+			try {
+				background_03 = ImageIO.read(Boot.class.getResource("/resources/UI/background_03.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return background_03;
+	}
 
 	public static BufferedImage getFrame() {
 		if(frame == null) {
@@ -114,6 +136,17 @@ public class ResourceManager {
 			}
 		}
 		return frame;
+	}
+	
+	public static BufferedImage getFrame_01_05() {
+		if(frame_01_05 == null) {
+			try {
+				frame_01_05 = ImageIO.read(Boot.class.getResource("/resources/UI/frame_01_05.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return frame_01_05;
 	}
 	
 	public static BufferedImage getSlot() {
@@ -158,6 +191,72 @@ public class ResourceManager {
 			}
 		}
 		return button_04_frame;
+	}
+	
+	public static BufferedImage getSlider_02_04() {
+		if(slider_02_04 == null) {
+			try {
+				slider_02_04 = ImageIO.read(Boot.class.getResource("/resources/UI/slider_02_04.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return slider_02_04;
+	}
+
+	public static BufferedImage getSlider_01_01() {
+		if(slider_01_01 == null) {
+			try {
+				slider_01_01 = ImageIO.read(Boot.class.getResource("/resources/UI/slider_01_01.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return slider_01_01;
+	}
+
+	public static BufferedImage getSlider_01_02() {
+		if(slider_01_02 == null) {
+			try {
+				slider_01_02 = ImageIO.read(Boot.class.getResource("/resources/UI/slider_01_02.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return slider_01_02;
+	}
+
+	public static BufferedImage getSlider_02_03() {
+		if(slider_02_03 == null) {
+			try {
+				slider_02_03 = ImageIO.read(Boot.class.getResource("/resources/UI/slider_02_03.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return slider_02_03;
+	}
+	
+	public static BufferedImage getText_bg_02() {
+		if(text_bg_02 == null) {
+			try {
+				text_bg_02 = ImageIO.read(Boot.class.getResource("/resources/UI/text_bg_02.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return text_bg_02;
+	}
+
+	public static BufferedImage getSlider_02_01() {
+		if(slider_02_01 == null) {
+			try {
+				slider_02_01 = ImageIO.read(Boot.class.getResource("/resources/UI/slider_02_01.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return slider_02_01;
 	}
 
 }
