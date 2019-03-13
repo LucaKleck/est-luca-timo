@@ -25,7 +25,8 @@ public class JViewportCustomBg extends JViewport {
 		g.drawImage(background, 0, 0, getWidth(), getHeight(), null);
 		super.paint(g);
 		if(hasFrame) {
-			g.drawImage(ResourceManager.getFrame(), 0, 0, getWidth(), getHeight(), null);
+			g.drawImage(ResourceManager.getFrame_10_01(), 0, 0, 10, getHeight(), null);
+			g.drawImage(ResourceManager.getFrame_10_02(), getWidth()-10, 0, 10, getHeight(), null);
 		}
 		
 	}

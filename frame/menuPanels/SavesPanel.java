@@ -31,7 +31,7 @@ public class SavesPanel extends JScrollPaneBg {
 	private String filterString = "";
 	
 	public SavesPanel(JPanel container, String filterString) {
-		super(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
+		super(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB), false);
 		setBackground(new Color(0, 0, 0, 0));
 		this.filterString = filterString;
 		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);

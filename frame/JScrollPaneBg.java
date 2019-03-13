@@ -11,8 +11,8 @@ import javax.swing.ScrollPaneConstants;
 public class JScrollPaneBg extends JScrollPane {
 	private static final long serialVersionUID = -3730877990751762965L;
 	
-	public JScrollPaneBg(BufferedImage image) {
-		setViewport(new JViewportCustomBg(image, false));
+	public JScrollPaneBg(BufferedImage image, boolean hasFrame) {
+		setViewport(new JViewportCustomBg(image, hasFrame));
 		DragAndDropJPanelMouseAdapter ma = new DragAndDropJPanelMouseAdapter(getViewport());
 		addMouseListener(ma);
 		addMouseMotionListener(ma);

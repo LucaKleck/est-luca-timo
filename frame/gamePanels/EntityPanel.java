@@ -1,6 +1,7 @@
 package frame.gamePanels;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.ScrollPaneConstants;
 
 import abilities.Ability;
+import abilities.Build;
 import abilities.CreateUnit;
 import abilities.LevelUp;
 import core.Core;
@@ -19,6 +21,8 @@ import core.Event;
 import core.GameInfo;
 import core.ResourceManager;
 import entity.Entity;
+import entity.building.Building;
+import frame.JButtonCustomBg;
 import frame.JButton_01;
 import frame.JPanelCustomBg;
 import frame.JScrollPaneBg;
@@ -36,14 +40,14 @@ public class EntityPanel extends JScrollPaneBg {
 	private String cssYellow = MainJFrame.makeCssStyle("color: #F0F900;");
 
 	public EntityPanel(Entity entity) {
-		super(ResourceManager.getBackground_02());
-		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		super(ResourceManager.getBackground_04(), true);
+		setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		
 		this.entity = entity;
 
 		JPanel panel = new JPanelCustomBg(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
 		setViewportView(panel);
-		panel.setLayout(new MigLayout("", "[][][][][][][]", "[][][][][][][][][][][][]"));
+		panel.setLayout(new MigLayout("insets 12 12 3 0", "[fill]", "[][][][][][][]"));
 		panel.setFont(font);
 
 		JLabel lblEntityName = new JLabel(cssYellow+"Name: " + entity.getName());
@@ -86,13 +90,23 @@ public class EntityPanel extends JScrollPaneBg {
 		panel.add(lblNextEvent, "cell 0 4");
 
 		JLabel lblAbilities = new JLabel(cssYellow+"Abilities: ");
-		panel.add(lblAbilities, "cell 0 5");
-
-		int index = 6;
-
+		if(!entity.getAbilities().isEmpty()) {
+			panel.add(lblAbilities, "cell 0 5");
+		}
+		JPanel abilityPanel = new JPanelCustomBg(ResourceManager.getBackground_01());
+		abilityPanel.setLayout(new MigLayout("insets 12 12 12 12 alignx left flowy", "[]", "[]"));
+		if(!entity.getAbilities().isEmpty()) {
+			panel.add(abilityPanel, "cell 0 6");
+		}
+		
+		int i = 0;
 		for (Ability ability : entity.getAbilities()) {
-				JButton jButton = new JButton_01(cssYellow+ability.getName());
+				i++;
+				JButton jButton = new JButtonCustomBg(getAbilityImage(ability), true);
+				if(ability instanceof Build) jButton.setText(cssYellow+((Build) ability).getBuildingName());
 				jButton.setToolTipText(ability.getDescription());
+				jButton.setPreferredSize(new Dimension(70, 70));
+				jButton.setMaximumSize(new Dimension(70, 70));
 				jButton.addActionListener(new ActionListener() {
 
 					@Override
@@ -116,8 +130,11 @@ public class EntityPanel extends JScrollPaneBg {
 				if(entity.getLevel() < ability.getAbilityMinimumLevel()) {
 					jButton.setEnabled(false);
 				}
-				panel.add(jButton, ("cell 0 " + index + ", grow"));
-			index++;
+				if(i%3 == 0) {
+					abilityPanel.add(jButton, "wrap 5");
+				} else {
+					abilityPanel.add(jButton);
+				}
 		}
 
 		for (Component component : panel.getComponents()) {
@@ -125,6 +142,18 @@ public class EntityPanel extends JScrollPaneBg {
 			component.setFont(font);
 
 		}
+	}
+
+	private BufferedImage getAbilityImage(Ability ability) {
+		BufferedImage abilityImage = null;
+		if(ability instanceof Ability) abilityImage = ResourceManager.getSpellBook01_93();
+		if(ability instanceof Build) {
+			if(((Build) ability).getBuildingName().matches(Building.WALL)) abilityImage = ResourceManager.getSpellBook05_72();
+			else abilityImage = ResourceManager.getSpellBook01_67();
+			
+			
+		};
+		return abilityImage;
 	}
 
 	public void updateEventText(String eventText) {

@@ -44,7 +44,7 @@ public class SelectionPanel extends JScrollPaneBg {
 	 * @param y
 	 */
 	public SelectionPanel(int x, int y) {
-		super(ResourceManager.getBackground_03());
+		super(ResourceManager.getBackground_03(), true);
 		setDoubleBuffered(true);
 
 		JPanel headerPanel = new JPanelCustomBg(ResourceManager.getText_bg_02());

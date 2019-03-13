@@ -10,9 +10,13 @@ public class ResourceManager {
 	private static BufferedImage background_01;
 	private static BufferedImage background_02;
 	private static BufferedImage background_03;
+	private static BufferedImage background_04;
 	
 	private static BufferedImage frame;
 	private static BufferedImage frame_01_05;
+	
+	private static BufferedImage frame_10_01;
+	private static BufferedImage frame_10_02;
 	
 	private static BufferedImage slot;
 	
@@ -35,6 +39,14 @@ public class ResourceManager {
 	private static BufferedImage builderImage;
 	private static BufferedImage archerImage;
 	private static BufferedImage trebuchetImage;
+	
+	// SpellBook
+	private static BufferedImage spellBook01_67;
+	private static BufferedImage spellBook01_93;
+	
+	private static BufferedImage spellBook05_72;
+	
+	
 	
 	private ResourceManager() {
 	}
@@ -126,6 +138,17 @@ public class ResourceManager {
 		}
 		return background_03;
 	}
+	
+	public static BufferedImage getBackground_04() {
+		if(background_04 == null) {
+			try {
+				background_04 = ImageIO.read(Boot.class.getResource("/resources/UI/background_04.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return background_04;
+	}
 
 	public static BufferedImage getFrame() {
 		if(frame == null) {
@@ -147,6 +170,28 @@ public class ResourceManager {
 			}
 		}
 		return frame_01_05;
+	}
+	
+	public static BufferedImage getFrame_10_01() {
+		if(frame_10_01 == null) {
+			try {
+				frame_10_01 = ImageIO.read(Boot.class.getResource("/resources/UI/frame_10_01.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return frame_10_01;
+	}
+	
+	public static BufferedImage getFrame_10_02() {
+		if(frame_10_02 == null) {
+			try {
+				frame_10_02 = ImageIO.read(Boot.class.getResource("/resources/UI/frame_10_02.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return frame_10_02;
 	}
 	
 	public static BufferedImage getSlot() {
@@ -259,4 +304,37 @@ public class ResourceManager {
 		return slider_02_01;
 	}
 
+	public static BufferedImage getSpellBook01_67() {
+		if(spellBook01_67 == null) {
+			try {
+				spellBook01_67 = ImageIO.read(Boot.class.getResource("/resources/spellbook/SpellBook01_67.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook01_67;
+	}
+
+	public static BufferedImage getSpellBook01_93() {
+		if(spellBook01_93 == null) {
+			try {
+				spellBook01_93 = ImageIO.read(Boot.class.getResource("/resources/spellbook/SpellBook01_93.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook01_93;
+	}
+	
+	public static BufferedImage getSpellBook05_72() {
+		if(spellBook05_72 == null) {
+			try {
+				spellBook05_72 = ImageIO.read(Boot.class.getResource("/resources/SpellBookPage05/SpellBook05_72.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook05_72;
+	}
+	
 }

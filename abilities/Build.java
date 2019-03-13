@@ -25,6 +25,10 @@ public class Build extends Ability {
 		this.controlable = controlable;
 		super.maxRange = DEFAULT_MAX_RANGE;
 	}
+	
+	public String getBuildingName() {
+		return buildingType;
+	}
 
 	@Override
 	public void applyAbility(Entity source, Entity target) {
