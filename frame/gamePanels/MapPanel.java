@@ -105,7 +105,6 @@ public class MapPanel extends JPanel implements MouseMotionListener, ActionListe
 				MapPanel.displacementX = (int) -(mp.getWidth() / 2 * displacementMultiplier * 1.75);
 			}
 		}
-		System.out.println("X: " + MapPanel.displacementX);
 	}
 
 	public static void addDisplacementY(int displacementY) {
@@ -120,7 +119,6 @@ public class MapPanel extends JPanel implements MouseMotionListener, ActionListe
 				MapPanel.displacementY = (int) -(mp.getWidth() / 2 * displacementMultiplier * 1.75);
 			}
 		}
-		System.out.println("Y: " + MapPanel.displacementY);
 	}
 
 	public void setPosition(int xPos, int yPos) {

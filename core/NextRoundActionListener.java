@@ -73,11 +73,12 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 		
 		for(Entity entity: enemyEntities) {
 			
-			Entity bestTarget = entityFilter.getBestEntityTarget(entity);
 			Ability ability = entityFilter.getRandomAbility(entity);
 			if(entity instanceof Unit) {
-				if(bestTarget != null && entity instanceof Builder == false && ability.rangeCheck(entity.getXPos(), entity.getYPos(), bestTarget.getXPos(), bestTarget.getYPos())) {
-					entity.setEvent(new Event(entity, entityFilter.getBestEntityTarget(entity), ability, new AbilityEffect(entity, bestTarget, ability)));
+				Entity bestTarget = entityFilter.getBestEntityTarget(entity);
+				ability = entityFilter.getBestAbility(ability.getRangeToTarget(entity, bestTarget), entity);					
+				if(ability != null && bestTarget != null && entity instanceof Builder == false && ability.rangeCheckEntity(entity, bestTarget)) {
+					entity.setEvent(new Event(entity, bestTarget, ability, new AbilityEffect(entity, bestTarget, ability)));
 				} else if(entity instanceof Builder) {
 					ability = entityFilter.getRandomAbility(entity);
 					((Builder)entity).setBuildPoint(entityFilter.getRandomBuildPoint((Builder) entity)); 
@@ -156,9 +157,11 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 	private void goThroughEventList() {
 		for (Iterator<Event> iterator = GameInfo.getRoundInfo().getEventList().iterator(); iterator.hasNext();) {			
 			Event e = iterator.next();
-			if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
-				MainGamePanel mp = (MainGamePanel) Core.getMainJFrame().getCurrentComponent();
-				mp.getMapPanel().setPosition(e.getSource().getXPos(), e.getSource().getYPos());
+			if(e.getAbility() instanceof CollectResources == false) {
+				if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+					MainGamePanel mp = (MainGamePanel) Core.getMainJFrame().getCurrentComponent();
+					mp.getMapPanel().setPosition(e.getSource().getXPos(), e.getSource().getYPos());
+				}
 			}
 			System.out.println(e);
 			try {
@@ -177,7 +180,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 				mp.getMapPanel().getMapImage().update();
 			}
 			try {
-				Thread.sleep(500);
+				Thread.sleep(750);
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}

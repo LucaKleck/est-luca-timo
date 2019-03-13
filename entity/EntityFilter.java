@@ -31,6 +31,22 @@ public class EntityFilter {
 			}
 		}
 		return null;
+	}
+	
+	public Ability getBestAbility(int rangeToTarget, Entity source) {
+		ArrayList<Ability> abilities = source.getAbilities();
+		Ability chosenAbility;
+		if(abilities != null) {
+			if(abilities.size() > 0) {
+				do {
+					chosenAbility = abilities.get(random.nextInt(abilities.size()));
+				} while(chosenAbility instanceof Move && chosenAbility.maxRange < rangeToTarget);
+				return chosenAbility;
+			} else {
+				return null;
+			}
+		}
+		return null;
 		
 	}
 	
@@ -61,6 +77,9 @@ public class EntityFilter {
 				}
 			}
 		}
+		
+		System.out.println(bestTarget.getName());
+		System.out.println(source.getName());
 		
 		return bestTarget;
 	}
