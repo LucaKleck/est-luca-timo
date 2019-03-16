@@ -63,10 +63,6 @@ public class Entity {
 		return controlable;
 	}
 	
-	public Event getEvent() {
-		return event;
-	}
-	
 	public int getId() {
 		return id;
 	}
@@ -149,6 +145,10 @@ public class Entity {
 		}
 		this.event = event;
 	}
+	
+	public Event getEvent() {
+		return this.event;
+	}
 
 	/**
 	 * This is needed for when the round end iterates through all the Events
@@ -159,6 +159,16 @@ public class Entity {
 	
 	public ArrayList<StatusEffect> getStatusEffects() {
 		return statusEffects;
+	}
+	
+	public void addStatusEffect(StatusEffect statusEffect) {
+		statusEffects.add(statusEffect);
+	}
+	
+	public void removeStatusEffect(StatusEffect statusEffect) {
+				
+		statusEffects.remove(statusEffect);
+		
 	}
 
 }

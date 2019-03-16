@@ -39,16 +39,6 @@ public class ObjectMap {
 		entityMap.add(new DefenseBuilding(new Point2DNoFxReq(7, 3), Building.WALL, 15, 15, 1, false, new ArrayList<>()));
 		entityMap.add(new Builder(new Point2DNoFxReq(5, 5), Unit.UNIT_BUILDER,  3, 1, true, new ArrayList<>()));
 		// FOR UNIT STACK (check scroll and other stuff)
-		entityMap.add(new Builder(new Point2DNoFxReq(5, 5), Unit.UNIT_BUILDER,  3, 1, true, new ArrayList<>()));
-		entityMap.add(new Builder(new Point2DNoFxReq(5, 5), Unit.UNIT_BUILDER,  3, 1, true, new ArrayList<>()));
-		entityMap.add(new Builder(new Point2DNoFxReq(5, 5), Unit.UNIT_BUILDER,  3, 1, true, new ArrayList<>()));
-		entityMap.add(new Builder(new Point2DNoFxReq(5, 5), Unit.UNIT_BUILDER,  3, 1, true, new ArrayList<>()));
-		entityMap.add(new Builder(new Point2DNoFxReq(5, 5), Unit.UNIT_BUILDER,  3, 1, true, new ArrayList<>()));
-		entityMap.add(new Builder(new Point2DNoFxReq(5, 5), Unit.UNIT_BUILDER,  3, 1, true, new ArrayList<>()));
-		entityMap.add(new Builder(new Point2DNoFxReq(5, 5), Unit.UNIT_BUILDER,  3, 1, true, new ArrayList<>()));
-		entityMap.add(new Builder(new Point2DNoFxReq(5, 5), Unit.UNIT_BUILDER,  3, 1, true, new ArrayList<>()));
-		entityMap.add(new Builder(new Point2DNoFxReq(5, 5), Unit.UNIT_BUILDER,  3, 1, true, new ArrayList<>()));
-		//
 		entityMap.add(new Warrior(new Point2DNoFxReq(5, 3), Unit.UNIT_WARRIOR,  3, 1, false, new ArrayList<>()));
 	}
 	

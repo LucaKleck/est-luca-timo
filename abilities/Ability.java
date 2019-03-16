@@ -92,6 +92,13 @@ public abstract class Ability {
 	// Other Abilities
 	public static final String ABILITY_LEVEL_UP = "Level Up";
 	public static final String ABILITY_DESC_LEVEL_UP = "Levels the selected entity at the end of the round";
+	
+	//Status Effect Abilities
+	public static final String ABILITY_HEAL = "Heal";
+	public static final String ABILITY_DESC_HEAL = "Heals the selected entity";
+	
+	public static final String ABILITY_POISON = "Poison";
+	public static final String ABILITY_DESC_POISON = "Poisons the selected entity";
 
 	// Ability Types
 	public static final String ABILITY_TYPE_DAMAGE = "damage";
@@ -100,6 +107,7 @@ public abstract class Ability {
 	public static final String ABILITY_TYPE_BUILD = "build";
 	public static final String ABILITY_TYPE_LEVEL = "level";
 	public static final String ABILITY_TYPE_MOVEMENT = "movement";
+	public static final String ABILITY_TYPE_STATUS_EFFECT = "statuseffect";
 
 	private String name;
 	private String description;
