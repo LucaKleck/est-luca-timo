@@ -9,11 +9,11 @@ import core.GameInfo;
 import core.Point2DNoFxReq;
 import entity.unit.Builder;
 
-public class EntityFilter {
+public class EntityAI {
 
 	private Random random = new Random();
 	
-	public EntityFilter() {
+	public EntityAI() {
 
 	}
 

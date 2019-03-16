@@ -1,28 +1,44 @@
 package statusEffects;
 
+import entity.Entity;
+
 public abstract class StatusEffect {
 
-	private String name;
-	private boolean permanent;
-	private int duration;
+	public final static String STATUS_EFFECT_NAME_HEAL = "Heal";
+	public final static boolean IS_PASSIVE_HEAL = false;
+	public final static int DURATION_HEAL = 3;
 	
-	public StatusEffect(String name, boolean permanent, int duration) {
-		this.name=name;
-		this.permanent=permanent;
-		this.duration=duration;
+	public final static String STATUS_EFFECT_NAME_POISON = "Poison";
+	public final static boolean IS_PASSIVE_POISON = false;
+	public final static int DURATION_POISON = 2;
+	
+	private String name;
+	private boolean passive;
+	private int duration;
+	private Entity target;
+
+	public StatusEffect(String name, boolean passive, int duration, Entity target) {
+		this.name = name;
+		this.passive = passive;
+		this.duration = duration;
+		this.target = target;
 	}
 
 	public String getName() {
 		return name;
 	}
-	
-	public boolean isPermanent() {
-		return permanent;
+
+	public boolean isPassive() {
+		return passive;
 	}
 
 	public int getDuration() {
 		return duration;
 	}
 
-	public abstract int applyEffect();
+	public Entity getTarget() {
+		return target;
+	}
+
+	public abstract void applyEffect();
 }
