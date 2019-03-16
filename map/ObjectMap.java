@@ -55,6 +55,8 @@ public class ObjectMap {
 	public ObjectMap(MapTile[][] map, ArrayList<Entity> entityMap) {
 		this.map = map;
 		this.entityMap = entityMap;
+		// TODO change it so that this is loaded from the actual position
+		portalPoint = new Point2DNoFxReq(45, 45);
 		selected = new Selected();
 	}
 

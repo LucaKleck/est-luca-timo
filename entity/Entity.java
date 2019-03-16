@@ -101,7 +101,7 @@ public class Entity {
 	}
 
 	public void addLevel() {
-		level ++;
+		level++;
 	}
 	
 	private void destroy() {

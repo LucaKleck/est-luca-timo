@@ -12,11 +12,13 @@ public class ResourceBuilding extends Building {
 	
 	public ResourceBuilding(Point2DNoFxReq pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
 		super(pointXY, name, maxHealth, currentHealth, level, controlable, abilities);
-		ressources = new BuildingRessources (getXPos(), getYPos(), name);
 		abilities.add(new CollectResources(this));
 	}
 	
 	public BuildingRessources getRessources() {
+		if(ressources == null) {
+			ressources = new BuildingRessources (getXPos(), getYPos(), getName());
+		}
 		return ressources;
 	}
 	
