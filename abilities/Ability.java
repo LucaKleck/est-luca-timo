@@ -177,9 +177,6 @@ public abstract class Ability {
 	}
 	
 	public boolean rangeCheck(int unitX, int unitY, int mapTileX, int mapTileY) {
-		if (mapTileX == unitX && mapTileY == unitY) {
-			return false;
-		}
 		for(Entity entity: GameInfo.getObjectMap().getEntityMap()) {
 			if(this.type.equals(ABILITY_TYPE_DAMAGE) == false) {
 				if(entity.isControlable() == false && entity instanceof DefenseBuilding) {

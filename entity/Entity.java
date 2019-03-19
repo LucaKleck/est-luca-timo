@@ -161,7 +161,9 @@ public class Entity {
 		return statusEffects;
 	}
 	
-	public void addStatusEffect(StatusEffect statusEffect) {
+	public void addStatusEffect(StatusEffect statusEffect, Entity source, Entity target) {
+		statusEffect.setTarget(target);
+		statusEffect.setSource(source);
 		statusEffects.add(statusEffect);
 	}
 	

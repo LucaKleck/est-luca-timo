@@ -128,6 +128,19 @@ public class Selected {
 						removeSelected();
 						break;
 					}
+					if (selectedAbility.getType().equals(Ability.ABILITY_TYPE_STATUS_EFFECT)) {
+						if ((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(),
+								selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
+							if (isntEmpty(x, y)) {
+								InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
+							} else {
+								InteractionPanel.setCurrentPanel(null);
+							}
+							break;
+						}
+						removeSelected();
+						break;
+					}
 					removeSelected();
 					if (isntEmpty(x, y)) {
 						InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));

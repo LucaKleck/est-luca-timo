@@ -1,16 +1,20 @@
 package statusEffects;
 
-import entity.Entity;
-
 public class Heal extends StatusEffect {
 
-	public Heal(String name, boolean permanent, int duration, Entity target) {
-		super(name, permanent, duration, target);
+	public Heal(String name, int duration) {
+		super(name, duration);
 	}
 
 	@Override
 	public void applyEffect() {
-		this.getTarget().setCurrentHealth(this.getTarget().getCurrentHealth() + 1);
+		if(this.getDuration() > 1) {
+			this.reduceDuration();
+			this.getTarget().setCurrentHealth(this.getTarget().getCurrentHealth() + 1);
+		} else {
+			this.getTarget().setCurrentHealth(this.getTarget().getCurrentHealth() + 1);
+			this.getSource().removeStatusEffect(this);
+		}
 	}
 
 }

@@ -76,13 +76,13 @@ public class EventlessSelectionQueue extends JPanel {
 						GameInfo.getObjectMap().getSelected().setSelectedMapTile(entity.getXPos(), entity.getYPos());
 						GameInfo.getObjectMap().getSelected().setSelectedEntity(entity);
 						InteractionPanel.setCurrentPanel(new EntityPanel(entity));
-						if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
-							MainGamePanel mp = (MainGamePanel) Core.getMainJFrame().getCurrentComponent();
-							mp.getMapPanel().setPosition(entity.getXPos(), entity.getYPos());
-						}
-						if (Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
-							((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
-						}
+					}
+					if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+						MainGamePanel mp = (MainGamePanel) Core.getMainJFrame().getCurrentComponent();
+						mp.getMapPanel().setPosition(entity.getXPos(), entity.getYPos());
+					}
+					if (Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+						((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
 					}
 				}
 				

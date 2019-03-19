@@ -5,39 +5,47 @@ import entity.Entity;
 public abstract class StatusEffect {
 
 	public final static String STATUS_EFFECT_NAME_HEAL = "Heal";
-	public final static boolean IS_PASSIVE_HEAL = false;
 	public final static int DURATION_HEAL = 3;
 	
 	public final static String STATUS_EFFECT_NAME_POISON = "Poison";
-	public final static boolean IS_PASSIVE_POISON = false;
 	public final static int DURATION_POISON = 2;
 	
 	private String name;
-	private boolean passive;
 	private int duration;
 	private Entity target;
+	private Entity source;
 
-	public StatusEffect(String name, boolean passive, int duration, Entity target) {
+	public StatusEffect(String name, int duration) {
 		this.name = name;
-		this.passive = passive;
 		this.duration = duration;
-		this.target = target;
 	}
 
 	public String getName() {
-		return name;
-	}
-
-	public boolean isPassive() {
-		return passive;
+		return this.name;
 	}
 
 	public int getDuration() {
-		return duration;
+		return this.duration;
+	}
+	
+	public void reduceDuration() {
+		this.duration = this.duration - 1;
 	}
 
+	public Entity getSource() {
+		return this.source;
+	}
+	
 	public Entity getTarget() {
-		return target;
+		return this.target;
+	}
+	
+	public Entity setSource(Entity source) {
+		return this.source = source;
+	}
+	
+	public Entity setTarget(Entity target) {
+		return this.target = target;
 	}
 
 	public abstract void applyEffect();

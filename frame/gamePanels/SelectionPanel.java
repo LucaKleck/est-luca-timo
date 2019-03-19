@@ -138,11 +138,16 @@ public class SelectionPanel extends JScrollPaneBg {
 			jBtn.addMouseListener(this);
 
 			this.jBtn.setPreferredSize(new Dimension(135, 23));
-			if (entity.isControlable() && GameInfo.getObjectMap().getSelected().getSelectionMode() != 3
-					&& GameInfo.getObjectMap().getSelected().getSelectionMode() != 5) {
-				this.add(jBtn, "flowx,cell 0 3,grow");
-			} else if (!entity.isControlable() && GameInfo.getObjectMap().getSelected().getSelectionMode() == 3
-					|| GameInfo.getObjectMap().getSelected().getSelectionMode() == 5) {
+			Ability abl = GameInfo.getObjectMap().getSelected().getSelectedAbility();
+			if(abl != null && !abl.getType().equals(Ability.ABILITY_TYPE_STATUS_EFFECT)) {
+				if (entity.isControlable() && GameInfo.getObjectMap().getSelected().getSelectionMode() != 3
+						&& GameInfo.getObjectMap().getSelected().getSelectionMode() != 5) {
+					this.add(jBtn, "flowx,cell 0 3,grow");
+				} else if (!entity.isControlable() && GameInfo.getObjectMap().getSelected().getSelectionMode() == 3
+						|| GameInfo.getObjectMap().getSelected().getSelectionMode() == 5) {
+					this.add(jBtn, "flowx,cell 0 3,grow");
+				}
+			} else {
 				this.add(jBtn, "flowx,cell 0 3,grow");
 			}
 
@@ -216,7 +221,7 @@ public class SelectionPanel extends JScrollPaneBg {
 				if (GameInfo.getObjectMap().getSelected().getSelectionMode() == 3
 						|| GameInfo.getObjectMap().getSelected().getSelectionMode() == 5) {
 					Ability abl = GameInfo.getObjectMap().getSelected().getSelectedAbility();
-					if (abl.getType().equals(Ability.ABILITY_TYPE_DAMAGE)) {
+					if (abl.getType().equals(Ability.ABILITY_TYPE_DAMAGE) || abl.getType().equals(Ability.ABILITY_TYPE_STATUS_EFFECT)) {
 						GameInfo.getObjectMap().getSelected().getSelectedEntity()
 								.setEvent(new Event(GameInfo.getObjectMap().getSelected().getSelectedEntity(), entity,
 										abl,

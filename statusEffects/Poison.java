@@ -1,11 +1,9 @@
 package statusEffects;
 
-import entity.Entity;
-
 public class Poison extends StatusEffect {
 
-	public Poison(String name, boolean permanent, int duration, Entity target) {
-		super(name, permanent, duration, target);
+	public Poison(String name, int duration) {
+		super(name, duration);
 	}
 
 	@Override
