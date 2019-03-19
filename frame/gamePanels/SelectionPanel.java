@@ -139,7 +139,7 @@ public class SelectionPanel extends JScrollPaneBg {
 
 			this.jBtn.setPreferredSize(new Dimension(135, 23));
 			Ability abl = GameInfo.getObjectMap().getSelected().getSelectedAbility();
-			if(abl != null && !abl.getType().equals(Ability.ABILITY_TYPE_STATUS_EFFECT)) {
+			if(abl == null || !abl.getType().equals(Ability.ABILITY_TYPE_STATUS_EFFECT)) {
 				if (entity.isControlable() && GameInfo.getObjectMap().getSelected().getSelectionMode() != 3
 						&& GameInfo.getObjectMap().getSelected().getSelectionMode() != 5) {
 					this.add(jBtn, "flowx,cell 0 3,grow");

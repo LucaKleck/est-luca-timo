@@ -49,4 +49,10 @@ public abstract class StatusEffect {
 	}
 
 	public abstract void applyEffect();
+	
+	@Override
+	public String toString() {
+		return "StatusEffect [name=" + name + ", duration=" + duration + ", target=" + target + ", source=" + source
+				+ "]";
+	}
 }

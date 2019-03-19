@@ -82,9 +82,6 @@ public class EntityAI {
 			}
 		}
 		
-		System.out.println(bestTarget.getName());
-		System.out.println(source.getName());
-		
 		return bestTarget;
 	}
 

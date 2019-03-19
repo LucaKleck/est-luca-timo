@@ -168,7 +168,7 @@ public class Entity {
 	}
 	
 	public void removeStatusEffect(StatusEffect statusEffect) {
-				
+		
 		statusEffects.remove(statusEffect);
 		
 	}

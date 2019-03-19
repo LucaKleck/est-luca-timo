@@ -82,6 +82,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 
 		for (StatusEffect statusEffect : statusEffects) {
 			statusEffect.applyEffect();
+			System.out.println(statusEffect);
 		}
 
 		for (Entity entity : enemyEntities) {
@@ -145,7 +146,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 					entity.setEvent(new Event(entity, entity, ability, null));
 				}
 			}
-
+			
 		}
 
 		// Collect resources after player and AI moved so that buildings that were

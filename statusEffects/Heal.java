@@ -12,8 +12,9 @@ public class Heal extends StatusEffect {
 			this.reduceDuration();
 			this.getTarget().setCurrentHealth(this.getTarget().getCurrentHealth() + 1);
 		} else {
+			this.reduceDuration();
 			this.getTarget().setCurrentHealth(this.getTarget().getCurrentHealth() + 1);
-			this.getSource().removeStatusEffect(this);
+			this.getTarget().removeStatusEffect(this);
 		}
 	}
 

@@ -8,7 +8,14 @@ public class Poison extends StatusEffect {
 
 	@Override
 	public void applyEffect() {
-		this.getTarget().setCurrentHealth(this.getTarget().getCurrentHealth() - 1);
+		if(this.getDuration() > 1) {
+			this.reduceDuration();
+			this.getTarget().setCurrentHealth(this.getTarget().getCurrentHealth() - 1);
+		} else {
+			this.reduceDuration();
+			this.getTarget().setCurrentHealth(this.getTarget().getCurrentHealth() - 1);
+			this.getTarget().removeStatusEffect(this);
+		}
 	}
 
 }
