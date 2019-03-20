@@ -14,7 +14,7 @@ import abilities.CollectResources;
 import abilities.Move;
 import effects.AbilityEffect;
 import entity.Entity;
-import entity.EntityAI;
+import entity.EntityFilter;
 import entity.building.Building;
 import entity.building.ProductionBuilding;
 import entity.unit.Builder;
@@ -26,14 +26,14 @@ import statusEffects.StatusEffect;
 public class NextRoundActionListener implements ActionListener, Runnable {
 	private static final ExecutorService EXS = Executors.newFixedThreadPool(1);
 	private JButton j;
-	private EntityAI entityFilter;
+	private EntityFilter entityFilter;
 	private int wave = 0;
 	private int waveCounter = 0;
 	private boolean newWave = true;
 	private UnitFactory uf;
 
 	public NextRoundActionListener() {
-		entityFilter = new EntityAI();
+		entityFilter = new EntityFilter();
 		uf = new UnitFactory();
 	}
 
@@ -105,13 +105,8 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 						}
 					}
 					if (ability != null) {
-						if (entity.getXPos() > 24) {
-							((Move) ability).setMoveToPoint(
-									new Point2DNoFxReq(entity.getXPos() - ability.maxRange, entity.getYPos()));
-						} else if (entity.getXPos() <= 24) {
-							((Move) ability).setMoveToPoint(
-									new Point2DNoFxReq(entity.getXPos() + ability.maxRange, entity.getYPos()));
-						}
+						((Move) ability).setMoveToPoint(entityFilter.getNextMovePoint((Unit)entity));
+
 						entity.setEvent(new Event(entity, entity, ability, new AbilityEffect(entity, entity, ability)));
 					}
 
@@ -146,7 +141,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 					entity.setEvent(new Event(entity, entity, ability, null));
 				}
 			}
-			
+
 		}
 
 		// Collect resources after player and AI moved so that buildings that were

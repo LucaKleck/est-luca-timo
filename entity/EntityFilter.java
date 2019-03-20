@@ -8,12 +8,13 @@ import abilities.Move;
 import core.GameInfo;
 import core.Point2DNoFxReq;
 import entity.unit.Builder;
+import entity.unit.Unit;
 
-public class EntityAI {
+public class EntityFilter {
 
 	private Random random = new Random();
 	
-	public EntityAI() {
+	public EntityFilter() {
 
 	}
 
@@ -52,6 +53,24 @@ public class EntityAI {
 			}
 		} 
 		return chosenAbility;
+	}
+	
+	public Point2DNoFxReq getNextMovePoint(Unit unit) {
+		
+		int xPos = unit.getXPos();
+		int range = unit.getMovementRange();
+		for(int y = 0; y < 49; y++) {
+			
+			if(GameInfo.getObjectMap().getMap()[xPos - range][y].isRoad()) {
+				
+				return new Point2DNoFxReq(xPos - range, y);
+				
+			}
+			
+		}
+		
+		return null;
+		
 	}
 	
 	public Point2DNoFxReq getRandomBuildPoint(Builder builder) {
