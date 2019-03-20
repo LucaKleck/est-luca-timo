@@ -28,6 +28,10 @@ public abstract class StatusEffect {
 		return this.duration;
 	}
 	
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+	
 	public void reduceDuration() {
 		this.duration = this.duration - 1;
 	}

@@ -17,7 +17,7 @@ public class Mage extends Unit {
 	public Mage(Point2DNoFxReq pointXY, String name, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
 		super(pointXY, name, BASE_MAX_HEALTH, currentHealth, level, controlable, BASE_DAMAGE, MOVEMENT_RANGE, abilities);
 		abilities.add(new FireBall(true));
-		abilities.add(new AddStatusEffect(StatusEffect.STATUS_EFFECT_NAME_HEAL, Ability.ABILITY_DESC_HEAL));
+		abilities.add(new AddStatusEffect(StatusEffect.STATUS_EFFECT_NAME_HEAL, Ability.ABILITY_DESC_HEAL, AddStatusEffect.TYPE_HEAL));
 	}
 	
 	public Mage(Point2DNoFxReq pointXY, String name, int level, boolean controlable, ArrayList<Ability> abilities) {

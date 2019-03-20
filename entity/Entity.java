@@ -164,6 +164,12 @@ public class Entity {
 	public void addStatusEffect(StatusEffect statusEffect, Entity source, Entity target) {
 		statusEffect.setTarget(target);
 		statusEffect.setSource(source);
+		for(StatusEffect se: statusEffects) {
+			if(se.getClass().getName().equals(statusEffect.getClass().getName())) {
+				se.setDuration(statusEffect.getDuration());
+				return;
+			}
+		}
 		statusEffects.add(statusEffect);
 	}
 	

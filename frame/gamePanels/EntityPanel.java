@@ -27,6 +27,7 @@ import frame.JPanelCustomBg;
 import frame.JScrollPaneBg;
 import frame.MainJFrame;
 import net.miginfocom.swing.MigLayout;
+import statusEffects.StatusEffect;
 
 public class EntityPanel extends JScrollPaneBg {
 	private static final long serialVersionUID = 1L;
@@ -89,14 +90,22 @@ public class EntityPanel extends JScrollPaneBg {
 		}
 		jPanel.add(lblNextEvent, "cell 0 4");
 
+		String statusEffects = "\n";
+		for(StatusEffect statusEffect: this.entity.getStatusEffects()) {
+			statusEffects += statusEffect.getName() + "\n";
+		}
+		
+		JLabel lblStatusEffects = new JLabel(cssYellow+"Status Effects: " + statusEffects);
+		jPanel.add(lblStatusEffects, "cell 0 5");
+		
 		JLabel lblAbilities = new JLabel(cssYellow+"Abilities: ");
 		if(!entity.getAbilities().isEmpty()) {
-			jPanel.add(lblAbilities, "cell 0 5");
+			jPanel.add(lblAbilities, "cell 0 6");
 		}
 		abilityPanel = new JPanelCustomBg(ResourceManager.getBackground_01());
 		abilityPanel.setLayout(new MigLayout("insets 12 12 12 12 alignx left flowy", "[]", "[]"));
 		if(!entity.getAbilities().isEmpty()) {
-			jPanel.add(abilityPanel, "cell 0 6");
+			jPanel.add(abilityPanel, "cell 0 7");
 		}
 		
 		updateUserInterface();
