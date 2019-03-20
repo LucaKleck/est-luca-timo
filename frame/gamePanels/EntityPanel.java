@@ -12,6 +12,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import abilities.Ability;
+import abilities.AddStatusEffect;
 import abilities.Build;
 import abilities.CreateUnit;
 import abilities.LevelUp;
@@ -117,6 +118,12 @@ public class EntityPanel extends JScrollPaneBg {
 		if(ability instanceof Build) {
 			if(((Build) ability).getBuildingName().matches(Building.WALL)) abilityImage = ResourceManager.getSpellBook05_72();
 			else abilityImage = ResourceManager.getSpellBook01_67();
+			
+			
+		};
+		if(ability instanceof AddStatusEffect) {
+			if(((AddStatusEffect) ability).getStatusEffectType().equals(AddStatusEffect.TYPE_HEAL)) abilityImage = ResourceManager.getSpellBook01_40();
+			else abilityImage = ResourceManager.getSpellBook01_93();
 			
 			
 		};

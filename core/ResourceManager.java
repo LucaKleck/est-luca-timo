@@ -43,6 +43,7 @@ public class ResourceManager {
 	// SpellBook !!! WARNING: Some of the pngs are .PNG -> Runnable JAR can't find them if you write .png !!!
 	private static BufferedImage spellBook01_67;
 	private static BufferedImage spellBook01_93;
+	private static BufferedImage spellBook01_40;
 	
 	private static BufferedImage spellBook05_72;
 	
@@ -324,6 +325,17 @@ public class ResourceManager {
 			}
 		}
 		return spellBook01_93;
+	}
+	
+	public static BufferedImage getSpellBook01_40() {
+		if(spellBook01_40 == null) {
+			try {
+				spellBook01_40 = ImageIO.read(Boot.class.getResource("/resources/spellbook/SpellBook01_40.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook01_40;
 	}
 	
 	public static BufferedImage getSpellBook05_72() {
