@@ -15,7 +15,10 @@ import abilities.Ability;
 import abilities.AddStatusEffect;
 import abilities.Build;
 import abilities.CreateUnit;
+import abilities.FireBall;
 import abilities.LevelUp;
+import abilities.MeleeAttack;
+import abilities.Move;
 import core.Core;
 import core.Event;
 import core.GameInfo;
@@ -117,15 +120,32 @@ public class EntityPanel extends JScrollPaneBg {
 		if(ability instanceof Ability) abilityImage = ResourceManager.getSpellBook01_93();
 		if(ability instanceof Build) {
 			if(((Build) ability).getBuildingName().matches(Building.WALL)) abilityImage = ResourceManager.getSpellBook05_72();
+			else if(((Build) ability).getBuildingName().matches(Building.ARCHER_TOWER)) abilityImage = ResourceManager.getSpellBook05_22();
+			
+			else if(((Build) ability).getBuildingName().matches(Building.BARRACKS)) abilityImage = ResourceManager.getSpellBook05_20();
+			else if(((Build) ability).getBuildingName().matches(Building.TOWN_CENTER)) abilityImage = ResourceManager.getSpellBook05_17();
+			else if(((Build) ability).getBuildingName().matches(Building.SIEGE_WORKSHOP)) abilityImage = ResourceManager.getSpellBook05_76();
+			
+			else if(((Build) ability).getBuildingName().matches(Building.WOOD_GETTER)) abilityImage = ResourceManager.getSpellBook05_75();
+			else if(((Build) ability).getBuildingName().matches(Building.FOOD_GETTER)) abilityImage = ResourceManager.getSpellBook05_28();
+			else if(((Build) ability).getBuildingName().matches(Building.STONE_GETTER)) abilityImage = ResourceManager.getSpellBook05_77();
+			else if(((Build) ability).getBuildingName().matches(Building.METAL_GETTER)) abilityImage = ResourceManager.getSpellBook05_06();
+			else if(((Build) ability).getBuildingName().matches(Building.MANA_GETTER)) abilityImage = ResourceManager.getSpellBook01_67();
+			else if(((Build) ability).getBuildingName().matches(Building.GOLD_GETTER)) abilityImage = ResourceManager.getSpellBook05_95();
 			else abilityImage = ResourceManager.getSpellBook01_67();
-			
-			
 		};
 		if(ability instanceof AddStatusEffect) {
 			if(((AddStatusEffect) ability).getStatusEffectType().equals(AddStatusEffect.TYPE_HEAL)) abilityImage = ResourceManager.getSpellBook01_40();
 			else abilityImage = ResourceManager.getSpellBook01_93();
-			
-			
+		};
+		if(ability instanceof Move) {
+			abilityImage = ResourceManager.getSpellBook01_22();
+		};
+		if(ability instanceof MeleeAttack) {
+			abilityImage = ResourceManager.getSGI_11();
+		};
+		if(ability instanceof FireBall) {
+			abilityImage = ResourceManager.getSpellBook01_46();
 		};
 		return abilityImage;
 	}

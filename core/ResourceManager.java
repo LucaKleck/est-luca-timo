@@ -44,10 +44,21 @@ public class ResourceManager {
 	private static BufferedImage spellBook01_67;
 	private static BufferedImage spellBook01_93;
 	private static BufferedImage spellBook01_40;
+	private static BufferedImage spellBook01_22;
+	private static BufferedImage spellBook01_46;
 	
+	private static BufferedImage spellBook05_06;
+	private static BufferedImage spellBook05_17;
+	private static BufferedImage spellBook05_20;
+	private static BufferedImage spellBook05_22;
+	private static BufferedImage spellBook05_28;
 	private static BufferedImage spellBook05_72;
+	private static BufferedImage spellBook05_75;
+	private static BufferedImage spellBook05_76;
+	private static BufferedImage spellBook05_77;
+	private static BufferedImage spellBook05_95;
 	
-	
+	private static BufferedImage sgi_11;
 	
 	private ResourceManager() {
 	}
@@ -338,6 +349,61 @@ public class ResourceManager {
 		return spellBook01_40;
 	}
 	
+	public static BufferedImage getSpellBook01_22() {
+		if(spellBook01_22 == null) {
+			try {
+				spellBook01_22 = ImageIO.read(Boot.class.getResource("/resources/spellbook/SpellBook01_22.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook01_22;
+	}
+	
+	public static BufferedImage getSpellBook01_46() {
+		if(spellBook01_46 == null) {
+			try {
+				spellBook01_46 = ImageIO.read(Boot.class.getResource("/resources/spellbook/SpellBook01_46.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook01_46;
+	}
+	
+	public static BufferedImage getSpellBook05_06() {
+		if(spellBook05_06 == null) {
+			try {
+				spellBook05_06 = ImageIO.read(Boot.class.getResource("/resources/SpellBookPage05/SpellBook05_06.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook05_06;
+	}
+	
+	public static BufferedImage getSpellBook05_17() {
+		if(spellBook05_17 == null) {
+			try {
+				spellBook05_17 = ImageIO.read(Boot.class.getResource("/resources/SpellBookPage05/SpellBook05_17.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook05_17;
+	}
+	
+	public static BufferedImage getSpellBook05_20() {
+		if(spellBook05_20 == null) {
+			try {
+				spellBook05_20 = ImageIO.read(Boot.class.getResource("/resources/SpellBookPage05/SpellBook05_20.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook05_20;
+	}
+	
 	public static BufferedImage getSpellBook05_72() {
 		if(spellBook05_72 == null) {
 			try {
@@ -347,6 +413,83 @@ public class ResourceManager {
 			}
 		}
 		return spellBook05_72;
+	}
+	
+	public static BufferedImage getSpellBook05_75() {
+		if(spellBook05_75 == null) {
+			try {
+				spellBook05_75 = ImageIO.read(Boot.class.getResource("/resources/SpellBookPage05/SpellBook05_75.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook05_75;
+	}
+	
+	public static BufferedImage getSpellBook05_76() {
+		if(spellBook05_76 == null) {
+			try {
+				spellBook05_76 = ImageIO.read(Boot.class.getResource("/resources/SpellBookPage05/SpellBook05_76.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook05_76;
+	}
+	
+	public static BufferedImage getSpellBook05_77() {
+		if(spellBook05_77 == null) {
+			try {
+				spellBook05_77 = ImageIO.read(Boot.class.getResource("/resources/SpellBookPage05/SpellBook05_77.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook05_77;
+	}
+	
+	public static BufferedImage getSpellBook05_95() {
+		if(spellBook05_95 == null) {
+			try {
+				spellBook05_95 = ImageIO.read(Boot.class.getResource("/resources/SpellBookPage05/SpellBook05_95.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook05_95;
+	}
+	
+	public static BufferedImage getSpellBook05_28() {
+		if(spellBook05_28 == null) {
+			try {
+				spellBook05_28 = ImageIO.read(Boot.class.getResource("/resources/SpellBookPage05/SpellBook05_28.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook05_28;
+	}
+	
+	public static BufferedImage getSpellBook05_22() {
+		if(spellBook05_22 == null) {
+			try {
+				spellBook05_22 = ImageIO.read(Boot.class.getResource("/resources/SpellBookPage05/SpellBook05_22.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook05_22;
+	}
+	
+	public static BufferedImage getSGI_11() {
+		if(sgi_11 == null) {
+			try {
+				sgi_11 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_11.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return sgi_11;
 	}
 	
 }
