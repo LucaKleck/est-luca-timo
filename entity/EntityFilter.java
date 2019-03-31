@@ -55,6 +55,52 @@ public class EntityFilter {
 		return chosenAbility;
 	}
 	
+	public Ability getBestBuilderAbility(Builder builder) {
+		ArrayList<Entity> entityMapInRange = new ArrayList<Entity>();
+		Ability chosenAbility = null;
+		
+		int builderX = builder.getXPos();
+		int builderY = builder.getYPos();
+		
+		for(Entity entity: GameInfo.getObjectMap().getEntityMap()) {
+			
+			int deltaX = (int) Math.sqrt(Math.pow(builderX - entity.getXPos(), 2));
+			int deltaY = (int) Math.sqrt(Math.pow(builderY - entity.getYPos(), 2));
+			
+			if(deltaX > builder.getMaxRange() == false && deltaY > builder.getMaxRange() == false) {
+				entityMapInRange.add(entity);
+			}
+		}
+		
+		ArrayList<Point2DNoFxReq> availablePoints = new ArrayList<Point2DNoFxReq>();
+		
+		for(int y = builderY - 3; y < builderY + 3; y++) {
+			for(int x = builderX - 3; x < builderX + 3; x++) {
+				for(Entity entity: entityMapInRange) {
+					System.out.println("Y: " + y + "X: " + x );
+					if(entity.getXPos() == x == false && entity.getYPos() == y == false) {
+						availablePoints.add(new Point2DNoFxReq(x, y));
+					}
+				}
+			}
+		}
+		
+		System.out.println("Test3");
+		
+		Random random = new Random();
+		
+		if(availablePoints.size() > 0) {
+			Point2DNoFxReq point = availablePoints.get(random.nextInt(availablePoints.size()));
+			chosenAbility = getRandomAbility(builder);
+			builder.setBuildPoint(point);
+			return chosenAbility;
+		} else {
+			chosenAbility = builder.getMove();
+			builder.getMove().setMoveToPoint(new Point2DNoFxReq(random.nextInt(builder.getXPos() - (builder.getMaxRange()) - builder.getMaxRange()), builder.getYPos() - (random.nextInt(builder.getMaxRange()) - builder.getMaxRange())));
+			return chosenAbility;
+		}
+	}
+	
 	public Point2DNoFxReq getNextMovePoint(Unit unit) {
 		
 		int xPos = unit.getXPos();

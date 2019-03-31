@@ -95,8 +95,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 					entity.setEvent(
 							new Event(entity, bestTarget, ability, new AbilityEffect(entity, bestTarget, ability)));
 				} else if (entity instanceof Builder) {
-					ability = entityFilter.getRandomAbility(entity);
-					((Builder) entity).setBuildPoint(entityFilter.getRandomBuildPoint((Builder) entity));
+					ability = entityFilter.getBestBuilderAbility((Builder) entity);
 					entity.setEvent(new Event(entity, entity, ability, new AbilityEffect(entity, bestTarget, ability)));
 				} else {
 					for (Ability abl : entity.getAbilities()) {
@@ -115,9 +114,8 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 				if (entity.getName().equals(Building.PORTAL)) {
 					if (newWave) {
 						switch (wave) {
-
 						case 1:
-							entityMap.add(uf.getNewPortalUnitByType(Unit.UNIT_ARCHER));
+							entityMap.add(uf.getNewPortalUnitByType(Unit.UNIT_BUILDER));
 							break;
 						case 2:
 							entityMap.add(uf.getNewPortalUnitByType(Unit.UNIT_TREBUCHET));
@@ -126,14 +124,13 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 							entityMap.add(uf.getNewPortalUnitByType(Unit.UNIT_MAGE));
 							break;
 						case 4:
-							entityMap.add(uf.getNewPortalUnitByType(Unit.UNIT_BUILDER));
+							entityMap.add(uf.getNewPortalUnitByType(Unit.UNIT_ARCHER));
 							break;
 						case 5:
 							entityMap.add(uf.getNewPortalUnitByType(Unit.UNIT_WARRIOR));
 							break;
 						default:
 							break;
-
 						}
 					}
 				} else {
