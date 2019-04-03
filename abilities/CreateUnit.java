@@ -1,6 +1,7 @@
 package abilities;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import core.GameInfo;
 import core.Point2DNoFxReq;
@@ -14,20 +15,25 @@ import entity.unit.Warrior;
 
 public class CreateUnit extends Ability {
 
-	private Point2DNoFxReq pointXY;
+	private Point2DNoFxReq point;
 	private String type;
+	private Random random;
 	private boolean controlable;
 
-	public CreateUnit(Point2DNoFxReq pointXY, String type, String name, String description, boolean controlable) {
+	public CreateUnit(Point2DNoFxReq point, String type, String name, String description, boolean controlable) {
 		super(name, description, Ability.ABILITY_TYPE_PRODUCE);
 		super.maxRange = 0;
+		this.random = new Random();
 		this.controlable = controlable;
 		this.type = type;
-		this.pointXY = pointXY;
+		this.point = point;
 	}
 
 	@Override
 	public void applyAbility(Entity source, Entity target) {
+		
+		Point2DNoFxReq pointXY = new Point2DNoFxReq(point.x + random.nextFloat(), point.y + random.nextFloat());
+		
 		if(type.equals(Unit.UNIT_BUILDER)) {
 			GameInfo.getObjectMap().getEntityMap().add(new Builder(pointXY, "Builder", 3, 1, controlable, new ArrayList<>()));
 		}

@@ -34,11 +34,12 @@ public class UnitFactory {
 		return getNewUnit(GameInfo.getObjectMap().getPortalPoint(), 0, false, new ArrayList<Ability>(), type);
 	}
 
-	private Unit getNewUnit(Point2DNoFxReq pointXY, int level, boolean controlable, ArrayList<Ability> abilities,
+	private Unit getNewUnit(Point2DNoFxReq point, int level, boolean controlable, ArrayList<Ability> abilities,
 			String type) {
 
 		Unit unit;
-
+		Point2DNoFxReq pointXY = new Point2DNoFxReq(point.x + random.nextFloat(), point.y + random.nextFloat());
+		
 		switch (type) {
 		case Unit.UNIT_ARCHER:
 			unit = new Archer(pointXY, "", level, controlable, abilities);

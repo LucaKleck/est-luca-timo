@@ -78,7 +78,7 @@ public class EntityFilter {
 			for(int x = builderX - 3; x < builderX + 3; x++) {
 				for(Entity entity: entityMapInRange) {
 					if(builder.positionIsBuildable(x, y, entity)) {
-						availablePoints.add(new Point2DNoFxReq(x, y));
+						availablePoints.add(new Point2DNoFxReq(x + random.nextFloat(), y + random.nextFloat()));
 					}
 				}
 			}
@@ -106,7 +106,7 @@ public class EntityFilter {
 			
 			if(GameInfo.getObjectMap().getMap()[xPos - range][y].isRoad()) {
 				
-				return new Point2DNoFxReq(xPos - range, y);
+				return new Point2DNoFxReq(xPos - range + random.nextFloat(), y + random.nextFloat());
 				
 			}
 			
