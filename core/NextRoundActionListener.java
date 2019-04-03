@@ -133,18 +133,14 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 							break;
 						}
 					}
-				} else {
-					ability = entityFilter.getRandomAbility(entity);
-					entity.setEvent(new Event(entity, entity, ability, null));
 				}
 			}
-
 		}
 
 		// Collect resources after player and AI moved so that buildings that were
 		// destroyed don't give resources
 		for (Entity b : entityMap) {
-			if (b instanceof Building) {
+			if (b instanceof Building && b.isControlable()) {
 				for (Ability ab : b.getAbilities()) {
 					if (ab instanceof CollectResources) {
 						if (GameInfo.getRoundInfo().getNewBuildings().contains(b))

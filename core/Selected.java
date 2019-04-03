@@ -106,7 +106,7 @@ public class Selected {
 					}
 					if (selectedAbility instanceof Build) {
 						if ((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(),
-								selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
+								selectedMapTile.getXPos(), selectedMapTile.getYPos())) && ((Build)selectedAbility).positionIsBuildable(x, y)) {
 							((Builder) this.getSelectedEntity()).setBuildPoint(new Point2DNoFxReq(xD, yD));
 							this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility,
 									new AbilityEffect((Unit) selectedEntity, (Unit) selectedEntity, selectedAbility)));

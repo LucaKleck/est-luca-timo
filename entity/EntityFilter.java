@@ -77,16 +77,13 @@ public class EntityFilter {
 		for(int y = builderY - 3; y < builderY + 3; y++) {
 			for(int x = builderX - 3; x < builderX + 3; x++) {
 				for(Entity entity: entityMapInRange) {
-					System.out.println("Y: " + y + "X: " + x );
-					if(entity.getXPos() == x == false && entity.getYPos() == y == false) {
+					if(builder.positionIsBuildable(x, y, entity)) {
 						availablePoints.add(new Point2DNoFxReq(x, y));
 					}
 				}
 			}
 		}
-		
-		System.out.println("Test3");
-		
+				
 		Random random = new Random();
 		
 		if(availablePoints.size() > 0) {

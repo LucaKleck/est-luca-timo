@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import abilities.Ability;
 import abilities.Build;
+import core.GameInfo;
 import core.Point2DNoFxReq;
+import entity.Entity;
 import entity.building.Building;
 
 public class Builder extends Unit {
@@ -61,6 +63,26 @@ public class Builder extends Unit {
 
 	public Point2DNoFxReq getBuildPoint() {
 		return buildPoint;
+	}
+	
+	public boolean positionIsBuildable(int xPos, int yPos) {
+		for(Entity entity: GameInfo.getObjectMap().getEntityMap()) {
+			if(entity instanceof Building) {
+				if(entity.getXPos() == xPos && entity.getYPos() == yPos) {
+					return false;
+				}
+			}
+		}		
+		return true;
+	}
+	
+	public boolean positionIsBuildable(int xPos, int yPos, Entity entity) {
+		if(entity instanceof Building) {
+			if(entity.getXPos() == xPos && entity.getYPos() == yPos) {
+				return false;
+			}
+		}	
+		return true;
 	}
 	
 }
