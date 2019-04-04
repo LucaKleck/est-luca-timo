@@ -205,8 +205,6 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 			} catch (InterruptedException e1) {
 				e1.printStackTrace();
 			}
-
 		}
 	}
-
 }

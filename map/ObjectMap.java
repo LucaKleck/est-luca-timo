@@ -5,6 +5,7 @@
 package map;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import core.GameInfo;
 import core.MapCreator;
@@ -34,11 +35,14 @@ public class ObjectMap {
 	}
 	
 	private void setInitalState() {
+		
+		Random r = new Random();
+		
 		entityMap.add(new ProductionBuilding(new Point2DNoFxReq(3, 3), ProductionBuilding.TOWN_CENTER, 15, 15, 1, true, new ArrayList<>()));
 		entityMap.add(new ProductionBuilding(portalPoint, ProductionBuilding.PORTAL, 15, 15, 1, false, new ArrayList<>()));
 		entityMap.add(new DefenseBuilding(new Point2DNoFxReq(7, 3), Building.ARCHER_TOWER, 15, 15, 1, false, new ArrayList<>()));
-		entityMap.add(new Builder(new Point2DNoFxReq(5, 5), Unit.UNIT_BUILDER,  3, 1, true, new ArrayList<>()));
-		entityMap.add(new Mage(new Point2DNoFxReq(5, 5), Unit.UNIT_MAGE,  3, 1, true, new ArrayList<>()));
+		entityMap.add(new Builder(new Point2DNoFxReq(5 + r.nextFloat(), 5 + r.nextFloat()), Unit.UNIT_BUILDER,  3, 1, true, new ArrayList<>()));
+		entityMap.add(new Mage(new Point2DNoFxReq(5 + r.nextFloat(), 5 + r.nextFloat()), Unit.UNIT_MAGE,  3, 1, true, new ArrayList<>()));
 		// FOR UNIT STACK (check scroll and other stuff)
 	}
 	

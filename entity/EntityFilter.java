@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import abilities.Ability;
+import abilities.Build;
 import abilities.Move;
+import core.Event;
 import core.GameInfo;
 import core.Point2DNoFxReq;
+import entity.building.Building;
 import entity.unit.Builder;
 import entity.unit.Unit;
 
@@ -56,46 +59,90 @@ public class EntityFilter {
 	}
 	
 	public Ability getBestBuilderAbility(Builder builder) {
-		ArrayList<Entity> entityMapInRange = new ArrayList<Entity>();
 		Ability chosenAbility = null;
 		
-		int builderX = builder.getXPos();
-		int builderY = builder.getYPos();
+		Point2DNoFxReq buildalbePoint = getBuildablePoint(builder);
+		
+		if(buildalbePoint != null) {
+				chosenAbility = getRandomAbility(builder);
+				builder.setBuildPoint(buildalbePoint);
+				return chosenAbility;
+		} else {
+			chosenAbility = builder.getMove();
+			builder.getMove().setMoveToPoint(getNextMovePoint(builder));
+			return chosenAbility;
+		}
+	}
+	
+	public Point2DNoFxReq getBuildablePoint(Builder builder) {
+		
+		Point2DNoFxReq chosenPoint = null;
+		ArrayList<Point2DNoFxReq> unbuildablePoints = new ArrayList<Point2DNoFxReq>();
+		Random random = new Random();
 		
 		for(Entity entity: GameInfo.getObjectMap().getEntityMap()) {
 			
-			int deltaX = (int) Math.sqrt(Math.pow(builderX - entity.getXPos(), 2));
-			int deltaY = (int) Math.sqrt(Math.pow(builderY - entity.getYPos(), 2));
+			int deltaX = (int) Math.sqrt(Math.pow(builder.getXPos() - entity.getXPos(), 2));
+			int deltaY = (int) Math.sqrt(Math.pow(builder.getYPos() - entity.getYPos(), 2));
 			
 			if(deltaX > builder.getMaxRange() == false && deltaY > builder.getMaxRange() == false) {
-				entityMapInRange.add(entity);
+				unbuildablePoints.add(new Point2DNoFxReq(entity.getXPos(), entity.getYPos()));
 			}
 		}
 		
-		ArrayList<Point2DNoFxReq> availablePoints = new ArrayList<Point2DNoFxReq>();
+		//Has a 75% chance to try to find a point, if none found or didn't try return null so the chosenAbility will be move			
+		if(random.nextInt(4) < 3) {
+			Point2DNoFxReq randomPoint = new Point2DNoFxReq(builder.getXPos() + (random.nextInt(7) - 3), builder.getYPos() + (random.nextInt(7) - 3));
+			if(unbuildablePoints.contains(randomPoint) == false) {	
+				chosenPoint = randomPoint;
+			}
+		}
 		
-		for(int y = builderY - 3; y < builderY + 3; y++) {
-			for(int x = builderX - 3; x < builderX + 3; x++) {
-				for(Entity entity: entityMapInRange) {
-					if(builder.positionIsBuildable(x, y, entity)) {
-						availablePoints.add(new Point2DNoFxReq(x + random.nextFloat(), y + random.nextFloat()));
-					}
+		return chosenPoint;
+	}
+	
+	public boolean positionIsBuildable(int xPos, int yPos) {
+		for(Entity entity: GameInfo.getObjectMap().getEntityMap()) {
+			if(entity instanceof Building) {
+				if(entity.getXPos() == xPos && entity.getYPos() == yPos) {
+					return false;
+				}
+			}
+		}		
+		for (Event event : GameInfo.getRoundInfo().getEventList()) {
+
+			if (event.getAbility() instanceof Build) {
+
+				Builder builder = (Builder) event.getSource();
+
+				if ((int) builder.getBuildPoint().x == xPos && (int) builder.getBuildPoint().y == yPos) {
+					return false;
 				}
 			}
 		}
-				
-		Random random = new Random();
-		
-		if(availablePoints.size() > 0) {
-			Point2DNoFxReq point = availablePoints.get(random.nextInt(availablePoints.size()));
-			chosenAbility = getRandomAbility(builder);
-			builder.setBuildPoint(point);
-			return chosenAbility;
-		} else {
-			chosenAbility = builder.getMove();
-			builder.getMove().setMoveToPoint(new Point2DNoFxReq(random.nextInt(builder.getXPos() - (builder.getMaxRange()) - builder.getMaxRange()), builder.getYPos() - (random.nextInt(builder.getMaxRange()) - builder.getMaxRange())));
-			return chosenAbility;
+		return true;
+	}
+	
+	public boolean positionIsBuildable(int xPos, int yPos, Entity entity) {
+		System.out.println(entity.getName());
+		if(entity instanceof Building) {
+			System.out.println(entity.getClass());
+			if(entity.getXPos() == xPos && entity.getYPos() == yPos) {
+				return false;
+			}
 		}
+		for (Event event : GameInfo.getRoundInfo().getEventList()) {
+
+			if (event.getAbility() instanceof Build) {
+
+				Builder builder = (Builder) event.getSource();
+
+				if ((int) builder.getBuildPoint().x == xPos && (int) builder.getBuildPoint().y == yPos) {
+					return false;
+				}
+			}
+		}
+		return true;
 	}
 	
 	public Point2DNoFxReq getNextMovePoint(Unit unit) {

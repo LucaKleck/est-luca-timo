@@ -138,7 +138,6 @@ public abstract class Ability {
 		int sourceX = source.getXPos();
 		int sourceY = source.getYPos();
 		
-
 		int deltaX = targetX - sourceX;
 		if(deltaX < 0) deltaX = -deltaX;
 		
