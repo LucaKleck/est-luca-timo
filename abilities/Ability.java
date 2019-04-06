@@ -156,7 +156,6 @@ public abstract class Ability {
 		int targetY = target.getYPos();
 		int sourceX = source.getXPos();
 		int sourceY = source.getYPos();
-		
 
 		int deltaX = targetX - sourceX;
 		if(deltaX < 0) deltaX = -deltaX;
@@ -169,7 +168,6 @@ public abstract class Ability {
 		} else {
 			return deltaX;
 		}
-		
 		
 	}
 	
@@ -199,7 +197,7 @@ public abstract class Ability {
 		case Ability.ABILITY_BUILD_SIEGE_WORKSHOP:
 			return 2;
 		default:
-			return 1;
+			return 0;
 		}
 	}
 

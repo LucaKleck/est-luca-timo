@@ -23,9 +23,10 @@ import core.Core;
 import core.Event;
 import core.GameInfo;
 import core.ResourceManager;
+import cost.BuildingCostManager;
+import cost.Cost;
+import cost.LevelUpCostManager;
 import entity.Entity;
-import entity.LevelUpCost;
-import entity.LevelUpCostManager;
 import entity.building.Building;
 import frame.JButtonCustomBg;
 import frame.JButton_01;
@@ -40,16 +41,17 @@ public class EntityPanel extends JScrollPaneBg {
 
 	private Entity entity;
 	private JLabel lblNextEvent;
-	//Just in Development
+	// Just in Development
 	private String lblCanBeLeveledText = "";
 	private static final String LBL_LEVEL_UP_COST_BASE_TEXT = "Leveling Costs: \n";
 	private static final String LBL_LEVEL_UP_COST_MAX_LEVEL_REACHED_TEXT = "";
 	private String lblLevelUpCostText;
-	
+
 	private Font font = new Font("MS PGothic", Font.BOLD, 16);
 	private String cssYellow = MainJFrame.makeCssStyle("color: #F0F900;");
-	
+
 	private LevelUpCostManager levelUpCostManager;
+	private BuildingCostManager buildingCostManager;
 
 	private JPanelCustomBg abilityPanel;
 
@@ -58,7 +60,9 @@ public class EntityPanel extends JScrollPaneBg {
 		
 		this.entity = entity;
 		
-		LevelUpCost levelUpCost = null;
+		Cost levelUpCost = null;
+		buildingCostManager = new BuildingCostManager();
+		levelUpCostManager = new LevelUpCostManager();
 		
 		JPanel jPanel = new JPanelCustomBg(new BufferedImage(9, 9, BufferedImage.TYPE_INT_ARGB));
 		getViewport().setView(jPanel);
@@ -84,7 +88,6 @@ public class EntityPanel extends JScrollPaneBg {
 			}
 
 		});
-		levelUpCostManager = new LevelUpCostManager();
 		
 		if (entity.canBeLeveled()) {
 			lblCanBeLeveledText = cssYellow+"Can be Leveled!";
@@ -106,12 +109,24 @@ public class EntityPanel extends JScrollPaneBg {
 		
 		if(levelUpCost != null) {
 			lblLevelUpCostText = cssYellow + LBL_LEVEL_UP_COST_BASE_TEXT;
-			lblLevelUpCostText += cssYellow + "Food: " + levelUpCost.getFoodCost() + "\n";
-			lblLevelUpCostText += cssYellow + "Wood: " + levelUpCost.getWoodCost() + "\n";
-			lblLevelUpCostText += cssYellow + "Stone: " + levelUpCost.getStoneCost() + "\n";
-			lblLevelUpCostText += cssYellow + "Metal: " + levelUpCost.getMetalCost() + "\n";
-			lblLevelUpCostText += cssYellow + "Gold: " + levelUpCost.getGoldCost() + "\n";
-			lblLevelUpCostText += cssYellow + "ManaStone: " + levelUpCost.getManaStoneCost();
+			if(levelUpCost.getFoodCost() > 0) {
+				lblLevelUpCostText += cssYellow + "Food: " + levelUpCost.getFoodCost() + "\n";
+			}
+			if(levelUpCost.getWoodCost() > 0) {
+				lblLevelUpCostText += cssYellow + "Wood: " + levelUpCost.getWoodCost() + "\n";
+			}
+			if(levelUpCost.getStoneCost() > 0) {
+				lblLevelUpCostText += cssYellow + "Stone: " + levelUpCost.getStoneCost() + "\n";
+			}
+			if(levelUpCost.getMetalCost() > 0) {
+				lblLevelUpCostText += cssYellow + "Metal: " + levelUpCost.getMetalCost() + "\n";
+			}
+			if(levelUpCost.getGoldCost() > 0) {
+				lblLevelUpCostText += cssYellow + "Gold: " + levelUpCost.getGoldCost() + "\n";
+			}
+			if(levelUpCost.getManaStoneCost() > 0) {
+				lblLevelUpCostText += cssYellow + "ManaStone: " + levelUpCost.getManaStoneCost() + "\n";
+			}
 		} else {
 			lblLevelUpCostText = LBL_LEVEL_UP_COST_MAX_LEVEL_REACHED_TEXT;
 		}
@@ -146,81 +161,135 @@ public class EntityPanel extends JScrollPaneBg {
 		
 		updateUserInterface();
 	}
-	
+
 	private static BufferedImage getAbilityImage(Ability ability) {
 		BufferedImage abilityImage = null;
-		if(ability instanceof Ability) abilityImage = ResourceManager.getSpellBook01_93();
-		if(ability instanceof Build) {
-			if(((Build) ability).getBuildingType().matches(Building.MAGE_TOWER)) abilityImage = ResourceManager.getSpellBook05_72();
-			else if(((Build) ability).getBuildingType().matches(Building.ARCHER_TOWER)) abilityImage = ResourceManager.getSpellBook05_22();
-			
-			else if(((Build) ability).getBuildingType().matches(Building.BARRACKS)) abilityImage = ResourceManager.getSpellBook05_20();
-			else if(((Build) ability).getBuildingType().matches(Building.TOWN_CENTER)) abilityImage = ResourceManager.getSpellBook05_17();
-			else if(((Build) ability).getBuildingType().matches(Building.SIEGE_WORKSHOP)) abilityImage = ResourceManager.getSpellBook05_76();
-			
-			else if(((Build) ability).getBuildingType().matches(Building.WOOD_GETTER)) abilityImage = ResourceManager.getSpellBook05_75();
-			else if(((Build) ability).getBuildingType().matches(Building.FOOD_GETTER)) abilityImage = ResourceManager.getSpellBook05_28();
-			else if(((Build) ability).getBuildingType().matches(Building.STONE_GETTER)) abilityImage = ResourceManager.getSpellBook05_77();
-			else if(((Build) ability).getBuildingType().matches(Building.METAL_GETTER)) abilityImage = ResourceManager.getSpellBook05_06();
-			else if(((Build) ability).getBuildingType().matches(Building.MANA_GETTER)) abilityImage = ResourceManager.getSpellBook01_67();
-			else if(((Build) ability).getBuildingType().matches(Building.GOLD_GETTER)) abilityImage = ResourceManager.getSpellBook05_95();
-			else abilityImage = ResourceManager.getSpellBook01_67();
-		};
-		if(ability instanceof AddStatusEffect) {
-			if(((AddStatusEffect) ability).getStatusEffectType().equals(AddStatusEffect.TYPE_HEAL)) abilityImage = ResourceManager.getSpellBook01_40();
-			else abilityImage = ResourceManager.getSpellBook01_93();
-		};
-		if(ability instanceof Move) {
+		if (ability instanceof Ability)
+			abilityImage = ResourceManager.getSpellBook01_93();
+		if (ability instanceof Build) {
+			if (((Build) ability).getBuildingType().matches(Building.MAGE_TOWER))
+				abilityImage = ResourceManager.getSpellBook05_72();
+			else if (((Build) ability).getBuildingType().matches(Building.ARCHER_TOWER))
+				abilityImage = ResourceManager.getSpellBook05_22();
+
+			else if (((Build) ability).getBuildingType().matches(Building.BARRACKS))
+				abilityImage = ResourceManager.getSpellBook05_20();
+			else if (((Build) ability).getBuildingType().matches(Building.TOWN_CENTER))
+				abilityImage = ResourceManager.getSpellBook05_17();
+			else if (((Build) ability).getBuildingType().matches(Building.SIEGE_WORKSHOP))
+				abilityImage = ResourceManager.getSpellBook05_76();
+
+			else if (((Build) ability).getBuildingType().matches(Building.WOOD_GETTER))
+				abilityImage = ResourceManager.getSpellBook05_75();
+			else if (((Build) ability).getBuildingType().matches(Building.FOOD_GETTER))
+				abilityImage = ResourceManager.getSpellBook05_28();
+			else if (((Build) ability).getBuildingType().matches(Building.STONE_GETTER))
+				abilityImage = ResourceManager.getSpellBook05_77();
+			else if (((Build) ability).getBuildingType().matches(Building.METAL_GETTER))
+				abilityImage = ResourceManager.getSpellBook05_06();
+			else if (((Build) ability).getBuildingType().matches(Building.MANA_GETTER))
+				abilityImage = ResourceManager.getSpellBook01_67();
+			else if (((Build) ability).getBuildingType().matches(Building.GOLD_GETTER))
+				abilityImage = ResourceManager.getSpellBook05_95();
+			else
+				abilityImage = ResourceManager.getSpellBook01_67();
+		}
+		;
+		if (ability instanceof AddStatusEffect) {
+			if (((AddStatusEffect) ability).getStatusEffectType().equals(AddStatusEffect.TYPE_HEAL))
+				abilityImage = ResourceManager.getSpellBook01_40();
+			else
+				abilityImage = ResourceManager.getSpellBook01_93();
+		}
+		;
+		if (ability instanceof Move) {
 			abilityImage = ResourceManager.getSpellBook01_22();
-		};
-		if(ability instanceof MeleeAttack) {
+		}
+		;
+		if (ability instanceof MeleeAttack) {
 			abilityImage = ResourceManager.getSGI_11();
-		};
-		if(ability instanceof FireBall) {
+		}
+		;
+		if (ability instanceof FireBall) {
 			abilityImage = ResourceManager.getSpellBook01_46();
-		};
+		}
+		;
 		return abilityImage;
 	}
-	
+
 	public void updateUserInterface() {
 		abilityPanel.removeAll();
 		int i = 0;
 		for (Ability ability : entity.getAbilities()) {
-				i++;
-				JButton jButton = new JButtonCustomBg(getAbilityImage(ability), true);
-				if(ability instanceof Build) jButton.setText(cssYellow+((Build) ability).getBuildingType());
-				jButton.setToolTipText(ability.getDescription());
-				jButton.setPreferredSize(new Dimension(70, 70));
-				jButton.setMaximumSize(new Dimension(70, 70));
-				jButton.setMinimumSize(new Dimension(70, 70));
-				jButton.addActionListener(new ActionListener() {
+			i++;
+			JButton jButton = new JButtonCustomBg(getAbilityImage(ability), true);
+			
+			String toolTipText = ability.getDescription() + "\n";
+			
+			if (ability instanceof Build) {
+				jButton.setText(cssYellow + ((Build) ability).getBuildingType());
+				Cost buildingCost = buildingCostManager.getBuildingCost(((Build) ability).getBuildingType());
+				if (buildingCost.getFoodCost() > 0) {
+					toolTipText += " | Food: " + buildingCost.getFoodCost() + "\n";
+				}
+				if (buildingCost.getWoodCost() > 0) {
+					toolTipText += " | Wood: " + buildingCost.getWoodCost() + "\n";
+				}
+				if (buildingCost.getStoneCost() > 0) {
+					toolTipText += " | Stone: " + buildingCost.getStoneCost() + "\n";
+				}
+				if (buildingCost.getMetalCost() > 0) {
+					toolTipText += " | Metal: " + buildingCost.getMetalCost() + "\n";
+				}
+				if (buildingCost.getGoldCost() > 0) {
+					toolTipText += " | Gold: " + buildingCost.getGoldCost() + "\n";
+				}
+				if (buildingCost.getManaStoneCost() > 0) {
+					toolTipText += " | ManaStone: " + buildingCost.getManaStoneCost() + "\n";
+				}
+			}
+			jButton.setToolTipText(toolTipText);
+			jButton.setPreferredSize(new Dimension(70, 70));
+			jButton.setMaximumSize(new Dimension(70, 70));
+			jButton.setMinimumSize(new Dimension(70, 70));
+			jButton.addActionListener(new ActionListener() {
 
-					@Override
-					public void actionPerformed(ActionEvent e) {
-						lblNextEvent.setText(cssYellow+"Event: " + ability.getName());
-						if (ability.maxRange > 0) {
-							((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
-									.drawAbilityLayer(ability,
-											GameInfo.getObjectMap().getSelected().getSelectedEntity().getXPos(),
-											GameInfo.getObjectMap().getSelected().getSelectedEntity().getYPos());
-							((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
-									.drawCombinedImage();
-						}
-						GameInfo.getObjectMap().getSelected().setSelectedAbility(ability);
-						if (ability instanceof CreateUnit) {
-							((EntityPanel) InteractionPanel.getCurrentPanel()).updateEventText(ability.getName());
-							GameInfo.getObjectMap().getSelected().clickedOnTile(0, 0, true);
-						}
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					lblNextEvent.setText(cssYellow + "Event: " + ability.getName());
+					if (ability.maxRange > 0) {
+						((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
+								.drawAbilityLayer(ability,
+										GameInfo.getObjectMap().getSelected().getSelectedEntity().getXPos(),
+										GameInfo.getObjectMap().getSelected().getSelectedEntity().getYPos());
+						((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
+								.drawCombinedImage();
 					}
-				});
-				if(entity.getLevel() < ability.getAbilityMinimumLevel()) {
+					GameInfo.getObjectMap().getSelected().setSelectedAbility(ability);
+					if (ability instanceof CreateUnit) {
+						((EntityPanel) InteractionPanel.getCurrentPanel()).updateEventText(ability.getName());
+						GameInfo.getObjectMap().getSelected().clickedOnTile(0, 0, true);
+					}
+				}
+			});
+			if (entity.getLevel() < ability.getAbilityMinimumLevel()) {
+				jButton.setEnabled(false);
+			}
+			if(ability instanceof Build) {
+				if(((Build)ability).buildingCanBeBuild() == false) {
 					jButton.setEnabled(false);
 				}
-				if(i%2 == 0) {
-					abilityPanel.add(jButton, "wrap 5");
-				} else {
-					abilityPanel.add(jButton);
+			}
+			if(ability instanceof CreateUnit) {
+				if(((CreateUnit)ability).unitCanBeCreated() == false) {
+					jButton.setEnabled(false);
 				}
+			}
+			if (i % 2 == 0) {
+				abilityPanel.add(jButton, "wrap 5");
+			} else {
+				abilityPanel.add(jButton);
+			}
 		}
 
 		for (Component component : getComponents()) {
@@ -232,9 +301,9 @@ public class EntityPanel extends JScrollPaneBg {
 
 	public void updateEventText(String eventText) {
 		if (eventText != null) {
-			lblNextEvent.setText(cssYellow+"Event: " + eventText);
+			lblNextEvent.setText(cssYellow + "Event: " + eventText);
 		} else {
-			lblNextEvent.setText(cssYellow+"Event: " + "No Event");
+			lblNextEvent.setText(cssYellow + "Event: " + "No Event");
 		}
 		InteractionPanel.getCurrentPanel().repaint();
 		InteractionPanel.getCurrentPanel().revalidate();

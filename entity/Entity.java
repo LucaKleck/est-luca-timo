@@ -3,10 +3,16 @@ package entity;
 import java.util.ArrayList;
 
 import abilities.Ability;
+import abilities.Build;
+import abilities.CreateUnit;
 import abilities.LevelUp;
 import core.Event;
 import core.GameInfo;
 import core.PlayerStats.PlayerResources;
+import cost.BuildingCostManager;
+import cost.Cost;
+import cost.LevelUpCostManager;
+import cost.ProductionCostManager;
 import core.Point2DNoFxReq;
 import statusEffects.StatusEffect;
 
@@ -22,11 +28,14 @@ public class Entity {
 	private int currentHealth;
 	private ArrayList<Ability> abilities;
 	private ArrayList<StatusEffect> statusEffects = new ArrayList<>(); // maybe add to constructor for permanent effects
-	private int level = 1;
+	private int level = 0;
 	private int maxRange = 5; // Will be calculated via the abilities in the future
 	private Event event = null;
 	private boolean controlable = false;
+	private BuildingCostManager buildingCostManager;
+	private ProductionCostManager productionCostManager;
 	private LevelUpCostManager levelUpCostManager;
+	private PlayerResources playerResources;
 
 	public Entity(Point2DNoFxReq pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable,
 			ArrayList<Ability> abilities) {
@@ -39,13 +48,18 @@ public class Entity {
 		this.level = level;
 		this.controlable = controlable;
 		this.abilities = abilities;
-		this.levelUpCostManager = new LevelUpCostManager();
+		buildingCostManager = new BuildingCostManager();
+		levelUpCostManager = new LevelUpCostManager();
+		productionCostManager = new ProductionCostManager();
 	}
 
 	public boolean canBeLeveled() {
+		if(playerResources == null) {
+			playerResources = GameInfo.getPlayerStats().getPlayerResources();
+		}
+		
 		if (this.getLevel() < Entity.MAX_LEVEL) {
-			LevelUpCost levelUpCost = levelUpCostManager.getLevelUpCost(this);
-			PlayerResources playerResources = GameInfo.getPlayerStats().getPlayerResources();
+			Cost levelUpCost = levelUpCostManager.getLevelUpCost(this);
 			
 			int availableFood = playerResources.getFood();
 			int availableWood =  playerResources.getWood();
@@ -56,7 +70,7 @@ public class Entity {
 			
 			for(Event event: GameInfo.getRoundInfo().getEventList()) {
 				if(event.getAbility() instanceof LevelUp) {
-					LevelUpCost entityLevelUpCost;
+					Cost entityLevelUpCost;
 					entityLevelUpCost = levelUpCostManager.getLevelUpCost(event.getTarget());
 					availableFood -= entityLevelUpCost.getFoodCost();
 					availableWood -= entityLevelUpCost.getWoodCost();
@@ -64,6 +78,26 @@ public class Entity {
 					availableMetal -= entityLevelUpCost.getMetalCost();
 					availableGold -= entityLevelUpCost.getGoldCost();
 					availableManaStone -= entityLevelUpCost.getManaStoneCost();
+				}
+				if(event.getAbility() instanceof Build) {
+					Cost entityBuildingCost;
+					entityBuildingCost = buildingCostManager.getBuildingCost(((Build)event.getAbility()).getBuildingType());
+					availableFood -= entityBuildingCost.getFoodCost();
+					availableWood -= entityBuildingCost.getWoodCost();
+					availableStone -= entityBuildingCost.getStoneCost();
+					availableMetal -= entityBuildingCost.getMetalCost();
+					availableGold -= entityBuildingCost.getGoldCost();
+					availableManaStone -= entityBuildingCost.getManaStoneCost();
+				}
+				if(event.getAbility() instanceof CreateUnit) {
+					Cost productionCost;
+					productionCost = productionCostManager.getProductionCost(((CreateUnit)event.getAbility()).getType());
+					availableFood -= productionCost.getFoodCost();
+					availableWood -= productionCost.getWoodCost();
+					availableStone -= productionCost.getStoneCost();
+					availableMetal -= productionCost.getMetalCost();
+					availableGold -= productionCost.getGoldCost();
+					availableManaStone -= productionCost.getManaStoneCost();
 				}
 			}
 			

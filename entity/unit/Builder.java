@@ -32,7 +32,6 @@ public class Builder extends Unit {
 		if(controlable) {
 			//Production Buildings
 			abilities.add(new Build(Building.BARRACKS, Ability.ABILITY_BUILD_BARRACKS, Ability.ABILITY_DESC_BUILD_BARRACKS, this, controlable));
-			abilities.add(new Build(Building.TOWN_CENTER, Ability.ABILITY_BUILD_TOWN_CENTER, Ability.ABILITY_DESC_BUILD_TOWN_CENTER, this, controlable));
 			abilities.add(new Build(Building.SIEGE_WORKSHOP, Ability.ABILITY_BUILD_SIEGE_WORKSHOP, Ability.ABILITY_DESC_BUILD_SIEGE_WORKSHOP, this, controlable));
 			//Resource Buildings
 			abilities.add(new Build(Building.WOOD_GETTER, Ability.ABILITY_BUILD_WOOD_GETTER, Ability.ABILITY_DESC_BUILD_WOOD_GETTER, this, controlable));

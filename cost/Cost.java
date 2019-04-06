@@ -1,6 +1,6 @@
-package entity;
+package cost;
 
-public class LevelUpCost {
+public class Cost {
 
 	private int foodCost;
 	private int woodCost;
@@ -9,7 +9,7 @@ public class LevelUpCost {
 	private int goldCost;
 	private int manaStoneCost;
 
-	public LevelUpCost(int foodCost, int woodCost, int stoneCost, int metalCost, int goldCost, int manaStoneCost) {
+	public Cost(int foodCost, int woodCost, int stoneCost, int metalCost, int goldCost, int manaStoneCost) {
 		this.foodCost = foodCost;
 		this.woodCost = woodCost;
 		this.stoneCost = stoneCost;

@@ -2,9 +2,9 @@ package abilities;
 
 import core.GameInfo;
 import core.PlayerStats.PlayerResources;
+import cost.Cost;
+import cost.LevelUpCostManager;
 import entity.Entity;
-import entity.LevelUpCost;
-import entity.LevelUpCostManager;
 
 public class LevelUp extends Ability {
 	
@@ -13,14 +13,17 @@ public class LevelUp extends Ability {
 	
 	public LevelUp() {
 		super(Ability.ABILITY_LEVEL_UP, Ability.ABILITY_DESC_LEVEL_UP, Ability.ABILITY_TYPE_LEVEL);
-		playerResources = GameInfo.getPlayerStats().getPlayerResources();
 		levelUpCostManager = new LevelUpCostManager();
 	}
 	
 	@Override
 	public void applyAbility(Entity source, Entity target) {
 		
-		LevelUpCost levelUpCost = levelUpCostManager.getLevelUpCost(target);
+		if(playerResources == null) {
+			playerResources = GameInfo.getPlayerStats().getPlayerResources();
+		}
+		
+		Cost levelUpCost = levelUpCostManager.getLevelUpCost(target);
 		
 		playerResources.reduceFoodBy(levelUpCost.getFoodCost());
 		playerResources.reduceWoodBy(levelUpCost.getWoodCost());

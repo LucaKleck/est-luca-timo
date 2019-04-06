@@ -19,9 +19,16 @@ public class PlayerStats {
 	private int timePlayedMins = 0;
 
 	private PlayerResources playerResources;
+	
+	private static final int INITAL_FOOD = 300;
+	private static final int INITAL_WOOD = 300;
+	private static final int INITAL_STONE = 200;
+	private static final int INITAL_METAL = 50;
+	private static final int INITAL_GOLD = 50;
+	private  static final int INITAL_MANA_STONE = 0;
 
 	public PlayerStats() {
-		playerResources = new PlayerResources();
+		playerResources = new PlayerResources(INITAL_FOOD, INITAL_WOOD, INITAL_STONE, INITAL_METAL, INITAL_GOLD, INITAL_MANA_STONE);
 	}
 	
 	public PlayerStats(int clicks,int unitsKilled, int buildingsDestroyed, int damageDealt, int unitsCreated, int buildingsBuilt, int timePlayedMins, PlayerResources playerResources) {
@@ -110,12 +117,12 @@ public class PlayerStats {
 		public PlayerResources() {
 		}
 
-		public PlayerResources(int gold, int food, int wood, int stone, int metal, int manaStone) {
-			this.gold = gold;
+		public PlayerResources(int food, int wood, int stone, int metal, int gold, int manaStone) {
 			this.food = food;
 			this.wood = wood;
 			this.stone = stone;
 			this.metal = metal;
+			this.gold = gold;
 			this.manaStone = manaStone;
 		}
 		
