@@ -20,8 +20,6 @@ public class LevelUp extends Ability {
 	@Override
 	public void applyAbility(Entity source, Entity target) {
 		
-		target.addLevel();
-		
 		LevelUpCost levelUpCost = levelUpCostManager.getLevelUpCost(target);
 		
 		playerResources.reduceFoodBy(levelUpCost.getFoodCost());
@@ -31,6 +29,7 @@ public class LevelUp extends Ability {
 		playerResources.reduceGoldBy(levelUpCost.getGoldCost());
 		playerResources.reduceMetalBy(levelUpCost.getMetalCost());
 		
+		target.addLevel();
 		
 	}
 

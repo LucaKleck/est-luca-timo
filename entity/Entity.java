@@ -3,6 +3,7 @@ package entity;
 import java.util.ArrayList;
 
 import abilities.Ability;
+import abilities.LevelUp;
 import core.Event;
 import core.GameInfo;
 import core.PlayerStats.PlayerResources;
@@ -45,22 +46,43 @@ public class Entity {
 		if (this.getLevel() < Entity.MAX_LEVEL) {
 			LevelUpCost levelUpCost = levelUpCostManager.getLevelUpCost(this);
 			PlayerResources playerResources = GameInfo.getPlayerStats().getPlayerResources();
-			if (levelUpCost.getFoodCost() > playerResources.getFood()) {
+			
+			int availableFood = playerResources.getFood();
+			int availableWood =  playerResources.getWood();
+			int availableStone = playerResources.getStone();
+			int availableMetal = playerResources.getMetal();
+			int availableGold = playerResources.getGold();
+			int availableManaStone = playerResources.getManaStone();
+			
+			for(Event event: GameInfo.getRoundInfo().getEventList()) {
+				if(event.getAbility() instanceof LevelUp) {
+					LevelUpCost entityLevelUpCost;
+					entityLevelUpCost = levelUpCostManager.getLevelUpCost(event.getTarget());
+					availableFood -= entityLevelUpCost.getFoodCost();
+					availableWood -= entityLevelUpCost.getWoodCost();
+					availableStone -= entityLevelUpCost.getStoneCost();
+					availableMetal -= entityLevelUpCost.getMetalCost();
+					availableGold -= entityLevelUpCost.getGoldCost();
+					availableManaStone -= entityLevelUpCost.getManaStoneCost();
+				}
+			}
+			
+			if (levelUpCost.getFoodCost() > availableFood) {
 				return false;
 			}
-			if (levelUpCost.getWoodCost() > playerResources.getFood()) {
+			if (levelUpCost.getWoodCost() > availableWood) {
 				return false;
 			}
-			if (levelUpCost.getStoneCost() > playerResources.getFood()) {
+			if (levelUpCost.getStoneCost() > availableStone) {
 				return false;
 			}
-			if (levelUpCost.getMetalCost() > playerResources.getFood()) {
+			if (levelUpCost.getMetalCost() > availableMetal) {
 				return false;
 			}
-			if (levelUpCost.getGoldCost() > playerResources.getFood()) {
+			if (levelUpCost.getGoldCost() > availableGold) {
 				return false;
 			}
-			if (levelUpCost.getManaStoneCost() > playerResources.getFood()) {
+			if (levelUpCost.getManaStoneCost() > availableManaStone) {
 				return false;
 			}
 			return true;
