@@ -166,6 +166,30 @@ public class PlayerStats {
 		public synchronized void addManaStone(int manaStone) {
 			this.manaStone += manaStone;
 		}
+		
+		public synchronized void reduceGoldBy(int gold) {
+			this.gold -= gold;
+		}
+
+		public synchronized void reduceFoodBy(int food) {
+			this.food -= food;
+		}
+
+		public synchronized void reduceWoodBy(int wood) {
+			this.wood -= wood;
+		}
+
+		public synchronized void reduceStoneBy(int stone) {
+			this.stone -= stone;
+		}
+
+		public synchronized void reduceMetalBy(int metal) {
+			this.metal -= metal;
+		}
+
+		public synchronized void reduceManaStoneBy(int manaStone) {
+			this.manaStone -= manaStone;
+		}
 
 		@Override
 		public String toString() {

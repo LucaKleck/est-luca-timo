@@ -40,6 +40,12 @@ public class ResourceManager {
 	private static BufferedImage archerImage;
 	private static BufferedImage trebuchetImage;
 	
+	// Buildings
+	private static BufferedImage buildingImage;
+	private static BufferedImage archerTowerImage;
+	private static BufferedImage mageTowerImage;
+	private static BufferedImage townCenterImage;
+	
 	// SpellBook !!! WARNING: Some of the pngs are .PNG -> Runnable JAR can't find them if you write .png !!!
 	private static BufferedImage spellBook01_67;
 	private static BufferedImage spellBook01_93;
@@ -116,6 +122,50 @@ public class ResourceManager {
 			}
 		}
 		return trebuchetImage;
+	}
+	
+	public static BufferedImage getBuildingImage() {
+		if(buildingImage == null) {
+			try {
+				buildingImage = ImageIO.read(Boot.class.getResource("/resources/building.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return buildingImage;
+	}
+	
+	public static BufferedImage getArcherTowerImage() {
+		if(archerTowerImage == null) {
+			try {
+				archerTowerImage = ImageIO.read(Boot.class.getResource("/resources/archer_tower.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return archerTowerImage;
+	}
+	
+	public static BufferedImage getMageTowerImage() {
+		if(mageTowerImage == null) {
+			try {
+				mageTowerImage = ImageIO.read(Boot.class.getResource("/resources/mage_tower.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return mageTowerImage;
+	}
+	
+	public static BufferedImage getTownCenterImage() {
+		if(townCenterImage == null) {
+			try {
+				townCenterImage = ImageIO.read(Boot.class.getResource("/resources/towncenter.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return townCenterImage;
 	}
 	
 	public static BufferedImage getBackground_01() {

@@ -43,8 +43,8 @@ public class Builder extends Unit {
 			abilities.add(new Build(Building.MANA_GETTER, Ability.ABILITY_BUILD_MANA_GETTER, Ability.ABILITY_DESC_BUILD_MANA_GETTER, this, controlable));
 		}
 		//Defense Buildings
-		abilities.add(new Build(Building.WALL, Ability.ABILITY_BUILD_WALL, Ability.ABILITY_DESC_BUILD_WALL, this, controlable));
-		abilities.add(new Build(Building.ARCHER_TOWER, Ability.ABILITY_BUILD_ARCHER_TOWER, Ability.ABILITY_DESC_BUILD_ARCHER_TOWER, this, controlable));
+		abilities.add(new Build(Building.MAGE_TOWER, Ability.ABILITY_BUILD_MAGE_TOWER, Ability.ABILITY_DESC_BUILD_MAGE_TOWER, this, controlable));
+		abilities.add(new Build(Building.ARCHER_TOWER, Ability.ABILITY_BUILD_ARCHER_TOWER, Ability.ABILITY_DESC_BUILD_ARCHER_TOWER, this, controlable));		
 	}
 	
 	public void setBuildPoint(Point2DNoFxReq buildPoint) {

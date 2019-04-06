@@ -22,7 +22,7 @@ public abstract class Building extends Entity {
 	public static final String PORTAL = "Portal";
 	public static final String SIEGE_WORKSHOP = "Siege-Workshop";
 	//Defense Buildings
-	public static final String WALL = "Wall";
+	public static final String MAGE_TOWER = "Mage Tower";
 	public static final String ARCHER_TOWER = "Archer Tower";
 	
 	public Building(Point2DNoFxReq pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {

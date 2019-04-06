@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import abilities.Ability;
 import core.Event;
 import core.GameInfo;
+import core.PlayerStats.PlayerResources;
 import core.Point2DNoFxReq;
 import statusEffects.StatusEffect;
 
 public class Entity {
 	private static int entityCount;
-	
+
+	public static final int MAX_LEVEL = 3; // The MaxLevel of every entity
+
 	private int id;
 	private Point2DNoFxReq pointXY = new Point2DNoFxReq();
 	private String name;
@@ -22,8 +25,10 @@ public class Entity {
 	private int maxRange = 5; // Will be calculated via the abilities in the future
 	private Event event = null;
 	private boolean controlable = false;
-	
-	public Entity(Point2DNoFxReq pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
+	private LevelUpCostManager levelUpCostManager;
+
+	public Entity(Point2DNoFxReq pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable,
+			ArrayList<Ability> abilities) {
 		entityCount++;
 		this.id = entityCount;
 		this.pointXY.setLocation(pointXY);
@@ -33,6 +38,35 @@ public class Entity {
 		this.level = level;
 		this.controlable = controlable;
 		this.abilities = abilities;
+		this.levelUpCostManager = new LevelUpCostManager();
+	}
+
+	public boolean canBeLeveled() {
+		if (this.getLevel() < Entity.MAX_LEVEL) {
+			LevelUpCost levelUpCost = levelUpCostManager.getLevelUpCost(this);
+			PlayerResources playerResources = GameInfo.getPlayerStats().getPlayerResources();
+			if (levelUpCost.getFoodCost() > playerResources.getFood()) {
+				return false;
+			}
+			if (levelUpCost.getWoodCost() > playerResources.getFood()) {
+				return false;
+			}
+			if (levelUpCost.getStoneCost() > playerResources.getFood()) {
+				return false;
+			}
+			if (levelUpCost.getMetalCost() > playerResources.getFood()) {
+				return false;
+			}
+			if (levelUpCost.getGoldCost() > playerResources.getFood()) {
+				return false;
+			}
+			if (levelUpCost.getManaStoneCost() > playerResources.getFood()) {
+				return false;
+			}
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	public String getName() {
@@ -58,11 +92,11 @@ public class Entity {
 	public int getLevel() {
 		return level;
 	}
-	
+
 	public boolean isControlable() {
 		return controlable;
 	}
-	
+
 	public int getId() {
 		return id;
 	}
@@ -70,19 +104,19 @@ public class Entity {
 	public int getXPos() {
 		return (int) pointXY.x;
 	}
-	
+
 	public int getYPos() {
 		return (int) pointXY.y;
 	}
-	
+
 	public Point2DNoFxReq getPoint() {
 		return pointXY;
 	}
-	
+
 	public void setPoint(Point2DNoFxReq moveToPoint) {
 		this.pointXY.setLocation(moveToPoint);
 	}
-	
+
 	public void setCurrentHealth(int currentHealth) {
 		this.currentHealth = currentHealth;
 
@@ -91,7 +125,7 @@ public class Entity {
 		}
 
 	}
-	
+
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -99,23 +133,23 @@ public class Entity {
 	public void addLevel() {
 		level++;
 	}
-	
+
 	private void destroy() {
 
 		int i = 0;
-		
-		while (GameInfo.getObjectMap().getEntityMap().get(i) != this && i < GameInfo.getObjectMap().getEntityMap().size() - 1) {
+
+		while (GameInfo.getObjectMap().getEntityMap().get(i) != this
+				&& i < GameInfo.getObjectMap().getEntityMap().size() - 1) {
 			i++;
 		}
 
-		if(this.event != null) {
+		if (this.event != null) {
 			GameInfo.getRoundInfo().getEventList().remove(this.event);
 			this.event = null;
 		}
-		if(GameInfo.getObjectMap().getEntityMap().get(i) == this) {
+		if (GameInfo.getObjectMap().getEntityMap().get(i) == this) {
 			GameInfo.getObjectMap().getEntityMap().remove(i);
 		}
-		
 
 	}
 
@@ -138,14 +172,14 @@ public class Entity {
 	}
 
 	public void setEvent(Event event) {
-		if(this.event != null) {
+		if (this.event != null) {
 			GameInfo.getRoundInfo().getEventList().remove(this.event);
-			this.event=null;
+			this.event = null;
 			System.gc();
 		}
 		this.event = event;
 	}
-	
+
 	public Event getEvent() {
 		return this.event;
 	}
@@ -156,27 +190,27 @@ public class Entity {
 	public void removeEventWithoutRemovingFromList() {
 		this.event = null;
 	}
-	
+
 	public ArrayList<StatusEffect> getStatusEffects() {
 		return statusEffects;
 	}
-	
+
 	public void addStatusEffect(StatusEffect statusEffect, Entity source, Entity target) {
 		statusEffect.setTarget(target);
 		statusEffect.setSource(source);
-		for(StatusEffect se: statusEffects) {
-			if(se.getClass().getName().equals(statusEffect.getClass().getName())) {
+		for (StatusEffect se : statusEffects) {
+			if (se.getClass().getName().equals(statusEffect.getClass().getName())) {
 				se.setDuration(statusEffect.getDuration());
 				return;
 			}
 		}
 		statusEffects.add(statusEffect);
 	}
-	
+
 	public void removeStatusEffect(StatusEffect statusEffect) {
-		
+
 		statusEffects.remove(statusEffect);
-		
+
 	}
 
 }

@@ -105,21 +105,17 @@ public class MapImage {
 	private static BufferedImage riverH;
 	private static BufferedImage riverV;
 
-	//Road
+	// Road
 	private static BufferedImage roadH;
 	private static BufferedImage roadV;
-	
+
 	private static BufferedImage roadTopLeft;
 	private static BufferedImage roadTopRight;
 	private static BufferedImage roadBottomLeft;
 	private static BufferedImage roadBottomRight;
+
 	
-	
-	// Buildings
-	private static BufferedImage buildingImage;
-	private static BufferedImage archerTowerImage;
-	private static BufferedImage townCenterImage;
-	
+
 	private static BufferedImage portalImage;
 
 	private BufferedImage combinedImage;
@@ -179,21 +175,16 @@ public class MapImage {
 				riverH = ImageIO.read(Boot.class.getResource("/resources/riverH.png"));
 				riverV = ImageIO.read(Boot.class.getResource("/resources/riverV.png"));
 
-				//Road
-				
+				// Road
+
 				roadH = ImageIO.read(Boot.class.getResource("/resources/roadH.png"));
 				roadV = ImageIO.read(Boot.class.getResource("/resources/roadV.png"));
-				
+
 				roadTopLeft = ImageIO.read(Boot.class.getResource("/resources/roadTopLeft.png"));
 				roadTopRight = ImageIO.read(Boot.class.getResource("/resources/roadTopRight.png"));
 				roadBottomLeft = ImageIO.read(Boot.class.getResource("/resources/roadBottomLeft.png"));
 				roadBottomRight = ImageIO.read(Boot.class.getResource("/resources/roadBottomRight.png"));
-				
-				// Buildings
-				buildingImage = ImageIO.read(Boot.class.getResource("/resources/building.png"));
-				archerTowerImage = ImageIO.read(Boot.class.getResource("/resources/archer_tower.png"));
-				townCenterImage = ImageIO.read(Boot.class.getResource("/resources/towncenter.png"));
-				
+
 				portalImage = ImageIO.read(Boot.class.getResource("/resources/portal.png"));
 
 			} catch (IOException e) {
@@ -225,8 +216,8 @@ public class MapImage {
 		for (int x = 0; x < GameInfo.getObjectMap().getMap().length; x++) {
 			for (int y = 0; y < GameInfo.getObjectMap().getMap()[0].length; y++) {
 				if (GameInfo.getObjectMap().getMap()[x][y].isRoad()) {
-					g.drawImage(getRoadImageForTile(x, y), x * mapTileSize, y * mapTileSize, mapTileSize,
-							mapTileSize, null);
+					g.drawImage(getRoadImageForTile(x, y), x * mapTileSize, y * mapTileSize, mapTileSize, mapTileSize,
+							null);
 				}
 			}
 		}
@@ -281,25 +272,25 @@ public class MapImage {
 			} else if (s instanceof Building) {
 				if (s instanceof ResourceBuilding) {
 					if (s.getName().matches(Building.WOOD_GETTER)) {
-						g.drawImage(buildingImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+						g.drawImage(ResourceManager.getBuildingImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					} else {
-						g.drawImage(buildingImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+						g.drawImage(ResourceManager.getBuildingImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					}
 				}
 				if (s instanceof ProductionBuilding) {
 					if (s.getName().matches(Building.TOWN_CENTER)) {
-						g.drawImage(townCenterImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
-					} else if(s.getName().matches(Building.PORTAL)) {
+						g.drawImage(ResourceManager.getTownCenterImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+					} else if (s.getName().matches(Building.PORTAL)) {
 						g.drawImage(portalImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					} else {
-						g.drawImage(townCenterImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+						g.drawImage(ResourceManager.getTownCenterImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					}
 				}
 				if (s instanceof DefenseBuilding) {
 					if (s.getName().matches(Building.ARCHER_TOWER)) {
-						g.drawImage(archerTowerImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+						g.drawImage(ResourceManager.getArcherTowerImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					} else {
-						g.drawImage(archerTowerImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+						g.drawImage(ResourceManager.getMageTowerImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					}
 				}
 			}
@@ -330,28 +321,11 @@ public class MapImage {
 		g.setComposite(AlphaComposite.SrcOver);
 		g.setColor(new Color(255, 255, 0, 120));
 
-		boolean[][] rangeField = new boolean[totalRange][totalRange];
-
-		for (Entity entity : GameInfo.getObjectMap().getEntityMap()) {
-			if(ability.getType().equals(Ability.ABILITY_TYPE_DAMAGE) == false) {
-				if (entity instanceof DefenseBuilding && entity.isControlable() == false) {
-					if (entity.getXPos() <= (x + range) && entity.getXPos() >= (x - range)
-							&& entity.getYPos() <= (y + range) && entity.getYPos() >= (y - range)) {
-
-						rangeField[entity.getYPos() - (y - range)][entity.getXPos() - (x - range)] = true;
-
-					}
-				}
-			}
-		}		
-		
 		for (int row = 0; row < totalRange; row++) {
 			for (int col = 0; col < totalRange; col++) {
 				if (!((x - range + col) == x && (y - range + row) == y)) {
-					if (!(rangeField[row][col])) {
 						g.fillRect((x - range + col) * mapTileSize, (y - range + row) * mapTileSize, mapTileSize,
 								mapTileSize);
-					}
 				}
 			}
 		}
@@ -385,29 +359,29 @@ public class MapImage {
 					mapTileSize);
 		}
 	}
-	
+
 	private BufferedImage getRoadImageForTile(int x, int y) {
 		boolean top = checkRoad(x, y, TOP);
 		boolean right = checkRoad(x, y, RIGHT);
 		boolean bottom = checkRoad(x, y, BOTTOM);
 		boolean left = checkRoad(x, y, LEFT);
 
-		if(left && top) {
-			return roadBottomRight;	
-		} else if(left && bottom) {
+		if (left && top) {
+			return roadBottomRight;
+		} else if (left && bottom) {
 			return roadTopRight;
-		} else if(top && right) {
+		} else if (top && right) {
 			return roadBottomLeft;
-		} else if(bottom && right) {
+		} else if (bottom && right) {
 			return roadTopLeft;
-		} else if(top || bottom) {
+		} else if (top || bottom) {
 			return roadV;
-		} else if(left || right) {
+		} else if (left || right) {
 			return roadH;
 		} else {
 			return roadH;
 		}
-		
+
 	}
 
 	private BufferedImage getImageForTile(int x, int y) {
@@ -662,7 +636,7 @@ public class MapImage {
 		}
 		return false;
 	}
-	
+
 	private boolean checkRoad(int x, int y, int[] pos) {
 		try {
 			if (GameInfo.getObjectMap().getMap()[(x + pos[0])][y + pos[1]].isRoad()) {

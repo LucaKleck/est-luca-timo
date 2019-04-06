@@ -37,6 +37,36 @@ public class EntityFilter {
 		return null;
 	}
 	
+	public Ability getRandomBuilderAbility(Builder builder) {
+		ArrayList<Ability> allAbilitiesExceptMove = builder.getAbilities();
+		Build buildMageTower = null;
+		Build buildArcherTower = null;
+		if(allAbilitiesExceptMove != null) {
+			if(allAbilitiesExceptMove.size() > 0) {
+				for(Ability abl: allAbilitiesExceptMove) {
+					if(abl instanceof Move) {
+						allAbilitiesExceptMove.remove(abl);
+					}
+					if(abl instanceof Build) {
+						if((((Build) abl).getBuildingType()).equals(Building.ARCHER_TOWER)) {
+							buildArcherTower = (Build) abl;
+						}
+						if((((Build) abl).getBuildingType()).equals(Building.MAGE_TOWER)) {
+							buildArcherTower = (Build) abl;
+						}
+					}
+				}
+			}
+		}
+		
+		if(random.nextInt(3) > 0) {
+			return buildArcherTower;
+		} else {
+			return buildMageTower;
+		}
+		
+	}
+	
 	public Ability getBestAbility(int rangeToTarget, Entity source) {
 		ArrayList<Ability> abilities = source.getAbilities();
 		Ability chosenAbility = null;
@@ -90,8 +120,8 @@ public class EntityFilter {
 			}
 		}
 		
-		//Has a 75% chance to try to find a point, if none found or didn't try return null so the chosenAbility will be move			
-		if(random.nextInt(4) < 3) {
+		//Has a 50% chance to try to find a point, if none found or didn't try return null so the chosenAbility will be move			
+		if(random.nextBoolean()) {
 			Point2DNoFxReq randomPoint = new Point2DNoFxReq(builder.getXPos() + (random.nextInt(7) - 3), builder.getYPos() + (random.nextInt(7) - 3));
 			if(unbuildablePoints.contains(randomPoint) == false) {	
 				chosenPoint = randomPoint;

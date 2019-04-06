@@ -11,10 +11,9 @@ public class FireBall extends Ability {
 		this.setDamage(BASE_DAMAGE);
 	}
 	
-	public FireBall(int maxRange) {
+	public FireBall(int damage) {
 		super(Ability.ABILITY_FIRE_BALL, Ability.ABILITY_DESC_FIRE_BALL, Ability.ABILITY_TYPE_DAMAGE);
-		super.maxRange = maxRange;
-		this.setDamage(BASE_DAMAGE);
+		this.setDamage(damage);
 	}
 	
 	public FireBall(boolean isMage) {

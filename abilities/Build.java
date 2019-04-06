@@ -27,7 +27,7 @@ public class Build extends Ability {
 		super.maxRange = DEFAULT_MAX_RANGE;
 	}
 
-	public String getBuildingName() {
+	public String getBuildingType() {
 		return buildingType;
 	}
 
@@ -99,8 +99,8 @@ public class Build extends Ability {
 					new ArrayList<>());
 		}
 		// Defense Building
-		if (buildingType.equals(Building.WALL)) {
-			building = new DefenseBuilding(buildPoint, Building.WALL, 20, 20, 1, controlable, new ArrayList<>());
+		if (buildingType.equals(Building.MAGE_TOWER)) {
+			building = new DefenseBuilding(buildPoint, Building.MAGE_TOWER, 7, 7, 1, controlable, new ArrayList<>());
 		}
 		if (buildingType.equals(Building.ARCHER_TOWER)) {
 			building = new DefenseBuilding(buildPoint, Building.ARCHER_TOWER, 10, 10, 1, controlable,

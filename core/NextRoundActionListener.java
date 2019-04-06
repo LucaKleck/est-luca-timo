@@ -16,6 +16,7 @@ import effects.AbilityEffect;
 import entity.Entity;
 import entity.EntityFilter;
 import entity.building.Building;
+import entity.building.DefenseBuilding;
 import entity.building.ProductionBuilding;
 import entity.unit.Builder;
 import entity.unit.Unit;
@@ -133,6 +134,13 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 							break;
 						}
 					}
+				}
+			} else if(entity instanceof DefenseBuilding) {
+				Entity bestTarget = entityFilter.getBestEntityTarget(entity);
+				ability = entityFilter.getBestAbility(ability.getRangeToTarget(entity, bestTarget), entity);
+				if (ability != null && bestTarget != null && entity instanceof Builder == false) {
+					entity.setEvent(
+							new Event(entity, bestTarget, ability, new AbilityEffect(entity, bestTarget, ability)));
 				}
 			}
 		}

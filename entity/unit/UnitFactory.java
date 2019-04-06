@@ -51,7 +51,7 @@ public class UnitFactory {
 			unit = new Mage(pointXY, "", level, controlable, abilities);
 			break;
 		case Unit.UNIT_TREBUCHET:
-			unit = new Trebuchet(pointXY, "", level, controlable, abilities);
+			unit = new Trebuchet(pointXY, "Trebuchet", level, controlable, abilities);
 			break;
 		case Unit.UNIT_WARRIOR:
 			unit = new Warrior(pointXY, "", level, controlable, abilities);
@@ -81,10 +81,11 @@ public class UnitFactory {
 				e.printStackTrace();
 			}
 		}
-		Element rootElement = namesXML.getDocumentElement();
-
-		unit.setName(getString("name", rootElement));
-
+		if(unit.getName().equals("Trebuchet") == false) {
+			Element rootElement = namesXML.getDocumentElement();
+			unit.setName(getString("name", rootElement));
+		}
+		
 		return unit;
 
 	}

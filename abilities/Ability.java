@@ -1,8 +1,6 @@
 package abilities;
 
-import core.GameInfo;
 import entity.Entity;
-import entity.building.DefenseBuilding;
 
 public abstract class Ability {
 	// DAMAGE will be searched and replaced by the actual damage the unit will deal
@@ -61,8 +59,8 @@ public abstract class Ability {
 	public static final String ABILITY_BUILD_SIEGE_WORKSHOP = "Build Siege-Workshop";
 	public static final String ABILITY_DESC_BUILD_SIEGE_WORKSHOP = "Builds siege-workshop at targeted spot";
 	// Defense Buildings
-	public static final String ABILITY_BUILD_WALL = "Build Wall";
-	public static final String ABILITY_DESC_BUILD_WALL = "Builds a wall at targeted spot";
+	public static final String ABILITY_BUILD_MAGE_TOWER = "Build Mage Tower";
+	public static final String ABILITY_DESC_BUILD_MAGE_TOWER = "Builds a mage tower at targeted spot";
 
 	public static final String ABILITY_BUILD_ARCHER_TOWER = "Build Archer Tower";
 	public static final String ABILITY_DESC_BUILD_ARCHER_TOWER = "Builds a archer tower at targeted spot";
@@ -176,15 +174,6 @@ public abstract class Ability {
 	}
 	
 	public boolean rangeCheck(int unitX, int unitY, int mapTileX, int mapTileY) {
-		for(Entity entity: GameInfo.getObjectMap().getEntityMap()) {
-			if(this.type.equals(ABILITY_TYPE_DAMAGE) == false) {
-				if(entity.isControlable() == false && entity instanceof DefenseBuilding) {
-					if(entity.getXPos() == mapTileX && entity.getYPos() == mapTileY) {
-						return false;
-					}
-				}
-			}
-		}
 		if (mapTileX >= unitX - maxRange && mapTileX <= unitX + maxRange && mapTileY >= unitY - maxRange
 				&& mapTileY <= unitY + maxRange) {
 			return true;
