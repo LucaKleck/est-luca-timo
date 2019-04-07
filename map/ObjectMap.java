@@ -12,7 +12,9 @@ import core.Point2DNoFxReq;
 import core.Selected;
 import entity.Entity;
 import entity.building.Building;
+import entity.building.DefenseBuilding;
 import entity.building.ProductionBuilding;
+import entity.building.ResourceBuilding;
 
 public class ObjectMap {
 
@@ -34,7 +36,16 @@ public class ObjectMap {
 		
 		entityMap.add(new ProductionBuilding(new Point2DNoFxReq(3, 3), ProductionBuilding.TOWN_CENTER, 15, 15, 0, true, new ArrayList<>()));
 		entityMap.add(new ProductionBuilding(PORTAL_POINT, ProductionBuilding.PORTAL, 150, 150, 0, false, new ArrayList<>()));
-		entityMap.add(new ProductionBuilding(new Point2DNoFxReq(3, 5), Building.BARRACKS, 10, 10, 0, true, new ArrayList<>()));
+		entityMap.add(new ResourceBuilding(new Point2DNoFxReq(0, 0), Building.METAL_GETTER, 10, 10, 0, true, new ArrayList<>()));
+		entityMap.add(new ResourceBuilding(new Point2DNoFxReq(0, 1), Building.STONE_GETTER, 10, 10, 0, true, new ArrayList<>()));
+		entityMap.add(new ResourceBuilding(new Point2DNoFxReq(0, 2), Building.MANA_GETTER, 10, 10, 0, true, new ArrayList<>()));
+		entityMap.add(new ResourceBuilding(new Point2DNoFxReq(0, 3), Building.WOOD_GETTER, 10, 10, 0, true, new ArrayList<>()));
+		entityMap.add(new ResourceBuilding(new Point2DNoFxReq(0, 4), Building.FOOD_GETTER, 10, 10, 0, true, new ArrayList<>()));
+		entityMap.add(new ResourceBuilding(new Point2DNoFxReq(0, 5), Building.GOLD_GETTER, 10, 10, 0, true, new ArrayList<>()));
+		entityMap.add(new ProductionBuilding(new Point2DNoFxReq(1, 0), Building.BARRACKS, 10, 10, 0, true, new ArrayList<>()));
+		entityMap.add(new ProductionBuilding(new Point2DNoFxReq(1, 1), Building.SIEGE_WORKSHOP, 10, 10, 0, true, new ArrayList<>()));
+		entityMap.add(new DefenseBuilding(new Point2DNoFxReq(2, 0), Building.ARCHER_TOWER, 10, 10, 0, true, new ArrayList<>()));
+		entityMap.add(new DefenseBuilding(new Point2DNoFxReq(2, 1), Building.MAGE_TOWER, 10, 10, 0, true, new ArrayList<>()));
 		// FOR UNIT STACK (check scroll and other stuff)
 	}
 	

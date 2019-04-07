@@ -272,7 +272,11 @@ public class MapImage {
 			} else if (s instanceof Building) {
 				if (s instanceof ResourceBuilding) {
 					if (s.getName().matches(Building.WOOD_GETTER)) {
-						g.drawImage(ResourceManager.getBuildingImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+						g.drawImage(ResourceManager.getWoodGetterImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+					} else if (s.getName().matches(Building.FOOD_GETTER)) {
+						g.drawImage(ResourceManager.getFoodGetterImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+					} else if (s.getName().matches(Building.METAL_GETTER)) {
+						g.drawImage(ResourceManager.getMetalForgeImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					} else {
 						g.drawImage(ResourceManager.getBuildingImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					}

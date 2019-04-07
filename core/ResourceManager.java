@@ -42,6 +42,9 @@ public class ResourceManager {
 	
 	// Buildings
 	private static BufferedImage buildingImage;
+	private static BufferedImage woodGetterImage;
+	private static BufferedImage metalForgeImage;
+	private static BufferedImage foodGetterImage;
 	private static BufferedImage archerTowerImage;
 	private static BufferedImage mageTowerImage;
 	private static BufferedImage townCenterImage;
@@ -140,6 +143,39 @@ public class ResourceManager {
 			}
 		}
 		return buildingImage;
+	}
+	
+	public static BufferedImage getWoodGetterImage() {
+		if(woodGetterImage == null) {
+			try {
+				woodGetterImage = ImageIO.read(Boot.class.getResource("/resources/wood_getter.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return woodGetterImage;
+	}
+	
+	public static BufferedImage getFoodGetterImage() {
+		if(foodGetterImage == null) {
+			try {
+				foodGetterImage = ImageIO.read(Boot.class.getResource("/resources/food_getter.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return foodGetterImage;
+	}
+	
+	public static BufferedImage getMetalForgeImage() {
+		if(metalForgeImage == null) {
+			try {
+				metalForgeImage = ImageIO.read(Boot.class.getResource("/resources/metal_forge.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return metalForgeImage;
 	}
 	
 	public static BufferedImage getArcherTowerImage() {
