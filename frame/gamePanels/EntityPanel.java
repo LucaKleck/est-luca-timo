@@ -23,9 +23,7 @@ import core.Core;
 import core.Event;
 import core.GameInfo;
 import core.ResourceManager;
-import cost.BuildingCostManager;
 import cost.Cost;
-import cost.LevelUpCostManager;
 import entity.Entity;
 import entity.building.Building;
 import frame.JButtonCustomBg;
@@ -50,9 +48,6 @@ public class EntityPanel extends JScrollPaneBg {
 	private Font font = new Font("MS PGothic", Font.BOLD, 16);
 	private String cssYellow = MainJFrame.makeCssStyle("color: #F0F900;");
 
-	private LevelUpCostManager levelUpCostManager;
-	private BuildingCostManager buildingCostManager;
-
 	private JPanelCustomBg abilityPanel;
 
 	public EntityPanel(Entity entity) {
@@ -61,8 +56,6 @@ public class EntityPanel extends JScrollPaneBg {
 		this.entity = entity;
 		
 		Cost levelUpCost = null;
-		buildingCostManager = new BuildingCostManager();
-		levelUpCostManager = new LevelUpCostManager();
 		
 		JPanel jPanel = new JPanelCustomBg(new BufferedImage(9, 9, BufferedImage.TYPE_INT_ARGB));
 		getViewport().setView(jPanel);
@@ -91,14 +84,14 @@ public class EntityPanel extends JScrollPaneBg {
 		
 		if (entity.canBeLeveled()) {
 			lblCanBeLeveledText = cssYellow+"Can be Leveled!";
-			levelUpCost = levelUpCostManager.getLevelUpCost(entity);
+			levelUpCost = GameInfo.getPlayerStats().getCostManager().getLevelUpCostManager().getLevelUpCost(entity);
 		} else if (entity.canBeLeveled() == false) {
 			btnLevelUp.setEnabled(false);
 			if(entity.getLevel() == Entity.MAX_LEVEL) {
 				lblCanBeLeveledText = cssYellow+"Max Level Reached!";
 			} else {
 				lblCanBeLeveledText = cssYellow+"Not Enough Resources!";
-				levelUpCost = levelUpCostManager.getLevelUpCost(entity);
+				levelUpCost = GameInfo.getPlayerStats().getCostManager().getLevelUpCostManager().getLevelUpCost(entity);
 			}
 		} 
 	
@@ -228,7 +221,7 @@ public class EntityPanel extends JScrollPaneBg {
 			
 			if (ability instanceof Build) {
 				jButton.setText(cssYellow + ((Build) ability).getBuildingType());
-				Cost buildingCost = buildingCostManager.getBuildingCost(((Build) ability).getBuildingType());
+				Cost buildingCost = GameInfo.getPlayerStats().getCostManager().getBuildingCostManager().getBuildingCost(((Build) ability).getBuildingType());
 				if (buildingCost.getFoodCost() > 0) {
 					toolTipText += " | Food: " + buildingCost.getFoodCost() + "\n";
 				}
@@ -246,6 +239,28 @@ public class EntityPanel extends JScrollPaneBg {
 				}
 				if (buildingCost.getManaStoneCost() > 0) {
 					toolTipText += " | ManaStone: " + buildingCost.getManaStoneCost() + "\n";
+				}
+			}
+			if (ability instanceof CreateUnit) {
+				jButton.setText(cssYellow + ((CreateUnit) ability).getUnitType());
+				Cost productionCost = GameInfo.getPlayerStats().getCostManager().getProductionCostManager().getProductionCost(((CreateUnit) ability).getUnitType());
+				if (productionCost.getFoodCost() > 0) {
+					toolTipText += " | Food: " + productionCost.getFoodCost() + "\n";
+				}
+				if (productionCost.getWoodCost() > 0) {
+					toolTipText += " | Wood: " + productionCost.getWoodCost() + "\n";
+				}
+				if (productionCost.getStoneCost() > 0) {
+					toolTipText += " | Stone: " + productionCost.getStoneCost() + "\n";
+				}
+				if (productionCost.getMetalCost() > 0) {
+					toolTipText += " | Metal: " + productionCost.getMetalCost() + "\n";
+				}
+				if (productionCost.getGoldCost() > 0) {
+					toolTipText += " | Gold: " + productionCost.getGoldCost() + "\n";
+				}
+				if (productionCost.getManaStoneCost() > 0) {
+					toolTipText += " | ManaStone: " + productionCost.getManaStoneCost() + "\n";
 				}
 			}
 			jButton.setToolTipText(toolTipText);

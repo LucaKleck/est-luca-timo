@@ -18,20 +18,21 @@ public class ObjectMap {
 	private Selected selected = new Selected();
 	private MapTile[][] map;
 	private ArrayList<Entity> entityMap;
-	private Point2DNoFxReq portalPoint;
+	private static final int PORTAL_POINT_X = 45;
+	private static final int PORTAL_POINT_Y = 45;
+	private static final Point2DNoFxReq PORTAL_POINT = new Point2DNoFxReq(PORTAL_POINT_X, PORTAL_POINT_Y); ;
 
 	public ObjectMap() {
 		map = MapCreator.createMap();
 		selected = new Selected();
 		entityMap = new ArrayList<>();
-		portalPoint = new Point2DNoFxReq(45, 45);
 		setInitalState();
 	}
 	
 	private void setInitalState() {
 		
 		entityMap.add(new ProductionBuilding(new Point2DNoFxReq(3, 3), ProductionBuilding.TOWN_CENTER, 15, 15, 0, true, new ArrayList<>()));
-		entityMap.add(new ProductionBuilding(portalPoint, ProductionBuilding.PORTAL, 150, 150, 0, false, new ArrayList<>()));
+		entityMap.add(new ProductionBuilding(PORTAL_POINT, ProductionBuilding.PORTAL, 150, 150, 0, false, new ArrayList<>()));
 		// FOR UNIT STACK (check scroll and other stuff)
 	}
 	
@@ -39,7 +40,6 @@ public class ObjectMap {
 		this.map = map;
 		this.entityMap = entityMap;
 		// TODO change it so that this is loaded from the actual position
-		portalPoint = new Point2DNoFxReq(45, 45);
 		selected = new Selected();
 	}
 
@@ -56,7 +56,7 @@ public class ObjectMap {
 	}
 	
 	public Point2DNoFxReq getPortalPoint() {
-		return portalPoint;
+		return PORTAL_POINT;
 	}
 	
 	public void remakeMap() {

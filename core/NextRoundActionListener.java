@@ -191,10 +191,12 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 				}
 			}
 			System.out.println(e);
-			try {
-				Thread.sleep(500);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
+			if(e.getAbility() instanceof CollectResources == false) {
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
 			}
 			e.run();
 			// due to concurrent modification issues iterator is used to remove the current
@@ -208,10 +210,12 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 				mp.updateUI();
 				mp.getMapPanel().getMapImage().update();
 			}
-			try {
-				Thread.sleep(750);
-			} catch (InterruptedException e1) {
-				e1.printStackTrace();
+			if(e.getAbility() instanceof CollectResources == false) {
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
 			}
 		}
 	}

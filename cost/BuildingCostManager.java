@@ -35,7 +35,7 @@ public class BuildingCostManager {
 			}
 			if (buildingType.equals(Building.BARRACKS)) {
 				if (barracksBuildingCost == null) {
-					barracksBuildingCost = new Cost(150, 300, 0, 150, 150, 0);
+					barracksBuildingCost = new Cost(150, 300, 0, 0, 50, 0);
 				}
 				return barracksBuildingCost;
 			}
@@ -47,7 +47,7 @@ public class BuildingCostManager {
 			}
 			if (buildingType.equals(Building.FOOD_GETTER)) {
 				if (foodGetterBuildingCost == null) {
-					foodGetterBuildingCost = new Cost(0, 300, 0, 0, 0, 0);
+					foodGetterBuildingCost = new Cost(0, 250, 0, 0, 0, 0);
 				}
 				return foodGetterBuildingCost;
 			}

@@ -1,5 +1,6 @@
 package core;
 
+import cost.CostManager;
 import frame.MainJFrame;
 
 /**
@@ -19,9 +20,10 @@ public class PlayerStats {
 	private int timePlayedMins = 0;
 
 	private PlayerResources playerResources;
+	private CostManager costManager;
 	
-	private static final int INITAL_FOOD = 300;
-	private static final int INITAL_WOOD = 300;
+	private static final int INITAL_FOOD = 500;
+	private static final int INITAL_WOOD = 250;
 	private static final int INITAL_STONE = 200;
 	private static final int INITAL_METAL = 50;
 	private static final int INITAL_GOLD = 50;
@@ -29,6 +31,7 @@ public class PlayerStats {
 
 	public PlayerStats() {
 		playerResources = new PlayerResources(INITAL_FOOD, INITAL_WOOD, INITAL_STONE, INITAL_METAL, INITAL_GOLD, INITAL_MANA_STONE);
+		costManager = new CostManager();
 	}
 	
 	public PlayerStats(int clicks,int unitsKilled, int buildingsDestroyed, int damageDealt, int unitsCreated, int buildingsBuilt, int timePlayedMins, PlayerResources playerResources) {
@@ -40,10 +43,15 @@ public class PlayerStats {
 		this.buildingsBuilt = buildingsBuilt;
 		this.timePlayedMins = timePlayedMins;
 		this.playerResources = playerResources;
+		costManager = new CostManager();
 	}
 
 	public PlayerResources getPlayerResources() {
 		return playerResources;
+	}
+	
+	public CostManager getCostManager() {
+		return costManager;
 	}
 
 	public synchronized int getClicks() {

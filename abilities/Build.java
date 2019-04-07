@@ -4,12 +4,11 @@ import java.util.ArrayList;
 
 import core.Event;
 import core.GameInfo;
-import core.Point2DNoFxReq;
+import core.PlayerStats;
 import core.PlayerStats.PlayerResources;
-import cost.BuildingCostManager;
+import core.Point2DNoFxReq;
+import cost.AvailableResources;
 import cost.Cost;
-import cost.LevelUpCostManager;
-import cost.ProductionCostManager;
 import entity.Entity;
 import entity.building.Building;
 import entity.building.DefenseBuilding;
@@ -24,10 +23,8 @@ public class Build extends Ability {
 	private static final int DEFAULT_MAX_RANGE = 2;
 	private boolean controlable;
 
-	private BuildingCostManager buildingCostManager;
-	private LevelUpCostManager levelUpCostManager;
-	private ProductionCostManager productionCostManager;
 	private PlayerResources playerResources;
+	private PlayerStats playerStats;
 	
 	public Build(String buildingType, String name, String description, Builder builder, boolean controlable) {
 		super(name, description, Ability.ABILITY_TYPE_BUILD);
@@ -35,10 +32,6 @@ public class Build extends Ability {
 		this.builder = builder;
 		this.controlable = controlable;
 		super.maxRange = DEFAULT_MAX_RANGE;
-		buildingCostManager = new BuildingCostManager();
-		levelUpCostManager = new LevelUpCostManager();
-		productionCostManager = new ProductionCostManager();
-		playerResources = GameInfo.getPlayerStats().getPlayerResources();
 	}
 
 	public String getBuildingType() {
@@ -72,6 +65,21 @@ public class Build extends Ability {
 		Point2DNoFxReq buildPoint = builder.getBuildPoint();
 		Building building = null;
 
+		if(source.isControlable()) {
+			if(playerResources == null) {
+				playerResources = GameInfo.getPlayerStats().getPlayerResources();
+			}
+			
+			Cost buildingCost = GameInfo.getPlayerStats().getCostManager().getBuildingCostManager().getBuildingCost(buildingType);
+			
+			playerResources.reduceFoodBy(buildingCost.getFoodCost());
+			playerResources.reduceWoodBy(buildingCost.getWoodCost());
+			playerResources.reduceStoneBy(buildingCost.getStoneCost());
+			playerResources.reduceManaStoneBy(buildingCost.getManaStoneCost());
+			playerResources.reduceGoldBy(buildingCost.getGoldCost());
+			playerResources.reduceMetalBy(buildingCost.getMetalCost());
+		}
+		
 		// Production Building
 		if (buildingType.equals(Building.BARRACKS)) {
 			building = new ProductionBuilding(buildPoint, Building.BARRACKS, 10, 10, 0, controlable, new ArrayList<>());
@@ -122,64 +130,40 @@ public class Build extends Ability {
 	
 	public boolean buildingCanBeBuild() {
 		
-		Cost buildingCost = buildingCostManager.getBuildingCost(this.getBuildingType());
-		
-		int availableFood = playerResources.getFood();
-		int availableWood =  playerResources.getWood();
-		int availableStone = playerResources.getStone();
-		int availableMetal = playerResources.getMetal();
-		int availableGold = playerResources.getGold();
-		int availableManaStone = playerResources.getManaStone();
-		
-		for(Event event: GameInfo.getRoundInfo().getEventList()) {
-			if(event.getAbility() instanceof LevelUp) {
-				Cost entityLevelUpCost;
-				entityLevelUpCost = levelUpCostManager.getLevelUpCost(event.getTarget());
-				availableFood -= entityLevelUpCost.getFoodCost();
-				availableWood -= entityLevelUpCost.getWoodCost();
-				availableStone -= entityLevelUpCost.getStoneCost();
-				availableMetal -= entityLevelUpCost.getMetalCost();
-				availableGold -= entityLevelUpCost.getGoldCost();
-				availableManaStone -= entityLevelUpCost.getManaStoneCost();
-			}
-			if(event.getAbility() instanceof Build) {
-				Cost entityBuildingCost;
-				entityBuildingCost = buildingCostManager.getBuildingCost(((Build)event.getAbility()).getBuildingType());
-				availableFood -= entityBuildingCost.getFoodCost();
-				availableWood -= entityBuildingCost.getWoodCost();
-				availableStone -= entityBuildingCost.getStoneCost();
-				availableMetal -= entityBuildingCost.getMetalCost();
-				availableGold -= entityBuildingCost.getGoldCost();
-				availableManaStone -= entityBuildingCost.getManaStoneCost();
-			}
-			if(event.getAbility() instanceof CreateUnit) {
-				Cost productionCost;
-				productionCost = productionCostManager.getProductionCost(((CreateUnit)event.getAbility()).getType());
-				availableFood -= productionCost.getFoodCost();
-				availableWood -= productionCost.getWoodCost();
-				availableStone -= productionCost.getStoneCost();
-				availableMetal -= productionCost.getMetalCost();
-				availableGold -= productionCost.getGoldCost();
-				availableManaStone -= productionCost.getManaStoneCost();
-			}
+		if(playerResources == null) {
+			playerResources = GameInfo.getPlayerStats().getPlayerResources();
+		}
+		if(playerStats == null) {
+			playerStats = GameInfo.getPlayerStats();
 		}
 		
-		if (buildingCost.getFoodCost() > availableFood) {
+		Cost levelUpCost = playerStats.getCostManager().getBuildingCostManager().getBuildingCost(buildingType);
+		
+		AvailableResources availableResources = playerStats.getCostManager().getAvailableResources();
+		
+		int availableFood = availableResources.getAvailableFood();
+		int availableWood =  availableResources.getAvailableWood();
+		int availableStone = availableResources.getAvailableStone();
+		int availableMetal = availableResources.getAvailableMetal();
+		int availableGold = availableResources.getAvailableGold();
+		int availableManaStone = availableResources.getAvailableManaStone();
+		
+		if (levelUpCost.getFoodCost() > availableFood) {
 			return false;
 		}
-		if (buildingCost.getWoodCost() > availableWood) {
+		if (levelUpCost.getWoodCost() > availableWood) {
 			return false;
 		}
-		if (buildingCost.getStoneCost() > availableStone) {
+		if (levelUpCost.getStoneCost() > availableStone) {
 			return false;
 		}
-		if (buildingCost.getMetalCost() > availableMetal) {
+		if (levelUpCost.getMetalCost() > availableMetal) {
 			return false;
 		}
-		if (buildingCost.getGoldCost() > availableGold) {
+		if (levelUpCost.getGoldCost() > availableGold) {
 			return false;
 		}
-		if (buildingCost.getManaStoneCost() > availableManaStone) {
+		if (levelUpCost.getManaStoneCost() > availableManaStone) {
 			return false;
 		}
 		return true;
