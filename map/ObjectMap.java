@@ -15,6 +15,11 @@ import entity.building.Building;
 import entity.building.DefenseBuilding;
 import entity.building.ProductionBuilding;
 import entity.building.ResourceBuilding;
+import entity.unit.Archer;
+import entity.unit.Builder;
+import entity.unit.Mage;
+import entity.unit.Trebuchet;
+import entity.unit.Warrior;
 
 public class ObjectMap {
 
@@ -46,6 +51,12 @@ public class ObjectMap {
 		entityMap.add(new ProductionBuilding(new Point2DNoFxReq(1, 1), Building.SIEGE_WORKSHOP, 10, 10, 0, true, new ArrayList<>()));
 		entityMap.add(new DefenseBuilding(new Point2DNoFxReq(2, 0), Building.ARCHER_TOWER, 10, 10, 0, true, new ArrayList<>()));
 		entityMap.add(new DefenseBuilding(new Point2DNoFxReq(2, 1), Building.MAGE_TOWER, 10, 10, 0, true, new ArrayList<>()));
+		
+		entityMap.add(new Builder(new Point2DNoFxReq(4, 1), "Builder", 3, 0, true, new ArrayList<>()));
+		entityMap.add(new Warrior(new Point2DNoFxReq(4, 2), "Warrior", 3, 0, true, new ArrayList<>()));
+		entityMap.add(new Mage(new Point2DNoFxReq(4, 3), "Mage", 3, 0, true, new ArrayList<>()));
+		entityMap.add(new Archer(new Point2DNoFxReq(4, 4), "Archer", 3, 0, true, new ArrayList<>()));
+		entityMap.add(new Trebuchet(new Point2DNoFxReq(4, 5), "Trebuchet", 5, 0, true, new ArrayList<>()));
 		// FOR UNIT STACK (check scroll and other stuff)
 	}
 	

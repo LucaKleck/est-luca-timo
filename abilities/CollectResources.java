@@ -14,6 +14,14 @@ public class CollectResources extends Ability {
 	 * 				5 - Metal</br>
 	 * 				6 - Manastone</br>
 	  */
+	
+	public static final int RESOURCE_TYPE_GOLD = 1;
+	public static final int RESOURCE_TYPE_WOOD = 2;
+	public static final int RESOURCE_TYPE_FOOD = 3;
+	public static final int RESOURCE_TYPE_STONE = 4;
+	public static final int RESOURCE_TYPE_METAL = 5;
+	public static final int RESOURCE_TYPE_MANA_STONE = 6;
+	
 	private ResourceBuilding b;
 	public CollectResources(ResourceBuilding b) {
 		super(ABILITY_COLLECT_RESOURCES, ABILITY_DESC_COLLECT_RESOURCES, Ability.ABILITY_TYPE_COLLECT);
@@ -51,4 +59,9 @@ public class CollectResources extends Ability {
 	public String toString() {
 		return "Collect resources[type="+b.getRessources().getType()+", amount="+(b.getRessources().getCollectableRessources() / 100 * b.getEfficiency())+"]";
 	}
+	
+	public int getResourceType() {
+		return b.getRessources().getType();
+	}
+	
 }

@@ -14,11 +14,14 @@ import javax.swing.JPanel;
 import abilities.Ability;
 import abilities.AddStatusEffect;
 import abilities.Build;
+import abilities.CollectResources;
 import abilities.CreateUnit;
 import abilities.FireBall;
 import abilities.LevelUp;
 import abilities.MeleeAttack;
 import abilities.Move;
+import abilities.RangedAttack;
+import abilities.SiegeAttack;
 import core.Core;
 import core.Event;
 import core.GameInfo;
@@ -50,7 +53,7 @@ public class EntityPanel extends JScrollPaneBg {
 	private String cssYellow = MainJFrame.makeCssStyle("color: #F0F900;");
 
 	private JPanelCustomBg abilityPanel;
-
+	
 	public EntityPanel(Entity entity) {
 		super(ResourceManager.getBackground_04(), true);
 		
@@ -168,8 +171,6 @@ public class EntityPanel extends JScrollPaneBg {
 
 			else if (((Build) ability).getBuildingType().matches(Building.BARRACKS))
 				abilityImage = ResourceManager.getSpellBook05_20();
-			else if (((Build) ability).getBuildingType().matches(Building.TOWN_CENTER))
-				abilityImage = ResourceManager.getSpellBook05_17();
 			else if (((Build) ability).getBuildingType().matches(Building.SIEGE_WORKSHOP))
 				abilityImage = ResourceManager.getSpellBook05_76();
 
@@ -182,7 +183,7 @@ public class EntityPanel extends JScrollPaneBg {
 			else if (((Build) ability).getBuildingType().matches(Building.METAL_GETTER))
 				abilityImage = ResourceManager.getSpellBook05_06();
 			else if (((Build) ability).getBuildingType().matches(Building.MANA_GETTER))
-				abilityImage = ResourceManager.getSGI_addons_170();
+				abilityImage = ResourceManager.getSGI_150();
 			else if (((Build) ability).getBuildingType().matches(Building.GOLD_GETTER))
 				abilityImage = ResourceManager.getSpellBook05_95();
 			else
@@ -206,7 +207,7 @@ public class EntityPanel extends JScrollPaneBg {
 		;
 		if (ability instanceof AddStatusEffect) {
 			if (((AddStatusEffect) ability).getStatusEffectType().equals(AddStatusEffect.TYPE_HEAL))
-				abilityImage = ResourceManager.getSpellBook01_40();
+				abilityImage = ResourceManager.getGreen_20();
 			else
 				abilityImage = ResourceManager.getSpellBook01_93();
 		}
@@ -221,6 +222,34 @@ public class EntityPanel extends JScrollPaneBg {
 		;
 		if (ability instanceof FireBall) {
 			abilityImage = ResourceManager.getSpellBook01_46();
+		}
+		;
+		if (ability instanceof RangedAttack) {
+			abilityImage = ResourceManager.getYellow_36();
+		}
+		;
+		if (ability instanceof SiegeAttack) {
+			abilityImage = ResourceManager.getSGI_27();
+		}
+		;
+		if (ability instanceof CollectResources) {
+			
+			int resourceType = ((CollectResources)ability).getResourceType();
+			
+			if(resourceType == CollectResources.RESOURCE_TYPE_FOOD) 
+				abilityImage = ResourceManager.getSGI_162();
+			else if(resourceType == CollectResources.RESOURCE_TYPE_WOOD) 
+				abilityImage = ResourceManager.getSGI_128();
+			else if(resourceType == CollectResources.RESOURCE_TYPE_STONE) 
+				abilityImage = ResourceManager.getSGI_90();
+			else if(resourceType == CollectResources.RESOURCE_TYPE_METAL) 
+				abilityImage = ResourceManager.getSGI_addons_172();
+			else if(resourceType == CollectResources.RESOURCE_TYPE_GOLD) 
+				abilityImage = ResourceManager.getSGI_164();
+			else if(resourceType == CollectResources.RESOURCE_TYPE_MANA_STONE) 
+				abilityImage = ResourceManager.getSGI_addons_170();
+			else
+				abilityImage = ResourceManager.getSGI_128();
 		}
 		;
 		return abilityImage;

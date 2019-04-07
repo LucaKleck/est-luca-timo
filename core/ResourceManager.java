@@ -50,31 +50,41 @@ public class ResourceManager {
 	private static BufferedImage townCenterImage;
 	
 	// SpellBook !!! WARNING: Some of the pngs are .PNG -> Runnable JAR can't find them if you write .png !!!
-	private static BufferedImage spellBook01_67;
-	private static BufferedImage spellBook01_93;
-	private static BufferedImage spellBook01_40;
-	private static BufferedImage spellBook01_22;
-	private static BufferedImage spellBook01_46;
+	private static BufferedImage spellBook01_67; //Build (unused)
+	private static BufferedImage spellBook01_93; //Ability Placeholder
+	private static BufferedImage spellBook01_22; //Move
+	private static BufferedImage spellBook01_46; //FireBall
 	
-	private static BufferedImage spellBook05_06;
-	private static BufferedImage spellBook05_17;
-	private static BufferedImage spellBook05_20;
-	private static BufferedImage spellBook05_22;
-	private static BufferedImage spellBook05_28;
-	private static BufferedImage spellBook05_72;
-	private static BufferedImage spellBook05_75;
-	private static BufferedImage spellBook05_76;
-	private static BufferedImage spellBook05_77;
-	private static BufferedImage spellBook05_95;
+	private static BufferedImage spellBook05_06; //MetalForge
+	private static BufferedImage spellBook05_20; //Barracks
+	private static BufferedImage spellBook05_22; //ArcherTower
+	private static BufferedImage spellBook05_28; //Farm
+	private static BufferedImage spellBook05_56; //RangedAttack
+	private static BufferedImage spellBook05_72; //Wall (unused)
+	private static BufferedImage spellBook05_75; //WoodGetter
+	private static BufferedImage spellBook05_76; //SiegeWorkshop
+	private static BufferedImage spellBook05_77; //Quarry
+	private static BufferedImage spellBook05_95; //GoldMine
 	
 	private static BufferedImage sgi_09; //Archer
-	private static BufferedImage sgi_11; //Melee-Attack
+	private static BufferedImage sgi_11; //MeleeAttack
+	private static BufferedImage sgi_27; //SiegeAttack
 	private static BufferedImage sgi_46; //Mage
 	private static BufferedImage sgi_63; //Warrior
 	private static BufferedImage sgi_81; //MageTower
+	private static BufferedImage sgi_90; //StoneGet
+	private static BufferedImage sgi_128; //WoodGet
 	private static BufferedImage sgi_138; //Trebuchet
+	private static BufferedImage sgi_150; //ManaGetter
 	private static BufferedImage sgi_157; //Builder
-	private static BufferedImage sgi_addons_170; //ManaGetter
+	private static BufferedImage sgi_162; //FoodGet
+	private static BufferedImage sgi_164; //GoldGet
+	
+	private static BufferedImage sgi_addons_170; //ManaGet
+	private static BufferedImage sgi_addons_172; //MetalGet
+	
+	private static BufferedImage green_20; //Heal
+	private static BufferedImage yellow_36; //RangedAttack
 	
 	private ResourceManager() {
 	}
@@ -431,17 +441,6 @@ public class ResourceManager {
 		return spellBook01_93;
 	}
 	
-	public static BufferedImage getSpellBook01_40() {
-		if(spellBook01_40 == null) {
-			try {
-				spellBook01_40 = ImageIO.read(Boot.class.getResource("/resources/spellbook/SpellBook01_40.png"));
-			} catch (IOException e) {
-				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
-			}
-		}
-		return spellBook01_40;
-	}
-	
 	public static BufferedImage getSpellBook01_22() {
 		if(spellBook01_22 == null) {
 			try {
@@ -475,17 +474,6 @@ public class ResourceManager {
 		return spellBook05_06;
 	}
 	
-	public static BufferedImage getSpellBook05_17() {
-		if(spellBook05_17 == null) {
-			try {
-				spellBook05_17 = ImageIO.read(Boot.class.getResource("/resources/SpellBookPage05/SpellBook05_17.png"));
-			} catch (IOException e) {
-				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
-			}
-		}
-		return spellBook05_17;
-	}
-	
 	public static BufferedImage getSpellBook05_20() {
 		if(spellBook05_20 == null) {
 			try {
@@ -495,6 +483,17 @@ public class ResourceManager {
 			}
 		}
 		return spellBook05_20;
+	}
+	
+	public static BufferedImage getSpellBook05_56() {
+		if(spellBook05_56 == null) {
+			try {
+				spellBook05_56 = ImageIO.read(Boot.class.getResource("/resources/SpellBookPage05/SpellBook05_56.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook05_56;
 	}
 	
 	public static BufferedImage getSpellBook05_72() {
@@ -596,6 +595,17 @@ public class ResourceManager {
 		return sgi_11;
 	}
 	
+	public static BufferedImage getSGI_27() {
+		if(sgi_27 == null) {
+			try {
+				sgi_27 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_27.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return sgi_27;
+	}
+	
 	public static BufferedImage getSGI_46() {
 		if(sgi_46 == null) {
 			try {
@@ -629,6 +639,28 @@ public class ResourceManager {
 		return sgi_81;
 	}
 	
+	public static BufferedImage getSGI_90() {
+		if(sgi_90 == null) {
+			try {
+				sgi_90 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_90.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return sgi_90;
+	}
+	
+	public static BufferedImage getSGI_128() {
+		if(sgi_128 == null) {
+			try {
+				sgi_128 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_128.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return sgi_128;
+	}
+	
 	public static BufferedImage getSGI_138() {
 		if(sgi_138 == null) {
 			try {
@@ -638,6 +670,17 @@ public class ResourceManager {
 			}
 		}
 		return sgi_138;
+	}
+	
+	public static BufferedImage getSGI_150() {
+		if(sgi_150 == null) {
+			try {
+				sgi_150 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_150.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return sgi_150;
 	}
 	
 	public static BufferedImage getSGI_157() {
@@ -651,7 +694,27 @@ public class ResourceManager {
 		return sgi_157;
 	}
 	
+	public static BufferedImage getSGI_162() {
+		if(sgi_162 == null) {
+			try {
+				sgi_162 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_162.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return sgi_162;
+	}
 	
+	public static BufferedImage getSGI_164() {
+		if(sgi_164 == null) {
+			try {
+				sgi_164 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_164.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return sgi_164;
+	}
 	
 	public static BufferedImage getSGI_addons_170() {
 		if(sgi_addons_170 == null) {
@@ -662,6 +725,39 @@ public class ResourceManager {
 			}
 		}
 		return sgi_addons_170;
+	}
+	
+	public static BufferedImage getSGI_addons_172() {
+		if(sgi_addons_172 == null) {
+			try {
+				sgi_addons_172 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_addons_172.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return sgi_addons_172;
+	}
+	
+	public static BufferedImage getGreen_20() {
+		if(green_20 == null) {
+			try {
+				green_20 = ImageIO.read(Boot.class.getResource("/resources/green_20.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return green_20;
+	}
+	
+	public static BufferedImage getYellow_36() {
+		if(yellow_36 == null) {
+			try {
+				yellow_36 = ImageIO.read(Boot.class.getResource("/resources/yellow_36.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return yellow_36;
 	}
 	
 }
