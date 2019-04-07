@@ -26,6 +26,7 @@ import core.ResourceManager;
 import cost.Cost;
 import entity.Entity;
 import entity.building.Building;
+import entity.unit.Unit;
 import frame.JButtonCustomBg;
 import frame.JButton_01;
 import frame.JPanelCustomBg;
@@ -161,7 +162,7 @@ public class EntityPanel extends JScrollPaneBg {
 			abilityImage = ResourceManager.getSpellBook01_93();
 		if (ability instanceof Build) {
 			if (((Build) ability).getBuildingType().matches(Building.MAGE_TOWER))
-				abilityImage = ResourceManager.getSpellBook05_72();
+				abilityImage = ResourceManager.getSGI_81();
 			else if (((Build) ability).getBuildingType().matches(Building.ARCHER_TOWER))
 				abilityImage = ResourceManager.getSpellBook05_22();
 
@@ -181,11 +182,26 @@ public class EntityPanel extends JScrollPaneBg {
 			else if (((Build) ability).getBuildingType().matches(Building.METAL_GETTER))
 				abilityImage = ResourceManager.getSpellBook05_06();
 			else if (((Build) ability).getBuildingType().matches(Building.MANA_GETTER))
-				abilityImage = ResourceManager.getSpellBook01_67();
+				abilityImage = ResourceManager.getSGI_addons_170();
 			else if (((Build) ability).getBuildingType().matches(Building.GOLD_GETTER))
 				abilityImage = ResourceManager.getSpellBook05_95();
 			else
 				abilityImage = ResourceManager.getSpellBook01_67();
+		}
+		;
+		if (ability instanceof CreateUnit) {
+			if (((CreateUnit) ability).getUnitType().matches(Unit.UNIT_MAGE))
+				abilityImage = ResourceManager.getSGI_46();
+			else if (((CreateUnit) ability).getUnitType().matches(Unit.UNIT_ARCHER))
+				abilityImage = ResourceManager.getSGI_09();
+			else if (((CreateUnit) ability).getUnitType().matches(Unit.UNIT_TREBUCHET))
+				abilityImage = ResourceManager.getSGI_138();
+			else if (((CreateUnit) ability).getUnitType().matches(Unit.UNIT_WARRIOR))
+				abilityImage = ResourceManager.getSGI_63();
+			else if (((CreateUnit) ability).getUnitType().matches(Unit.UNIT_BUILDER))
+				abilityImage = ResourceManager.getSGI_157();
+			else
+				abilityImage = ResourceManager.getSGI_157();
 		}
 		;
 		if (ability instanceof AddStatusEffect) {

@@ -41,5 +41,9 @@ public abstract class Building extends Entity {
 	public int getEfficiency() {
 		return efficiency;
 	}
+	
+	public void updateEfficiency() {
+		efficiency = (this.getLevel() + 1) * 12;
+	}
 
 }

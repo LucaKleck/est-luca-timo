@@ -50,7 +50,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 		// down
 		EXS.execute(this);
 		waveCounter++;
-		if (waveCounter >= 3) {
+		if (waveCounter >= 6) {
 			wave++;
 			waveCounter = 0;
 			newWave = true;

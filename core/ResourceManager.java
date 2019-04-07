@@ -64,7 +64,14 @@ public class ResourceManager {
 	private static BufferedImage spellBook05_77;
 	private static BufferedImage spellBook05_95;
 	
-	private static BufferedImage sgi_11;
+	private static BufferedImage sgi_09; //Archer
+	private static BufferedImage sgi_11; //Melee-Attack
+	private static BufferedImage sgi_46; //Mage
+	private static BufferedImage sgi_63; //Warrior
+	private static BufferedImage sgi_81; //MageTower
+	private static BufferedImage sgi_138; //Trebuchet
+	private static BufferedImage sgi_157; //Builder
+	private static BufferedImage sgi_addons_170; //ManaGetter
 	
 	private ResourceManager() {
 	}
@@ -531,6 +538,17 @@ public class ResourceManager {
 		return spellBook05_22;
 	}
 	
+	public static BufferedImage getSGI_09() {
+		if(sgi_09 == null) {
+			try {
+				sgi_09 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_09.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return sgi_09;
+	}
+	
 	public static BufferedImage getSGI_11() {
 		if(sgi_11 == null) {
 			try {
@@ -540,6 +558,74 @@ public class ResourceManager {
 			}
 		}
 		return sgi_11;
+	}
+	
+	public static BufferedImage getSGI_46() {
+		if(sgi_46 == null) {
+			try {
+				sgi_46 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_46.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return sgi_46;
+	}
+	
+	public static BufferedImage getSGI_63() {
+		if(sgi_63 == null) {
+			try {
+				sgi_63 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_63.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return sgi_63;
+	}
+	
+	public static BufferedImage getSGI_81() {
+		if(sgi_81 == null) {
+			try {
+				sgi_81 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_81.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return sgi_81;
+	}
+	
+	public static BufferedImage getSGI_138() {
+		if(sgi_138 == null) {
+			try {
+				sgi_138 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_138.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return sgi_138;
+	}
+	
+	public static BufferedImage getSGI_157() {
+		if(sgi_157 == null) {
+			try {
+				sgi_157 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_157.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return sgi_157;
+	}
+	
+	
+	
+	public static BufferedImage getSGI_addons_170() {
+		if(sgi_addons_170 == null) {
+			try {
+				sgi_addons_170 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_addons_170.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return sgi_addons_170;
 	}
 	
 }

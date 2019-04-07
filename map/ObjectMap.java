@@ -11,6 +11,7 @@ import core.MapCreator;
 import core.Point2DNoFxReq;
 import core.Selected;
 import entity.Entity;
+import entity.building.Building;
 import entity.building.ProductionBuilding;
 
 public class ObjectMap {
@@ -33,6 +34,7 @@ public class ObjectMap {
 		
 		entityMap.add(new ProductionBuilding(new Point2DNoFxReq(3, 3), ProductionBuilding.TOWN_CENTER, 15, 15, 0, true, new ArrayList<>()));
 		entityMap.add(new ProductionBuilding(PORTAL_POINT, ProductionBuilding.PORTAL, 150, 150, 0, false, new ArrayList<>()));
+		entityMap.add(new ProductionBuilding(new Point2DNoFxReq(3, 5), Building.BARRACKS, 10, 10, 0, true, new ArrayList<>()));
 		// FOR UNIT STACK (check scroll and other stuff)
 	}
 	

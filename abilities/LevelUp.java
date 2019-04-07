@@ -5,6 +5,7 @@ import core.PlayerStats.PlayerResources;
 import cost.Cost;
 import cost.LevelUpCostManager;
 import entity.Entity;
+import entity.building.Building;
 
 public class LevelUp extends Ability {
 	
@@ -33,6 +34,9 @@ public class LevelUp extends Ability {
 		playerResources.reduceMetalBy(levelUpCost.getMetalCost());
 		
 		target.addLevel();
+		if(target instanceof Building) {
+			((Building)target).updateEfficiency();
+		}
 		
 	}
 
