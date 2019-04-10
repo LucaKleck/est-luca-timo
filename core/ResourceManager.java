@@ -664,7 +664,7 @@ public class ResourceManager {
 	public static BufferedImage getSGI_138() {
 		if(sgi_138 == null) {
 			try {
-				sgi_138 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_138.png"));
+				sgi_138 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_138.PNG"));
 			} catch (IOException e) {
 				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
 			}
@@ -675,7 +675,7 @@ public class ResourceManager {
 	public static BufferedImage getSGI_150() {
 		if(sgi_150 == null) {
 			try {
-				sgi_150 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_150.png"));
+				sgi_150 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_150.PNG"));
 			} catch (IOException e) {
 				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
 			}
@@ -697,7 +697,7 @@ public class ResourceManager {
 	public static BufferedImage getSGI_162() {
 		if(sgi_162 == null) {
 			try {
-				sgi_162 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_162.png"));
+				sgi_162 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_162.PNG"));
 			} catch (IOException e) {
 				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
 			}
@@ -708,7 +708,7 @@ public class ResourceManager {
 	public static BufferedImage getSGI_164() {
 		if(sgi_164 == null) {
 			try {
-				sgi_164 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_164.png"));
+				sgi_164 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_164.PNG"));
 			} catch (IOException e) {
 				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
 			}
