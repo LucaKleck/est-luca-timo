@@ -273,6 +273,8 @@ public class MapImage {
 				if (s instanceof ResourceBuilding) {
 					if (s.getName().matches(Building.WOOD_GETTER)) {
 						g.drawImage(ResourceManager.getWoodGetterImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+					} else if (s.getName().matches(Building.GOLD_GETTER)) {
+						g.drawImage(ResourceManager.getGoldGetterImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					} else if (s.getName().matches(Building.FOOD_GETTER)) {
 						g.drawImage(ResourceManager.getFoodGetterImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					} else if (s.getName().matches(Building.METAL_GETTER)) {

@@ -86,7 +86,31 @@ public abstract class Ability {
 	
 	public static final String ABILITY_CREATE_TREBUCHET = "Create Trebuchet";
 	public static final String ABILITY_DESC_CREATE_TREBUCHET = "Creates new Trebuchet at the end of the round";
+	
+	public static final String ABILITY_CREATE_BATTERING_RAM = "Create Battering Ram";
+	public static final String ABILITY_DESC_CREATE_BATTERING_RAM = "Creates new Battering Ram at the end of the round";
+	
+	public static final String ABILITY_CREATE_CAVALRY = "Create Cavalry";
+	public static final String ABILITY_DESC_CREATE_CAVALRY = "Creates new Cavalry at the end of the round";
+	
+	public static final String ABILITY_CREATE_CAVALRY_ARCHER = "Create Cavalry Archer";
+	public static final String ABILITY_DESC_CREATE_CAVALRY_ARCHER = "Creates new Cavalry Archer at the end of the round";
 
+	public static final String ABILITY_CREATE_DRAGON = "Create Dragon";
+	public static final String ABILITY_DESC_CREATE_DRAGON = "Creates new Dragon at the end of the round";
+	
+	public static final String ABILITY_CREATE_HERO = "Create Hero";
+	public static final String ABILITY_DESC_CREATE_HERO = "Creates new Hero at the end of the round";
+	
+	public static final String ABILITY_CREATE_KNIGHT = "Create Knight";
+	public static final String ABILITY_DESC_CREATE_KNIGHT = "Creates new Knight at the end of the round";
+	
+	public static final String ABILITY_CREATE_MANGONEL = "Create Mangonel";
+	public static final String ABILITY_DESC_CREATE_MANGONEL = "Creates new Mangonel at the end of the round";
+	
+	public static final String ABILITY_CREATE_PRIEST = "Create Priest";
+	public static final String ABILITY_DESC_CREATE_PRIEST = "Creates new Priest at the end of the round";
+	
 	// Other Abilities
 	public static final String ABILITY_LEVEL_UP = "Level Up";
 	public static final String ABILITY_DESC_LEVEL_UP = "Levels the selected entity at the end of the round";

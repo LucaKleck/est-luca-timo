@@ -43,6 +43,7 @@ public class ResourceManager {
 	// Buildings
 	private static BufferedImage buildingImage;
 	private static BufferedImage woodGetterImage;
+	private static BufferedImage goldGetterImage;
 	private static BufferedImage metalForgeImage;
 	private static BufferedImage foodGetterImage;
 	private static BufferedImage archerTowerImage;
@@ -164,6 +165,17 @@ public class ResourceManager {
 			}
 		}
 		return woodGetterImage;
+	}
+	
+	public static BufferedImage getGoldGetterImage() {
+		if(goldGetterImage == null) {
+			try {
+				goldGetterImage = ImageIO.read(Boot.class.getResource("/resources/gold_getter.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return goldGetterImage;
 	}
 	
 	public static BufferedImage getFoodGetterImage() {

@@ -18,6 +18,12 @@ public class SiegeAttack extends Ability {
 		this.setDamage(BASE_DAMAGE);
 	}
 	
+	public SiegeAttack(int maxRange, int damage) {
+		super(Ability.ABILITY_SIEGE_ATTACK, Ability.ABILITY_DESC_SIEGE_ATTACK, Ability.ABILITY_TYPE_DAMAGE);
+		super.maxRange = maxRange;
+		this.setDamage(damage);
+	}
+	
 	@Override
 	public void applyAbility(Entity source, Entity target) {
 		if(target instanceof Building) {

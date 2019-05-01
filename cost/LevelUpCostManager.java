@@ -8,8 +8,16 @@ import entity.building.DefenseBuilding;
 import entity.building.ProductionBuilding;
 import entity.building.ResourceBuilding;
 import entity.unit.Archer;
+import entity.unit.BatteringRam;
 import entity.unit.Builder;
+import entity.unit.Cavalry;
+import entity.unit.CavalryArcher;
+import entity.unit.Dragon;
+import entity.unit.Hero;
+import entity.unit.Knight;
 import entity.unit.Mage;
+import entity.unit.Mangonel;
+import entity.unit.Priest;
 import entity.unit.Trebuchet;
 import entity.unit.Warrior;
 
@@ -20,6 +28,14 @@ public class LevelUpCostManager {
 	private ArrayList<Cost> mageLevelUpCost;
 	private ArrayList<Cost> warriorLevelUpCost;
 	private ArrayList<Cost> trebuchetLevelUpCost;
+	private ArrayList<Cost> batteringRamLevelUpCost;
+	private ArrayList<Cost> mangonelLevelUpCost;
+	private ArrayList<Cost> priestLevelUpCost;
+	private ArrayList<Cost> knightLevelUpCost;
+	private ArrayList<Cost> cavalryLevelUpCost;
+	private ArrayList<Cost> cavalryArcherLevelUpCost;
+	private ArrayList<Cost> dragonLevelUpCost;
+	private ArrayList<Cost> heroLevelUpCost;
 	// Buildings
 	// DefenseBuildings
 	private ArrayList<Cost> archerTowerLevelUpCost;
@@ -28,6 +44,8 @@ public class LevelUpCostManager {
 	private ArrayList<Cost> siegeWorkshopLevelUpCost;
 	private ArrayList<Cost> townCenterLevelUpCost;
 	private ArrayList<Cost> barracksLevelUpCost;
+	private ArrayList<Cost> churchLevelUpCost;
+	private ArrayList<Cost> stableLevelUpCost;
 	// ResourceBuildings
 	private ArrayList<Cost> foodGetterLevelUpCost;
 	private ArrayList<Cost> manaStoneGetterLevelUpCost;
@@ -89,6 +107,78 @@ public class LevelUpCostManager {
 			}
 			return trebuchetLevelUpCost.get(entity.getLevel());
 		}
+		if (entity instanceof BatteringRam) {
+			if (batteringRamLevelUpCost == null) {
+				batteringRamLevelUpCost = new ArrayList<Cost>();
+				batteringRamLevelUpCost.add(new Cost(0, 200, 0, 0, 0, 0));
+				batteringRamLevelUpCost.add(new Cost(0, 300, 0, 100, 0, 0));
+				batteringRamLevelUpCost.add(new Cost(0, 400, 10, 200, 0, 0));
+			}
+			return batteringRamLevelUpCost.get(entity.getLevel());
+		}
+		if (entity instanceof Cavalry) {
+			if (cavalryLevelUpCost == null) {
+				cavalryLevelUpCost = new ArrayList<Cost>();
+				cavalryLevelUpCost.add(new Cost(200, 0, 0, 0, 0, 0));
+				cavalryLevelUpCost.add(new Cost(400, 0, 0, 200, 0, 0));
+				cavalryLevelUpCost.add(new Cost(800, 0, 0, 400, 100, 0));
+			}
+			return cavalryLevelUpCost.get(entity.getLevel());
+		}
+		if (entity instanceof CavalryArcher) {
+			if (cavalryArcherLevelUpCost == null) {
+				cavalryArcherLevelUpCost = new ArrayList<Cost>();
+				cavalryArcherLevelUpCost.add(new Cost(200, 0, 0, 0, 0, 0));
+				cavalryArcherLevelUpCost.add(new Cost(400, 0, 0, 0, 200, 0));
+				cavalryArcherLevelUpCost.add(new Cost(800, 0, 0, 100, 400, 0));
+			}
+			return cavalryArcherLevelUpCost.get(entity.getLevel());
+		}
+		if (entity instanceof Dragon) {
+			if (dragonLevelUpCost == null) {
+				dragonLevelUpCost = new ArrayList<Cost>();
+				dragonLevelUpCost.add(new Cost(400, 0, 0, 0, 0, 100));
+				dragonLevelUpCost.add(new Cost(800, 0, 0, 200, 200, 200));
+				dragonLevelUpCost.add(new Cost(1200, 0, 10, 400, 400, 400));
+			}
+			return dragonLevelUpCost.get(entity.getLevel());
+		}
+		if (entity instanceof Hero) {
+			if (heroLevelUpCost == null) {
+				heroLevelUpCost = new ArrayList<Cost>();
+				heroLevelUpCost.add(new Cost(800, 0, 0, 0, 0, 0));
+				heroLevelUpCost.add(new Cost(1600, 0, 0, 400, 400, 0));
+				heroLevelUpCost.add(new Cost(2400, 0, 0, 800, 800, 200));
+			}
+			return heroLevelUpCost.get(entity.getLevel());
+		}
+		if (entity instanceof Knight) {
+			if (knightLevelUpCost == null) {
+				knightLevelUpCost = new ArrayList<Cost>();
+				knightLevelUpCost.add(new Cost(200, 0, 0, 100, 100, 0));
+				knightLevelUpCost.add(new Cost(300, 0, 0, 200, 200, 0));
+				knightLevelUpCost.add(new Cost(400, 0, 0, 400, 400, 0));
+			}
+			return knightLevelUpCost.get(entity.getLevel());
+		}
+		if (entity instanceof Mangonel) {
+			if (mangonelLevelUpCost == null) {
+				mangonelLevelUpCost = new ArrayList<Cost>();
+				mangonelLevelUpCost.add(new Cost(0, 200, 0, 0, 0, 0));
+				mangonelLevelUpCost.add(new Cost(0, 300, 0, 100, 0, 0));
+				mangonelLevelUpCost.add(new Cost(0, 400, 10, 200, 0, 0));
+			}
+			return mangonelLevelUpCost.get(entity.getLevel());
+		}
+		if (entity instanceof Priest) {
+			if (priestLevelUpCost == null) {
+				priestLevelUpCost = new ArrayList<Cost>();
+				priestLevelUpCost.add(new Cost(200, 0, 0, 0, 0, 100));
+				priestLevelUpCost.add(new Cost(400, 0, 0, 0, 100, 200));
+				priestLevelUpCost.add(new Cost(800, 0, 0, 0, 200, 400));
+			}
+			return priestLevelUpCost.get(entity.getLevel());
+		}
 		if (entity instanceof DefenseBuilding) {
 			if (entity.getName().equals(Building.ARCHER_TOWER)) {
 				if (archerTowerLevelUpCost == null) {
@@ -136,6 +226,24 @@ public class LevelUpCostManager {
 					siegeWorkshopLevelUpCost.add(new Cost(100, 200, 400, 400, 400, 0));
 				}
 				return siegeWorkshopLevelUpCost.get(entity.getLevel());
+			}
+			if (entity.getName().equals(Building.STABLE)) {
+				if (stableLevelUpCost == null) {
+					stableLevelUpCost = new ArrayList<Cost>();
+					stableLevelUpCost.add(new Cost(0, 200, 100, 0, 0, 0));
+					stableLevelUpCost.add(new Cost(0, 300, 300, 300, 300, 0));
+					stableLevelUpCost.add(new Cost(100, 200, 400, 400, 400, 0));
+				}
+				return stableLevelUpCost.get(entity.getLevel());
+			}
+			if (entity.getName().equals(Building.CHURCH)) {
+				if (churchLevelUpCost == null) {
+					churchLevelUpCost = new ArrayList<Cost>();
+					churchLevelUpCost.add(new Cost(0, 200, 100, 0, 0, 200));
+					churchLevelUpCost.add(new Cost(0, 300, 300, 300, 300, 400));
+					churchLevelUpCost.add(new Cost(0, 200, 400, 400, 400, 800));
+				}
+				return churchLevelUpCost.get(entity.getLevel());
 			}
 		}
 		if (entity instanceof ResourceBuilding) {

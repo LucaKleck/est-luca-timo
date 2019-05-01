@@ -28,6 +28,10 @@ public class Move extends Ability {
 	public void setMoveToPoint(Point2DNoFxReq moveToPoint) {
 		this.moveToPoint.setLocation(moveToPoint);
 	}
+
+	public int getMaxRange() {
+		return this.maxRange;
+	}
 	
 	public Point2DNoFxReq getMoveToPoint() {
 		return moveToPoint;

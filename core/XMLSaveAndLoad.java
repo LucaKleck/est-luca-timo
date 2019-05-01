@@ -30,7 +30,15 @@ import entity.building.ProductionBuilding;
 import entity.building.ResourceBuilding;
 import entity.unit.Archer;
 import entity.unit.Builder;
+import entity.unit.Cavalry;
+import entity.unit.CavalryArcher;
+import entity.unit.Dragon;
+import entity.unit.Hero;
+import entity.unit.Knight;
 import entity.unit.Mage;
+import entity.unit.Mangonel;
+import entity.unit.Priest;
+import entity.unit.Trebuchet;
 import entity.unit.Unit;
 import entity.unit.Warrior;
 import frame.gamePanels.LogPanel;
@@ -166,6 +174,30 @@ public class XMLSaveAndLoad {
 				}
 				if (type.matches("Mage")) {
 					e = new Mage(p, name, currentHealth, level, controlable, new ArrayList<>());
+				}
+				if (type.matches("Cavalry")) {
+					e = new Cavalry(p, name, currentHealth, level, controlable, new ArrayList<>());
+				}
+				if (type.matches("CavalryArcher")) {
+					e = new CavalryArcher(p, name, currentHealth, level, controlable, new ArrayList<>());
+				}
+				if (type.matches("Dragon")) {
+					e = new Dragon(p, name, currentHealth, level, controlable, new ArrayList<>());
+				}
+				if (type.matches("Hero")) {
+					e = new Hero(p, name, currentHealth, level, controlable, new ArrayList<>());
+				}
+				if (type.matches("Knight")) {
+					e = new Knight(p, name, currentHealth, level, controlable, new ArrayList<>());
+				}
+				if (type.matches("Priest")) {
+					e = new Priest(p, name, currentHealth, level, controlable, new ArrayList<>());
+				}
+				if (type.matches("Trebuchet")) {
+					e = new Trebuchet(p, name, currentHealth, level, controlable, new ArrayList<>());
+				}
+				if (type.matches("Mangonel")) {
+					e = new Mangonel(p, name, currentHealth, level, controlable, new ArrayList<>());
 				}
 				//Buildings
 				if (type.matches("ProductionBuilding")) {

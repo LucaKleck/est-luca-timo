@@ -10,6 +10,8 @@ public class BuildingCostManager {
 	// ProductionBuildings
 	private Cost siegeWorkshopBuildingCost;
 	private Cost barracksBuildingCost;
+	private Cost churchBuildingCost;
+	private Cost stableBuildingCost;
 	// ResourceBuildings
 	private Cost foodGetterBuildingCost;
 	private Cost manaStoneGetterBuildingCost;
@@ -33,6 +35,7 @@ public class BuildingCostManager {
 				}
 				return mageTowerBuildingCost;
 			}
+			
 			if (buildingType.equals(Building.BARRACKS)) {
 				if (barracksBuildingCost == null) {
 					barracksBuildingCost = new Cost(150, 300, 0, 0, 50, 0);
@@ -45,6 +48,19 @@ public class BuildingCostManager {
 				}
 				return siegeWorkshopBuildingCost;
 			}
+			if (buildingType.equals(Building.CHURCH)) {
+				if (churchBuildingCost == null) {
+					churchBuildingCost = new Cost(0, 300, 300, 0, 50, 50);
+				}
+				return churchBuildingCost;
+			}
+			if (buildingType.equals(Building.STABLE)) {
+				if (stableBuildingCost == null) {
+					stableBuildingCost = new Cost(300, 150, 150, 0, 0, 0);
+				}
+				return stableBuildingCost;
+			}
+			
 			if (buildingType.equals(Building.FOOD_GETTER)) {
 				if (foodGetterBuildingCost == null) {
 					foodGetterBuildingCost = new Cost(0, 250, 0, 0, 0, 0);
