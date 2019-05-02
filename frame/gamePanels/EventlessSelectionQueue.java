@@ -62,6 +62,30 @@ public class EventlessSelectionQueue extends JPanel {
 			case "Trebuchet":
 				entityImage = ResourceManager.getTrebuchetImage();
 				break;
+			case "BatteringRam":
+				entityImage = ResourceManager.getBatteringRamImage();
+				break;
+			case "Cavalry":
+				entityImage = ResourceManager.getCavalryImage();
+				break;
+			case "CavalryArcher":
+				entityImage = ResourceManager.getCavalryArcherImage();
+				break;
+			case "Knight":
+				entityImage = ResourceManager.getKnightImage();
+				break;
+			case "Hero":
+				entityImage = ResourceManager.getHeroImage();
+				break;
+			case "Dragon":
+				entityImage = ResourceManager.getDragonImage();
+				break;
+			case "Priest":
+				entityImage = ResourceManager.getPriestImage();
+				break;
+			case "Mangonel":
+				entityImage = ResourceManager.getMangonelImage();
+				break;
 			default:
 				entityImage = ResourceManager.getBackground_01();
 				break;

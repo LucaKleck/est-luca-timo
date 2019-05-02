@@ -39,6 +39,14 @@ public class ResourceManager {
 	private static BufferedImage builderImage;
 	private static BufferedImage archerImage;
 	private static BufferedImage trebuchetImage;
+	private static BufferedImage batteringRamImage;
+	private static BufferedImage cavalryArcherImage;
+	private static BufferedImage cavalryImage;
+	private static BufferedImage knightImage;
+	private static BufferedImage heroImage;
+	private static BufferedImage dragonImage;
+	private static BufferedImage priestImage;
+	private static BufferedImage mangonelImage;
 	
 	// Buildings
 	private static BufferedImage buildingImage;
@@ -46,9 +54,15 @@ public class ResourceManager {
 	private static BufferedImage goldGetterImage;
 	private static BufferedImage metalForgeImage;
 	private static BufferedImage foodGetterImage;
+	private static BufferedImage stoneGetterImage;
+	private static BufferedImage manaGetterImage;
 	private static BufferedImage archerTowerImage;
 	private static BufferedImage mageTowerImage;
 	private static BufferedImage townCenterImage;
+	private static BufferedImage stableImage;
+	private static BufferedImage churchImage;
+	private static BufferedImage siegeWorkshopImage;
+	private static BufferedImage barracksImage;
 	
 	// SpellBook !!! WARNING: Some of the pngs are .PNG -> Runnable JAR can't find them if you write .png !!!
 	private static BufferedImage spellBook01_67; //Build (unused)
@@ -145,6 +159,94 @@ public class ResourceManager {
 		return trebuchetImage;
 	}
 	
+	public static BufferedImage getBatteringRamImage() {
+		if(batteringRamImage == null) {
+			try {
+				batteringRamImage = ImageIO.read(Boot.class.getResource("/resources/battering_ram.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return batteringRamImage;
+	}
+	
+	public static BufferedImage getCavalryImage() {
+		if(cavalryImage == null) {
+			try {
+				cavalryImage = ImageIO.read(Boot.class.getResource("/resources/cavalry.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return cavalryImage;
+	}
+	
+	public static BufferedImage getCavalryArcherImage() {
+		if(cavalryArcherImage == null) {
+			try {
+				cavalryArcherImage = ImageIO.read(Boot.class.getResource("/resources/cavalry_archer.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return cavalryArcherImage;
+	}
+	
+	public static BufferedImage getKnightImage() {
+		if(knightImage == null) {
+			try {
+				knightImage = ImageIO.read(Boot.class.getResource("/resources/knight.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return knightImage;
+	}
+	
+	public static BufferedImage getHeroImage() {
+		if(heroImage == null) {
+			try {
+				heroImage = ImageIO.read(Boot.class.getResource("/resources/hero.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return heroImage;
+	}
+	
+	public static BufferedImage getDragonImage() {
+		if(dragonImage == null) {
+			try {
+				dragonImage = ImageIO.read(Boot.class.getResource("/resources/dragon.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return dragonImage;
+	}
+	
+	public static BufferedImage getPriestImage() {
+		if(priestImage == null) {
+			try {
+				priestImage = ImageIO.read(Boot.class.getResource("/resources/priest.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return priestImage;
+	}
+	
+	public static BufferedImage getMangonelImage() {
+		if(mangonelImage == null) {
+			try {
+				mangonelImage = ImageIO.read(Boot.class.getResource("/resources/mangonel.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return mangonelImage;
+	}
+	
 	public static BufferedImage getBuildingImage() {
 		if(buildingImage == null) {
 			try {
@@ -189,6 +291,28 @@ public class ResourceManager {
 		return foodGetterImage;
 	}
 	
+	public static BufferedImage getStoneGetterImage() {
+		if(stoneGetterImage == null) {
+			try {
+				stoneGetterImage = ImageIO.read(Boot.class.getResource("/resources/stone_getter.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return stoneGetterImage;
+	}
+	
+	public static BufferedImage getManaGetterImage() {
+		if(manaGetterImage == null) {
+			try {
+				manaGetterImage = ImageIO.read(Boot.class.getResource("/resources/mana_getter.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return manaGetterImage;
+	}
+	
 	public static BufferedImage getMetalForgeImage() {
 		if(metalForgeImage == null) {
 			try {
@@ -231,6 +355,50 @@ public class ResourceManager {
 			}
 		}
 		return townCenterImage;
+	}
+	
+	public static BufferedImage getBarracksImage() {
+		if(barracksImage == null) {
+			try {
+				barracksImage = ImageIO.read(Boot.class.getResource("/resources/barracks.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return barracksImage;
+	}
+	
+	public static BufferedImage getChurchImage() {
+		if(churchImage == null) {
+			try {
+				churchImage = ImageIO.read(Boot.class.getResource("/resources/church.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return churchImage;
+	}
+	
+	public static BufferedImage getStableImage() {
+		if(stableImage == null) {
+			try {
+				stableImage = ImageIO.read(Boot.class.getResource("/resources/stable.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return stableImage;
+	}
+	
+	public static BufferedImage getSiegeWorkshopImage() {
+		if(siegeWorkshopImage == null) {
+			try {
+				siegeWorkshopImage = ImageIO.read(Boot.class.getResource("/resources/siege_workshop.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return siegeWorkshopImage;
 	}
 	
 	public static BufferedImage getBackground_01() {

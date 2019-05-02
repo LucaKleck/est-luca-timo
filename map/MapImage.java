@@ -27,8 +27,16 @@ import entity.building.DefenseBuilding;
 import entity.building.ProductionBuilding;
 import entity.building.ResourceBuilding;
 import entity.unit.Archer;
+import entity.unit.BatteringRam;
 import entity.unit.Builder;
+import entity.unit.Cavalry;
+import entity.unit.CavalryArcher;
+import entity.unit.Dragon;
+import entity.unit.Hero;
+import entity.unit.Knight;
 import entity.unit.Mage;
+import entity.unit.Mangonel;
+import entity.unit.Priest;
 import entity.unit.Trebuchet;
 import entity.unit.Unit;
 import entity.unit.Warrior;
@@ -265,7 +273,34 @@ public class MapImage {
 				} else if (s instanceof Trebuchet) {
 					g.drawImage(ResourceManager.getTrebuchetImage(), (int) (s.getPoint().x * mapTileSize) - 8,
 							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				} else {
+				} else if (s instanceof BatteringRam) {
+					g.drawImage(ResourceManager.getBatteringRamImage(), (int) (s.getPoint().x * mapTileSize) - 8,
+							(int) (s.getPoint().y * mapTileSize) - 8, null);
+				} else if (s instanceof Cavalry) {
+					g.drawImage(ResourceManager.getCavalryImage(), (int) (s.getPoint().x * mapTileSize) - 8,
+							(int) (s.getPoint().y * mapTileSize) - 8, null);
+				} else if (s instanceof CavalryArcher) {
+					g.drawImage(ResourceManager.getCavalryArcherImage(), (int) (s.getPoint().x * mapTileSize) - 8,
+							(int) (s.getPoint().y * mapTileSize) - 8, null);
+				} else if (s instanceof Knight) {
+					g.drawImage(ResourceManager.getKnightImage(), (int) (s.getPoint().x * mapTileSize) - 8,
+							(int) (s.getPoint().y * mapTileSize) - 8, null);
+				} else if (s instanceof Hero) {
+					g.drawImage(ResourceManager.getHeroImage(), (int) (s.getPoint().x * mapTileSize) - 8,
+							(int) (s.getPoint().y * mapTileSize) - 8, null);
+				} else if (s instanceof Dragon) {
+					g.drawImage(ResourceManager.getDragonImage(), (int) (s.getPoint().x * mapTileSize) - 8,
+							(int) (s.getPoint().y * mapTileSize) - 8, null);
+				} else if (s instanceof Priest) {
+					g.drawImage(ResourceManager.getPriestImage(), (int) (s.getPoint().x * mapTileSize) - 8,
+							(int) (s.getPoint().y * mapTileSize) - 8, null);
+				} else if (s instanceof Mangonel) {
+					g.drawImage(ResourceManager.getMangonelImage(), (int) (s.getPoint().x * mapTileSize) - 8,
+							(int) (s.getPoint().y * mapTileSize) - 8, null);
+				} else if (s instanceof Mangonel) {
+					g.drawImage(ResourceManager.getMangonelImage(), (int) (s.getPoint().x * mapTileSize) - 8,
+							(int) (s.getPoint().y * mapTileSize) - 8, null);
+				}else {
 					g.drawImage(ResourceManager.getBuilderImage(), (int) (s.getPoint().x * mapTileSize) - 8,
 							(int) (s.getPoint().y * mapTileSize) - 8, null);
 				}
@@ -279,6 +314,10 @@ public class MapImage {
 						g.drawImage(ResourceManager.getFoodGetterImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					} else if (s.getName().matches(Building.METAL_GETTER)) {
 						g.drawImage(ResourceManager.getMetalForgeImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+					} else if (s.getName().matches(Building.STONE_GETTER)) {
+						g.drawImage(ResourceManager.getStoneGetterImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+					} else if (s.getName().matches(Building.MANA_GETTER)) {
+						g.drawImage(ResourceManager.getManaGetterImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					} else {
 						g.drawImage(ResourceManager.getBuildingImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					}
@@ -288,6 +327,14 @@ public class MapImage {
 						g.drawImage(ResourceManager.getTownCenterImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					} else if (s.getName().matches(Building.PORTAL)) {
 						g.drawImage(portalImage, s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+					} else if (s.getName().matches(Building.SIEGE_WORKSHOP)) {
+						g.drawImage(ResourceManager.getSiegeWorkshopImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+					} else if (s.getName().matches(Building.CHURCH)) {
+						g.drawImage(ResourceManager.getChurchImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+					} else if (s.getName().matches(Building.BARRACKS)) {
+						g.drawImage(ResourceManager.getBarracksImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
+					} else if (s.getName().matches(Building.STABLE)) {
+						g.drawImage(ResourceManager.getStableImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					} else {
 						g.drawImage(ResourceManager.getTownCenterImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					}

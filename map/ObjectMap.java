@@ -11,23 +11,7 @@ import core.MapCreator;
 import core.Point2DNoFxReq;
 import core.Selected;
 import entity.Entity;
-import entity.building.Building;
-import entity.building.DefenseBuilding;
 import entity.building.ProductionBuilding;
-import entity.building.ResourceBuilding;
-import entity.unit.Archer;
-import entity.unit.BatteringRam;
-import entity.unit.Builder;
-import entity.unit.Cavalry;
-import entity.unit.CavalryArcher;
-import entity.unit.Dragon;
-import entity.unit.Hero;
-import entity.unit.Knight;
-import entity.unit.Mage;
-import entity.unit.Mangonel;
-import entity.unit.Priest;
-import entity.unit.Trebuchet;
-import entity.unit.Warrior;
 
 public class ObjectMap {
 
@@ -47,9 +31,13 @@ public class ObjectMap {
 	
 	private void setInitalState() {
 		
+		
 		entityMap.add(new ProductionBuilding(new Point2DNoFxReq(3, 3), ProductionBuilding.TOWN_CENTER, 15, 15, 0, true, new ArrayList<>()));
 		entityMap.add(new ProductionBuilding(PORTAL_POINT, ProductionBuilding.PORTAL, 150, 150, 0, false, new ArrayList<>()));
 		
+		/*
+		 * Adds all available uildings and units to the map
+		 * 
 		entityMap.add(new ResourceBuilding(new Point2DNoFxReq(0, 0), Building.METAL_GETTER, 10, 10, 0, true, new ArrayList<>()));
 		entityMap.add(new ResourceBuilding(new Point2DNoFxReq(0, 1), Building.STONE_GETTER, 10, 10, 0, true, new ArrayList<>()));
 		entityMap.add(new ResourceBuilding(new Point2DNoFxReq(0, 2), Building.MANA_GETTER, 10, 10, 0, true, new ArrayList<>()));
@@ -78,7 +66,7 @@ public class ObjectMap {
 		entityMap.add(new Knight(new Point2DNoFxReq(4, 11), "Knight", 0, true, new ArrayList<>()));
 		entityMap.add(new Mangonel(new Point2DNoFxReq(4, 12), "Mangonel", 0, true, new ArrayList<>()));
 		entityMap.add(new Priest(new Point2DNoFxReq(4, 13), "Priest", 0, true, new ArrayList<>()));
-
+	    */
 		
 		// FOR UNIT STACK (check scroll and other stuff)
 	}
