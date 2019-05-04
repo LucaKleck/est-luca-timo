@@ -104,6 +104,9 @@ public class CreateUnit extends Ability {
 		if(unitType.equals(Unit.UNIT_PRIEST)) {
 			GameInfo.getObjectMap().getEntityMap().add(new Priest(pointXY, "Priest", 0, controlable, new ArrayList<>()));
 		}
+		
+		GameInfo.getPlayerStats().addUnitsCreated(1);
+		
 	}
 	
 	public boolean unitCanBeCreated() {

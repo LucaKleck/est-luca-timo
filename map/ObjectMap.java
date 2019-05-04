@@ -36,7 +36,7 @@ public class ObjectMap {
 		entityMap.add(new ProductionBuilding(PORTAL_POINT, ProductionBuilding.PORTAL, 150, 150, 0, false, new ArrayList<>()));
 		
 		/*
-		 * Adds all available uildings and units to the map
+		 * Adds all available buildings and units to the map
 		 * 
 		entityMap.add(new ResourceBuilding(new Point2DNoFxReq(0, 0), Building.METAL_GETTER, 10, 10, 0, true, new ArrayList<>()));
 		entityMap.add(new ResourceBuilding(new Point2DNoFxReq(0, 1), Building.STONE_GETTER, 10, 10, 0, true, new ArrayList<>()));

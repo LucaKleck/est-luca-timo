@@ -126,6 +126,7 @@ public class Build extends Ability {
 		}
 		GameInfo.getRoundInfo().getNewBuildings().add(building);
 		GameInfo.getObjectMap().getEntityMap().add(building);
+		GameInfo.getPlayerStats().addBuildingsBuilt(1);
 	}
 	
 	public boolean buildingCanBeBuild() {

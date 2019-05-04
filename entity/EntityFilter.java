@@ -211,7 +211,7 @@ public class EntityFilter {
 		for(Entity entity: GameInfo.getObjectMap().getEntityMap()) {
 			
 			if(entity.isControlable()) {
-				if(bestTarget == null ) {
+				if(bestTarget == null) {
 					bestTarget = entity;
 					bestTargetPriorityPoints = calculatePriorityPoints(entity, source);
 				} else if(bestTargetPriorityPoints < calculatePriorityPoints(entity, source)) {
@@ -227,12 +227,33 @@ public class EntityFilter {
 	private int calculatePriorityPoints(Entity targetEntity, Entity sourceEntity) {
 
 		int healthPoints = (100 / targetEntity.getCurrentHealth());
-		int distancePoints = calculateDifference(targetEntity.getXPos(), sourceEntity.getXPos())
-				+ calculateDifference(targetEntity.getYPos(), sourceEntity.getYPos());
+		int distancePoints = 1000 / ((calculateDifference(targetEntity.getXPos(), sourceEntity.getXPos())
+				+ calculateDifference(targetEntity.getYPos(), sourceEntity.getYPos())) + 1);
 		return healthPoints + distancePoints;
 
 	}
 
+	public int getRangeToTarget(Entity source, Entity target) {
+		
+		int targetX = target.getXPos();
+		int targetY = target.getYPos();
+		int sourceX = source.getXPos();
+		int sourceY = source.getYPos();
+
+		int deltaX = targetX - sourceX;
+		if(deltaX < 0) deltaX = -deltaX;
+		
+		int deltaY = targetY - sourceY;
+		if(deltaY < 0) deltaY = -deltaY;
+		
+		if(deltaY > deltaX) {
+			return deltaY;
+		} else {
+			return deltaX;
+		}
+		
+	}
+	
 	private int calculateDifference(int x1, int x2) {
 
 		int difference;

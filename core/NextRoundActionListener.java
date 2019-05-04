@@ -28,9 +28,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 	private static final ExecutorService EXS = Executors.newFixedThreadPool(1);
 	private JButton j;
 	private EntityFilter entityFilter;
-	private int wave = 0;
-	private int waveCounter = 0;
-	private boolean newWave = true;
+	private int round = 0;
 	private UnitFactory uf;
 
 	public NextRoundActionListener() {
@@ -49,14 +47,8 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 		// TODO make it so player can't use selected.clicked(x,y) while this is going
 		// down
 		EXS.execute(this);
-		waveCounter++;
-		if (waveCounter >= 6) {
-			wave++;
-			waveCounter = 0;
-			newWave = true;
-		} else {
-			newWave = false;
-		}
+		//Spawn an enemy wave every ten rounds
+		round++;
 	}
 
 	@Override
@@ -85,16 +77,17 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 			statusEffect.applyEffect();
 			System.out.println(statusEffect);
 		}
-
+		
 		for (Entity entity : enemyEntities) {
 
-			Ability ability = entityFilter.getRandomAbility(entity);
+			Ability ability;
+			
 			if (entity instanceof Unit) {
 				Entity bestTarget = entityFilter.getBestEntityTarget(entity);
-				ability = entityFilter.getBestAbility(ability.getRangeToTarget(entity, bestTarget), entity);
+				int rangeToTarget = entityFilter.getRangeToTarget(entity, bestTarget);
+				ability = entityFilter.getBestAbility(rangeToTarget, entity);
 				if (ability != null && bestTarget != null && entity instanceof Builder == false) {
-					entity.setEvent(
-							new Event(entity, bestTarget, ability, new AbilityEffect(entity, bestTarget, ability)));
+					entity.setEvent(new Event(entity, bestTarget, ability, new AbilityEffect(entity, bestTarget, ability)));
 				} else if (entity instanceof Builder) {
 					ability = entityFilter.getBestBuilderAbility((Builder) entity);
 					entity.setEvent(new Event(entity, entity, ability, new AbilityEffect(entity, bestTarget, ability)));
@@ -106,38 +99,23 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 					}
 					if (ability != null) {
 						((Move) ability).setMoveToPoint(entityFilter.getNextMovePoint((Unit)entity));
-
 						entity.setEvent(new Event(entity, entity, ability, new AbilityEffect(entity, entity, ability)));
 					}
 
 				}
 			} else if (entity instanceof ProductionBuilding) {
 				if (entity.getName().equals(Building.PORTAL)) {
-					if (newWave) {
-						switch (wave) {
-						case 1:
-							entityMap.add(uf.getNewPortalUnitByType(Unit.UNIT_BUILDER));
-							break;
-						case 2:
-							entityMap.add(uf.getNewPortalUnitByType(Unit.UNIT_TREBUCHET));
-							break;
-						case 3:
-							entityMap.add(uf.getNewPortalUnitByType(Unit.UNIT_MAGE));
-							break;
-						case 4:
-							entityMap.add(uf.getNewPortalUnitByType(Unit.UNIT_ARCHER));
-							break;
-						case 5:
-							entityMap.add(uf.getNewPortalUnitByType(Unit.UNIT_WARRIOR));
-							break;
-						default:
-							break;
+					if (round % 10 == 0) {
+						int wave = round / 10;
+						ArrayList<Unit> units = uf.getNewPortalUnitsByWave(wave);
+						for(Unit unit: units) {
+							entityMap.add(unit);
 						}
 					}
 				}
 			} else if(entity instanceof DefenseBuilding) {
 				Entity bestTarget = entityFilter.getBestEntityTarget(entity);
-				ability = entityFilter.getBestAbility(ability.getRangeToTarget(entity, bestTarget), entity);
+				ability = entityFilter.getBestAbility(entityFilter.getRangeToTarget(entity, bestTarget), entity);
 				if (ability != null && bestTarget != null && entity instanceof Builder == false) {
 					entity.setEvent(
 							new Event(entity, bestTarget, ability, new AbilityEffect(entity, bestTarget, ability)));
@@ -193,7 +171,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 			System.out.println(e);
 			if(e.getAbility() instanceof CollectResources == false) {
 				try {
-					Thread.sleep(500);
+					Thread.sleep(250);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
@@ -212,7 +190,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 			}
 			if(e.getAbility() instanceof CollectResources == false) {
 				try {
-					Thread.sleep(500);
+					Thread.sleep(250);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}

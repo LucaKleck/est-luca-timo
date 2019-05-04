@@ -38,11 +38,13 @@ public class ControlInput {
 
 		@Override
 		public void mouseWheelMoved(MouseWheelEvent evt) {
-			if (evt.getWheelRotation() < 0) {
-				MapPanel.addDisplacementMultiplier(0.1);
-			}
-			if (evt.getWheelRotation() > 0) {
-				MapPanel.addDisplacementMultiplier(-0.1);
+			if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+				if (evt.getWheelRotation() < 0) {
+					MapPanel.addDisplacementMultiplier(0.1);
+				}
+				if (evt.getWheelRotation() > 0) {
+					MapPanel.addDisplacementMultiplier(-0.1);
+				}
 			}
 		}
 

@@ -3,6 +3,7 @@ package entity;
 import java.util.ArrayList;
 
 import abilities.Ability;
+import core.Core;
 import core.Event;
 import core.GameInfo;
 import core.PlayerStats;
@@ -10,6 +11,10 @@ import core.PlayerStats.PlayerResources;
 import core.Point2DNoFxReq;
 import cost.AvailableResources;
 import cost.Cost;
+import entity.building.Building;
+import entity.building.ProductionBuilding;
+import entity.unit.Unit;
+import frame.menuPanels.EndScreenPanel;
 import statusEffects.StatusEffect;
 
 public class Entity {
@@ -141,6 +146,21 @@ public class Entity {
 
 		if (currentHealth <= 0) {
 			destroy();
+			if(this.isControlable() == false) {
+				if(this instanceof Building) {
+					GameInfo.getPlayerStats().addBuildingsDestroyed(1);
+				}
+				if(this instanceof Unit) {
+					GameInfo.getPlayerStats().addUnitsKilled(1);
+				}
+			}
+			if(this instanceof ProductionBuilding) {
+				if(this.getName().equals(Building.TOWN_CENTER)) {
+					Core.getMainJFrame().setCurrentComponent(new EndScreenPanel(false));
+				} else if(this.getName().equals(Building.PORTAL)) {
+					Core.getMainJFrame().setCurrentComponent(new EndScreenPanel(true));
+				}
+			}
 		}
 
 	}

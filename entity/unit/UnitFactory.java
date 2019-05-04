@@ -33,6 +33,43 @@ public class UnitFactory {
 	public Unit getNewPortalUnitByType(String type) {
 		return getNewUnit(GameInfo.getObjectMap().getPortalPoint(), 0, false, new ArrayList<Ability>(), type);
 	}
+	
+	public ArrayList<Unit> getNewPortalUnitsByWave(int wave) {
+		
+		ArrayList<Unit> waveUnits = new ArrayList<Unit>();
+		ArrayList<String> unitTypes = new ArrayList<String>();
+		
+		if(wave > 0) {
+			unitTypes.add(Unit.UNIT_WARRIOR);
+		}
+		if(wave > 1) {
+			unitTypes.add(Unit.UNIT_TREBUCHET);
+			unitTypes.add(Unit.UNIT_MAGE);
+		}
+		if(wave > 2) {
+			unitTypes.add(Unit.UNIT_MANGONEL);
+			unitTypes.add(Unit.UNIT_BATTERING_RAM);
+			unitTypes.add(Unit.UNIT_CAVALRY);
+		}
+		if(wave > 3) {
+			unitTypes.add(Unit.UNIT_PRIEST);
+			unitTypes.add(Unit.UNIT_CAVALRY_ARCHER);
+		}
+		if(wave > 5) {
+			unitTypes.add(Unit.UNIT_KNIGHT);
+		}
+		if(wave % 8 == 0) {
+			unitTypes.add(Unit.UNIT_BUILDER);
+			unitTypes.add(Unit.UNIT_DRAGON);
+			unitTypes.add(Unit.UNIT_HERO);
+		}
+		for(int i = 0; i < 2*wave; i++) {
+			waveUnits.add(getNewPortalUnitByType(unitTypes.get(random.nextInt(unitTypes.size()))));
+		}
+		
+		return waveUnits;
+		
+	}
 
 	private Unit getNewUnit(Point2DNoFxReq point, int level, boolean controlable, ArrayList<Ability> abilities,
 			String type) {
@@ -56,8 +93,32 @@ public class UnitFactory {
 		case Unit.UNIT_WARRIOR:
 			unit = new Warrior(pointXY, "", level, controlable, abilities);
 			break;
+		case Unit.UNIT_BATTERING_RAM:
+			unit = new BatteringRam(pointXY, "BatteringRam", level, controlable, abilities);
+			break;
+		case Unit.UNIT_CAVALRY:
+			unit = new Cavalry(pointXY, "", level, controlable, abilities);
+			break;
+		case Unit.UNIT_CAVALRY_ARCHER:
+			unit = new CavalryArcher(pointXY, "", level, controlable, abilities);
+			break;
+		case Unit.UNIT_DRAGON:
+			unit = new Dragon(pointXY, "", level, controlable, abilities);
+			break;
+		case Unit.UNIT_HERO:
+			unit = new Hero(pointXY, "", level, controlable, abilities);
+			break;
+		case Unit.UNIT_KNIGHT:
+			unit = new Knight(pointXY, "", level, controlable, abilities);
+			break;
+		case Unit.UNIT_MANGONEL:
+			unit = new Mangonel(pointXY, "Mangonel", level, controlable, abilities);
+			break;
+		case Unit.UNIT_PRIEST:
+			unit = new Priest(pointXY, "", level, controlable, abilities);
+			break;
 		default:
-			unit = new Warrior(pointXY, "", level, controlable, abilities);
+			unit = null;
 			break;
 		}
 

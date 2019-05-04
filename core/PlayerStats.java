@@ -8,17 +8,18 @@ import frame.MainJFrame;
  */
 public class PlayerStats {
 	
-	private int clicks = 0;
-	
 	private int unitsKilled = 0;
 	private int buildingsDestroyed = 0;
-	private int damageDealt = 0;
-
 	private int unitsCreated = 0;
 	private int buildingsBuilt = 0;
 	
-	private int timePlayedMins = 0;
-
+	private int totalWoodCollected = 0;
+	private int totalFoodCollected = 0;
+	private int totalStoneCollected = 0;
+	private int totalMetalCollected = 0;
+	private int totalGoldCollected = 0;
+	private int totalManaStoneCollected = 0;
+	
 	private PlayerResources playerResources;
 	private CostManager costManager;
 	
@@ -34,14 +35,19 @@ public class PlayerStats {
 		costManager = new CostManager();
 	}
 	
-	public PlayerStats(int clicks,int unitsKilled, int buildingsDestroyed, int damageDealt, int unitsCreated, int buildingsBuilt, int timePlayedMins, PlayerResources playerResources) {
-		this.clicks = clicks;
+	public PlayerStats(int unitsKilled, int buildingsDestroyed, int unitsCreated, int buildingsBuilt, PlayerResources playerResources, int totalFoodCollected, int totalWoodCollected, int totalStoneCollected, int totalMetalCollected, int totalGoldCollected, int totalManaStoneCollected) {
 		this.unitsKilled = unitsKilled;
 		this.buildingsDestroyed = buildingsDestroyed;
-		this.damageDealt = damageDealt;
 		this.unitsCreated = unitsCreated;
 		this.buildingsBuilt = buildingsBuilt;
-		this.timePlayedMins = timePlayedMins;
+		
+		this.totalFoodCollected = totalFoodCollected;
+		this.totalWoodCollected = totalWoodCollected;
+		this.totalGoldCollected = totalGoldCollected;
+		this.totalStoneCollected = totalStoneCollected;
+		this.totalMetalCollected = totalMetalCollected;
+		this.totalManaStoneCollected = totalManaStoneCollected;
+		
 		this.playerResources = playerResources;
 		costManager = new CostManager();
 	}
@@ -54,20 +60,16 @@ public class PlayerStats {
 		return costManager;
 	}
 
-	public synchronized int getClicks() {
-		return clicks;
-	}
-
-	public synchronized void setClicks(int clicks) {
-		this.clicks = clicks;
-	}
-
 	public synchronized int getUnitsKilled() {
 		return unitsKilled;
 	}
 
 	public synchronized void setUnitsKilled(int unitsKilled) {
 		this.unitsKilled = unitsKilled;
+	}
+	
+	public synchronized void addUnitsKilled(int unitsKilled) {
+		this.unitsKilled += unitsKilled;
 	}
 
 	public synchronized int getBuildingsDestroyed() {
@@ -77,13 +79,9 @@ public class PlayerStats {
 	public synchronized void setBuildingsDestroyed(int buildingsDestroyed) {
 		this.buildingsDestroyed = buildingsDestroyed;
 	}
-
-	public synchronized int getDamageDealt() {
-		return damageDealt;
-	}
-
-	public synchronized void setDamageDealt(int damageDealt) {
-		this.damageDealt = damageDealt;
+	
+	public synchronized void addBuildingsDestroyed(int buildingsDestroyed) {
+		this.buildingsDestroyed += buildingsDestroyed;
 	}
 
 	public synchronized int getUnitsCreated() {
@@ -93,6 +91,10 @@ public class PlayerStats {
 	public synchronized void setUnitsCreated(int unitsCreated) {
 		this.unitsCreated = unitsCreated;
 	}
+	
+	public synchronized void addUnitsCreated(int unitsCreated) {
+		this.unitsCreated += unitsCreated;
+	}
 
 	public synchronized int getBuildingsBuilt() {
 		return buildingsBuilt;
@@ -101,13 +103,81 @@ public class PlayerStats {
 	public synchronized void setBuildingsBuilt(int buildingsBuilt) {
 		this.buildingsBuilt = buildingsBuilt;
 	}
-
-	public synchronized int getTimePlayedMins() {
-		return timePlayedMins;
+	
+	public synchronized void addBuildingsBuilt(int buildingsBuilt) {
+		this.buildingsBuilt += buildingsBuilt;
+	}
+	
+	public synchronized int getTotalGoldCollected() {
+		return totalGoldCollected;
 	}
 
-	public synchronized void setTimePlayedMins(int timePlayedMins) {
-		this.timePlayedMins = timePlayedMins;
+	public synchronized void setTotalGoldCollected(int totalGoldCollected) {
+		this.totalGoldCollected = totalGoldCollected;
+	}
+	
+	public synchronized void addTotalGoldCollected(int totalGoldCollected) {
+		this.totalGoldCollected += totalGoldCollected;
+	}
+	
+	public synchronized int getTotalFoodCollected() {
+		return totalFoodCollected;
+	}
+
+	public synchronized void setTotalFoodCollected(int totalFoodCollected) {
+		this.totalFoodCollected = totalFoodCollected;
+	}
+	
+	public synchronized void addTotalFoodCollected(int totalFoodCollected) {
+		this.totalFoodCollected += totalFoodCollected;
+	}
+	
+	public synchronized int getTotalWoodCollected() {
+		return totalWoodCollected;
+	}
+
+	public synchronized void setTotalWoodCollected(int totalWoodCollected) {
+		this.totalWoodCollected = totalWoodCollected;
+	}
+	
+	public synchronized void addTotalWoodCollected(int totalWoodCollected) {
+		this.totalWoodCollected += totalWoodCollected;
+	}
+	
+	public synchronized int getTotalStoneCollected() {
+		return totalStoneCollected;
+	}
+
+	public synchronized void setTotalStoneCollected(int totalStoneCollected) {
+		this.totalStoneCollected = totalStoneCollected;
+	}
+	
+	public synchronized void addTotalStoneCollected(int totalStoneCollected) {
+		this.totalStoneCollected += totalStoneCollected;
+	}
+	
+	public synchronized int getTotalMetalCollected() {
+		return totalMetalCollected;
+	}
+
+	public synchronized void setTotalMetalCollected(int totalMetalCollected) {
+		this.totalMetalCollected = totalGoldCollected;
+	}
+	
+	public synchronized void addTotalMetalCollected(int totalMetalCollected) {
+		this.totalMetalCollected += totalGoldCollected;
+	}
+	
+	public synchronized int getTotalManaStoneCollected() {
+		return totalManaStoneCollected;
+	}
+
+	public synchronized void setTotalManaStoneCollected(int totalManaStoneCollected) {
+		this.totalManaStoneCollected = totalManaStoneCollected;
+	}
+	
+	public synchronized void addTotalManaStoneCollected(int totalManaStoneCollected) {
+		this.totalManaStoneCollected += totalManaStoneCollected;
 	}
 
 	public synchronized void setPlayerResources(PlayerResources playerResources) {

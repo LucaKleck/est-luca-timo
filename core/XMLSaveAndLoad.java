@@ -65,13 +65,19 @@ public class XMLSaveAndLoad {
 	private static final String BASE_DAMAGE = "baseDamage";
 	private static final String MOVEMENT_RANGE = "movementRange";
 	private static final String MAP_SIZE = "mapSize";
-	private static final String CLICKS = "clicks";
+	
 	private static final String UNITS_KILLED = "unitsKilled";
 	private static final String BUILDINGS_DESTROYED = "buildingsDestroyed";
-	private static final String DAMAGE_DEALT = "damageDealt";
 	private static final String BUILDINGS_BUILT = "buildingsBuilt";
 	private static final String UNITS_CREATED = "unitsCreated";
-	private static final String TIME_PLAYED_MINS = "timePlayedMins";
+	
+	private static final String TOTAL_FOOD = "totalFood";
+	private static final String TOTAL_WOOD = "totalWood";
+	private static final String TOTAL_STONE = "totalStone";
+	private static final String TOTAL_METAL = "totalMetal";
+	private static final String TOTAL_GOLD = "totalGold";
+	private static final String TOTAL_MANA_STONE = "totalManaStone";
+	
 	private static final String LEVEL = "level";
 	private static final String CONTROLABLE = "controlable";
 
@@ -268,20 +274,28 @@ public class XMLSaveAndLoad {
 
 		Element playerStatsElement = (Element) saveDoc.getElementsByTagName("PlayerStats").item(0);
 
-		int clicks = Integer.parseInt(playerStatsElement.getElementsByTagName(CLICKS).item(0).getTextContent());
 		int unitsKilled = Integer
 				.parseInt(playerStatsElement.getElementsByTagName(UNITS_KILLED).item(0).getTextContent());
 		int buildingsDestroyed = Integer
 				.parseInt(playerStatsElement.getElementsByTagName(BUILDINGS_DESTROYED).item(0).getTextContent());
-		int damageDealt = Integer
-				.parseInt(playerStatsElement.getElementsByTagName(DAMAGE_DEALT).item(0).getTextContent());
+		
 		int unitsCreated = Integer
 				.parseInt(playerStatsElement.getElementsByTagName(UNITS_CREATED).item(0).getTextContent());
 		int buildingsBuilt = Integer
 				.parseInt(playerStatsElement.getElementsByTagName(BUILDINGS_BUILT).item(0).getTextContent());
-		int timePlayedMins = Integer
-				.parseInt(playerStatsElement.getElementsByTagName(TIME_PLAYED_MINS).item(0).getTextContent());
-		;
+		
+		int totalFood = Integer
+				.parseInt(playerStatsElement.getElementsByTagName(TOTAL_FOOD).item(0).getTextContent());
+		int totalWood = Integer
+				.parseInt(playerStatsElement.getElementsByTagName(TOTAL_WOOD).item(0).getTextContent());
+		int totalStone = Integer
+				.parseInt(playerStatsElement.getElementsByTagName(TOTAL_STONE).item(0).getTextContent());
+		int totalMetal = Integer
+				.parseInt(playerStatsElement.getElementsByTagName(TOTAL_METAL).item(0).getTextContent());
+		int totalGold = Integer
+				.parseInt(playerStatsElement.getElementsByTagName(TOTAL_GOLD).item(0).getTextContent());
+		int totalManaStone = Integer
+				.parseInt(playerStatsElement.getElementsByTagName(TOTAL_MANA_STONE).item(0).getTextContent());
 
 		Element playerResourcesElement = (Element) saveDoc.getElementsByTagName("playerResources").item(0);
 		int gold = Integer.parseInt(playerResourcesElement.getElementsByTagName(GOLD).item(0).getTextContent());
@@ -294,17 +308,12 @@ public class XMLSaveAndLoad {
 
 		PlayerResources playerResources = ps.new PlayerResources(gold, food, wood, stone, metal, manaStone);
 
-		ps = new PlayerStats(clicks, unitsKilled, buildingsDestroyed, damageDealt, unitsCreated, buildingsBuilt,
-				timePlayedMins, playerResources);
+		ps = new PlayerStats(unitsKilled, buildingsDestroyed, unitsCreated, buildingsBuilt, playerResources, totalFood, totalWood, totalStone, totalMetal, totalGold, totalManaStone);
 		return ps;
 	}
 
 	private static Node savePlayerStats(Document saveDoc) {
 		Element playerStatsElement = saveDoc.createElement("PlayerStats");
-
-		Element clicks = saveDoc.createElement(CLICKS);
-		clicks.appendChild(saveDoc.createTextNode("" + GameInfo.getPlayerStats().getClicks()));
-		playerStatsElement.appendChild(clicks);
 
 		Element unitsKilled = saveDoc.createElement(UNITS_KILLED);
 		unitsKilled.appendChild(saveDoc.createTextNode("" + GameInfo.getPlayerStats().getUnitsKilled()));
@@ -314,10 +323,6 @@ public class XMLSaveAndLoad {
 		buildingsDestroyed.appendChild(saveDoc.createTextNode("" + GameInfo.getPlayerStats().getBuildingsDestroyed()));
 		playerStatsElement.appendChild(buildingsDestroyed);
 
-		Element damageDealt = saveDoc.createElement(DAMAGE_DEALT);
-		damageDealt.appendChild(saveDoc.createTextNode("" + GameInfo.getPlayerStats().getDamageDealt()));
-		playerStatsElement.appendChild(damageDealt);
-
 		Element unitsCreated = saveDoc.createElement(UNITS_CREATED);
 		unitsCreated.appendChild(saveDoc.createTextNode("" + GameInfo.getPlayerStats().getUnitsCreated()));
 		playerStatsElement.appendChild(unitsCreated);
@@ -325,10 +330,30 @@ public class XMLSaveAndLoad {
 		Element buildingsBuilt = saveDoc.createElement(BUILDINGS_BUILT);
 		buildingsBuilt.appendChild(saveDoc.createTextNode("" + GameInfo.getPlayerStats().getBuildingsBuilt()));
 		playerStatsElement.appendChild(buildingsBuilt);
-
-		Element timePlayedMins = saveDoc.createElement(TIME_PLAYED_MINS);
-		timePlayedMins.appendChild(saveDoc.createTextNode("" + GameInfo.getPlayerStats().getTimePlayedMins()));
-		playerStatsElement.appendChild(timePlayedMins);
+		
+		Element totalWood = saveDoc.createElement(TOTAL_WOOD);
+		totalWood.appendChild(saveDoc.createTextNode("" + GameInfo.getPlayerStats().getTotalWoodCollected()));
+		playerStatsElement.appendChild(totalWood);
+		
+		Element totalFood = saveDoc.createElement(TOTAL_FOOD);
+		totalFood.appendChild(saveDoc.createTextNode("" + GameInfo.getPlayerStats().getTotalFoodCollected()));
+		playerStatsElement.appendChild(totalFood);
+		
+		Element totalStone = saveDoc.createElement(TOTAL_STONE);
+		totalStone.appendChild(saveDoc.createTextNode("" + GameInfo.getPlayerStats().getTotalStoneCollected()));
+		playerStatsElement.appendChild(totalStone);
+		
+		Element totalMetal = saveDoc.createElement(TOTAL_METAL);
+		totalMetal.appendChild(saveDoc.createTextNode("" + GameInfo.getPlayerStats().getTotalMetalCollected()));
+		playerStatsElement.appendChild(totalMetal);
+		
+		Element totalGold = saveDoc.createElement(TOTAL_GOLD);
+		totalGold.appendChild(saveDoc.createTextNode("" + GameInfo.getPlayerStats().getTotalGoldCollected()));
+		playerStatsElement.appendChild(totalGold);
+		
+		Element totalManaStone = saveDoc.createElement(TOTAL_MANA_STONE);
+		totalManaStone.appendChild(saveDoc.createTextNode("" + GameInfo.getPlayerStats().getTotalManaStoneCollected()));
+		playerStatsElement.appendChild(totalManaStone);
 
 		playerStatsElement.appendChild(playerResources(saveDoc));
 

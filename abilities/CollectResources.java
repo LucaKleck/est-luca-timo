@@ -35,21 +35,27 @@ public class CollectResources extends Ability {
 		switch (b.getRessources().getType()) {
 		case 1:
 			GameInfo.getPlayerStats().getPlayerResources().addGold(resources);
+			GameInfo.getPlayerStats().addTotalGoldCollected(resources);
 			break;
 		case 2:
 			GameInfo.getPlayerStats().getPlayerResources().addWood(resources);
+			GameInfo.getPlayerStats().addTotalWoodCollected(resources);
 			break;
 		case 3:
 			GameInfo.getPlayerStats().getPlayerResources().addFood(resources);
+			GameInfo.getPlayerStats().addTotalFoodCollected(resources);
 			break;
 		case 4:
 			GameInfo.getPlayerStats().getPlayerResources().addStone(resources);
+			GameInfo.getPlayerStats().addTotalStoneCollected(resources);
 			break;
 		case 5:
 			GameInfo.getPlayerStats().getPlayerResources().addMetal(resources);
+			GameInfo.getPlayerStats().addTotalMetalCollected(resources);
 			break;
 		case 6:
 			GameInfo.getPlayerStats().getPlayerResources().addManaStone(resources);
+			GameInfo.getPlayerStats().addTotalManaStoneCollected(resources);
 			break;
 		default:
 			break;

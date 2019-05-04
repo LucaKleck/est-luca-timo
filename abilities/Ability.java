@@ -174,27 +174,6 @@ public abstract class Ability {
 	
 	}
 	
-	public int getRangeToTarget(Entity source, Entity target) {
-		
-		int targetX = target.getXPos();
-		int targetY = target.getYPos();
-		int sourceX = source.getXPos();
-		int sourceY = source.getYPos();
-
-		int deltaX = targetX - sourceX;
-		if(deltaX < 0) deltaX = -deltaX;
-		
-		int deltaY = targetY - sourceY;
-		if(deltaY < 0) deltaY = -deltaY;
-		
-		if(deltaY > deltaX) {
-			return deltaY;
-		} else {
-			return deltaX;
-		}
-		
-	}
-	
 	public boolean rangeCheck(int unitX, int unitY, int mapTileX, int mapTileY) {
 		if (mapTileX >= unitX - maxRange && mapTileX <= unitX + maxRange && mapTileY >= unitY - maxRange
 				&& mapTileY <= unitY + maxRange) {
