@@ -84,7 +84,10 @@ public class Build extends Ability {
 		if (buildingType.equals(Building.BARRACKS)) {
 			building = new ProductionBuilding(buildPoint, Building.BARRACKS, 10, 10, 0, controlable, new ArrayList<>());
 		}
-		if (buildingType.equals(Building.PORTAL)) {
+		if (buildingType.equals(Building.CHURCH)) {
+			building = new ProductionBuilding(buildPoint, Building.BARRACKS, 10, 10, 0, controlable, new ArrayList<>());
+		}
+		if (buildingType.equals(Building.STABLE)) {
 			building = new ProductionBuilding(buildPoint, Building.BARRACKS, 10, 10, 0, controlable, new ArrayList<>());
 		}
 		if (buildingType.equals(Building.SIEGE_WORKSHOP)) {

@@ -30,7 +30,6 @@ public class Entity {
 	private ArrayList<Ability> abilities;
 	private ArrayList<StatusEffect> statusEffects = new ArrayList<>(); // maybe add to constructor for permanent effects
 	private int level = 0;
-	private int maxRange = 5; // Will be calculated via the abilities in the future
 	private Event event = null;
 	private boolean controlable = false;
 	private PlayerResources playerResources;
@@ -104,11 +103,7 @@ public class Entity {
 	public int getCurrentHealth() {
 		return currentHealth;
 	}
-
-	public int getMaxRange() {
-		return maxRange;
-	}
-
+	
 	public ArrayList<Ability> getAbilities() {
 		return abilities;
 	}
@@ -195,8 +190,7 @@ public class Entity {
 	@Override
 	public String toString() {
 		return "Entity [id=" + id + ", pointXY=" + pointXY + ", name=" + name + ", maxHealth=" + maxHealth
-				+ ", currentHealth=" + currentHealth + ", abilities=" + abilities + ", level=" + level + ", maxRange="
-				+ maxRange + ", event=" + event + ", controlable=" + controlable + "]";
+				+ ", currentHealth=" + currentHealth + ", abilities=" + abilities + ", level=" + level + ", event=" + event + ", controlable=" + controlable + "]";
 	}
 
 	public boolean hasAbility() {

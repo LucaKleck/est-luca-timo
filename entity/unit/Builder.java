@@ -12,7 +12,7 @@ public class Builder extends Unit {
 	private static final int BASE_MAX_HEALTH = 3;
 	private static final int BASE_DAMAGE = 2;
 	private static final int MOVEMENT_RANGE = 2;
-	
+	private static final int MAX_RANGE = 5;
 	private Point2DNoFxReq buildPoint;
 	
 	public Builder(Point2DNoFxReq pointXY, String name, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
@@ -33,6 +33,8 @@ public class Builder extends Unit {
 			//Production Buildings
 			abilities.add(new Build(Building.BARRACKS, Ability.ABILITY_BUILD_BARRACKS, Ability.ABILITY_DESC_BUILD_BARRACKS, this, controlable));
 			abilities.add(new Build(Building.SIEGE_WORKSHOP, Ability.ABILITY_BUILD_SIEGE_WORKSHOP, Ability.ABILITY_DESC_BUILD_SIEGE_WORKSHOP, this, controlable));
+			abilities.add(new Build(Building.STABLE, Ability.ABILITY_BUILD_STABLE, Ability.ABILITY_DESC_BUILD_STABLE, this, controlable));
+			abilities.add(new Build(Building.CHURCH, Ability.ABILITY_BUILD_CHURCH, Ability.ABILITY_DESC_BUILD_CHURCH, this, controlable));
 			//Resource Buildings
 			abilities.add(new Build(Building.WOOD_GETTER, Ability.ABILITY_BUILD_WOOD_GETTER, Ability.ABILITY_DESC_BUILD_WOOD_GETTER, this, controlable));
 			abilities.add(new Build(Building.STONE_GETTER, Ability.ABILITY_BUILD_STONE_GETTER, Ability.ABILITY_DESC_BUILD_STONE_GETTER, this, controlable));
@@ -50,6 +52,10 @@ public class Builder extends Unit {
 		this.buildPoint = buildPoint;
 	}
 
+	public int getMaxRange() {
+		return MAX_RANGE;
+	}
+	
 	public Point2DNoFxReq getBuildPoint() {
 		return buildPoint;
 	}

@@ -36,8 +36,7 @@ public abstract class Building extends Entity {
 	@Override
 	public String toString() {
 		return "Building [efficiency=" + efficiency + ", getName()=" + getName() + ", getMaxHealth()=" + getMaxHealth()
-				+ ", getCurrentHealth()=" + getCurrentHealth() + ", getMaxRange()=" + getMaxRange()
-				+ ", getAbilities()=" + getAbilities() + ", getEvent()=" + getEvent() + ", getId()=" + getId() + "]";
+				+ ", getCurrentHealth()=" + getCurrentHealth() + ", getAbilities()=" + getAbilities() + ", getEvent()=" + getEvent() + ", getId()=" + getId() + "]";
 	}
 
 	public int getEfficiency() {

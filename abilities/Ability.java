@@ -56,6 +56,12 @@ public abstract class Ability {
 	public static final String ABILITY_BUILD_BARRACKS = "Build Barracks";
 	public static final String ABILITY_DESC_BUILD_BARRACKS = "Builds barracks at targeted spot";
 	
+	public static final String ABILITY_BUILD_STABLE = "Build Stable";
+	public static final String ABILITY_DESC_BUILD_STABLE = "Builds stable at targeted spot";
+	
+	public static final String ABILITY_BUILD_CHURCH = "Build Church";
+	public static final String ABILITY_DESC_BUILD_CHURCH = "Builds church at targeted spot";
+	
 	public static final String ABILITY_BUILD_SIEGE_WORKSHOP = "Build Siege-Workshop";
 	public static final String ABILITY_DESC_BUILD_SIEGE_WORKSHOP = "Builds siege-workshop at targeted spot";
 	// Defense Buildings
