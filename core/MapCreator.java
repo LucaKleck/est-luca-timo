@@ -12,7 +12,7 @@ import map.MapTile;
  */
 public class MapCreator {
 
-	// map building constants
+	// map building values
 	private static int forestCount = 25; // make a pre-game setting
 	private static int riverCount = 5; // make a pre-game setting
 	private static int mountainCount = 15; // make a pre-game setting
@@ -150,7 +150,7 @@ public class MapCreator {
 	private static boolean inBounds(MapTile[][] map, int x, int y) {
 		boolean isInBounds = false;
 		if(x >= 0 && y >= 0) {
-			if(x < map.length && y < map[0].length) {
+			if(x < map.length && y < map[map.length-1].length) {
 				isInBounds = true;
 			}
 		}
@@ -220,6 +220,14 @@ public class MapCreator {
 		}
 	}
 
+	/**
+	 * Method for creating a square patch, checks if it's in bounds of an area
+	 * @param x
+	 * @param y
+	 * @param xMax
+	 * @param yMax
+	 * @return
+	 */
 	private static boolean isInBounds(int x, int y, int xMax, int yMax) {
 		boolean isInBounds = false;
 		if (x < xMax && y < yMax && x >= 0 && y >= 0) {
@@ -249,4 +257,10 @@ public class MapCreator {
 	public static void setRiverCount(int count) {
 		MapCreator.riverCount = count;
 	}
+	
+	public static void setMountainCount(int count) {
+		MapCreator.mountainCount
+		= count;
+	}
+	
 }
