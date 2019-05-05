@@ -98,15 +98,21 @@ public class ObjectMap {
 		map = MapCreator.createMap();
 	}
 	
-	public static boolean inBounds(int c) {
-		if(c >= 0 && c < GameInfo.getObjectMap().getMap().length) {
-			return true;
+	public static boolean inBounds(int c, boolean checkHorizontal) {
+		if(checkHorizontal) {
+			if(c >= 0 && c < GameInfo.getObjectMap().getMap().length) {
+				return true;
+			}
+		} else {
+			if(c >= 0 && c < GameInfo.getObjectMap().getMap()[GameInfo.getObjectMap().getMap().length-1].length) {
+				return true;
+			}
 		}
 		return false;
 	}
 	
 	public static boolean inBounds(int x, int y) {
-		if(inBounds(x) && inBounds(y)) {
+		if(inBounds(x, true) && inBounds(y, false)) {
 			return true;
 		}
 		return false;
