@@ -176,7 +176,7 @@ public class MapCreator {
 		int[] vector = new int[2];
 		vector[0] = RAND.nextInt(30) + COMMON_RADIUS;
 		vector[1] = RAND.nextInt(30) + COMMON_RADIUS;
-		createSqarePatch(xPos - vector[0], yPos - vector[1], MapTile.TYPE_FOREST, MapTile.NAME_FOREST, map);
+		createSquarePatch(xPos - vector[0], yPos - vector[1], MapTile.TYPE_FOREST, MapTile.NAME_FOREST, map);
 //		System.out.println("-----------------");
 		while (Math.sqrt((Math.pow(vector[0], 2) + Math.pow(vector[1], 2))) > 1.43) {
 //			System.out.println(Math.sqrt( (Math.pow(vector[0], 2)+Math.pow(vector[1], 2))) );
@@ -192,11 +192,11 @@ public class MapCreator {
 			} else {
 				return;
 			}
-			createSqarePatch(xPos + vector[0], yPos + vector[1], MapTile.TYPE_FOREST, MapTile.NAME_FOREST, map);
+			createSquarePatch(xPos + vector[0], yPos + vector[1], MapTile.TYPE_FOREST, MapTile.NAME_FOREST, map);
 		}
 	}
 
-	private static void createSqarePatch(int xPos, int yPos, int type, String name, MapTile[][] map) {
+	private static void createSquarePatch(int xPos, int yPos, int type, String name, MapTile[][] map) {
 		for (int x = 0; x < COMMON_RADIUS; x++) {
 			int xFinal;
 			if (RAND.nextBoolean()) {
