@@ -278,8 +278,8 @@ public class PlayerStats {
 
 		@Override
 		public String toString() {
-			return MainJFrame.makeCssStyle("padding:3px; background-color: #FFFFFF; color: #121212")+"PlayerResources [gold=" + gold + ", food=" + food + ", wood=" + wood + ", stone=" + stone
-					+ ", metal=" + metal + ", manaStone=" + manaStone + "]";
+			return MainJFrame.makeCssStyle("padding:3px; background-color: #643611; color: #edded1")+"gold=" + gold + ", food=" + food + ", wood=" + wood + ", stone=" + stone
+					+ ", metal=" + metal + ", manaStone=" + manaStone;
 		}
 		
 	}

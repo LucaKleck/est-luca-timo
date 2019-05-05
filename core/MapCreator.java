@@ -15,7 +15,7 @@ public class MapCreator {
 	// map building constants
 	private static int forestCount = 25; // make a pre-game setting
 	private static int riverCount = 5; // make a pre-game setting
-	private static int mountainCount = 10; // make a pre-game setting
+	private static int mountainCount = 15; // make a pre-game setting
 	private static final int COMMON_RADIUS = 7; // this is the radius that most methods will use to determine the sizes
 	private static final Random RAND = new Random();
 
@@ -46,17 +46,21 @@ public class MapCreator {
 		return map;
 	}
 	/**
-	 * This will put in mountains.
+	 * This will create mountains.
 	 * @param map - 2D array of @see {@link MapTile}
 	 */
 	private static void smashContinentalPlatesTogether(MapTile[][] map) {
 		for(int i=0; i < mountainCount; i++) {
 			int x = RAND.nextInt(map.length);
 			int y = RAND.nextInt(map[0].length);
-			for(int xRow = 0; xRow < 12; xRow++) {
-				for(int yCol = 0; yCol < 6; yCol++) {
-					if(inBounds(map, xRow+x, yCol+y)) {
-						map[xRow+x][yCol+y] = new MapTile( (xRow+x), (yCol+y), MapTile.TYPE_MOUNTAIN, MapTile.NAME_MOUNTAIN);
+			for(int c = 0; c < 5; c++) {
+				for(int xRow = 0; xRow < 2; xRow++) {
+					for(int yCol = 0; yCol < 2; yCol++) {
+						if(RAND.nextBoolean() && inBounds(map, xRow+x+c, yCol+y+c)) {
+							map[xRow+x+c][yCol+y+c] = new MapTile( (xRow+x), (yCol+y), MapTile.TYPE_MOUNTAIN, MapTile.NAME_MOUNTAIN);
+						} else if(inBounds(map, xRow+x-c, yCol+y+c)) {
+							map[xRow+x-c][yCol+y+c] = new MapTile( (xRow+x), (yCol+y), MapTile.TYPE_MOUNTAIN, MapTile.NAME_MOUNTAIN);
+						}
 					}
 				}
 			}
