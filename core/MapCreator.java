@@ -57,9 +57,9 @@ public class MapCreator {
 				for(int xRow = 0; xRow < 2; xRow++) {
 					for(int yCol = 0; yCol < 2; yCol++) {
 						if(RAND.nextBoolean() && inBounds(map, xRow+x+c, yCol+y+c)) {
-							map[xRow+x+c][yCol+y+c] = new MapTile( (xRow+x), (yCol+y), MapTile.TYPE_MOUNTAIN, MapTile.NAME_MOUNTAIN);
+							map[xRow+x+c][yCol+y+c] = new MapTile( (xRow+x+c), (yCol+y+c), MapTile.TYPE_MOUNTAIN, MapTile.NAME_MOUNTAIN);
 						} else if(inBounds(map, xRow+x-c, yCol+y+c)) {
-							map[xRow+x-c][yCol+y+c] = new MapTile( (xRow+x), (yCol+y), MapTile.TYPE_MOUNTAIN, MapTile.NAME_MOUNTAIN);
+							map[xRow+x-c][yCol+y+c] = new MapTile( (xRow+x-c), (yCol+y+c), MapTile.TYPE_MOUNTAIN, MapTile.NAME_MOUNTAIN);
 						}
 					}
 				}
