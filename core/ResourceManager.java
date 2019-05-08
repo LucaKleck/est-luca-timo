@@ -624,7 +624,7 @@ public class ResourceManager {
 	public static BufferedImage getSpellBook01_22() {
 		if(spellBook01_22 == null) {
 			try {
-				spellBook01_22 = ImageIO.read(Boot.class.getResource("/resources/spellbook/SpellBook01_22.png"));
+				spellBook01_22 = ImageIO.read(Boot.class.getResource("/resources/spellbook/SpellBook01_22.PNG"));
 			} catch (IOException e) {
 				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
 			}
@@ -635,7 +635,7 @@ public class ResourceManager {
 	public static BufferedImage getSpellBook01_46() {
 		if(spellBook01_46 == null) {
 			try {
-				spellBook01_46 = ImageIO.read(Boot.class.getResource("/resources/spellbook/SpellBook01_46.png"));
+				spellBook01_46 = ImageIO.read(Boot.class.getResource("/resources/spellbook/SpellBook01_46.PNG"));
 			} catch (IOException e) {
 				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
 			}
@@ -756,7 +756,7 @@ public class ResourceManager {
 	public static BufferedImage getSGI_09() {
 		if(sgi_09 == null) {
 			try {
-				sgi_09 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_09.png"));
+				sgi_09 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_09.PNG"));
 			} catch (IOException e) {
 				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
 			}
@@ -800,7 +800,7 @@ public class ResourceManager {
 	public static BufferedImage getSGI_63() {
 		if(sgi_63 == null) {
 			try {
-				sgi_63 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_63.png"));
+				sgi_63 = ImageIO.read(Boot.class.getResource("/resources/StrategyGameIcons/SGI_63.PNG"));
 			} catch (IOException e) {
 				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
 			}
