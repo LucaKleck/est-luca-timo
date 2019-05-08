@@ -78,7 +78,7 @@ public class CostManager {
 			}
 			if(event.getAbility() instanceof CreateUnit) {
 				Cost productionCost;
-				productionCost = playerStats.getCostManager().getProductionCostManager().getProductionCost(((CreateUnit)event.getAbility()).getType());
+				productionCost = playerStats.getCostManager().getProductionCostManager().getProductionCost(((CreateUnit)event.getAbility()).getUnitType());
 				
 				availableResources.reduceAvailableFoodBy(productionCost.getFoodCost());
 				availableResources.reduceAvailableWoodBy(productionCost.getWoodCost());
