@@ -33,12 +33,6 @@ public abstract class Building extends Entity {
 		efficiency = (level + 1) * 12;
 	}
 
-	@Override
-	public String toString() {
-		return "Building [efficiency=" + efficiency + ", getName()=" + getName() + ", getMaxHealth()=" + getMaxHealth()
-				+ ", getCurrentHealth()=" + getCurrentHealth() + ", getAbilities()=" + getAbilities() + ", getEvent()=" + getEvent() + ", getId()=" + getId() + "]";
-	}
-
 	public int getEfficiency() {
 		return efficiency;
 	}
