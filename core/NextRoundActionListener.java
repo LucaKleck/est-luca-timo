@@ -98,6 +98,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 						}
 					}
 					if (ability != null) {
+						System.out.println(entity);
 						((Move) ability).setMoveToPoint(entityFilter.getNextMovePoint((Unit)entity));
 						entity.setEvent(new Event(entity, entity, ability, new AbilityEffect(entity, entity, ability)));
 					}
@@ -175,7 +176,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 			LogPanel.appendNewLine(e.toString());
 			if(e.getAbility() instanceof CollectResources == false) {
 				try {
-					Thread.sleep(250);
+					Thread.sleep(0);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
@@ -194,7 +195,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 			}
 			if(e.getAbility() instanceof CollectResources == false) {
 				try {
-					Thread.sleep(250);
+					Thread.sleep(0);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}

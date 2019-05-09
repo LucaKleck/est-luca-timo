@@ -176,21 +176,11 @@ public class EntityFilter {
 	}
 	
 	public Point2DNoFxReq getNextMovePoint(Unit unit) {
-		
 		int xPos = unit.getXPos();
 		int range = unit.getMovementRange();
-		for(int y = 0; y < 49; y++) {
-			
-			if(GameInfo.getObjectMap().getMap()[xPos - range][y].isRoad()) {
-				
-				return new Point2DNoFxReq(xPos - range + random.nextFloat(), y + random.nextFloat());
-				
-			}
-			
-		}
-		
-		return null;
-		
+
+		return new Point2DNoFxReq(xPos - range + random.nextFloat(), xPos - range + random.nextFloat());
+
 	}
 	
 	public Point2DNoFxReq getRandomBuildPoint(Builder builder) {

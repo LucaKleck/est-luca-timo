@@ -11,7 +11,7 @@ public class RoundInfo {
 	private ArrayList<Building> newBuildings = new ArrayList<>();
 	
 	public RoundInfo(int round) {
-		this.round = round;
+		this.round = 30;
 	}
 	
 	public RoundInfo(LinkedList<Event> eventList, int round) {
