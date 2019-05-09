@@ -189,8 +189,7 @@ public class Entity {
 
 	@Override
 	public String toString() {
-		return "Entity [id=" + id + ", pointXY=" + pointXY + ", name=" + name + ", maxHealth=" + maxHealth
-				+ ", currentHealth=" + currentHealth + ", abilities=" + abilities + ", level=" + level + ", event=" + event + ", controlable=" + controlable + "]";
+		return name+ "(id="+id+") hp("+ currentHealth + "/" + maxHealth+")";
 	}
 
 	public boolean hasAbility() {

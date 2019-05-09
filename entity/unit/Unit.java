@@ -43,11 +43,6 @@ public class Unit extends Entity {
 		return baseDamage;
 	}
 
-	@Override
-	public String toString() {
-		return "Unit [ id="+super.getId()+", name=" + getName() + ", damage=" + baseDamage + ", health=" + getMaxHealth() + ", movementRange=" + movementRange + "]";
-	}
-
 	public Move getMove() {
 		return (Move) move;
 	}

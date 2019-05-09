@@ -3,7 +3,8 @@ package core;
 import abilities.Ability;
 import abilities.Build;
 import abilities.CollectResources;
-import abilities.Move;
+import abilities.CreateUnit;
+import abilities.LevelUp;
 import effects.MapImageEffect;
 import entity.Entity;
 
@@ -46,13 +47,15 @@ public class Event implements Runnable {
 	@Override
 	public String toString() {
 		if(ability instanceof CollectResources) {
-			return source.getName() + ability;
-		} else if(ability instanceof Move) {
-			return source.getName() +" "+ ability;
+			return source.toString() + ability;
 		} else if(ability instanceof Build) {
-			return source.getName() + " Built " + ((Build)ability).getBuildingType();
+			return source + " built " + ((Build)ability).getBuildingType();
+		} else if(ability instanceof CreateUnit) {
+			return source + " created " + ((CreateUnit)ability).getUnitType();
+		} else if(ability instanceof LevelUp) {
+			return source + " leveled up ("+(source.getLevel()+1)+")";
 		} else {
-			return source.getName() + " used "+ ability + " on " + target.getName();
+			return source + " used "+ ability + " on " + target;
 		}
 	}
 }

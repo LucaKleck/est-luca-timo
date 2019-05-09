@@ -98,7 +98,6 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 						}
 					}
 					if (ability != null) {
-						System.out.println(entity);
 						((Move) ability).setMoveToPoint(entityFilter.getNextMovePoint((Unit)entity));
 						entity.setEvent(new Event(entity, entity, ability, new AbilityEffect(entity, entity, ability)));
 					}
@@ -173,7 +172,9 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 					mp.getMapPanel().setPosition(e.getSource().getXPos(), e.getSource().getYPos());
 				}
 			}
-			LogPanel.appendNewLine(e.toString());
+			if(!(e.getAbility() instanceof Move)) {
+				LogPanel.appendNewLine(e.toString());
+			}
 
 			if(e.getAbility() instanceof CollectResources == false) {
 				try {
