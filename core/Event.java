@@ -1,6 +1,8 @@
 package core;
 
 import abilities.Ability;
+import abilities.CollectResources;
+import abilities.Move;
 import effects.MapImageEffect;
 import entity.Entity;
 
@@ -42,6 +44,12 @@ public class Event implements Runnable {
 
 	@Override
 	public String toString() {
-		return "Event [source=" + source.getName() + ", target=" + target.getName() + ", ability=" + ability + ", effect=" + effect + "]";
+		if(ability instanceof CollectResources) {
+			return source.getName() + ability;
+		} else if(ability instanceof Move) {
+			return source.getName() + ability;
+		} else {
+			return source.getName() + " used "+ ability + " on " + target.getName();
+		}
 	}
 }

@@ -21,6 +21,7 @@ import entity.building.ProductionBuilding;
 import entity.unit.Builder;
 import entity.unit.Unit;
 import entity.unit.UnitFactory;
+import frame.gamePanels.LogPanel;
 import frame.gamePanels.MainGamePanel;
 import statusEffects.StatusEffect;
 
@@ -28,7 +29,6 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 	private static final ExecutorService EXS = Executors.newFixedThreadPool(1);
 	private JButton j;
 	private EntityFilter entityFilter;
-	private int round = 0;
 	private UnitFactory uf;
 
 	public NextRoundActionListener() {
@@ -48,7 +48,6 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 		// down
 		EXS.execute(this);
 		//Spawn an enemy wave every ten rounds
-		round++;
 	}
 
 	@Override
@@ -59,9 +58,10 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 		ArrayList<Entity> enemyEntities = new ArrayList<Entity>();
 
 		GameInfo.getObjectMap().getSelected().removeSelected();
-		System.out.println("-----------------");
-		System.out.println("Round x start");
+		LogPanel.appendNewLine("-----------------");
+		LogPanel.appendNewLine("Round "+GameInfo.getRoundInfo().getRoundNumber()+" start");
 		// player events
+		LogPanel.appendNewLine("-> User Events <-");
 		goThroughEventList();
 
 		for (Entity entity : entityMap) {
@@ -72,12 +72,13 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 				statusEffects.addAll(entity.getStatusEffects());
 			}
 		}
-
+		LogPanel.appendNewLine("-> Status Effects <-");
 		for (StatusEffect statusEffect : statusEffects) {
 			statusEffect.applyEffect();
-			System.out.println(statusEffect);
+			
 		}
 		
+		LogPanel.appendNewLine("-> Enemy Events <-");
 		for (Entity entity : enemyEntities) {
 
 			Ability ability;
@@ -105,8 +106,8 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 				}
 			} else if (entity instanceof ProductionBuilding) {
 				if (entity.getName().equals(Building.PORTAL)) {
-					if (round % 10 == 0) {
-						int wave = round / 10;
+					if (GameInfo.getRoundInfo().getRoundNumber() % 10 == 0) {
+						int wave = GameInfo.getRoundInfo().getRoundNumber()/ 10;
 						ArrayList<Unit> units = uf.getNewPortalUnitsByWave(wave);
 						for(Unit unit: units) {
 							entityMap.add(unit);
@@ -137,20 +138,22 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 				}
 			}
 		}
+		
 		GameInfo.getRoundInfo().getNewBuildings().clear();
 		if (Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
 			((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).updateUI();
 			((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
 		}
+		
 		try {
 			Thread.sleep(500);
 		} catch (InterruptedException e1) {
 			e1.printStackTrace();
 		}
+		LogPanel.appendNewLine("-> Building Events <-");
 		goThroughEventList();
 
-		System.out.println("Round x end");
-		System.out.println("-----------------");
+		GameInfo.getRoundInfo().increRoundNum();
 		// Update stuff
 		if (Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
 			((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).updateUI();
@@ -168,7 +171,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 					mp.getMapPanel().setPosition(e.getSource().getXPos(), e.getSource().getYPos());
 				}
 			}
-			System.out.println(e);
+			LogPanel.appendNewLine(e.toString());
 			if(e.getAbility() instanceof CollectResources == false) {
 				try {
 					Thread.sleep(250);

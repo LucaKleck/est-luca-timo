@@ -50,7 +50,7 @@ public class GameSettingsPanel extends JPanelBg {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				LogPanel.reset("This is the log, keeping track of all important events");
+				LogPanel.setLoad("This is the log, keeping track of all important events");
 				new XMLSaveAndLoad(txtNewGame.getText());
 				new GameInfo();
 			}

@@ -27,10 +27,11 @@ import core.Core;
 public class LogPanel extends JScrollPane {
 	private static final long serialVersionUID = 123L;
 	private static JTextArea log = new JTextAreaLog();
-	private static LogPanel self;
+	
+	private static boolean loaded = false;	
+	private static String loadText = "";
 	
 	public LogPanel() {
-		self = this;
 		setBorder(new MatteBorder(2, 0, 0, 0, new Color(0, 0, 0, 100)));
 		setName("GameLog");
 		getVerticalScrollBar().setUnitIncrement(8);
@@ -74,11 +75,9 @@ public class LogPanel extends JScrollPane {
 		}
 	}
 	
-	public static void reset(String textAfterReset) {
-		if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
-			log.setText(textAfterReset);
-			self.removeAll();
-		}
+	public static void setLoad(String textAfterReset) {
+		loaded = true;
+		LogPanel.loadText = textAfterReset;
 	}
 	
 	class LogScrollBarUI extends BasicScrollBarUI {
@@ -132,6 +131,10 @@ public class LogPanel extends JScrollPane {
 		@Override
 		public void paint(Graphics g) {
 			super.paint(g);
+			if(loaded == true) {
+				setText(loadText);
+				loaded = false;
+			}
 		}
 		
 	}

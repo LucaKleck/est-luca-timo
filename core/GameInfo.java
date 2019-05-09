@@ -21,16 +21,10 @@ public class GameInfo {
 		GameInfo.roundInfo = roundInfo;
 	}
 	
-	public GameInfo(ObjectMap objectMap, PlayerStats playerStats) {
-		GameInfo.objectMap = objectMap;
-		GameInfo.playerStats = playerStats;
-		GameInfo.roundInfo = new RoundInfo();
-	}
-	
 	public GameInfo() {
 		GameInfo.objectMap = new ObjectMap();
 		GameInfo.playerStats = new PlayerStats();
-		GameInfo.roundInfo = new RoundInfo();
+		GameInfo.roundInfo = new RoundInfo(1);
 	}
 
 	public static synchronized ObjectMap getObjectMap() {

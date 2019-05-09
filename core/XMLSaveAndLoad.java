@@ -78,6 +78,8 @@ public class XMLSaveAndLoad {
 	private static final String TOTAL_GOLD = "totalGold";
 	private static final String TOTAL_MANA_STONE = "totalManaStone";
 	
+	private static final String ROUND_NUM = "roundNumber";
+	
 	private static final String LEVEL = "level";
 	private static final String CONTROLABLE = "controlable";
 
@@ -104,12 +106,23 @@ public class XMLSaveAndLoad {
 			Document saveDoc = dBuilder.parse(save);
 			saveDoc.getDocumentElement().normalize();
 
-			new GameInfo(new ObjectMap(loadMap(saveDoc), loadEntityMap(saveDoc)), loadPlayerStats(saveDoc));
+			new GameInfo(new ObjectMap(loadMap(saveDoc), loadEntityMap(saveDoc)), loadPlayerStats(saveDoc), loadRoundInfo(saveDoc));
 
-			LogPanel.reset(saveDoc.getElementsByTagName("gameLog").item(0).getTextContent());
+			LogPanel.setLoad(saveDoc.getElementsByTagName("gameLog").item(0).getTextContent());
 		} catch (ParserConfigurationException | SAXException | IOException e1) {
 			e1.printStackTrace();
 		}
+	}
+
+	private static RoundInfo loadRoundInfo(Document saveDoc) {
+
+		Element playerStatsElement = (Element) saveDoc.getElementsByTagName("RoundInfo").item(0);
+
+		int rn = Integer
+				.parseInt(playerStatsElement.getElementsByTagName(ROUND_NUM).item(0).getTextContent());
+
+		RoundInfo roundInfo = new RoundInfo(rn);
+		return roundInfo;
 	}
 
 	private static MapTile[][] loadMap(Document saveDoc) {
@@ -237,6 +250,9 @@ public class XMLSaveAndLoad {
 
 			// append player stats
 			saveRoot.appendChild(savePlayerStats(saveDoc));
+			
+			// append roundInfo
+			saveRoot.appendChild(saveRoundInfo(saveDoc));
 
 			// append game log (do this last, there is a Game Saved that will be added to
 			// the Log, if something crashes after log, it'll say "Game Saved!" even though
@@ -311,7 +327,17 @@ public class XMLSaveAndLoad {
 		ps = new PlayerStats(unitsKilled, buildingsDestroyed, unitsCreated, buildingsBuilt, playerResources, totalFood, totalWood, totalStone, totalMetal, totalGold, totalManaStone);
 		return ps;
 	}
+	
+	private static Node saveRoundInfo(Document saveDoc) {
+		Element roundInforElement = saveDoc.createElement("RoundInfo");
 
+		Element round = saveDoc.createElement(ROUND_NUM);
+		round.appendChild(saveDoc.createTextNode("" + GameInfo.getRoundInfo().getRoundNumber()));
+		roundInforElement.appendChild(round);
+
+		return roundInforElement;
+	}
+	
 	private static Node savePlayerStats(Document saveDoc) {
 		Element playerStatsElement = saveDoc.createElement("PlayerStats");
 
@@ -556,7 +582,4 @@ public class XMLSaveAndLoad {
 		return gameLog;
 	}
 
-	public static void SaveOptions() {
-
-	}
 }

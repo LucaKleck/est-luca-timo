@@ -63,7 +63,27 @@ public class CollectResources extends Ability {
 	}
 	@Override
 	public String toString() {
-		return "Collect resources[type="+b.getRessources().getType()+", amount="+(b.getRessources().getCollectableRessources() / 100 * b.getEfficiency())+"]";
+		return "Collected " + (b.getRessources().getCollectableRessources() / 100 * b.getEfficiency()) + " " + typeToString(b.getRessources().getType());
+	}
+	
+	public String typeToString(int type) {
+		switch (type) {
+		case RESOURCE_TYPE_FOOD:
+			return "Food";
+		case RESOURCE_TYPE_GOLD:
+			return "Gold";
+		case RESOURCE_TYPE_MANA_STONE:
+			return "Mana Stone";
+		case RESOURCE_TYPE_METAL:
+			return "Metal";
+		case RESOURCE_TYPE_STONE:
+			return "Stone";
+		case RESOURCE_TYPE_WOOD:
+			return "Wood";
+
+		default:
+			return "TYPE UNKNOWN";
+		}
 	}
 	
 	public int getResourceType() {

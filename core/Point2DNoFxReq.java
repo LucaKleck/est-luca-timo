@@ -183,12 +183,7 @@ public class Point2DNoFxReq {
         return false;
     }
 
-    /**
-     * Returns a <code>String</code> that represents the value
-     * of this <code>Point2D</code>.
-     * @return a string representation of this <code>Point2D</code>.
-     */
     public String toString() {
-        return "Point2D["+x+", "+y+"]";
+        return "x="+(int)x+", y="+(int)y;
     }
 }

@@ -39,7 +39,7 @@ public class Move extends Ability {
 	
 	@Override
 	public String toString() {
-		return "Move [moveToPoint=" + moveToPoint + "]";
+		return "Moved to "+ moveToPoint;
 	}
 
 	
