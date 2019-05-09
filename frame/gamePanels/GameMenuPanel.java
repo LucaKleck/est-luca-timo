@@ -40,7 +40,6 @@ public class GameMenuPanel extends JPanel {
 	private JMenuItem mntmExitToMain;
 	private JMenuItem mntmAddResources;
 	private JMenuItem mntmSave;
-	private JMenuItem mntmCreateBuilder;
 
 	public GameMenuPanel() {
 		setLayout(new GridLayout(0, 1, 0, 0));
@@ -113,13 +112,6 @@ public class GameMenuPanel extends JPanel {
 		});
 		mnDev.add(mntmAddResources);
 
-		mntmCreateBuilder = new JMenuItem("Create Builder");
-		mntmCreateBuilder.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		mntmCreateBuilder
-				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
-		mntmCreateBuilder.addActionListener(a -> GameInfo.getObjectMap().getSelected().setSelectedAbility(new CreateUnit(new Point2DNoFxReq(0, 0), Unit.UNIT_BUILDER, "DevBuilder", Ability.ABILITY_CREATE_BUILDER, true)) );
-		mnDev.add(mntmCreateBuilder);
-		
 		mntmSave.addActionListener(new ActionListener() {
 
 			@Override

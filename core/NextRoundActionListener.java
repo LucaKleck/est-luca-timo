@@ -75,10 +75,9 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 		LogPanel.appendNewLine("-> Status Effects <-");
 		for (StatusEffect statusEffect : statusEffects) {
 			statusEffect.applyEffect();
-			
+			LogPanel.appendNewLine(statusEffect.toString());
 		}
 		
-		LogPanel.appendNewLine("-> Enemy Events <-");
 		for (Entity entity : enemyEntities) {
 
 			Ability ability;
@@ -123,6 +122,8 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 				}
 			}
 		}
+		LogPanel.appendNewLine("-> Enemy Events <-");
+		goThroughEventList();
 
 		// Collect resources after player and AI moved so that buildings that were
 		// destroyed don't give resources

@@ -56,7 +56,6 @@ public abstract class StatusEffect {
 	
 	@Override
 	public String toString() {
-		return "StatusEffect [name=" + name + ", duration=" + duration + ", target=" + target + ", source=" + source
-				+ "]";
+		return "StatusEffect " + name + ", duration=" + duration + " on " + target + " from " + source;
 	}
 }
