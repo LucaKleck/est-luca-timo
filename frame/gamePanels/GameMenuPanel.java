@@ -18,11 +18,15 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
+import abilities.Ability;
+import abilities.CreateUnit;
 import core.ControlInput;
 import core.Core;
 import core.FullscreenActionListener;
 import core.GameInfo;
+import core.Point2DNoFxReq;
 import core.XMLSaveAndLoad;
+import entity.unit.Unit;
 
 public class GameMenuPanel extends JPanel {
 	private static final long serialVersionUID = 122L;
@@ -34,9 +38,9 @@ public class GameMenuPanel extends JPanel {
 	private JMenu mnOptions;
 	private JMenuItem mntmExitGame;
 	private JMenuItem mntmExitToMain;
-	private JMenuItem mntmRemakeMap;
+	private JMenuItem mntmAddResources;
 	private JMenuItem mntmSave;
-	private JMenuItem mntmSendLogLine;
+	private JMenuItem mntmCreateBuilder;
 
 	public GameMenuPanel() {
 		setLayout(new GridLayout(0, 1, 0, 0));
@@ -100,17 +104,21 @@ public class GameMenuPanel extends JPanel {
 		mnDev.setFocusTraversalKeysEnabled(false);
 		if(new Boolean(Core.getSetting(Core.SETTING_DEV))) menuBar.add(mnDev);
 
-		mntmRemakeMap = new JMenuItem("Remake Map");
-		mntmRemakeMap.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		mntmRemakeMap
+		mntmAddResources = new JMenuItem("Add 1000 Resources");
+		mntmAddResources.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		mntmAddResources
 				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
-		mnDev.add(mntmRemakeMap);
+		mntmAddResources.addActionListener(a -> {
+			GameInfo.getPlayerStats().getPlayerResources().addAll(1000);
+		});
+		mnDev.add(mntmAddResources);
 
-		mntmSendLogLine = new JMenuItem("Send log line");
-		mntmSendLogLine.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		mntmSendLogLine
-				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
-		mnDev.add(mntmSendLogLine);
+		mntmCreateBuilder = new JMenuItem("Create Builder");
+		mntmCreateBuilder.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		mntmCreateBuilder
+				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_B, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
+		mntmCreateBuilder.addActionListener(a -> GameInfo.getObjectMap().getSelected().setSelectedAbility(new CreateUnit(new Point2DNoFxReq(0, 0), Unit.UNIT_BUILDER, "DevBuilder", Ability.ABILITY_CREATE_BUILDER, true)) );
+		mnDev.add(mntmCreateBuilder);
 		
 		mntmSave.addActionListener(new ActionListener() {
 
@@ -132,26 +140,6 @@ public class GameMenuPanel extends JPanel {
 		});
 
 		chckbxmntmFullscreen.addActionListener(new FullscreenActionListener());
-
-		mntmSendLogLine.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				LogPanel.appendNewLine("dev line");
-				LogPanel.appendNewLine("dev line");
-				LogPanel.appendNewLine("dev line");
-				LogPanel.appendNewLine("dev line");
-			}
-		});
-
-		mntmRemakeMap.addActionListener(new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				GameInfo.getObjectMap().remakeMap();
-			}
-
-		});
 
 		chckbxmntmShowLog.addActionListener(new ActionListener() {
 

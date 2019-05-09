@@ -252,6 +252,15 @@ public class PlayerStats {
 			this.manaStone += manaStone;
 		}
 		
+		public synchronized void addAll(int amount) {
+			addGold(amount);
+			addFood(amount);
+			addWood(amount);
+			addStone(amount);
+			addMetal(amount);
+			addManaStone(amount);
+		}
+		
 		public synchronized void reduceGoldBy(int gold) {
 			this.gold -= gold;
 		}
