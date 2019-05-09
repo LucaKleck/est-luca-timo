@@ -24,7 +24,7 @@ public class ProductionCostManager {
 		
 		if(type.equals(Unit.UNIT_ARCHER)) {
 			if(archerProductionCost == null) {
-				archerProductionCost = new Cost(250, 0, 0, 50, 150, 0);
+				archerProductionCost = new Cost(250, 0, 0, 50, 100, 0);
 			}
 			return archerProductionCost;
 		}
@@ -48,7 +48,7 @@ public class ProductionCostManager {
 		}
 		if(type.equals(Unit.UNIT_WARRIOR)) {
 			if(warriorProductionCost == null) {
-				warriorProductionCost = new Cost(200, 0, 0, 200, 50, 0);
+				warriorProductionCost = new Cost(200, 100, 0, 100, 0, 0);
 			}
 			return warriorProductionCost;
 		}
@@ -60,7 +60,7 @@ public class ProductionCostManager {
 		}
 		if(type.equals(Unit.UNIT_CAVALRY)) {
 			if(cavalryProductionCost == null) {
-				cavalryProductionCost = new Cost(150, 0, 0, 150, 50, 0);
+				cavalryProductionCost = new Cost(250, 0, 0, 150, 0, 0);
 			}
 			return cavalryProductionCost;
 		}
