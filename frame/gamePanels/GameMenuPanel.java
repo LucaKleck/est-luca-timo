@@ -18,15 +18,11 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
-import abilities.Ability;
-import abilities.CreateUnit;
 import core.ControlInput;
 import core.Core;
 import core.FullscreenActionListener;
 import core.GameInfo;
-import core.Point2DNoFxReq;
 import core.XMLSaveAndLoad;
-import entity.unit.Unit;
 
 public class GameMenuPanel extends JPanel {
 	private static final long serialVersionUID = 122L;
@@ -116,7 +112,9 @@ public class GameMenuPanel extends JPanel {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				LogPanel.appendNewLine(XMLSaveAndLoad.saveGame());
+				if(((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getBtnNextRound().isEnabled()) {
+					LogPanel.appendNewLine(XMLSaveAndLoad.saveGame());
+				}
 			}
 		});
 

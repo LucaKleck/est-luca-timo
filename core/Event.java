@@ -1,6 +1,7 @@
 package core;
 
 import abilities.Ability;
+import abilities.Build;
 import abilities.CollectResources;
 import abilities.Move;
 import effects.MapImageEffect;
@@ -47,7 +48,9 @@ public class Event implements Runnable {
 		if(ability instanceof CollectResources) {
 			return source.getName() + ability;
 		} else if(ability instanceof Move) {
-			return source.getName() + ability;
+			return source.getName() +" "+ ability;
+		} else if(ability instanceof Build) {
+			return source.getName() + " Built " + ((Build)ability).getBuildingType();
 		} else {
 			return source.getName() + " used "+ ability + " on " + target.getName();
 		}
