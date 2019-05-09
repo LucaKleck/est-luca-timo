@@ -174,9 +174,10 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 				}
 			}
 			LogPanel.appendNewLine(e.toString());
+
 			if(e.getAbility() instanceof CollectResources == false) {
 				try {
-					Thread.sleep(0);
+					Thread.sleep(250);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
@@ -195,7 +196,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 			}
 			if(e.getAbility() instanceof CollectResources == false) {
 				try {
-					Thread.sleep(0);
+					Thread.sleep(250);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}

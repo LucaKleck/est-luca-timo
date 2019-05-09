@@ -176,11 +176,11 @@ public class EntityFilter {
 	}
 	
 	public Point2DNoFxReq getNextMovePoint(Unit unit) {
-		int xPos = unit.getXPos();
 		int range = unit.getMovementRange();
+		float newXPos = unit.getXPos() - range + random.nextFloat();
+		float newYPos = unit.getXPos() - range + random.nextFloat();
 
-		return new Point2DNoFxReq(xPos - range + random.nextFloat(), xPos - range + random.nextFloat());
-
+		return new Point2DNoFxReq(newXPos, newYPos);
 	}
 	
 	public Point2DNoFxReq getRandomBuildPoint(Builder builder) {
