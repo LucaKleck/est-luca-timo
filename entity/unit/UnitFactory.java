@@ -1,10 +1,7 @@
 package entity.unit;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -21,7 +18,6 @@ import abilities.Ability;
 import core.Boot;
 import core.GameInfo;
 import core.Point2DNoFxReq;
-import frame.gamePanels.LogPanel;
 
 public class UnitFactory {
 
