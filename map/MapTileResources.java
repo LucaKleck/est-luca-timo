@@ -21,37 +21,40 @@ public class MapTileResources {
 	public MapTileResources(int type) {
 		Random r = new Random();
 		int chance = r.nextInt(100) + 1;
-		if (type == 0) {
+		if (type == MapTile.TYPE_PLAIN) {
 			food = 100;
-			if (chance <= 40) {
-				gold = r.nextInt(101);
+			if (chance <= 10) {
+				gold = 10+r.nextInt(91);
+			} else if (chance <= 30) {
+				wood = 10+r.nextInt(91);
 			} else if (chance <= 50) {
-				wood = r.nextInt(101);
+				stone = 10+r.nextInt(91);
 			} else if (chance <= 70) {
-				stone = r.nextInt(101);
+				metal = 10+r.nextInt(91);
 			} else if (chance <= 90) {
-				metal = r.nextInt(101);
-			} else if (chance <= 100) {
-				manaStone = r.nextInt(101);
+				manaStone = 10+r.nextInt(91);
 			}
-		} else if (type == 1) {
+		} else if (type == MapTile.TYPE_FOREST) {
 			wood = 100;
-			if (chance <= 40) {
-				gold = r.nextInt(101);
+			if (chance <= 10) {
+				gold = 10+r.nextInt(91);
+			} else if (chance <= 30) {
+				food = 10+r.nextInt(91);
 			} else if (chance <= 50) {
-				food = r.nextInt(101);
-			} else if (chance <= 70) {
-				stone = r.nextInt(101);
-			} else if (chance <= 90) {
-				metal = r.nextInt(101);
+				stone = 10+r.nextInt(91);
+			} else if (chance <= 80) {
+				metal = 10+r.nextInt(91);
 			} else if (chance <= 100) {
-				manaStone = r.nextInt(101);
+				manaStone = 10+r.nextInt(91);
 			}
-		} else if (type == 2) {
+		} else if (type == MapTile.TYPE_MOUNTAIN) {
 			stone = 80;
 			metal = 80;
+			if(chance <= 20) {
+				gold = 20+r.nextInt(81);
+			}
 
-		} else if (type == 3) {
+		} else if (type == MapTile.TYPE_LIQUID) {
 			manaStone = 70;
 			food = 70;
 		}

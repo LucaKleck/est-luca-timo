@@ -66,7 +66,7 @@ public class CollectResources extends Ability {
 		return "Collected " + (b.getRessources().getCollectableRessources() / 100 * b.getEfficiency()) + " " + typeToString(b.getRessources().getType());
 	}
 	
-	public String typeToString(int type) {
+	public static String typeToString(int type) {
 		switch (type) {
 		case RESOURCE_TYPE_FOOD:
 			return "Food";

@@ -1,5 +1,6 @@
 package entity.building;
 
+import abilities.CollectResources;
 import core.GameInfo;
 import map.ObjectMap;
 
@@ -59,4 +60,7 @@ public class BuildingRessources {
 		return type;
 	}
 
+	public String toString(ResourceBuilding b) {
+		return "This building collects "+(collectableRessources / 100 * b.getEfficiency())+" "+CollectResources.typeToString(type);
+	}
 }

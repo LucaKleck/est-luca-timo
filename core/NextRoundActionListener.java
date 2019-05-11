@@ -160,6 +160,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 			((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).updateUI();
 			((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
 		}
+		
 		j.setEnabled(true);
 	}
 

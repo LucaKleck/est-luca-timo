@@ -29,6 +29,7 @@ import core.ResourceManager;
 import cost.Cost;
 import entity.Entity;
 import entity.building.Building;
+import entity.building.ResourceBuilding;
 import entity.unit.Unit;
 import frame.JButtonCustomBg;
 import frame.JButton_01;
@@ -69,7 +70,7 @@ public class EntityPanel extends JScrollPaneBg {
 
 		JLabel lblEntityName = new JLabel(cssYellow+"Name: " + entity.getName());
 		jPanel.add(lblEntityName, "cell 0 0");
-
+		
 		JLabel lblLevel = new JLabel(cssYellow+"Level: " + this.entity.getLevel());
 		jPanel.add(lblLevel, "cell 0 1");
 
@@ -150,10 +151,29 @@ public class EntityPanel extends JScrollPaneBg {
 		if(!entity.getAbilities().isEmpty()) {
 			jPanel.add(lblAbilities, "cell 0 7");
 		}
+		
+		JButton btnCancleEvent =  new JButton_01(cssYellow+"Cancle Event");
+		btnCancleEvent.addActionListener(a -> {
+			entity.setEvent(null);
+			updateUserInterface();
+			updateEventText(null);
+			if (Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+				MainGamePanel mp = (MainGamePanel) Core.getMainJFrame().getCurrentComponent();
+				mp.updateUI();
+				mp.getMapPanel().getMapImage().update();
+			}
+		});
+		jPanel.add(btnCancleEvent, "cell 0 8");
+		
 		abilityPanel = new JPanelCustomBg(ResourceManager.getBackground_01());
 		abilityPanel.setLayout(new MigLayout("insets 12 12 12 12 alignx left flowy", "[]", "[]"));
 		if(!entity.getAbilities().isEmpty()) {
-			jPanel.add(abilityPanel, "cell 0 8");
+			jPanel.add(abilityPanel, "cell 0 9");
+		}
+		
+		if(entity instanceof ResourceBuilding) {
+			JLabel lblAmountOfResources = new JLabel(cssYellow+((ResourceBuilding)entity).getRessources().toString((ResourceBuilding) entity));
+			jPanel.add(lblAmountOfResources, "cell 0 10");
 		}
 		
 		updateUserInterface();
@@ -307,6 +327,9 @@ public class EntityPanel extends JScrollPaneBg {
 				if (productionCost.getManaStoneCost() > 0) {
 					toolTipText += " | ManaStone: " + productionCost.getManaStoneCost() + "\n";
 				}
+			}
+			if (ability instanceof CollectResources) {
+				jButton.setEnabled(false);
 			}
 			jButton.setToolTipText(toolTipText);
 			jButton.setPreferredSize(new Dimension(70, 70));
