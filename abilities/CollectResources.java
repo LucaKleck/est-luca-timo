@@ -86,6 +86,10 @@ public class CollectResources extends Ability {
 		}
 	}
 	
+	public int getResourcesToBeCollected() {
+		return (b.getRessources().getCollectableRessources() / 100 * b.getEfficiency());
+	}
+	
 	public int getResourceType() {
 		return b.getRessources().getType();
 	}

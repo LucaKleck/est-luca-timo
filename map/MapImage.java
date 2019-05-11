@@ -247,63 +247,12 @@ public class MapImage {
 		g.fillRect(0, 0, imageWidth, imageHeight);
 		g.setComposite(AlphaComposite.SrcOver);
 		ArrayList<Entity> e = GameInfo.getObjectMap().getEntityMap();
+		ArrayList<Unit> units = new ArrayList<Unit>();
 		for (Iterator<Entity> iterator = e.iterator(); iterator.hasNext();) {
 			Entity s = iterator.next();
+			
 			if (s instanceof Unit) {
-				g.setColor(Color.BLUE);
-				if (GameInfo.getObjectMap().getSelected().getSelectedEntity() != null) {
-					if (GameInfo.getObjectMap().getSelected().getSelectedEntity().equals(s)) {
-						g.setColor(Color.WHITE);
-					}
-				}
-				g.fillRoundRect((int) (s.getPoint().x * mapTileSize) - 5, (int) (s.getPoint().y * mapTileSize) - 5, 10,
-						10, 10, 10);
-				if (s instanceof Warrior) {
-					g.drawImage(ResourceManager.getWarriorImage(), (int) (s.getPoint().x * mapTileSize) - 8,
-							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				} else if (s instanceof Mage) {
-					g.drawImage(ResourceManager.getMageImage(), (int) (s.getPoint().x * mapTileSize) - 8,
-							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				} else if (s instanceof Builder) {
-					g.drawImage(ResourceManager.getBuilderImage(), (int) (s.getPoint().x * mapTileSize) - 8,
-							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				} else if (s instanceof Archer) {
-					g.drawImage(ResourceManager.getArcherImage(), (int) (s.getPoint().x * mapTileSize) - 8,
-							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				} else if (s instanceof Trebuchet) {
-					g.drawImage(ResourceManager.getTrebuchetImage(), (int) (s.getPoint().x * mapTileSize) - 8,
-							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				} else if (s instanceof BatteringRam) {
-					g.drawImage(ResourceManager.getBatteringRamImage(), (int) (s.getPoint().x * mapTileSize) - 8,
-							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				} else if (s instanceof Cavalry) {
-					g.drawImage(ResourceManager.getCavalryImage(), (int) (s.getPoint().x * mapTileSize) - 8,
-							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				} else if (s instanceof CavalryArcher) {
-					g.drawImage(ResourceManager.getCavalryArcherImage(), (int) (s.getPoint().x * mapTileSize) - 8,
-							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				} else if (s instanceof Knight) {
-					g.drawImage(ResourceManager.getKnightImage(), (int) (s.getPoint().x * mapTileSize) - 8,
-							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				} else if (s instanceof Hero) {
-					g.drawImage(ResourceManager.getHeroImage(), (int) (s.getPoint().x * mapTileSize) - 8,
-							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				} else if (s instanceof Dragon) {
-					g.drawImage(ResourceManager.getDragonImage(), (int) (s.getPoint().x * mapTileSize) - 8,
-							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				} else if (s instanceof Priest) {
-					g.drawImage(ResourceManager.getPriestImage(), (int) (s.getPoint().x * mapTileSize) - 8,
-							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				} else if (s instanceof Mangonel) {
-					g.drawImage(ResourceManager.getMangonelImage(), (int) (s.getPoint().x * mapTileSize) - 8,
-							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				} else if (s instanceof Mangonel) {
-					g.drawImage(ResourceManager.getMangonelImage(), (int) (s.getPoint().x * mapTileSize) - 8,
-							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				}else {
-					g.drawImage(ResourceManager.getBuilderImage(), (int) (s.getPoint().x * mapTileSize) - 8,
-							(int) (s.getPoint().y * mapTileSize) - 8, null);
-				}
+				units.add((Unit) s);
 			} else if (s instanceof Building) {
 				if (s instanceof ResourceBuilding) {
 					if (s.getName().matches(Building.WOOD_GETTER)) {
@@ -345,6 +294,68 @@ public class MapImage {
 					} else {
 						g.drawImage(ResourceManager.getMageTowerImage(), s.getXPos() * mapTileSize, s.getYPos() * mapTileSize, null);
 					}
+				}
+			}
+		}
+		for(Unit u : units) {
+			if (u instanceof Unit) {
+				if(u.isControlable()) {
+					g.setColor(Color.BLUE);
+				} else {
+					g.setColor(Color.RED);
+				}
+				if (GameInfo.getObjectMap().getSelected().getSelectedEntity() != null) {
+					if (GameInfo.getObjectMap().getSelected().getSelectedEntity().equals(u)) {
+						g.setColor(Color.WHITE);
+					}
+				}
+				g.fillRoundRect((int) (u.getPoint().x * mapTileSize) - 5, (int) (u.getPoint().y * mapTileSize) - 5, 10,
+						10, 10, 10);
+				if (u instanceof Warrior) {
+					g.drawImage(ResourceManager.getWarriorImage(), (int) (u.getPoint().x * mapTileSize) - 8,
+							(int) (u.getPoint().y * mapTileSize) - 8, null);
+				} else if (u instanceof Mage) {
+					g.drawImage(ResourceManager.getMageImage(), (int) (u.getPoint().x * mapTileSize) - 8,
+							(int) (u.getPoint().y * mapTileSize) - 8, null);
+				} else if (u instanceof Builder) {
+					g.drawImage(ResourceManager.getBuilderImage(), (int) (u.getPoint().x * mapTileSize) - 8,
+							(int) (u.getPoint().y * mapTileSize) - 8, null);
+				} else if (u instanceof Archer) {
+					g.drawImage(ResourceManager.getArcherImage(), (int) (u.getPoint().x * mapTileSize) - 8,
+							(int) (u.getPoint().y * mapTileSize) - 8, null);
+				} else if (u instanceof Trebuchet) {
+					g.drawImage(ResourceManager.getTrebuchetImage(), (int) (u.getPoint().x * mapTileSize) - 8,
+							(int) (u.getPoint().y * mapTileSize) - 8, null);
+				} else if (u instanceof BatteringRam) {
+					g.drawImage(ResourceManager.getBatteringRamImage(), (int) (u.getPoint().x * mapTileSize) - 8,
+							(int) (u.getPoint().y * mapTileSize) - 8, null);
+				} else if (u instanceof Cavalry) {
+					g.drawImage(ResourceManager.getCavalryImage(), (int) (u.getPoint().x * mapTileSize) - 8,
+							(int) (u.getPoint().y * mapTileSize) - 8, null);
+				} else if (u instanceof CavalryArcher) {
+					g.drawImage(ResourceManager.getCavalryArcherImage(), (int) (u.getPoint().x * mapTileSize) - 8,
+							(int) (u.getPoint().y * mapTileSize) - 8, null);
+				} else if (u instanceof Knight) {
+					g.drawImage(ResourceManager.getKnightImage(), (int) (u.getPoint().x * mapTileSize) - 8,
+							(int) (u.getPoint().y * mapTileSize) - 8, null);
+				} else if (u instanceof Hero) {
+					g.drawImage(ResourceManager.getHeroImage(), (int) (u.getPoint().x * mapTileSize) - 8,
+							(int) (u.getPoint().y * mapTileSize) - 8, null);
+				} else if (u instanceof Dragon) {
+					g.drawImage(ResourceManager.getDragonImage(), (int) (u.getPoint().x * mapTileSize) - 8,
+							(int) (u.getPoint().y * mapTileSize) - 8, null);
+				} else if (u instanceof Priest) {
+					g.drawImage(ResourceManager.getPriestImage(), (int) (u.getPoint().x * mapTileSize) - 8,
+							(int) (u.getPoint().y * mapTileSize) - 8, null);
+				} else if (u instanceof Mangonel) {
+					g.drawImage(ResourceManager.getMangonelImage(), (int) (u.getPoint().x * mapTileSize) - 8,
+							(int) (u.getPoint().y * mapTileSize) - 8, null);
+				} else if (u instanceof Mangonel) {
+					g.drawImage(ResourceManager.getMangonelImage(), (int) (u.getPoint().x * mapTileSize) - 8,
+							(int) (u.getPoint().y * mapTileSize) - 8, null);
+				}else {
+					g.drawImage(ResourceManager.getBuilderImage(), (int) (u.getPoint().x * mapTileSize) - 8,
+							(int) (u.getPoint().y * mapTileSize) - 8, null);
 				}
 			}
 		}

@@ -31,6 +31,14 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 	private EntityFilter entityFilter;
 	private UnitFactory uf;
 
+	private int 
+	collectedWood = 0,
+	collectedFood = 0,
+	collectedStone = 0,
+	collectedGold = 0,
+	collectedManaStone = 0,
+	collectedMetal = 0;
+	
 	public NextRoundActionListener() {
 		entityFilter = new EntityFilter();
 		uf = new UnitFactory();
@@ -153,6 +161,19 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 		}
 		LogPanel.appendNewLine("-> Building Events <-");
 		goThroughEventList();
+		LogPanel.appendNewLine("Farmers collected " + collectedFood +" Food");
+		LogPanel.appendNewLine("Lumberjacks collected " + collectedWood +" Wood");
+		LogPanel.appendNewLine("Stonemasons collected " + collectedStone +" Stone");
+		LogPanel.appendNewLine("Metalsmiths collected " + collectedMetal +" Metal");
+		LogPanel.appendNewLine("Goldminers collected " + collectedGold +" Gold");
+		LogPanel.appendNewLine("Mage apprentices collected " + collectedManaStone +" Manastones");
+		
+		collectedWood = 0;
+		collectedFood = 0;
+		collectedStone = 0;
+		collectedGold = 0;
+		collectedManaStone = 0;
+		collectedMetal = 0;
 
 		GameInfo.getRoundInfo().increRoundNum();
 		// Update stuff
@@ -173,8 +194,31 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 					mp.getMapPanel().setPosition(e.getSource().getXPos(), e.getSource().getYPos());
 				}
 			}
-			if(!(e.getAbility() instanceof Move)) {
+			if(!(e.getAbility() instanceof Move) && !(e.getAbility() instanceof CollectResources)) {
 				LogPanel.appendNewLine(e.toString());
+			}
+			if (e.getAbility() instanceof CollectResources) {
+				int type = ((CollectResources)e.getAbility()).getResourceType();
+				switch (type) {
+				case CollectResources.RESOURCE_TYPE_FOOD:
+					collectedFood += ((CollectResources)e.getAbility()).getResourcesToBeCollected();
+					break;
+				case CollectResources.RESOURCE_TYPE_GOLD:
+					collectedGold += ((CollectResources)e.getAbility()).getResourcesToBeCollected();
+					break;
+				case CollectResources.RESOURCE_TYPE_MANA_STONE:
+					collectedManaStone += ((CollectResources)e.getAbility()).getResourcesToBeCollected();
+					break;
+				case CollectResources.RESOURCE_TYPE_METAL:
+					collectedMetal += ((CollectResources)e.getAbility()).getResourcesToBeCollected();
+					break;
+				case CollectResources.RESOURCE_TYPE_STONE:
+					collectedStone += ((CollectResources)e.getAbility()).getResourcesToBeCollected();
+					break;
+				case CollectResources.RESOURCE_TYPE_WOOD:
+					collectedWood += ((CollectResources)e.getAbility()).getResourcesToBeCollected();
+					break;
+				}
 			}
 
 			if(e.getAbility() instanceof CollectResources == false) {
