@@ -236,6 +236,7 @@ public class SelectionPanel extends JScrollPaneBg {
 					InteractionPanel.setCurrentPanel(new EntityPanel(entity));
 					GameInfo.getObjectMap().getSelected().setSelectedEntity(entity);
 				}
+				MapImage.highlightEntity = null;
 				if (Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
 					((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
 				}
