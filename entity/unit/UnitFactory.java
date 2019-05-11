@@ -2,6 +2,7 @@ package entity.unit;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import abilities.Ability;
 import core.Boot;
 import core.GameInfo;
 import core.Point2DNoFxReq;
+import frame.gamePanels.LogPanel;
 
 public class UnitFactory {
 
@@ -131,13 +133,9 @@ public class UnitFactory {
 				e.printStackTrace();
 			}
 			try {
-				URL names = Boot.class.getResource("/resources/names.xml");
+				InputStream names = Boot.class.getResourceAsStream("/resources/names.xml");
 
-				try {
-					namesXML = builder.parse(new File(names.toURI()));
-				} catch (URISyntaxException e) {
-					e.printStackTrace();
-				}
+				namesXML = builder.parse(names);
 			} catch (SAXException | IOException e) {
 				e.printStackTrace();
 			}
