@@ -35,7 +35,7 @@ public class MainJFrame extends JFrame implements ComponentListener {
 	private Component currentComponent;
 
 	public MainJFrame() {
-		setTitle("4x Game");
+		setTitle("TBTD");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MainJFrame.class.getResource("/resources/gameIcon.png")));
 		setBackground(Color.DARK_GRAY);
 		setName("GameMainFrame");
