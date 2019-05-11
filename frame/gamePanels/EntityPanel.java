@@ -173,7 +173,10 @@ public class EntityPanel extends JScrollPaneBg {
 		
 		if(entity instanceof ResourceBuilding) {
 			JLabel lblAmountOfResources = new JLabel(cssYellow+((ResourceBuilding)entity).getRessources().toString((ResourceBuilding) entity));
-			jPanel.add(lblAmountOfResources, "cell 0 10");
+			jPanel.add(lblAmountOfResources, "cell 0 11");
+			
+			JLabel lblEfficiency = new JLabel( cssYellow+("Base Efficiency: "+((ResourceBuilding)entity).getEfficiency()) );
+			jPanel.add(lblEfficiency, "cell 0 12");
 		}
 		
 		updateUserInterface();

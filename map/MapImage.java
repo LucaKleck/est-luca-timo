@@ -49,6 +49,7 @@ import frame.gamePanels.MainGamePanel;
  */
 public class MapImage {
 
+	public static Entity highlightEntity = null;
 	public static final int IMAGE_TYPE = BufferedImage.TYPE_INT_ARGB;
 
 	private static final int[] TOP_LEFT = { -1, -1 };
@@ -308,6 +309,9 @@ public class MapImage {
 					if (GameInfo.getObjectMap().getSelected().getSelectedEntity().equals(u)) {
 						g.setColor(Color.WHITE);
 					}
+				}
+				if(highlightEntity != null && highlightEntity.equals(u)) {
+					g.setColor(Color.GREEN);
 				}
 				g.fillRoundRect((int) (u.getPoint().x * mapTileSize) - 5, (int) (u.getPoint().y * mapTileSize) - 5, 10,
 						10, 10, 10);

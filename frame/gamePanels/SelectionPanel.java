@@ -31,6 +31,7 @@ import entity.unit.Warrior;
 import frame.JButton_01;
 import frame.JPanelCustomBg;
 import frame.JScrollPaneBg;
+import map.MapImage;
 import net.miginfocom.swing.MigLayout;
 
 public class SelectionPanel extends JScrollPaneBg {
@@ -243,15 +244,24 @@ public class SelectionPanel extends JScrollPaneBg {
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
+			MapImage.highlightEntity = entity;
+			if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+				((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
+			}
 		}
 
 		@Override
 		public void mouseExited(MouseEvent e) {
+			MapImage.highlightEntity = null;
+			if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+				((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
+			}
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
 
 		}
+			
 	}
 }

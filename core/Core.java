@@ -4,7 +4,10 @@ import java.awt.Color;
 import java.awt.Insets;
 import java.awt.Toolkit;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintStream;
 import java.util.logging.FileHandler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -59,7 +62,7 @@ public class Core {
 	public Core() {
 		setCustomUI();
 		File game_directory = new File(GAME_PATH);
-
+		
     	if (game_directory.exists()) {
     	} else if (game_directory.mkdirs()) {
     	} else {
@@ -139,6 +142,14 @@ public class Core {
 			GAME_LOGGER.setLevel(Level.ALL);
 		} catch (SecurityException | IOException e) {
 			e.printStackTrace();
+		}
+		if(getSetting(SETTING_DEV).matches("false")) {
+			try {
+				PrintStream out = new PrintStream(new FileOutputStream(new File(GAME_PATH + File.separator + "errlog.txt")));
+				System.setErr(out);
+			} catch (FileNotFoundException e1) {
+				e1.printStackTrace();
+			}
 		}
 		Core.controlInput = new ControlInput();
 		Core.mainJFrame = new MainJFrame();
