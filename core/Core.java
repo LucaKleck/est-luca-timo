@@ -37,7 +37,7 @@ import frame.MainJFrame;
 public class Core {
 	public static final Logger GAME_LOGGER = Logger.getLogger("gameLogger");
 	
-	public static final String GAME_PATH = System.getProperty("user.home") + File.separator + "Documents" + File.separator + "EST-SCHULPROJEKT";
+	public static final String GAME_PATH = System.getProperty("user.home") + File.separator + "Games" + File.separator + "TBTD";
 	public static final String GAME_PATH_SAVES = GAME_PATH + File.separator + "saves";
 	public static final String GAME_PATH_SETTINGS = GAME_PATH + File.separator + "settings.xml";
 	public static final String GAME_PATH_NAMES = GAME_PATH + File.separator + "names.xml";
