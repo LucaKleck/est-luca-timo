@@ -28,7 +28,7 @@ public class Entity {
 	private String name;
 	private int maxHealth;
 	private int currentHealth;
-	private ArrayList<Ability> abilities;
+	private ArrayList<Ability> abilities = new ArrayList<Ability>();
 	private ArrayList<StatusEffect> statusEffects = new ArrayList<>(); // maybe add to constructor for permanent effects
 	private int level = 0;
 	private Event event = null;
@@ -46,10 +46,10 @@ public class Entity {
 		this.currentHealth = currentHealth;
 		this.level = level;
 		this.controlable = controlable;
-		this.abilities = abilities;
+		this.abilities.addAll(abilities);
 		
 		if(controlable == true) {
-			abilities.add(new Destroy());
+			this.abilities.add(new Destroy());
 		}
 		
 	}

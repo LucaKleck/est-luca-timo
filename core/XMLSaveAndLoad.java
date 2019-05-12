@@ -179,7 +179,7 @@ public class XMLSaveAndLoad {
 				int level = Integer.parseInt(eElement.getElementsByTagName(LEVEL).item(0).getTextContent());
 				boolean controlable = new Boolean(eElement.getElementsByTagName(CONTROLABLE).item(0).getTextContent());
 
-				e = new Entity(p, name, maxHealth, currentHealth, level, controlable, null);
+				e = new Entity(p, name, maxHealth, currentHealth, level, controlable, new ArrayList<>());
 
 				//Units
 				if (type.matches("Warrior")) {
