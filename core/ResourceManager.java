@@ -80,6 +80,7 @@ public class ResourceManager {
 	private static BufferedImage spellBook05_76; //SiegeWorkshop
 	private static BufferedImage spellBook05_77; //Quarry
 	private static BufferedImage spellBook05_95; //GoldMine
+	private static BufferedImage spellBook05_120; //Destroy Entity
 	
 	private static BufferedImage sgi_09; //Archer
 	private static BufferedImage sgi_11; //MeleeAttack
@@ -729,6 +730,17 @@ public class ResourceManager {
 			}
 		}
 		return spellBook05_95;
+	}
+	
+	public static BufferedImage getSpellBook05_120() {
+		if(spellBook05_120 == null) {
+			try {
+				spellBook05_120 = ImageIO.read(Boot.class.getResource("/resources/SpellBookPage05/SpellBook05_120.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook05_120;
 	}
 	
 	public static BufferedImage getSpellBook05_28() {

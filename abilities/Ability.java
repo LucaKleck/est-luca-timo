@@ -14,6 +14,10 @@ public abstract class Ability {
 	public static final String ABILITY_DEV_CREATE_BUILDING = "devCreateBuilding";
 	public static final String ABILITY_DESC_DEV_CREATE_BUILDING = "devCreateBuilding";
 
+	//Entity Abilities
+	public static final String ABILITY_DESTROY_ENTITY = "Destroy Entity";
+	public static final String ABILITY_DESC_DESTROY_ENTITY = "Destroy the selected entity";
+	
 	// Unit Abilities
 	public static final String ABILITY_FIRE_BALL = "Fireball";
 	public static final String ABILITY_DESC_FIRE_BALL = "Shoots a Fireball at the target, dealing DAMAGE damage to the target";
@@ -129,6 +133,7 @@ public abstract class Ability {
 	public static final String ABILITY_DESC_POISON = "Poisons the selected entity";
 
 	// Ability Types
+	public static final String ABILITY_TYPE_DESTROY = "destroy";
 	public static final String ABILITY_TYPE_DAMAGE = "damage";
 	public static final String ABILITY_TYPE_COLLECT = "collect";
 	public static final String ABILITY_TYPE_PRODUCE = "produce";

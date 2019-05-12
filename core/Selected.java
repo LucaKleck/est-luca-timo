@@ -12,6 +12,7 @@ import entity.Entity;
 import entity.building.Building;
 import entity.unit.Builder;
 import entity.unit.Unit;
+import frame.gamePanels.EntityPanel;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.MainGamePanel;
 import frame.gamePanels.SelectionPanel;
@@ -44,10 +45,8 @@ public class Selected {
 	 * controls player-input acts on last selectionMode and then changes it to what
 	 * it would be after changes
 	 * 
-	 * @param x
-	 *            position on the map
-	 * @param y
-	 *            position on the map
+	 * @param x           position on the map
+	 * @param y           position on the map
 	 * @param isLeftClick
 	 */
 	public void clickedOnTile(float xD, float yD, boolean isLeftClick) {
@@ -62,8 +61,24 @@ public class Selected {
 				switch (selectionMode) {
 				case 0:
 					selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
+					int numOfEntitiesOnTile = 0;
+					Entity entityOnTile = null;
+					for(Entity entity: GameInfo.getObjectMap().getEntityMap()) {
+						if(selectedMapTile.getXPos() == entity.getXPos() && selectedMapTile.getYPos() == entity.getYPos()) {
+							entityOnTile = entity;
+							numOfEntitiesOnTile++;
+							if(numOfEntitiesOnTile > 1) {
+								InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
+								break;
+							}
+						}
+					}
+					if(numOfEntitiesOnTile > 1) {
+						break;
+					}
 					if (isntEmpty(x, y)) {
-						InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
+						InteractionPanel.setCurrentPanel(new EntityPanel(entityOnTile));
+						selectedEntity = entityOnTile;
 					} else if (InteractionPanel.getCurrentPanel() instanceof SelectionPanel) {
 						InteractionPanel.setCurrentPanel(null);
 					}
@@ -106,7 +121,8 @@ public class Selected {
 					}
 					if (selectedAbility instanceof Build) {
 						if ((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(),
-								selectedMapTile.getXPos(), selectedMapTile.getYPos())) && ((Build)selectedAbility).positionIsBuildable(x, y)) {
+								selectedMapTile.getXPos(), selectedMapTile.getYPos()))
+								&& ((Build) selectedAbility).positionIsBuildable(x, y)) {
 							((Builder) this.getSelectedEntity()).setBuildPoint(new Point2DNoFxReq(xD, yD));
 							this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility,
 									new AbilityEffect((Unit) selectedEntity, (Unit) selectedEntity, selectedAbility)));
@@ -235,10 +251,8 @@ public class Selected {
 	/**
 	 * checks if there is an entity at that spot
 	 * 
-	 * @param x
-	 *            coordinate of the map to be checked
-	 * @param y
-	 *            coordinate of the map to be checked
+	 * @param x coordinate of the map to be checked
+	 * @param y coordinate of the map to be checked
 	 * @return
 	 */
 	private boolean isntEmpty(int x, int y) {
@@ -269,7 +283,7 @@ public class Selected {
 		}
 		changeSelectionMode();
 	}
-	
+
 	public void setSelectedMapTile(int x, int y) {
 		selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
 	}

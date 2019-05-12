@@ -16,6 +16,7 @@ import abilities.AddStatusEffect;
 import abilities.Build;
 import abilities.CollectResources;
 import abilities.CreateUnit;
+import abilities.Destroy;
 import abilities.FireBall;
 import abilities.LevelUp;
 import abilities.MeleeAttack;
@@ -256,6 +257,10 @@ public class EntityPanel extends JScrollPaneBg {
 			abilityImage = ResourceManager.getSGI_27();
 		}
 		;
+		if (ability instanceof Destroy) {
+			abilityImage = ResourceManager.getSpellBook05_120();
+		}
+		;
 		if (ability instanceof CollectResources) {
 			
 			int resourceType = ((CollectResources)ability).getResourceType();
@@ -353,6 +358,9 @@ public class EntityPanel extends JScrollPaneBg {
 								.drawCombinedImage();
 					}
 					GameInfo.getObjectMap().getSelected().setSelectedAbility(ability);
+					if(ability.maxRange <= 0) {
+						entity.setEvent(new Event(entity, entity, ability, null));
+					}
 					if (ability instanceof CreateUnit) {
 						((EntityPanel) InteractionPanel.getCurrentPanel()).updateEventText(ability.getName());
 						GameInfo.getObjectMap().getSelected().clickedOnTile(0, 0, true);

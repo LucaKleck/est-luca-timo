@@ -3,6 +3,7 @@ package entity;
 import java.util.ArrayList;
 
 import abilities.Ability;
+import abilities.Destroy;
 import core.Core;
 import core.Event;
 import core.GameInfo;
@@ -46,6 +47,11 @@ public class Entity {
 		this.level = level;
 		this.controlable = controlable;
 		this.abilities = abilities;
+		
+		if(controlable == true) {
+			abilities.add(new Destroy());
+		}
+		
 	}
 
 	public boolean canBeLeveled() {
@@ -141,21 +147,6 @@ public class Entity {
 
 		if (currentHealth <= 0) {
 			destroy();
-			if(this.isControlable() == false) {
-				if(this instanceof Building) {
-					GameInfo.getPlayerStats().addBuildingsDestroyed(1);
-				}
-				if(this instanceof Unit) {
-					GameInfo.getPlayerStats().addUnitsKilled(1);
-				}
-			}
-			if(this instanceof ProductionBuilding) {
-				if(this.getName().equals(Building.TOWN_CENTER)) {
-					Core.getMainJFrame().setCurrentComponent(new EndScreenPanel(false));
-				} else if(this.getName().equals(Building.PORTAL)) {
-					Core.getMainJFrame().setCurrentComponent(new EndScreenPanel(true));
-				}
-			}
 		}
 
 	}
@@ -168,7 +159,7 @@ public class Entity {
 		level++;
 	}
 
-	private void destroy() {
+	public void destroy() {
 
 		int i = 0;
 
@@ -183,6 +174,22 @@ public class Entity {
 		}
 		if (GameInfo.getObjectMap().getEntityMap().get(i) == this) {
 			GameInfo.getObjectMap().getEntityMap().remove(i);
+		}
+		
+		if(this.isControlable() == false) {
+			if(this instanceof Building) {
+				GameInfo.getPlayerStats().addBuildingsDestroyed(1);
+			}
+			if(this instanceof Unit) {
+				GameInfo.getPlayerStats().addUnitsKilled(1);
+			}
+		}
+		if(this instanceof ProductionBuilding) {
+			if(this.getName().equals(Building.TOWN_CENTER)) {
+				Core.getMainJFrame().setCurrentComponent(new EndScreenPanel(false));
+			} else if(this.getName().equals(Building.PORTAL)) {
+				Core.getMainJFrame().setCurrentComponent(new EndScreenPanel(true));
+			}
 		}
 
 	}
