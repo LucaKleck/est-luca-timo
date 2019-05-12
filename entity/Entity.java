@@ -46,7 +46,7 @@ public class Entity {
 		this.currentHealth = currentHealth;
 		this.level = level;
 		this.controlable = controlable;
-		this.abilities.addAll(abilities);
+		this.abilities = abilities;
 		
 		if(controlable == true) {
 			this.abilities.add(new Destroy());
