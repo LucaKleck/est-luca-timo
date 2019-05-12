@@ -31,7 +31,8 @@ public class CollectResources extends Ability {
 
 	@Override
 	public void applyAbility(Entity source, Entity target) {
-		int resources = b.getRessources().getCollectableRessources() / 100 * b.getEfficiency();
+		int resources = (int) (b.getRessources().getCollectableRessources() / 100.0 * b.getEfficiency());
+		
 		switch (b.getRessources().getType()) {
 		case 1:
 			GameInfo.getPlayerStats().getPlayerResources().addGold(resources);
@@ -61,9 +62,10 @@ public class CollectResources extends Ability {
 			break;
 		}
 	}
+	
 	@Override
 	public String toString() {
-		return "Collected " + (b.getRessources().getCollectableRessources() / 100 * b.getEfficiency()) + " " + typeToString(b.getRessources().getType());
+		return "Collected " + (b.getRessources().getCollectableRessources() / 100.0 * b.getEfficiency()) + " " + typeToString(b.getRessources().getType());
 	}
 	
 	public static String typeToString(int type) {
@@ -87,7 +89,7 @@ public class CollectResources extends Ability {
 	}
 	
 	public int getResourcesToBeCollected() {
-		return (b.getRessources().getCollectableRessources() / 100 * b.getEfficiency());
+		return (int) (b.getRessources().getCollectableRessources() / 100.0 * b.getEfficiency());
 	}
 	
 	public int getResourceType() {

@@ -29,6 +29,7 @@ import core.ResourceManager;
 import cost.Cost;
 import entity.Entity;
 import entity.building.Building;
+import entity.building.BuildingRessources;
 import entity.building.ResourceBuilding;
 import entity.unit.Unit;
 import frame.JButtonCustomBg;
@@ -172,7 +173,7 @@ public class EntityPanel extends JScrollPaneBg {
 		}
 		
 		if(entity instanceof ResourceBuilding) {
-			JLabel lblAmountOfResources = new JLabel(cssYellow+((ResourceBuilding)entity).getRessources().toString((ResourceBuilding) entity));
+			JLabel lblAmountOfResources = new JLabel(cssYellow+BuildingRessources.toString((ResourceBuilding) entity));
 			jPanel.add(lblAmountOfResources, "cell 0 11");
 			
 			JLabel lblEfficiency = new JLabel( cssYellow+("Base Efficiency: "+((ResourceBuilding)entity).getEfficiency()) );

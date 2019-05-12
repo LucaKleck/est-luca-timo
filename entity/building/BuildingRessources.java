@@ -60,7 +60,7 @@ public class BuildingRessources {
 		return type;
 	}
 
-	public String toString(ResourceBuilding b) {
-		return "This building collects "+(collectableRessources / 100 * b.getEfficiency())+" "+CollectResources.typeToString(type);
+	public static String toString(ResourceBuilding b) {
+		return "This building collects "+(int) (b.getRessources().getCollectableRessources() / 100.0 * b.getEfficiency())+" "+CollectResources.typeToString(b.getRessources().getType());
 	}
 }
