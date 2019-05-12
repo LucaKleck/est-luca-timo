@@ -322,7 +322,7 @@ public class XMLSaveAndLoad {
 		int manaStone = Integer
 				.parseInt(playerResourcesElement.getElementsByTagName(MANA_STONE).item(0).getTextContent());
 
-		PlayerResources playerResources = ps.new PlayerResources(gold, food, wood, stone, metal, manaStone);
+		PlayerResources playerResources = ps.new PlayerResources(food, wood, stone, metal, gold, manaStone);
 
 		ps = new PlayerStats(unitsKilled, buildingsDestroyed, unitsCreated, buildingsBuilt, playerResources, totalFood, totalWood, totalStone, totalMetal, totalGold, totalManaStone);
 		return ps;
