@@ -96,7 +96,7 @@ public class SavesPanel extends JScrollPaneBg {
 				
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if(new Boolean(Core.getSetting(Core.SETTING_ASK_SAVE_DELETE))) {
+					if(new Boolean(Core.loadSetting(Core.SETTING_ASK_SAVE_DELETE))) {
 						if(JOptionPane.showConfirmDialog(null, "Sure you want to delete?", "", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION)  {
 							save.delete();
 							btnDelete.setText("Deleted!");

@@ -54,7 +54,7 @@ public class GameMenuPanel extends JPanel {
 		chckbxmntmShowLog = new JCheckBoxMenuItem("show Log");
 		chckbxmntmShowLog.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		chckbxmntmShowLog.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_L, InputEvent.CTRL_MASK));
-		chckbxmntmShowLog.setSelected(Boolean.parseBoolean(Core.getSetting(Core.SETTING_SHOW_LOG)));
+		chckbxmntmShowLog.setSelected(Boolean.parseBoolean(Core.loadSetting(Core.SETTING_SHOW_LOG)));
 		mnOptions.add(chckbxmntmShowLog);
 
 		chckbxmntmEnableLogSelection = new JCheckBoxMenuItem("Enable Log selection (disables key-shortcuts)");
@@ -97,7 +97,7 @@ public class GameMenuPanel extends JPanel {
 
 		mnDev = createMenu("dev");
 		mnDev.setFocusTraversalKeysEnabled(false);
-		if(new Boolean(Core.getSetting(Core.SETTING_DEV))) menuBar.add(mnDev);
+		if(new Boolean(Core.loadSetting(Core.SETTING_DEV))) menuBar.add(mnDev);
 
 		mntmAddResources = new JMenuItem("Add 1000 Resources");
 		mntmAddResources.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));

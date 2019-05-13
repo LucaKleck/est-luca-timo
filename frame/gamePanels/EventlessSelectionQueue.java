@@ -162,8 +162,10 @@ public class EventlessSelectionQueue extends JPanel {
 	}
 	
 	public void selectFirstInRow()  {
-		if(getComponentCount() > 0) {
-			((EventlessEntity) getComponent(0)).select();
+		if(Core.loadSetting(Core.SETTING_AUTO_SELECT_NEXT).matches("true")) {
+			if(getComponentCount() > 0) {
+				((EventlessEntity) getComponent(0)).select();
+			}
 		}
 	}
 	

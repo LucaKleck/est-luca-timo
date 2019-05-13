@@ -55,6 +55,7 @@ public class Core {
 	public static final String SETTING_ENABLE_LOG = "enableLog";
 	public static final String SETTING_RTX = "RTX";
 	public static final String SETTING_DEV = "dev";
+	public static final String SETTING_AUTO_SELECT_NEXT = "autoSelectNext";
 	
 	private static MainJFrame mainJFrame;
 	private static ControlInput controlInput;
@@ -72,69 +73,7 @@ public class Core {
 		File settingsXML = new File(GAME_PATH_SETTINGS);
 		
 		if(!settingsXML.exists()) {
-			try {
-				DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-				Document settingsDoc = dbFactory.newDocumentBuilder().newDocument();
-				
-				Element settingsRoot = settingsDoc.createElement("settings");
-				settingsDoc.appendChild(settingsRoot);
-				
-				// General
-				Element fullscreen = settingsDoc.createElement(SETTING_FULLSCREEN);
-				fullscreen.setTextContent("false");
-				settingsRoot.appendChild(fullscreen);
-				
-				Element defaultWidth = settingsDoc.createElement(SETTING_DEFAULT_WIDTH);
-				defaultWidth.setTextContent(""+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2));
-				settingsRoot.appendChild(defaultWidth);
-				
-				Element defaultHeight = settingsDoc.createElement(SETTING_DEFAULT_HEIGHT);
-				defaultHeight.setTextContent(""+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2));
-				settingsRoot.appendChild(defaultHeight);
-
-				Element fpsLimit = settingsDoc.createElement(SETTING_FPS_LIMIT);
-				fpsLimit.setTextContent("30");
-				settingsRoot.appendChild(fpsLimit);
-
-				Element askSaveDelete = settingsDoc.createElement(SETTING_ASK_SAVE_DELETE);
-				askSaveDelete.setTextContent("true");
-				settingsRoot.appendChild(askSaveDelete);
-				
-				// Log
-				Element showLog = settingsDoc.createElement(SETTING_SHOW_LOG);
-				showLog.setTextContent("true");
-				settingsRoot.appendChild(showLog);
-				
-				Element enableLog = settingsDoc.createElement(SETTING_ENABLE_LOG);
-				enableLog.setTextContent("false");
-				settingsRoot.appendChild(enableLog);
-
-				// Other
-				Element RTX = settingsDoc.createElement(SETTING_RTX);
-				RTX.setTextContent("false");
-				settingsRoot.appendChild(RTX);
-				
-				Element dev = settingsDoc.createElement(SETTING_DEV);
-				dev.setTextContent("false");
-				settingsRoot.appendChild(dev);
-				
-				settingsDoc.normalizeDocument();
-				
-			    TransformerFactory transformerFactory = TransformerFactory.newInstance();
-			    Transformer transformer = transformerFactory.newTransformer();
-			    
-			    transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
-			    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
-			    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "3");
-			    
-			    DOMSource domSource = new DOMSource(settingsDoc);
-			    
-			    StreamResult streamResult = new StreamResult(new File(GAME_PATH_SETTINGS));
-				
-			    transformer.transform(domSource, streamResult);
-			} catch (ParserConfigurationException | TransformerException e) {
-				e.printStackTrace();
-			}
+			createSettings();
 		}
 		try {
 			FileHandler logFileHandler = new FileHandler(GAME_PATH+File.separator+"gameLog.log");
@@ -143,7 +82,7 @@ public class Core {
 		} catch (SecurityException | IOException e) {
 			e.printStackTrace();
 		}
-		if(getSetting(SETTING_DEV).matches("false")) {
+		if(loadSetting(SETTING_DEV).matches("false")) {
 			try {
 				PrintStream out = new PrintStream(new FileOutputStream(new File(GAME_PATH + File.separator + "errlog.txt")));
 				System.setErr(out);
@@ -153,6 +92,78 @@ public class Core {
 		}
 		Core.controlInput = new ControlInput();
 		Core.mainJFrame = new MainJFrame();
+	}
+
+	private static Document createSettings() {
+		try {
+			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+			Document settingsDoc = dbFactory.newDocumentBuilder().newDocument();
+			
+			Element settingsRoot = settingsDoc.createElement("settings");
+			settingsDoc.appendChild(settingsRoot);
+			
+			// General
+			Element fullscreen = settingsDoc.createElement(SETTING_FULLSCREEN);
+			fullscreen.setTextContent("false");
+			settingsRoot.appendChild(fullscreen);
+			
+			Element defaultWidth = settingsDoc.createElement(SETTING_DEFAULT_WIDTH);
+			defaultWidth.setTextContent(""+((int)Toolkit.getDefaultToolkit().getScreenSize().getWidth()/2));
+			settingsRoot.appendChild(defaultWidth);
+			
+			Element defaultHeight = settingsDoc.createElement(SETTING_DEFAULT_HEIGHT);
+			defaultHeight.setTextContent(""+((int)Toolkit.getDefaultToolkit().getScreenSize().getHeight()/2));
+			settingsRoot.appendChild(defaultHeight);
+
+			Element fpsLimit = settingsDoc.createElement(SETTING_FPS_LIMIT);
+			fpsLimit.setTextContent("30");
+			settingsRoot.appendChild(fpsLimit);
+
+			Element askSaveDelete = settingsDoc.createElement(SETTING_ASK_SAVE_DELETE);
+			askSaveDelete.setTextContent("true");
+			settingsRoot.appendChild(askSaveDelete);
+			
+			// Log
+			Element showLog = settingsDoc.createElement(SETTING_SHOW_LOG);
+			showLog.setTextContent("true");
+			settingsRoot.appendChild(showLog);
+			
+			Element enableLog = settingsDoc.createElement(SETTING_ENABLE_LOG);
+			enableLog.setTextContent("false");
+			settingsRoot.appendChild(enableLog);
+
+			// Other
+			Element RTX = settingsDoc.createElement(SETTING_RTX);
+			RTX.setTextContent("false");
+			settingsRoot.appendChild(RTX);
+			
+			Element dev = settingsDoc.createElement(SETTING_DEV);
+			dev.setTextContent("false");
+			settingsRoot.appendChild(dev);
+			
+			Element autoSelectNext = settingsDoc.createElement(SETTING_AUTO_SELECT_NEXT);
+			autoSelectNext.setTextContent("true");
+			settingsRoot.appendChild(autoSelectNext);
+			
+			settingsDoc.normalizeDocument();
+			
+		    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+		    Transformer transformer = transformerFactory.newTransformer();
+		    
+		    transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+		    transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+		    transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "3");
+		    
+		    DOMSource domSource = new DOMSource(settingsDoc);
+		    
+		    StreamResult streamResult = new StreamResult(new File(GAME_PATH_SETTINGS));
+			
+		    transformer.transform(domSource, streamResult);
+		    return settingsDoc;
+		} catch (ParserConfigurationException | TransformerException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public static MainJFrame getMainJFrame() {
@@ -168,7 +179,7 @@ public class Core {
 	 * @param settingName - setting name of the setting you want to get information of
 	 * @return current state of setting
 	 */
-	public static String getSetting(String settingName) {
+	public static String loadSetting(String settingName) {
 		String settingString = null;
 		
 		DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -177,7 +188,13 @@ public class Core {
 			dBuilder = dbFactory.newDocumentBuilder();
 			Document settingsDoc = dBuilder.parse(GAME_PATH_SETTINGS);
 			settingsDoc.getDocumentElement().normalize();
+			
 			Node node = settingsDoc.getElementsByTagName(settingName).item(0);
+			
+			if(node == null) {
+				node = createSettings().getElementsByTagName(settingName).item(0);
+			}
+			
 			try {
 				if(node.getNodeType() == Node.ELEMENT_NODE) {
 					Element e = (Element) node;
@@ -207,6 +224,11 @@ public class Core {
 			settingsDoc.getDocumentElement().normalize();
 			
 			Node node = settingsDoc.getElementsByTagName(settingName).item(0);
+			
+			if(node == null) {
+				node = createSettings().getElementsByTagName(settingName).item(0);
+			}
+			
 			node.setTextContent(state);
 			GAME_LOGGER.log(Level.CONFIG, "save["+settingName+"="+state+"]");
 			settingsDoc.normalizeDocument();

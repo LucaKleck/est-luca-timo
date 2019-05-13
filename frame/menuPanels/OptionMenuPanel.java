@@ -36,8 +36,13 @@ public class OptionMenuPanel extends JPanelCustomBg {
 	private static final long serialVersionUID = 112L;
 
 	public OptionMenuPanel() {
-		super(ResourceManager.getBackground_04());
-		setLayout(new MigLayout("", "[][][][60px:60px:60px][100%]", "[fill][fill][100%][10%][]"));
+		super(ResourceManager.getBackground_05());
+		setLayout(new MigLayout("insets 0 0 0 0", "[33%][33%][33%]", "[100%,fill]"));
+		
+		JPanelCustomBg container = new JPanelCustomBg(ResourceManager.getBackground_03(), true);
+		container.setLayout(new MigLayout("insets 10 10 10 10", "[]", "[]"));
+		
+		add(container, "cell 1 0,grow");
 
 		JButton btnBack = new JButton_01("Back");
 		btnBack.setActionCommand("frame.menuPanels.MainMenuPanel");
@@ -45,7 +50,7 @@ public class OptionMenuPanel extends JPanelCustomBg {
 		
 		JLabel lblWindowWidth = new JLabel("Window Width");
 		lblWindowWidth.setForeground(Color.WHITE);
-		add(lblWindowWidth, "cell 2 0,alignx left");
+		container.add(lblWindowWidth, "cell 2 0,alignx left");
 		
 		JSpinner spnWidth = new JSpinner();
 		spnWidth.setMinimumSize(new Dimension(60, 20));
@@ -65,15 +70,15 @@ public class OptionMenuPanel extends JPanelCustomBg {
 				}
 			}
 		});
-		add(spnWidth, "cell 3 0,grow");
+		container.add(spnWidth, "cell 3 0,grow");
 		
 		JSeparator separator = new JSeparator();
 		separator.setOrientation(SwingConstants.VERTICAL);
-		add(separator, "cell 1 0 1 2");
+		container.add(separator, "cell 1 0 1 2");
 		
 		JLabel lblWindowHeight = new JLabel("Window Height");
 		lblWindowHeight.setForeground(Color.WHITE);
-		add(lblWindowHeight, "cell 2 1,alignx left");
+		container.add(lblWindowHeight, "cell 2 1,alignx left");
 		
 		JSpinner spnHeight = new JSpinner();
 		spnHeight.setMinimumSize(new Dimension(60, 20));
@@ -93,28 +98,28 @@ public class OptionMenuPanel extends JPanelCustomBg {
 				}
 			}
 		});
-		add(spnHeight, "cell 3 1,grow");
-		add(btnBack, "cell 0 4");
+		container.add(spnHeight, "cell 3 1,grow");
+		container.add(btnBack, "cell 0 4");
 		
 		JCheckBox chckbxFullscreen = new JCheckBox("Fullscreen");
 		chckbxFullscreen.setBackground(Color.LIGHT_GRAY);
 		chckbxFullscreen.setSelected(Core.getMainJFrame().isUndecorated());
 		chckbxFullscreen.addActionListener(new FullscreenActionListener());
-		add(chckbxFullscreen, "cell 0 0,growx,aligny center");
+		container.add(chckbxFullscreen, "cell 0 0,growx,aligny center");
 		
 		JCheckBox chckbxAskBeforeDeleting = new JCheckBox("Ask before deleting saves");
 		chckbxAskBeforeDeleting.setBackground(Color.LIGHT_GRAY);
-		chckbxAskBeforeDeleting.setSelected(new Boolean(Core.getSetting(Core.SETTING_ASK_SAVE_DELETE)));
+		chckbxAskBeforeDeleting.setSelected(new Boolean(Core.loadSetting(Core.SETTING_ASK_SAVE_DELETE)));
 		chckbxAskBeforeDeleting.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Boolean b = new Boolean(Core.getSetting(Core.SETTING_ASK_SAVE_DELETE));
+				Boolean b = new Boolean(Core.loadSetting(Core.SETTING_ASK_SAVE_DELETE));
 				b = !b;
 				Core.saveSetting(Core.SETTING_ASK_SAVE_DELETE, b.toString());
 			}
 		});
-		add(chckbxAskBeforeDeleting, "cell 0 1,grow");
+		container.add(chckbxAskBeforeDeleting, "cell 0 1,grow");
 
 
 	}

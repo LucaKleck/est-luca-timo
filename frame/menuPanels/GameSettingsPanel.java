@@ -2,6 +2,7 @@ package frame.menuPanels;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,6 +18,7 @@ import core.ResourceManager;
 import core.XMLSaveAndLoad;
 import frame.JButton_01;
 import frame.JPanelCustomBg;
+import frame.MainJFrame;
 import frame.gamePanels.LogPanel;
 import net.miginfocom.swing.MigLayout;
 
@@ -32,16 +34,24 @@ public class GameSettingsPanel extends JPanelCustomBg {
 	private JTextField txtNewGame;
 
 	public GameSettingsPanel() {
-		super(ResourceManager.getBackground_04());
-		setLayout(new MigLayout("", "[grow]", "[10%][3%][100%][fill]"));
+		super(ResourceManager.getBackground_05());
+		setLayout(new MigLayout("insets 0 0 0 0", "[20%][60%][20%]", "[100%,fill]"));
+		
+		JPanelCustomBg container = new JPanelCustomBg(ResourceManager.getBackground_03(), true);
+		container.setLayout(new MigLayout("insets 40 25 40 25", "[100%]", "[]"));
+		
+		add(container, "cell 1 0,grow");
 
-		JLabel lblGameName = new JLabel("Game Name");
-		add(lblGameName, "flowy,cell 0 0");
+		JLabel lblGameName = new JLabel(MainJFrame.htmlStyleDefault+"Game Name");
+		container.add(lblGameName, "cell 0 0");
 
 		txtNewGame = new JTextField();
 		txtNewGame.setToolTipText("Enter save name");
-		txtNewGame.setText("New Game");
-		add(txtNewGame, "cell 0 0,growx");
+		Random r = new Random();
+		txtNewGame.setText("New Game "+r.nextInt(25565));
+		
+		container.add(txtNewGame, "cell 0 1,growx");
+		
 		txtNewGame.setColumns(1);
 		((AbstractDocument)txtNewGame.getDocument()).setDocumentFilter(new SaveNameTextDocumentFilter());
 		
@@ -58,12 +68,12 @@ public class GameSettingsPanel extends JPanelCustomBg {
 			}
 
 		});
-		add(btnStartGame, "cell 0 1");
+		container.add(btnStartGame, "cell 0 2");
 		
 		JButton btnBack = new JButton_01("Back");
 		btnBack.setActionCommand("frame.menuPanels.MainMenuPanel");
 		btnBack.addActionListener(ControlInput.menuChanger);
-		add(btnBack, "cell 0 3");
+		container.add(btnBack, "cell 0 3");
 
 	}
 	private class SaveNameTextDocumentFilter extends DocumentFilter {

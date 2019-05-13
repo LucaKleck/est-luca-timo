@@ -20,7 +20,7 @@ public class FullscreenActionListener implements ActionListener {
 		}
 		Core.getMainJFrame().pack();
 		if (!Core.getMainJFrame().isUndecorated()) {
-			Core.getMainJFrame().setSize(Integer.parseInt(Core.getSetting(Core.SETTING_DEFAULT_WIDTH)), Integer.parseInt(Core.getSetting(Core.SETTING_DEFAULT_HEIGHT)));
+			Core.getMainJFrame().setSize(Integer.parseInt(Core.loadSetting(Core.SETTING_DEFAULT_WIDTH)), Integer.parseInt(Core.loadSetting(Core.SETTING_DEFAULT_HEIGHT)));
 		}
 		Core.getMainJFrame().validate();
 

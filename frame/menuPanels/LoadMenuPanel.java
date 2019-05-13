@@ -37,7 +37,11 @@ public class LoadMenuPanel extends JPanelCustomBg implements ComponentListener, 
 	
 	public LoadMenuPanel() {
 		super(ResourceManager.getBackground_05());
-		setLayout(new MigLayout("", "[100%,grow]", "[100%,fill][fill][fill]"));
+		setLayout(new MigLayout("insets 0 0 0 0", "[20%][60%][20%]", "[100%,fill]"));
+		
+		JPanelCustomBg container = new JPanelCustomBg(ResourceManager.getBackground_03(), true);
+		container.setLayout(new MigLayout("insets 40 25 40 25", "[100%]", "[100%,fill][fill][fill]"));
+		add(container, "cell 1 0,grow");
 		
 		JButton btnBack = new JButton_01("Back");
 		btnBack.setActionCommand("frame.menuPanels.MainMenuPanel");
@@ -46,23 +50,23 @@ public class LoadMenuPanel extends JPanelCustomBg implements ComponentListener, 
 		SavesPanelContainer  = new JPanel();
 		SavesPanelContainer.setBackground(new Color(0,0,0,0));
 		SavesPanelContainer.setOpaque(false);
-		add(SavesPanelContainer, "cell 0 0,grow");
+		container.add(SavesPanelContainer, "cell 0 0,grow");
 		SavesPanelContainer.setLayout(new MigLayout("", "[100%,fill]", "[100%,fill]"));
 		
 		JLabel lblSearch = new JLabel(MainJFrame.htmlStyleDefault+"Search");
-		add(lblSearch, "flowx,cell 0 1,alignx left,aligny center");
+		container.add(lblSearch, "flowx,cell 0 1,alignx left,aligny center");
 		
 		filterTextField = new JTextField();
 		filterTextField.setColumns(1);
 		filterTextField.getDocument().addDocumentListener(this);
-		add(filterTextField, "cell 0 1,grow");
+		container.add(filterTextField, "cell 0 1,grow");
 		
 		SavesPanelContainer.add(new SavesPanel(SavesPanelContainer, filterTextField.getText()), "cell 0 0,grow");
 		
-		add(btnBack, "flowx,cell 0 2,alignx left,aligny center");
+		container.add(btnBack, "flowx,cell 0 2,alignx left,aligny center");
 		
 		JButton btnRefresh = new JButton_01("Refresh");
-		add(btnRefresh, "cell 0 2");
+		container.add(btnRefresh, "cell 0 2");
 		
 		btnRefresh.addActionListener(new ActionListener() {
 			
@@ -77,14 +81,14 @@ public class LoadMenuPanel extends JPanelCustomBg implements ComponentListener, 
 		JCheckBox chckbxAskBeforeDelete = new JCheckBox(MainJFrame.htmlStyleDefault+"Ask before deleting?");
 		chckbxAskBeforeDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Boolean b = new Boolean(Core.getSetting(Core.SETTING_ASK_SAVE_DELETE));
+				Boolean b = new Boolean(Core.loadSetting(Core.SETTING_ASK_SAVE_DELETE));
 				b = !b;
 				Core.saveSetting(Core.SETTING_ASK_SAVE_DELETE, b.toString());
 			}
 		});
 		chckbxAskBeforeDelete.setOpaque(false);
-		chckbxAskBeforeDelete.setSelected(new Boolean(Core.getSetting(Core.SETTING_ASK_SAVE_DELETE)));
-		add(chckbxAskBeforeDelete, "cell 0 2");
+		chckbxAskBeforeDelete.setSelected(new Boolean(Core.loadSetting(Core.SETTING_ASK_SAVE_DELETE)));
+		container.add(chckbxAskBeforeDelete, "cell 0 2");
 	}
 	
 	@Override
