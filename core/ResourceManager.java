@@ -13,6 +13,7 @@ public class ResourceManager {
 	private static BufferedImage background_02;
 	private static BufferedImage background_03;
 	private static BufferedImage background_04;
+	private static BufferedImage background_05;
 	
 	private static BufferedImage tbtimg;
 	
@@ -455,6 +456,17 @@ public class ResourceManager {
 			}
 		}
 		return background_04;
+	}
+	
+	public static BufferedImage getBackground_05() {
+		if(background_05 == null) {
+			try {
+				background_05 = ImageIO.read(Boot.class.getResource("/resources/UI/background_05.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return background_05;
 	}
 
 	public static BufferedImage getFrame() {
@@ -1035,7 +1047,7 @@ public class ResourceManager {
 		return manaStone;
 	}
 	
-	public static Image getTbtImage() {
+	public static BufferedImage getTbtImage() {
 		if(tbtimg == null) {
 			try {
 				tbtimg = ImageIO.read(Boot.class.getResource("/resources/UI/tbtimg.png"));

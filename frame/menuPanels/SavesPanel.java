@@ -1,7 +1,6 @@
 package frame.menuPanels;
 
 import java.awt.Color;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
@@ -9,19 +8,19 @@ import java.io.File;
 import java.io.FilenameFilter;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ScrollPaneConstants;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.SoftBevelBorder;
 
 import core.ControlInput;
 import core.Core;
 import core.ResourceManager;
 import core.XMLSaveAndLoad;
 import frame.JButton_01;
+import frame.JPanelCustomBg;
 import frame.JScrollPaneBg;
 import net.miginfocom.swing.MigLayout;
 
@@ -76,17 +75,15 @@ public class SavesPanel extends JScrollPaneBg {
         } );
 	}
 	
-	private class SavesPanelElement extends JPanel {
+	private class SavesPanelElement extends JPanelCustomBg {
 		private static final long serialVersionUID = -5017892450502876588L;
 		JButton btnDelete;
 		JButton btnLoad;
 
 		public SavesPanelElement(File save, JPanel savesPanelContainer) {
-			setOpaque(false);
-			setBackground(new Color(0,0,0,0));
-			setBorder(new SoftBevelBorder(BevelBorder.RAISED, null, null, null, null));
-			setDoubleBuffered(true);
-			MigLayout miglay = new MigLayout("insets 4 4 4 4, gap 4px 4px", "[135px]["+(savesPanelContainer.getWidth()-202)+",fill]", "[fill][fill][fill][fill]");
+			super(ResourceManager.getBackground_03(), true);
+			setBorder(BorderFactory.createLineBorder(Color.black, 3, true));
+			MigLayout miglay = new MigLayout("insets 10 10 10 10, gap 2px 2px", "[135px]["+(savesPanelContainer.getWidth()-212)+",fill]", "[fill][fill][fill][fill]");
 			
 			this.setLayout(miglay);
 			
@@ -129,11 +126,6 @@ public class SavesPanel extends JScrollPaneBg {
 			});
 			add(btnLoad, "cell 0 3,grow");
 			
-		}
-		@Override
-		public void paint(Graphics g) {
-			g.drawImage(ResourceManager.getBackground_02(), 0, 0, getWidth(), getHeight(), null);
-			super.paint(g);
 		}
 	}
 

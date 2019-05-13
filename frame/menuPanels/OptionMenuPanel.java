@@ -21,8 +21,9 @@ import javax.swing.text.NumberFormatter;
 import core.ControlInput;
 import core.Core;
 import core.FullscreenActionListener;
+import core.ResourceManager;
 import frame.JButton_01;
-import frame.JPanelBg;
+import frame.JPanelCustomBg;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -31,10 +32,11 @@ import net.miginfocom.swing.MigLayout;
  * @author Luca Kleck
  * @see frame.MainJFrame
  */
-public class OptionMenuPanel extends JPanelBg {
+public class OptionMenuPanel extends JPanelCustomBg {
 	private static final long serialVersionUID = 112L;
 
 	public OptionMenuPanel() {
+		super(ResourceManager.getBackground_04());
 		setLayout(new MigLayout("", "[][][][60px:60px:60px][100%]", "[fill][fill][100%][10%][]"));
 
 		JButton btnBack = new JButton_01("Back");

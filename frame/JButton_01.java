@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Graphics;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 
 import core.ResourceManager;
@@ -13,6 +14,7 @@ public class JButton_01 extends JButton {
 
 	public JButton_01(String string) {
 		super(string);
+		setBorder(BorderFactory.createEmptyBorder(2, 2, 2, 2));
 		setBackground(new Color(0, 0, 0, 0));
 		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		setOpaque(false);

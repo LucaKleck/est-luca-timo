@@ -16,8 +16,10 @@ import javax.swing.event.DocumentListener;
 
 import core.ControlInput;
 import core.Core;
+import core.ResourceManager;
 import frame.JButton_01;
-import frame.JPanelBg;
+import frame.JPanelCustomBg;
+import frame.MainJFrame;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -27,15 +29,15 @@ import net.miginfocom.swing.MigLayout;
  * @author Luca Kleck
  * @see frame.MainJFrame
  */
-public class LoadMenuPanel extends JPanelBg implements ComponentListener, DocumentListener {
+public class LoadMenuPanel extends JPanelCustomBg implements ComponentListener, DocumentListener {
 	private static final long serialVersionUID = 114L;
 	
 	private JTextField filterTextField;
 	private JPanel SavesPanelContainer;
 	
 	public LoadMenuPanel() {
+		super(ResourceManager.getBackground_05());
 		setLayout(new MigLayout("", "[100%,grow]", "[100%,fill][fill][fill]"));
-		setDoubleBuffered(true);
 		
 		JButton btnBack = new JButton_01("Back");
 		btnBack.setActionCommand("frame.menuPanels.MainMenuPanel");
@@ -47,7 +49,7 @@ public class LoadMenuPanel extends JPanelBg implements ComponentListener, Docume
 		add(SavesPanelContainer, "cell 0 0,grow");
 		SavesPanelContainer.setLayout(new MigLayout("", "[100%,fill]", "[100%,fill]"));
 		
-		JLabel lblSearch = new JLabel("Search");
+		JLabel lblSearch = new JLabel(MainJFrame.htmlStyleDefault+"Search");
 		add(lblSearch, "flowx,cell 0 1,alignx left,aligny center");
 		
 		filterTextField = new JTextField();
@@ -72,7 +74,7 @@ public class LoadMenuPanel extends JPanelBg implements ComponentListener, Docume
 		});
 		this.addComponentListener(this);
 		
-		JCheckBox chckbxAskBeforeDelete = new JCheckBox("Ask before deleting?");
+		JCheckBox chckbxAskBeforeDelete = new JCheckBox(MainJFrame.htmlStyleDefault+"Ask before deleting?");
 		chckbxAskBeforeDelete.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				Boolean b = new Boolean(Core.getSetting(Core.SETTING_ASK_SAVE_DELETE));

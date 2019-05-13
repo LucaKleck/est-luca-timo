@@ -13,9 +13,10 @@ import javax.swing.text.DocumentFilter;
 
 import core.ControlInput;
 import core.GameInfo;
+import core.ResourceManager;
 import core.XMLSaveAndLoad;
 import frame.JButton_01;
-import frame.JPanelBg;
+import frame.JPanelCustomBg;
 import frame.gamePanels.LogPanel;
 import net.miginfocom.swing.MigLayout;
 
@@ -26,11 +27,12 @@ import net.miginfocom.swing.MigLayout;
  * @author Luca Kleck
  * @see frame.MainJFrame
  */
-public class GameSettingsPanel extends JPanelBg {
+public class GameSettingsPanel extends JPanelCustomBg {
 	private static final long serialVersionUID = 113L;
 	private JTextField txtNewGame;
 
 	public GameSettingsPanel() {
+		super(ResourceManager.getBackground_04());
 		setLayout(new MigLayout("", "[grow]", "[10%][3%][100%][fill]"));
 
 		JLabel lblGameName = new JLabel("Game Name");

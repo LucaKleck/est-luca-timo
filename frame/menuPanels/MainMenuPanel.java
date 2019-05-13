@@ -6,8 +6,9 @@ import java.awt.event.ActionListener;
 import javax.swing.JButton;
 
 import core.ControlInput;
+import core.ResourceManager;
 import frame.JButton_01;
-import frame.JPanelBg;
+import frame.JPanelCustomBg;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -16,10 +17,11 @@ import net.miginfocom.swing.MigLayout;
  * @author Luca Kleck
  * @see frame.MainJFrame
  */
-public class MainMenuPanel extends JPanelBg {
+public class MainMenuPanel extends JPanelCustomBg {
 	private static final long serialVersionUID = 111L;
 
 	public MainMenuPanel() {
+		super(ResourceManager.getTbtImage());
 		setLayout(new MigLayout("", "[33%][33%,center][33%]", "[20%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:40%:40%]"));
 
 		JButton btnNewGame = new JButton_01("New Game");

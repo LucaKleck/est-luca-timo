@@ -237,18 +237,18 @@ public class Core {
 		Color transparent = new Color(0,0,0,0);
 		// Button
 		UIManager.getDefaults().put("Button.border", BorderFactory.createEmptyBorder(3, 3, 3, 3));
-		UIManager.getDefaults().put("Button.background", transparent);
-		UIManager.getDefaults().put("Button.foreground", transparent);
-		
-		UIManager.getDefaults().put("Button.select", transparent);
+//		UIManager.getDefaults().put("Button.background", transparent);
+//		UIManager.getDefaults().put("Button.foreground", transparent);
+//		
+//		UIManager.getDefaults().put("Button.select", transparent);
 		UIManager.getDefaults().put("Button.focus", transparent);
 		UIManager.getDefaults().put("Button.select", transparent);
-		
-		UIManager.getDefaults().put("Button.light", transparent);
-		UIManager.getDefaults().put("Button.highlight", transparent);
-		
-		UIManager.getDefaults().put("Button.shadow", transparent);
-		UIManager.getDefaults().put("Button.darkShadow", transparent);
+//		
+//		UIManager.getDefaults().put("Button.light", transparent);
+//		UIManager.getDefaults().put("Button.highlight", transparent);
+//		
+//		UIManager.getDefaults().put("Button.shadow", transparent);
+//		UIManager.getDefaults().put("Button.darkShadow", transparent);
 		
 		// Menu Item
 		UIManager.getDefaults().put("MenuItem.background", menuBgColor);
