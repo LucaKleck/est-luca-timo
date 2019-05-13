@@ -27,7 +27,7 @@ public class Builder extends Unit {
 	
 	public void addAbilities(ArrayList<Ability> abilities) {
 		
-		boolean controlable = this.isControlable();
+		boolean controlable = this.isControllable();
 		
 		if(controlable) {
 			//Production Buildings

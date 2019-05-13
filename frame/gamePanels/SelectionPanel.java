@@ -21,6 +21,7 @@ import javax.swing.Timer;
 import javax.swing.border.TitledBorder;
 
 import abilities.Ability;
+import abilities.AddStatusEffect;
 import core.Core;
 import core.Event;
 import core.GameInfo;
@@ -66,19 +67,14 @@ public class SelectionPanel extends JScrollPaneBg {
 		setViewportView(viewportPanel);
 		viewportPanel.setLayout(new MigLayout("insets 4 4 2 2", "[fill]", "[fill]"));
 
-		for (int i = 0; i < GameInfo.getObjectMap().getEntityMap().size(); i++) {
-			if (GameInfo.getObjectMap().getEntityMap().get(i).getXPos() == x
-					&& GameInfo.getObjectMap().getEntityMap().get(i).getYPos() == y) {
-				selectedEntityList.add(GameInfo.getObjectMap().getEntityMap().get(i));
-			}
-		}
+		selectedEntityList = GameInfo.getObjectMap().getEntitiesOnTile(x,y);
 
 		new SelectionPanelFilter().sortEntityList(selectedEntityList);
 
 		for (int i = 0; i < selectedEntityList.size(); i++) {
 			selectedEntityElementList.add(createEntityPane(selectedEntityList.get(i)));
 		}
-
+		
 		String columns = "";
 
 		for (int i = 0; i < selectedEntityList.size(); i++) {
@@ -92,7 +88,7 @@ public class SelectionPanel extends JScrollPaneBg {
 		for (int i = 0; i < selectedEntityElementList.size(); i++) {
 			viewportPanel.add(selectedEntityElementList.get(i), ("cell 0 " + i + ", grow"));
 		}
-
+		
 	}
 	
 	private SelectionPaneElement createEntityPane(Entity entity) {
@@ -140,16 +136,30 @@ public class SelectionPanel extends JScrollPaneBg {
 
 			this.jBtn.setPreferredSize(new Dimension(135, 23));
 			Ability abl = GameInfo.getObjectMap().getSelected().getSelectedAbility();
-			if(abl == null || !abl.getType().equals(Ability.ABILITY_TYPE_STATUS_EFFECT)) {
-				if (entity.isControlable() && GameInfo.getObjectMap().getSelected().getSelectionMode() != 3
+			if(abl == null) {
+				// if controllable
+				if (entity.isControllable() && GameInfo.getObjectMap().getSelected().getSelectionMode() != 3
 						&& GameInfo.getObjectMap().getSelected().getSelectionMode() != 5) {
 					this.add(jBtn, "flowx,cell 0 3,grow");
-				} else if (!entity.isControlable() && GameInfo.getObjectMap().getSelected().getSelectionMode() == 3
+				}
+				// if not controllable
+				else if (!entity.isControllable() && GameInfo.getObjectMap().getSelected().getSelectionMode() == 3
 						|| GameInfo.getObjectMap().getSelected().getSelectionMode() == 5) {
 					this.add(jBtn, "flowx,cell 0 3,grow");
 				}
 			} else {
-				this.add(jBtn, "flowx,cell 0 3,grow");
+				if(entity.isControllable()) {
+					if(abl instanceof AddStatusEffect && ((AddStatusEffect) abl).getStatusEffect().isNegative() ||
+							abl.getType().matches(Ability.ABILITY_TYPE_DAMAGE)) {
+					} else {
+						this.add(jBtn, "flowx,cell 0 3,grow");
+					}
+				} else {
+					if(abl instanceof AddStatusEffect && !((AddStatusEffect) abl).getStatusEffect().isNegative()) {
+					} else {
+						this.add(jBtn, "flowx,cell 0 3,grow");
+					}
+				}
 			}
 
 			JLabel lblName = new JLabel(entity.getName());
@@ -174,10 +184,34 @@ public class SelectionPanel extends JScrollPaneBg {
 
 		}
 
+		private void select() {
+			// if it's with an ability create event with target (this entity and source
+			// current selected entity)
+			if (GameInfo.getObjectMap().getSelected().getSelectionMode() == 3
+					|| GameInfo.getObjectMap().getSelected().getSelectionMode() == 5) {
+				Ability abl = GameInfo.getObjectMap().getSelected().getSelectedAbility();
+				if (abl.getType().equals(Ability.ABILITY_TYPE_DAMAGE) || abl.getType().equals(Ability.ABILITY_TYPE_STATUS_EFFECT)) {
+					GameInfo.getObjectMap().getSelected().getSelectedEntity()
+							.setEvent(new Event(GameInfo.getObjectMap().getSelected().getSelectedEntity(), entity,
+									abl,
+									new AbilityEffect(GameInfo.getObjectMap().getSelected().getSelectedEntity(),
+											entity, abl)));
+				}
+				GameInfo.getObjectMap().getSelected().removeSelected();
+				InteractionPanel.setCurrentPanel(null);
+			} // else just normal selection change
+			else {
+				InteractionPanel.setCurrentPanel(new EntityPanel(entity));
+				GameInfo.getObjectMap().getSelected().setSelectedEntity(entity);
+			}
+			MapImage.highlightEntity = null;
+			if (Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+				((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
+			}
+		}
+		
 		public void paint(Graphics g) {
 			g.drawImage(ResourceManager.getBackground_01(), 0, 0, getWidth(), getHeight(), null);
-			// g.setColor(Color.LIGHT_GRAY);
-			// g.fillRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
 			g.setColor(getControllableColor());
 			g.fillRoundRect(0, 0, 5, getHeight(), 10, 10);
 			g.setColor(getColorFromClass());
@@ -189,7 +223,7 @@ public class SelectionPanel extends JScrollPaneBg {
 
 		private Color getControllableColor() {
 			Color c;
-			if (entity.isControlable() == true) {
+			if (entity.isControllable() == true) {
 				c = new Color(0, 255, 0);
 			} else {
 				c = new Color(255, 0, 0);
@@ -217,29 +251,7 @@ public class SelectionPanel extends JScrollPaneBg {
 		@Override
 		public void mouseReleased(MouseEvent e) {
 			if (jBtn.contains(e.getPoint())) {
-				// if it's with an ability create event with target (this entity and source
-				// current selected entity)
-				if (GameInfo.getObjectMap().getSelected().getSelectionMode() == 3
-						|| GameInfo.getObjectMap().getSelected().getSelectionMode() == 5) {
-					Ability abl = GameInfo.getObjectMap().getSelected().getSelectedAbility();
-					if (abl.getType().equals(Ability.ABILITY_TYPE_DAMAGE) || abl.getType().equals(Ability.ABILITY_TYPE_STATUS_EFFECT)) {
-						GameInfo.getObjectMap().getSelected().getSelectedEntity()
-								.setEvent(new Event(GameInfo.getObjectMap().getSelected().getSelectedEntity(), entity,
-										abl,
-										new AbilityEffect(GameInfo.getObjectMap().getSelected().getSelectedEntity(),
-												entity, abl)));
-					}
-					GameInfo.getObjectMap().getSelected().removeSelected();
-					InteractionPanel.setCurrentPanel(null);
-				} // else just normal selection change
-				else {
-					InteractionPanel.setCurrentPanel(new EntityPanel(entity));
-					GameInfo.getObjectMap().getSelected().setSelectedEntity(entity);
-				}
-				MapImage.highlightEntity = null;
-				if (Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
-					((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
-				}
+				select();
 			}
 		}
 
@@ -263,6 +275,6 @@ public class SelectionPanel extends JScrollPaneBg {
 		public void actionPerformed(ActionEvent e) {
 
 		}
-			
+		
 	}
 }

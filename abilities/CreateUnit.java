@@ -48,7 +48,7 @@ public class CreateUnit extends Ability {
 	@Override
 	public void applyAbility(Entity source, Entity target) {
 		
-		if(source.isControlable()) {
+		if(source.isControllable()) {
 			if(playerResources == null) {
 				playerResources = GameInfo.getPlayerStats().getPlayerResources();
 			}

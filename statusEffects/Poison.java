@@ -3,7 +3,7 @@ package statusEffects;
 public class Poison extends StatusEffect {
 
 	public Poison(String name, int duration) {
-		super(name, duration);
+		super(name, duration, true);
 	}
 
 	@Override

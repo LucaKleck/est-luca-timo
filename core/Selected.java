@@ -1,8 +1,10 @@
 package core;
 
 import java.awt.Point;
+import java.util.ArrayList;
 
 import abilities.Ability;
+import abilities.AddStatusEffect;
 import abilities.Build;
 import abilities.CollectResources;
 import abilities.CreateUnit;
@@ -61,27 +63,7 @@ public class Selected {
 				switch (selectionMode) {
 				case 0:
 					selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
-					int numOfEntitiesOnTile = 0;
-					Entity entityOnTile = null;
-					for(Entity entity: GameInfo.getObjectMap().getEntityMap()) {
-						if(selectedMapTile.getXPos() == entity.getXPos() && selectedMapTile.getYPos() == entity.getYPos()) {
-							entityOnTile = entity;
-							numOfEntitiesOnTile++;
-							if(numOfEntitiesOnTile > 1) {
-								InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
-								break;
-							}
-						}
-					}
-					if(numOfEntitiesOnTile > 1) {
-						break;
-					}
-					if (isntEmpty(x, y)) {
-						InteractionPanel.setCurrentPanel(new EntityPanel(entityOnTile));
-						selectedEntity = entityOnTile;
-					} else if (InteractionPanel.getCurrentPanel() instanceof SelectionPanel) {
-						InteractionPanel.setCurrentPanel(null);
-					}
+					checkForSingleEntity(x, y);
 					break;
 				case 1:
 				case 2:
@@ -90,8 +72,8 @@ public class Selected {
 						selectedMapTile = GameInfo.getObjectMap().getMap()[x][y];
 					}
 					selectedEntity = null;
-					if (isntEmpty(x, y)) {
-						InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
+					if (!GameInfo.getObjectMap().getEntitiesOnTile(x, y).isEmpty()) {
+						checkForSingleEntity(x, y);
 					} else {
 						InteractionPanel.setCurrentPanel(null);
 					}
@@ -131,11 +113,37 @@ public class Selected {
 						removeSelected();
 						break;
 					}
+					
+					/**
+					 * Attack with type damage
+					 */
 					if (selectedAbility.getType().equals(Ability.ABILITY_TYPE_DAMAGE)) {
 						if ((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(),
 								selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
-							if (isntEmpty(x, y)) {
-								InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
+							ArrayList<Entity> entitiesOnTile = GameInfo.getObjectMap().getEntitiesOnTile(x,y);
+							if (!entitiesOnTile.isEmpty()) {
+								if(entitiesOnTile.size() > 1) {
+									InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
+								} else {
+									if(entitiesOnTile.get(0).isControllable()) {
+										InteractionPanel.setCurrentPanel(null);
+										break;
+									}
+									// create event
+									GameInfo.getObjectMap().getSelected().getSelectedEntity().setEvent(
+										new Event(selectedEntity,
+											entitiesOnTile.get(0),
+											selectedAbility,
+											new AbilityEffect(
+												selectedEntity,
+												entitiesOnTile.get(0),
+												selectedAbility
+											)
+										) 
+									);
+									GameInfo.getObjectMap().getSelected().removeSelected();
+									InteractionPanel.setCurrentPanel(null);
+								}
 							} else {
 								InteractionPanel.setCurrentPanel(null);
 							}
@@ -144,11 +152,38 @@ public class Selected {
 						removeSelected();
 						break;
 					}
+					/**
+					 * Use status-effect on x,y
+					 */
 					if (selectedAbility.getType().equals(Ability.ABILITY_TYPE_STATUS_EFFECT)) {
 						if ((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(),
 								selectedMapTile.getXPos(), selectedMapTile.getYPos()))) {
-							if (isntEmpty(x, y)) {
-								InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
+							ArrayList<Entity> entitiesOnTile = GameInfo.getObjectMap().getEntitiesOnTile(x, y);
+							if (!entitiesOnTile.isEmpty()) {
+								if(entitiesOnTile.size() > 1) {
+									InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
+								} else {
+									if(entitiesOnTile.get(0).isControllable() && ((AddStatusEffect) selectedAbility).getStatusEffect().isNegative() ||
+											!entitiesOnTile.get(0).isControllable() && !((AddStatusEffect) selectedAbility).getStatusEffect().isNegative() ) {
+										InteractionPanel.setCurrentPanel(null);
+										break;
+									} else {
+										// create event
+										GameInfo.getObjectMap().getSelected().getSelectedEntity().setEvent(
+												new Event(selectedEntity,
+													entitiesOnTile.get(0),
+													selectedAbility,
+													new AbilityEffect(
+														selectedEntity,
+														entitiesOnTile.get(0),
+														selectedAbility
+													)
+												) 
+											);
+									}
+									GameInfo.getObjectMap().getSelected().removeSelected();
+									InteractionPanel.setCurrentPanel(null);
+								}
 							} else {
 								InteractionPanel.setCurrentPanel(null);
 							}
@@ -158,7 +193,7 @@ public class Selected {
 						break;
 					}
 					removeSelected();
-					if (isntEmpty(x, y)) {
+					if (!GameInfo.getObjectMap().getEntitiesOnTile(x, y).isEmpty()) {
 						InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
 					} else {
 						InteractionPanel.setCurrentPanel(null);
@@ -182,6 +217,24 @@ public class Selected {
 		}
 		System.gc();
 //		System.out.println((System.nanoTime() - start) / 1000000 + "ms");
+	}
+
+	private void checkForSingleEntity(int x, int y) {
+		ArrayList<Entity> entitiesOnTile = GameInfo.getObjectMap().getEntitiesOnTile(x,y);
+		if(entitiesOnTile.size() > 1) {
+			InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
+			return;
+		}
+		if (!entitiesOnTile.isEmpty()) {
+			if(entitiesOnTile.get(0).isControllable()) {
+				InteractionPanel.setCurrentPanel(new EntityPanel(entitiesOnTile.get(0)));
+				selectedEntity = entitiesOnTile.get(0);
+			} else {
+				InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
+			}
+		} else if (InteractionPanel.getCurrentPanel() instanceof SelectionPanel) {
+			InteractionPanel.setCurrentPanel(null);
+		}
 	}
 
 	/**
@@ -246,29 +299,6 @@ public class Selected {
 
 	public int getSelectionMode() {
 		return selectionMode;
-	}
-
-	/**
-	 * checks if there is an entity at that spot
-	 * 
-	 * @param x coordinate of the map to be checked
-	 * @param y coordinate of the map to be checked
-	 * @return
-	 */
-	private boolean isntEmpty(int x, int y) {
-		boolean test = false;
-		try {
-			for (int i = 0; i < GameInfo.getObjectMap().getEntityMap().size(); i++) {
-				if (GameInfo.getObjectMap().getEntityMap().get(i).getXPos() == x
-						&& GameInfo.getObjectMap().getEntityMap().get(i).getYPos() == y) {
-					if (GameInfo.getObjectMap().getEntityMap().get(i) != null) {
-						test = true;
-					}
-				}
-			}
-		} catch (ArrayIndexOutOfBoundsException ex) {
-		}
-		return test;
 	}
 
 	public void setSelectedAbility(Ability selectedAbility) {

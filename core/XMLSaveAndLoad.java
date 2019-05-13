@@ -537,7 +537,7 @@ public class XMLSaveAndLoad {
 
 				Element controlable = save.createElement(CONTROLABLE);
 				controlable.appendChild(save.createTextNode(
-						new Boolean(GameInfo.getObjectMap().getEntityMap().get(i).isControlable()).toString()));
+						new Boolean(GameInfo.getObjectMap().getEntityMap().get(i).isControllable()).toString()));
 				entity.appendChild(controlable);
 
 				// things every unit has

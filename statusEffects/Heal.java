@@ -3,7 +3,7 @@ package statusEffects;
 public class Heal extends StatusEffect {
 
 	public Heal(String name, int duration) {
-		super(name, duration);
+		super(name, duration, false);
 	}
 
 	@Override

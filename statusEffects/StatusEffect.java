@@ -12,12 +12,14 @@ public abstract class StatusEffect {
 	
 	private String name;
 	private int duration;
-	private Entity target;
 	private Entity source;
+	private Entity target;
+	private boolean isNegative = false;
 
-	public StatusEffect(String name, int duration) {
+	public StatusEffect(String name, int duration, boolean isNegative) {
 		this.name = name;
 		this.duration = duration;
+		this.isNegative = isNegative;
 	}
 
 	public String getName() {
@@ -52,6 +54,10 @@ public abstract class StatusEffect {
 		return this.target = target;
 	}
 
+	public boolean isNegative() {
+		return isNegative;
+	}
+	
 	public abstract void applyEffect();
 	
 	@Override

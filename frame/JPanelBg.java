@@ -17,8 +17,7 @@ public class JPanelBg extends JPanel {
 
 	@Override
 	public void paint(Graphics g) {
-		g.drawImage(ResourceManager.getButton_04_bg(), 0, 0, getWidth(), getHeight(), null);
-		g.drawImage(ResourceManager.getButton_04_frame(), 0, 0, getWidth(), getHeight(), null);
+		g.drawImage(ResourceManager.getTbtImage(), 0, 0, getWidth(), getHeight(), null);
 		super.paint(g);
 	}
 }

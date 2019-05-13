@@ -32,7 +32,7 @@ public class Entity {
 	private ArrayList<StatusEffect> statusEffects = new ArrayList<>(); // maybe add to constructor for permanent effects
 	private int level = 0;
 	private Event event = null;
-	private boolean controlable = false;
+	private boolean controllable = false;
 	private PlayerResources playerResources;
 	private PlayerStats playerStats;
 
@@ -45,7 +45,7 @@ public class Entity {
 		this.maxHealth = maxHealth;
 		this.currentHealth = currentHealth;
 		this.level = level;
-		this.controlable = controlable;
+		this.controllable = controlable;
 		this.abilities = abilities;
 		
 		if(controlable == true) {
@@ -118,8 +118,8 @@ public class Entity {
 		return level;
 	}
 
-	public boolean isControlable() {
-		return controlable;
+	public boolean isControllable() {
+		return controllable;
 	}
 
 	public int getId() {
@@ -176,7 +176,7 @@ public class Entity {
 			GameInfo.getObjectMap().getEntityMap().remove(i);
 		}
 		
-		if(this.isControlable() == false) {
+		if(this.isControllable() == false) {
 			if(this instanceof Building) {
 				GameInfo.getPlayerStats().addBuildingsDestroyed(1);
 			}

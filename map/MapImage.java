@@ -300,7 +300,7 @@ public class MapImage {
 		}
 		for(Unit u : units) {
 			if (u instanceof Unit) {
-				if(u.isControlable()) {
+				if(u.isControllable()) {
 					g.setColor(Color.BLUE);
 				} else {
 					g.setColor(Color.RED);

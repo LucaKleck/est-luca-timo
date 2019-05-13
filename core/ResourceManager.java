@@ -7,11 +7,14 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class ResourceManager {
+	
 	// UI
 	private static BufferedImage background_01;
 	private static BufferedImage background_02;
 	private static BufferedImage background_03;
 	private static BufferedImage background_04;
+	
+	private static BufferedImage tbtimg;
 	
 	private static BufferedImage frame;
 	private static BufferedImage frame_01_05;
@@ -1030,6 +1033,17 @@ public class ResourceManager {
 			}
 		}
 		return manaStone;
+	}
+	
+	public static Image getTbtImage() {
+		if(tbtimg == null) {
+			try {
+				tbtimg = ImageIO.read(Boot.class.getResource("/resources/UI/tbtimg.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return tbtimg;
 	}
 	
 	

@@ -146,7 +146,7 @@ public class EventlessSelectionQueue extends JPanel {
 		int i = 0;
 		for(Entity e : GameInfo.getObjectMap().getEntityMap()) {
 			if(i > 5) break;
-			if(e.getEvent() == null && e.isControlable() && !(e instanceof Building)) {
+			if(e.getEvent() == null && e.isControllable() && !(e instanceof Building)) {
 				i++;
 				add(new EventlessEntity(e));
 			}

@@ -23,14 +23,14 @@ public class SelectionPanelFilter {
 
 		for (Entity entity : entityList) {
 			if (entity instanceof Unit) {
-				if (entity.isControlable()) {
+				if (entity.isControllable()) {
 					friendlyEntityList.add(entity);
 				} else {
 					enemyEntityList.add(entity);
 				}
 			}
 			if (entity instanceof Building) {
-				if (entity.isControlable()) {
+				if (entity.isControllable()) {
 					friendlyBuildingList.add(entity);
 				} else {
 					enemyBuildingList.add(entity);

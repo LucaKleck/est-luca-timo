@@ -20,7 +20,7 @@ public class MainMenuPanel extends JPanelBg {
 	private static final long serialVersionUID = 111L;
 
 	public MainMenuPanel() {
-		setLayout(new MigLayout("", "[33%][33%,center][33%]", "[3%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:57%:57%]"));
+		setLayout(new MigLayout("", "[33%][33%,center][33%]", "[20%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:40%:40%]"));
 
 		JButton btnNewGame = new JButton_01("New Game");
 		btnNewGame.setActionCommand("frame.menuPanels.GameSettingsPanel");

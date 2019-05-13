@@ -90,6 +90,17 @@ public class ObjectMap {
 		return entityMap;
 	}
 	
+	public ArrayList<Entity> getEntitiesOnTile(int x, int y) {
+		ArrayList<Entity> selectedEntityList = new ArrayList<Entity>();
+		for (Entity e : entityMap) {
+			if (e.getXPos() == x && e.getYPos() == y) {
+				selectedEntityList.add(e);
+			}
+		}
+		return selectedEntityList;
+	}
+	
+	
 	public Point2DNoFxReq getPortalPoint() {
 		return PORTAL_POINT;
 	}

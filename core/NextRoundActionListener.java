@@ -49,11 +49,6 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 		j = ((JButton) (e.getSource()));
 		j.setEnabled(false);
 
-		// TODO Collect events that are passive (Building etc.)
-		// TODO Collect events from enemies, they should happen before the passive ones
-		// and after the player created events
-		// TODO make it so player can't use selected.clicked(x,y) while this is going
-		// down
 		EXS.execute(this);
 		//Spawn an enemy wave every ten rounds
 	}
@@ -73,7 +68,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 		goThroughEventList();
 
 		for (Entity entity : entityMap) {
-			if (entity.isControlable() == false) {
+			if (entity.isControllable() == false) {
 				enemyEntities.add(entity);
 			}
 			if (entity.getStatusEffects().isEmpty() == false) {
@@ -136,7 +131,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 		// Collect resources after player and AI moved so that buildings that were
 		// destroyed don't give resources
 		for (Entity b : entityMap) {
-			if (b instanceof Building && b.isControlable()) {
+			if (b instanceof Building && b.isControllable()) {
 				for (Ability ab : b.getAbilities()) {
 					if (ab instanceof CollectResources) {
 						if (GameInfo.getRoundInfo().getNewBuildings().contains(b))

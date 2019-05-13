@@ -200,7 +200,7 @@ public class EntityFilter {
 		
 		for(Entity entity: GameInfo.getObjectMap().getEntityMap()) {
 			
-			if(entity.isControlable()) {
+			if(entity.isControllable()) {
 				if(bestTarget == null) {
 					bestTarget = entity;
 					bestTargetPriorityPoints = calculatePriorityPoints(entity, source);

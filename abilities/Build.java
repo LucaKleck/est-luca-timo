@@ -65,7 +65,7 @@ public class Build extends Ability {
 		Point2DNoFxReq buildPoint = builder.getBuildPoint();
 		Building building = null;
 
-		if(source.isControlable()) {
+		if(source.isControllable()) {
 			if(playerResources == null) {
 				playerResources = GameInfo.getPlayerStats().getPlayerResources();
 			}
