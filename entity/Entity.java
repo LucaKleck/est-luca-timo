@@ -169,7 +169,6 @@ public class Entity {
 		}
 
 		if (this.event != null) {
-			GameInfo.getRoundInfo().getEventList().remove(this.event);
 			this.event = null;
 		}
 		if (GameInfo.getObjectMap().getEntityMap().get(i) == this) {
