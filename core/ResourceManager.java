@@ -1,5 +1,6 @@
 package core;
 
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
@@ -32,6 +33,13 @@ public class ResourceManager {
 	private static BufferedImage button_04_frame;
 	
 	private static BufferedImage text_bg_02;
+	
+	private static Image food;
+	private static Image wood;
+	private static Image stone;
+	private static Image metal;
+	private static Image gold;
+	private static Image manaStone;
 	
 	// Units
 	private static BufferedImage warriorImage;
@@ -951,5 +959,78 @@ public class ResourceManager {
 		}
 		return yellow_36;
 	}
+	
+	public static Image getFood() {
+		if(food == null) {
+			try {
+				food = ImageIO.read(Boot.class.getResource("/resources/UI/food.png"));
+				food = food.getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return food;
+	}
+	
+	public static Image getWood() {
+		if(wood == null) {
+			try {
+				wood = ImageIO.read(Boot.class.getResource("/resources/UI/wood.png"));
+				wood = wood.getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return wood;
+	}
+	
+	public static Image getStone() {
+		if(stone == null) {
+			try {
+				stone = ImageIO.read(Boot.class.getResource("/resources/UI/stone.png"));
+				stone = stone.getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return stone;
+	}
+	
+	public static Image getMetal() {
+		if(metal == null) {
+			try {
+				metal = ImageIO.read(Boot.class.getResource("/resources/UI/metal.png"));
+				metal = metal.getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return metal;
+	}
+	
+	public static Image getGold() {
+		if(gold == null) {
+			try {
+				gold = ImageIO.read(Boot.class.getResource("/resources/UI/gold.png"));
+				gold = gold.getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return gold;
+	}
+	
+	public static Image getManaStone() {
+		if(manaStone == null) {
+			try {
+				manaStone = ImageIO.read(Boot.class.getResource("/resources/UI/manaStone.png"));
+				manaStone = manaStone.getScaledInstance(16, 16, Image.SCALE_SMOOTH);
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return manaStone;
+	}
+	
 	
 }

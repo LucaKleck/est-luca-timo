@@ -1,19 +1,24 @@
 package frame.gamePanels;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
-import javax.swing.UIManager;
 
 import core.GameInfo;
 import core.NextRoundActionListener;
+import core.ResourceManager;
+import core.PlayerStats.PlayerResources;
+import cost.AvailableResources;
+import cost.CostManager;
 import frame.JButton_01;
+import frame.JPanelCustomBg;
 import frame.MainJFrame;
 import net.miginfocom.swing.MigLayout;
 
@@ -31,11 +36,18 @@ public class MainGamePanel extends JLayeredPane {
 	private InfoPanel infoPanel;
 	private JPanel resourcesPanel;
 	private GameMenuPanel menuPanel;
-	private JLabel lblResourcesLable;
 	private JButton btnNextRound;
 	private static final MigLayout layout = new MigLayout("insets 0 0 0 0, gap 0px 0px", "[0px][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%]", "[:20px:20px][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%][:10%:10%]");
 	private JLayeredPane uiPanel;
 	private EventlessSelectionQueue eventlessSelectionQueue;
+	
+	// Lables
+	JLabel lblFood = new JLabel("Food", new ImageIcon(ResourceManager.getFood()) , JLabel.LEADING);
+	JLabel lblWood = new JLabel("wood", new ImageIcon(ResourceManager.getWood()) , JLabel.LEADING);
+	JLabel lblStone = new JLabel("Stone", new ImageIcon(ResourceManager.getStone()) , JLabel.LEADING);
+	JLabel lblMetal = new JLabel("Metal", new ImageIcon(ResourceManager.getMetal()) , JLabel.LEADING);
+	JLabel lblGold = new JLabel("Gold", new ImageIcon(ResourceManager.getGold()) , JLabel.LEADING);
+	JLabel lblManaStone = new JLabel("ManaStone", new ImageIcon(ResourceManager.getManaStone()) , JLabel.LEADING);
 	
 	public MainGamePanel() { // x // y
 		// Contains the map and the UI. has 2x cells, 1 of them is just for enabling overlaying the panels
@@ -51,16 +63,17 @@ public class MainGamePanel extends JLayeredPane {
 		setLayer(menuPanel, 3);
 		uiPanel.add(menuPanel, "cell 8 0 3 1,grow");		
 		
-		resourcesPanel = new JPanel();
+		resourcesPanel = new JPanelCustomBg(ResourceManager.getText_bg_02());
+		resourcesPanel.setLayout(new FlowLayout(FlowLayout.LEADING,  10, 3));
+		resourcesPanel.add(lblFood);
+		resourcesPanel.add(lblWood);
+		resourcesPanel.add(lblStone);
+		resourcesPanel.add(lblMetal);
+		resourcesPanel.add(lblGold);
+		resourcesPanel.add(lblManaStone);
 		setLayer(resourcesPanel, 1);
-		resourcesPanel.setBorder(UIManager.getBorder("MenuBar.border"));
-		resourcesPanel.setOpaque(false);
-		resourcesPanel.setBackground(new Color(0,0,0,0));
 		
 		uiPanel.add(resourcesPanel, "cell 1 0 7 1,alignx left,aligny center");
-		
-		lblResourcesLable = new JLabel("Resources");
-		resourcesPanel.add(lblResourcesLable);
 		
 		logBackgroundPanel = new LogBackgroundPanel();
 		setLayer(logBackgroundPanel, 1);
@@ -103,7 +116,7 @@ public class MainGamePanel extends JLayeredPane {
 		uiPanel.add(eventlessSelectionQueue, "cell 1 1,grow");
 		
 		if(GameInfo.getPlayerStats().getPlayerResources() != null) {
-			lblResourcesLable.setText(GameInfo.getPlayerStats().getPlayerResources().toString());
+			updatePlayerResources();
 		}
 	}
 
@@ -131,20 +144,28 @@ public class MainGamePanel extends JLayeredPane {
 		return menuPanel;
 	}
 
-	public synchronized JLabel getLblResourcesLable() {
-		return lblResourcesLable;
-	}
-
 	public synchronized JButton getBtnNextRound() {
 		return btnNextRound;
 	}
 	
 	public void updateUI() {
 		if(GameInfo.getPlayerStats().getPlayerResources() != null) {
-			lblResourcesLable.setText(GameInfo.getPlayerStats().getPlayerResources().toString());
+			updatePlayerResources();
 		}
 		infoPanel.update();
 		eventlessSelectionQueue.updateList();
+	}
+
+	private void updatePlayerResources() {
+		PlayerResources playerResources = GameInfo.getPlayerStats().getPlayerResources();
+		AvailableResources availableResources = GameInfo.getPlayerStats().getCostManager().getAvailableResources();
+		lblFood.setText(playerResources.getFood()+" ("+availableResources.getAvailableFood()+")");
+		lblWood.setText(playerResources.getWood()+" ("+availableResources.getAvailableWood()+")");
+		lblStone.setText(playerResources.getStone()+" ("+availableResources.getAvailableStone()+")");
+		lblMetal.setText(playerResources.getMetal()+" ("+availableResources.getAvailableMetal()+")");
+		lblGold.setText(playerResources.getGold()+" ("+availableResources.getAvailableGold()+" )");
+		lblManaStone.setText(playerResources.getManaStone()+" ("+availableResources.getAvailableManaStone()+")");
+		resourcesPanel.revalidate();
 	}
 	
 }
