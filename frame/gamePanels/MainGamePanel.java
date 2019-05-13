@@ -119,6 +119,10 @@ public class MainGamePanel extends JLayeredPane {
 		}
 	}
 
+	public EventlessSelectionQueue getEventlessSelectionQueue() {
+		return eventlessSelectionQueue;
+	}
+	
 	public synchronized LogBackgroundPanel getLogBackgroundPanel() {
 		return logBackgroundPanel;
 	}

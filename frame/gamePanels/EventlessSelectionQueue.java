@@ -32,7 +32,7 @@ public class EventlessSelectionQueue extends JPanel {
 		updateList();
 	}
 	
-	private class EventlessEntity extends JPanel {
+	public class EventlessEntity extends JPanel {
 		private static final long serialVersionUID = -8414788789036001915L;
 		private Entity entity;
 		private BufferedImage entityImage = null;;
@@ -90,23 +90,15 @@ public class EventlessSelectionQueue extends JPanel {
 				entityImage = ResourceManager.getBackground_01();
 				break;
 			}
+			
+			
 			addMouseListener(new MouseListener() {
 				
 
 				@Override
 				public void mouseReleased(MouseEvent e) {
-					if (contains(e.getPoint()) && ((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getBtnNextRound().isEnabled()) {
-						GameInfo.getObjectMap().getSelected().removeSelected();
-						GameInfo.getObjectMap().getSelected().setSelectedMapTile(entity.getXPos(), entity.getYPos());
-						GameInfo.getObjectMap().getSelected().setSelectedEntity(entity);
-						InteractionPanel.setCurrentPanel(new EntityPanel(entity));
-					}
-					if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
-						MainGamePanel mp = (MainGamePanel) Core.getMainJFrame().getCurrentComponent();
-						mp.getMapPanel().setPosition(entity.getXPos(), entity.getYPos());
-					}
-					if (Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
-						((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
+					if (contains(e.getPoint())) {
+						select();
 					}
 				}
 				
@@ -126,7 +118,23 @@ public class EventlessSelectionQueue extends JPanel {
 				public void mouseClicked(MouseEvent e) {
 				}
 			});
+			
 		}
+		
+		private void select() {
+			if (((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getBtnNextRound().isEnabled()) {
+				GameInfo.getObjectMap().getSelected().removeSelected();
+				GameInfo.getObjectMap().getSelected().setSelectedMapTile(entity.getXPos(), entity.getYPos());
+				GameInfo.getObjectMap().getSelected().setSelectedEntity(entity);
+				InteractionPanel.setCurrentPanel(new EntityPanel(entity));
+			}
+			if(Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
+				MainGamePanel mp = (MainGamePanel) Core.getMainJFrame().getCurrentComponent();
+				mp.getMapPanel().setPosition(entity.getXPos(), entity.getYPos());
+				((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
+			}
+		}
+		
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
@@ -150,6 +158,12 @@ public class EventlessSelectionQueue extends JPanel {
 				i++;
 				add(new EventlessEntity(e));
 			}
+		}
+	}
+	
+	public void selectFirstInRow()  {
+		if(getComponentCount() > 0) {
+			((EventlessEntity) getComponent(0)).select();
 		}
 	}
 	

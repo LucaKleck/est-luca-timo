@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import abilities.Ability;
 import abilities.AddStatusEffect;
 import abilities.Build;
-import abilities.CollectResources;
 import abilities.CreateUnit;
 import abilities.Move;
 import effects.AbilityEffect;
@@ -89,10 +88,7 @@ public class Selected {
 									new AbilityEffect((Unit) selectedEntity, (Unit) selectedEntity, selectedAbility)));
 						}
 						removeSelected();
-						break;
-					}
-					if (selectedAbility instanceof CollectResources) {
-						removeSelected();
+						((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getEventlessSelectionQueue().selectFirstInRow();
 						break;
 					}
 					if (selectedAbility instanceof CreateUnit) {
@@ -105,12 +101,19 @@ public class Selected {
 						if ((selectedAbility.rangeCheck(selectedEntity.getXPos(), selectedEntity.getYPos(),
 								selectedMapTile.getXPos(), selectedMapTile.getYPos()))
 								&& ((Build) selectedAbility).positionIsBuildable(x, y)) {
-							((Builder) this.getSelectedEntity()).setBuildPoint(new Point2DNoFxReq(xD, yD));
-							this.getSelectedEntity().setEvent(new Event(selectedEntity, selectedEntity, selectedAbility,
-									new AbilityEffect((Unit) selectedEntity, (Unit) selectedEntity, selectedAbility)));
-							removeSelected();
+							{ // create event
+								// set target point for building
+								((Builder) this.getSelectedEntity()).setBuildPoint(new Point2DNoFxReq(xD, yD));
+								
+								this.getSelectedEntity().setEvent
+									(
+										new Event(selectedEntity, selectedEntity, selectedAbility,
+										new AbilityEffect((Unit) selectedEntity, (Unit) selectedEntity, selectedAbility))
+									);
+							}
 						}
 						removeSelected();
+						((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getEventlessSelectionQueue().selectFirstInRow();
 						break;
 					}
 					
@@ -141,8 +144,10 @@ public class Selected {
 											)
 										) 
 									);
+									
 									GameInfo.getObjectMap().getSelected().removeSelected();
 									InteractionPanel.setCurrentPanel(null);
+									((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getEventlessSelectionQueue().selectFirstInRow();
 								}
 							} else {
 								InteractionPanel.setCurrentPanel(null);
@@ -183,6 +188,7 @@ public class Selected {
 									}
 									GameInfo.getObjectMap().getSelected().removeSelected();
 									InteractionPanel.setCurrentPanel(null);
+									((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getEventlessSelectionQueue().selectFirstInRow();
 								}
 							} else {
 								InteractionPanel.setCurrentPanel(null);
@@ -192,6 +198,7 @@ public class Selected {
 						removeSelected();
 						break;
 					}
+					
 					removeSelected();
 					if (!GameInfo.getObjectMap().getEntitiesOnTile(x, y).isEmpty()) {
 						InteractionPanel.setCurrentPanel(new SelectionPanel(x, y));
