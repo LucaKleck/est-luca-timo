@@ -16,9 +16,9 @@ import core.ControlInput;
 import core.GameInfo;
 import core.ResourceManager;
 import core.XMLSaveAndLoad;
-import frame.JButton_01;
-import frame.JPanelCustomBg;
 import frame.MainJFrame;
+import frame.customPresets.JButton_01;
+import frame.customPresets.JPanelCustomBg;
 import frame.gamePanels.LogPanel;
 import net.miginfocom.swing.MigLayout;
 

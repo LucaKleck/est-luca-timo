@@ -1,4 +1,4 @@
-package frame;
+package frame.customPresets;
 
 import java.awt.Point;
 import java.awt.event.MouseAdapter;

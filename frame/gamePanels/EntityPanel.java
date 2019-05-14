@@ -33,11 +33,11 @@ import entity.building.Building;
 import entity.building.BuildingRessources;
 import entity.building.ResourceBuilding;
 import entity.unit.Unit;
-import frame.JButtonCustomBg;
-import frame.JButton_01;
-import frame.JPanelCustomBg;
-import frame.JScrollPaneBg;
 import frame.MainJFrame;
+import frame.customPresets.JButtonCustomBg;
+import frame.customPresets.JButton_01;
+import frame.customPresets.JPanelCustomBg;
+import frame.customPresets.JScrollPaneBg;
 import net.miginfocom.swing.MigLayout;
 import statusEffects.StatusEffect;
 

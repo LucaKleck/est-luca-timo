@@ -9,6 +9,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
+import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 
 import core.Core;
@@ -16,19 +17,19 @@ import core.GameInfo;
 import core.ResourceManager;
 import entity.Entity;
 import entity.building.Building;
-import frame.MouseHoverListener;
+import frame.customPresets.JPanelCustomBg;
+import frame.customPresets.MouseHoverListener;
 
-public class EventlessSelectionQueue extends JPanel {
+public class EventlessSelectionQueue extends JPanelCustomBg {
 	private static final long serialVersionUID = 3364851222909630455L;
 
 	public EventlessSelectionQueue() {
-		setOpaque(false);
-		setDoubleBuffered(true);
-		setBackground(new Color(0, 0, 0, 0));
-		setLayout(new FlowLayout(FlowLayout.LEFT, 20, 5));
-		setMinimumSize(new Dimension(280, 64));
-		setPreferredSize(new Dimension(280, 64));
-		setMaximumSize(new Dimension(280, 64));
+		super(ResourceManager.getBackground_05(), false, true);
+		setLayout(new FlowLayout(FlowLayout.LEFT, 5, 0));
+		setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
+		setMinimumSize(new Dimension(282, 83));
+		setPreferredSize(new Dimension(282, 83));
+		setMaximumSize(new Dimension(282, 83));
 		updateList();
 	}
 	
@@ -138,7 +139,7 @@ public class EventlessSelectionQueue extends JPanel {
 		@Override
 		protected void paintComponent(Graphics g) {
 			super.paintComponent(g);
-			g.drawImage(ResourceManager.getSlot(), 6, 6, 48, 48, null);
+			g.drawImage(ResourceManager.getSlot(), 0, 0, 64, 64, null);
 			g.drawImage(entityImage, 16, 16, 32, 32, null);
 		}
 	}
@@ -153,7 +154,7 @@ public class EventlessSelectionQueue extends JPanel {
 		removeAll();
 		int i = 0;
 		for(Entity e : GameInfo.getObjectMap().getEntityMap()) {
-			if(i > 5) break;
+			if(i >= 4) break;
 			if(e.getEvent() == null && e.isControllable() && !(e instanceof Building)) {
 				i++;
 				add(new EventlessEntity(e));

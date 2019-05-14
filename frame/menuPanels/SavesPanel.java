@@ -19,9 +19,9 @@ import core.ControlInput;
 import core.Core;
 import core.ResourceManager;
 import core.XMLSaveAndLoad;
-import frame.JButton_01;
-import frame.JPanelCustomBg;
-import frame.JScrollPaneBg;
+import frame.customPresets.JButton_01;
+import frame.customPresets.JPanelCustomBg;
+import frame.customPresets.JScrollPaneBg;
 import net.miginfocom.swing.MigLayout;
 
 public class SavesPanel extends JScrollPaneBg {

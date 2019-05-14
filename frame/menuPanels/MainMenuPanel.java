@@ -7,8 +7,8 @@ import javax.swing.JButton;
 
 import core.ControlInput;
 import core.ResourceManager;
-import frame.JButton_01;
-import frame.JPanelCustomBg;
+import frame.customPresets.JButton_01;
+import frame.customPresets.JPanelCustomBg;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -25,7 +25,7 @@ public class MainMenuPanel extends JPanelCustomBg {
 		setLayout(new MigLayout("insets 0 0 0 0", "[33%][33%][33%]", "[100%,fill]"));
 		
 		JPanelCustomBg container = new JPanelCustomBg(ResourceManager.getBackground_03(), true);
-		container.setLayout(new MigLayout("insets 0 0 0 0", "[10%][80%][10%]", "[30%][42px]"));
+		container.setLayout(new MigLayout("insets 0 0 0 0", "[10%][80%][10%]", "[30%][6%]"));
 		
 		add(container, "cell 1 0,grow");
 		

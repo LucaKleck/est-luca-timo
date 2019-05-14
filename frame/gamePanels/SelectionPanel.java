@@ -18,7 +18,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.Timer;
-import javax.swing.border.TitledBorder;
 
 import abilities.Ability;
 import abilities.AddStatusEffect;
@@ -29,9 +28,10 @@ import core.ResourceManager;
 import effects.AbilityEffect;
 import entity.Entity;
 import entity.unit.Warrior;
-import frame.JButton_01;
-import frame.JPanelCustomBg;
-import frame.JScrollPaneBg;
+import frame.customPresets.CustomProgressBar;
+import frame.customPresets.JButton_01;
+import frame.customPresets.JPanelCustomBg;
+import frame.customPresets.JScrollPaneBg;
 import map.MapImage;
 import net.miginfocom.swing.MigLayout;
 
@@ -109,55 +109,55 @@ public class SelectionPanel extends JScrollPaneBg {
 	/**
 	 * @author Luca Kleck
 	 */
-	public class SelectionPaneElement extends JPanel implements MouseListener, ActionListener {
+	public class SelectionPaneElement extends JPanelCustomBg implements MouseListener, ActionListener {
 		private static final long serialVersionUID = 128L;
 
 		Timer creationAnimationTimer = new Timer(20, this);
 
-		private JButton jBtn;
+		private JButton btnAbility;
 		private Entity entity;
 
 		public SelectionPaneElement(Entity entity) {
-			setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+			super(ResourceManager.getBackground_05());
+			setBorder(BorderFactory.createLineBorder(Color.BLACK, 3, true));
 			this.entity = entity;
-			this.setBorder(BorderFactory.createEmptyBorder(0, 5, 0, 0));
-			this.setBackground(new Color(0, 0, 0, 0));
-			this.setOpaque(false);
 
 			MigLayout miglay = new MigLayout("insets 4 5 2 5, gap 4px 0px",
 					"[135px][" + (InteractionPanel.getInteractionPanel().getWidth() - 198) + ",fill]",
 					"[fill][fill][fill][fill]");
-
 			miglay.preferredLayoutSize(InteractionPanel.getInteractionPanel());
-
 			setLayout(miglay);
-			this.jBtn = new JButton_01("Select");
-			jBtn.addMouseListener(this);
+			
+			
+			this.btnAbility = new JButton_01("Select");
+			btnAbility.addMouseListener(this);
 
-			this.jBtn.setPreferredSize(new Dimension(135, 23));
+			this.btnAbility.setPreferredSize(new Dimension(135, 23));
+			
 			Ability abl = GameInfo.getObjectMap().getSelected().getSelectedAbility();
+			
 			if(abl == null) {
 				// if controllable
 				if (entity.isControllable() && GameInfo.getObjectMap().getSelected().getSelectionMode() != 3
 						&& GameInfo.getObjectMap().getSelected().getSelectionMode() != 5) {
-					this.add(jBtn, "flowx,cell 0 3,grow");
+					this.add(btnAbility, "flowx,cell 0 3,grow");
 				}
 				// if not controllable
 				else if (!entity.isControllable() && GameInfo.getObjectMap().getSelected().getSelectionMode() == 3
 						|| GameInfo.getObjectMap().getSelected().getSelectionMode() == 5) {
-					this.add(jBtn, "flowx,cell 0 3,grow");
+					this.add(btnAbility, "flowx,cell 0 3,grow");
 				}
 			} else {
 				if(entity.isControllable()) {
 					if(abl instanceof AddStatusEffect && ((AddStatusEffect) abl).getStatusEffect().isNegative() ||
 							abl.getType().matches(Ability.ABILITY_TYPE_DAMAGE)) {
 					} else {
-						this.add(jBtn, "flowx,cell 0 3,grow");
+						this.add(btnAbility, "flowx,cell 0 3,grow");
 					}
 				} else {
 					if(abl instanceof AddStatusEffect && !((AddStatusEffect) abl).getStatusEffect().isNegative()) {
 					} else {
-						this.add(jBtn, "flowx,cell 0 3,grow");
+						this.add(btnAbility, "flowx,cell 0 3,grow");
 					}
 				}
 			}
@@ -174,12 +174,8 @@ public class SelectionPanel extends JScrollPaneBg {
 			lblHealth.setIcon(new ImageIcon(SelectionPaneElement.class.getResource("/resources/healthIcon.png")));
 			add(lblHealth, "flowx,cell 0 1,alignx left,aligny center");
 
-			JProgressBar healthStatus = new JProgressBar();
-			healthStatus.setMaximum(entity.getMaxHealth());
-			healthStatus.setMinimum(0);
-			healthStatus.setValue(entity.getCurrentHealth());
-			healthStatus.setStringPainted(true);
-			healthStatus.setString(entity.getCurrentHealth() + "/" + entity.getMaxHealth());
+			
+			JProgressBar healthStatus = CustomProgressBar.createFromEntity(entity);
 			add(healthStatus, "cell 0 1,growy");
 
 		}
@@ -199,6 +195,7 @@ public class SelectionPanel extends JScrollPaneBg {
 				}
 				GameInfo.getObjectMap().getSelected().removeSelected();
 				InteractionPanel.setCurrentPanel(null);
+				((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getEventlessSelectionQueue().selectFirstInRow();
 			} // else just normal selection change
 			else {
 				InteractionPanel.setCurrentPanel(new EntityPanel(entity));
@@ -211,14 +208,13 @@ public class SelectionPanel extends JScrollPaneBg {
 		}
 		
 		public void paint(Graphics g) {
-			g.drawImage(ResourceManager.getBackground_01(), 0, 0, getWidth(), getHeight(), null);
+			super.paint(g);
 			g.setColor(getControllableColor());
 			g.fillRoundRect(0, 0, 5, getHeight(), 10, 10);
-			g.setColor(getColorFromClass());
-			g.fillRoundRect(getWidth() - 5, 0, 5, getHeight(), 10, 10);
+//			g.setColor(getColorFromClass());
+//			g.fillRoundRect(getWidth() - 5, 0, 5, getHeight(), 10, 10);
 			g.setColor(new Color(0, 0, 0, 120));
 			g.drawRoundRect(0, 0, getWidth(), getHeight(), 10, 10);
-			super.paint(g);
 		}
 
 		private Color getControllableColor() {
@@ -232,6 +228,7 @@ public class SelectionPanel extends JScrollPaneBg {
 			return c;
 		}
 
+		@SuppressWarnings("unused")
 		private Color getColorFromClass() {
 			Color c = Color.lightGray;
 			if (entity instanceof Warrior) {
@@ -250,7 +247,7 @@ public class SelectionPanel extends JScrollPaneBg {
 
 		@Override
 		public void mouseReleased(MouseEvent e) {
-			if (jBtn.contains(e.getPoint())) {
+			if (btnAbility.contains(e.getPoint())) {
 				select();
 			}
 		}

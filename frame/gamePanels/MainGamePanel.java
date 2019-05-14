@@ -16,9 +16,9 @@ import core.NextRoundActionListener;
 import core.PlayerStats.PlayerResources;
 import core.ResourceManager;
 import cost.AvailableResources;
-import frame.JButton_01;
-import frame.JPanelCustomBg;
 import frame.MainJFrame;
+import frame.customPresets.JButton_01;
+import frame.customPresets.JPanelCustomBg;
 import net.miginfocom.swing.MigLayout;
 
 /**

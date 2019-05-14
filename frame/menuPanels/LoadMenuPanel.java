@@ -17,9 +17,9 @@ import javax.swing.event.DocumentListener;
 import core.ControlInput;
 import core.Core;
 import core.ResourceManager;
-import frame.JButton_01;
-import frame.JPanelCustomBg;
 import frame.MainJFrame;
+import frame.customPresets.JButton_01;
+import frame.customPresets.JPanelCustomBg;
 import net.miginfocom.swing.MigLayout;
 
 /**

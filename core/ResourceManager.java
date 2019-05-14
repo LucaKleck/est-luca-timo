@@ -22,6 +22,8 @@ public class ResourceManager {
 	
 	private static BufferedImage frame_10_01;
 	private static BufferedImage frame_10_02;
+	private static BufferedImage frame_10_03;
+	private static BufferedImage frame_10_04;
 	
 	private static BufferedImage slot;
 	
@@ -511,6 +513,28 @@ public class ResourceManager {
 			}
 		}
 		return frame_10_02;
+	}
+	
+	public static BufferedImage getFrame_10_03() {
+		if(frame_10_03 == null) {
+			try {
+				frame_10_03 = ImageIO.read(Boot.class.getResource("/resources/UI/frame_10_03.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return frame_10_03;
+	}
+	
+	public static BufferedImage getFrame_10_04() {
+		if(frame_10_04 == null) {
+			try {
+				frame_10_04 = ImageIO.read(Boot.class.getResource("/resources/UI/frame_10_04.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return frame_10_04;
 	}
 	
 	public static BufferedImage getSlot() {

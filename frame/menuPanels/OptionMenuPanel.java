@@ -22,8 +22,8 @@ import core.ControlInput;
 import core.Core;
 import core.FullscreenActionListener;
 import core.ResourceManager;
-import frame.JButton_01;
-import frame.JPanelCustomBg;
+import frame.customPresets.JButton_01;
+import frame.customPresets.JPanelCustomBg;
 import net.miginfocom.swing.MigLayout;
 
 /**

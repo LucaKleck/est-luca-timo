@@ -1,4 +1,4 @@
-package frame;
+package frame.customPresets;
 
 import java.awt.Color;
 import java.awt.Cursor;
@@ -14,7 +14,7 @@ public class JButton_01 extends JButton {
 
 	public JButton_01(String string) {
 		super(string);
-		setBorder(BorderFactory.createEmptyBorder(4, 4, 4, 4));
+		setBorder(BorderFactory.createEmptyBorder(6, 6, 6, 6));
 		setBackground(new Color(0, 0, 0, 0));
 		setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		setOpaque(false);

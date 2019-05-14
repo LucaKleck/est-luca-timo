@@ -9,9 +9,9 @@ import javax.swing.JLabel;
 import core.ControlInput;
 import core.GameInfo;
 import core.ResourceManager;
-import frame.JButton_01;
-import frame.JPanelCustomBg;
-import frame.StatisticLabel;
+import frame.customPresets.JButton_01;
+import frame.customPresets.JPanelCustomBg;
+import frame.customPresets.StatisticLabel;
 import net.miginfocom.swing.MigLayout;
 
 public class EndScreenPanel extends JPanelCustomBg {
