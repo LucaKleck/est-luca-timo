@@ -121,7 +121,7 @@ public class GameMenuPanel extends JPanelCustomBg {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getBtnNextRound().isEnabled()) {
-					LogPanel.appendNewLine(XMLSaveAndLoad.saveGame());
+					LogPanel.appendNewLine(XMLSaveAndLoad.saveGame(XMLSaveAndLoad.xmlFilePath));
 				}
 			}
 		});

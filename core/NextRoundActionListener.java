@@ -2,6 +2,7 @@ package core;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.concurrent.ExecutorService;
@@ -30,6 +31,8 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 	private JButton j;
 	private EntityFilter entityFilter;
 	private UnitFactory uf;
+	
+	private static int eventCycleSpeed = 250;
 
 	private int 
 	collectedWood = 0,
@@ -55,6 +58,8 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 
 	@Override
 	public void run() {
+		if(Core.loadSetting(Core.SETTING_QUICK_ROUNDS).matches(Core.TRUE)) eventCycleSpeed = 50;
+		else eventCycleSpeed = 250;
 
 		ArrayList<Entity> entityMap = GameInfo.getObjectMap().getEntityMap();
 		ArrayList<StatusEffect> statusEffects = new ArrayList<StatusEffect>();
@@ -108,8 +113,8 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 				}
 			} else if (entity instanceof ProductionBuilding) {
 				if (entity.getName().equals(Building.PORTAL)) {
-					if (GameInfo.getRoundInfo().getRoundNumber() % 10 == 0) {
-						int wave = GameInfo.getRoundInfo().getRoundNumber()/ 10;
+					if (GameInfo.getRoundInfo().getRoundNumber() % 5 == 0) {
+						int wave = GameInfo.getRoundInfo().getRoundNumber()/ 5;
 						ArrayList<Unit> units = uf.getNewPortalUnitsByWave(wave);
 						for(Unit unit: units) {
 							entityMap.add(unit);
@@ -177,6 +182,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 			((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
 		}
 		
+		XMLSaveAndLoad.saveGame(Core.GAME_PATH_SAVES + File.separator + "autosave_" + GameInfo.getRoundInfo().getRoundNumber()%3 + ".xml");
 		j.setEnabled(true);
 	}
 
@@ -218,7 +224,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 
 			if(e.getAbility() instanceof CollectResources == false) {
 				try {
-					Thread.sleep(250);
+					Thread.sleep(eventCycleSpeed);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}
@@ -237,7 +243,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 			}
 			if(e.getAbility() instanceof CollectResources == false) {
 				try {
-					Thread.sleep(250);
+					Thread.sleep(eventCycleSpeed);
 				} catch (InterruptedException e1) {
 					e1.printStackTrace();
 				}

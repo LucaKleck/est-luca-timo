@@ -56,6 +56,10 @@ public class Core {
 	public static final String SETTING_RTX = "RTX";
 	public static final String SETTING_DEV = "dev";
 	public static final String SETTING_AUTO_SELECT_NEXT = "autoSelectNext";
+	public static final String SETTING_QUICK_ROUNDS = "quickRounds";
+
+	public static final String TRUE = "true";
+	public static final String FALSE = "false";
 	
 	private static MainJFrame mainJFrame;
 	private static ControlInput controlInput;
@@ -104,7 +108,7 @@ public class Core {
 			
 			// General
 			Element fullscreen = settingsDoc.createElement(SETTING_FULLSCREEN);
-			fullscreen.setTextContent("false");
+			fullscreen.setTextContent(FALSE);
 			settingsRoot.appendChild(fullscreen);
 			
 			Element defaultWidth = settingsDoc.createElement(SETTING_DEFAULT_WIDTH);
@@ -120,30 +124,34 @@ public class Core {
 			settingsRoot.appendChild(fpsLimit);
 
 			Element askSaveDelete = settingsDoc.createElement(SETTING_ASK_SAVE_DELETE);
-			askSaveDelete.setTextContent("true");
+			askSaveDelete.setTextContent(TRUE);
 			settingsRoot.appendChild(askSaveDelete);
 			
 			// Log
 			Element showLog = settingsDoc.createElement(SETTING_SHOW_LOG);
-			showLog.setTextContent("true");
+			showLog.setTextContent(TRUE);
 			settingsRoot.appendChild(showLog);
 			
 			Element enableLog = settingsDoc.createElement(SETTING_ENABLE_LOG);
-			enableLog.setTextContent("false");
+			enableLog.setTextContent(FALSE);
 			settingsRoot.appendChild(enableLog);
 
 			// Other
 			Element RTX = settingsDoc.createElement(SETTING_RTX);
-			RTX.setTextContent("false");
+			RTX.setTextContent(FALSE);
 			settingsRoot.appendChild(RTX);
 			
 			Element dev = settingsDoc.createElement(SETTING_DEV);
-			dev.setTextContent("false");
+			dev.setTextContent(FALSE);
 			settingsRoot.appendChild(dev);
 			
 			Element autoSelectNext = settingsDoc.createElement(SETTING_AUTO_SELECT_NEXT);
-			autoSelectNext.setTextContent("true");
+			autoSelectNext.setTextContent(TRUE);
 			settingsRoot.appendChild(autoSelectNext);
+			
+			Element quickRounds = settingsDoc.createElement(SETTING_QUICK_ROUNDS);
+			quickRounds.setTextContent(FALSE);
+			settingsRoot.appendChild(quickRounds);
 			
 			settingsDoc.normalizeDocument();
 			
@@ -230,7 +238,7 @@ public class Core {
 			}
 			
 			node.setTextContent(state);
-			GAME_LOGGER.log(Level.CONFIG, "save["+settingName+"="+state+"]");
+			GAME_LOGGER.log(Level.CONFIG, "Save["+settingName+"="+state+"]");
 			settingsDoc.normalizeDocument();
 			
 		    TransformerFactory transformerFactory = TransformerFactory.newInstance();

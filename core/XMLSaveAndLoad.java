@@ -83,7 +83,7 @@ public class XMLSaveAndLoad {
 	private static final String LEVEL = "level";
 	private static final String CONTROLABLE = "controlable";
 
-	private static String xmlFilePath;
+	public static String xmlFilePath;
 
 	public XMLSaveAndLoad(String saveName) {
 		// System.out.println(saveName);
@@ -235,7 +235,7 @@ public class XMLSaveAndLoad {
 		return entityMap;
 	}
 
-	public static String saveGame() {
+	public static String saveGame(String path) {
 		String returnMessage = "Something isn't right, save system broken!";
 		try {
 			DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
@@ -269,7 +269,7 @@ public class XMLSaveAndLoad {
 			transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "3");
 			DOMSource domSource = new DOMSource(saveDoc);
 
-			StreamResult streamResult = new StreamResult(new File(xmlFilePath));
+			StreamResult streamResult = new StreamResult(new File(path));
 
 			transformer.transform(domSource, streamResult);
 			returnMessage = "Game Saved!";
