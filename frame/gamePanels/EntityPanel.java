@@ -289,7 +289,7 @@ public class EntityPanel extends JScrollPaneBg {
 		int i = 0;
 		for (Ability ability : entity.getAbilities()) {
 			i++;
-			JButton jButton = new JButtonCustomBg(getAbilityImage(ability), true);
+			JButton jButton = new JButtonCustomBg(getAbilityImage(ability), true, "");
 			
 			String toolTipText = ability.getDescription() + "\n";
 			

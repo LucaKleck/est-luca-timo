@@ -3,6 +3,7 @@ package frame.gamePanels;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,20 +12,22 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 
 import core.ControlInput;
 import core.Core;
 import core.FullscreenActionListener;
 import core.GameInfo;
+import core.ResourceManager;
 import core.XMLSaveAndLoad;
+import frame.customPresets.JPanelCustomBg;
 
-public class GameMenuPanel extends JPanel {
+public class GameMenuPanel extends JPanelCustomBg {
 	private static final long serialVersionUID = 122L;
 	private JCheckBoxMenuItem chckbxmntmEnableLogSelection;
 	private JCheckBoxMenuItem chckbxmntmFullscreen;
@@ -38,8 +41,13 @@ public class GameMenuPanel extends JPanel {
 	private JMenuItem mntmSave;
 
 	public GameMenuPanel() {
+		super(ResourceManager.getFrame_10_03());
 		setLayout(new GridLayout(0, 1, 0, 0));
 		menuBar = new JMenuBar();
+		menuBar.setBackground(new Color(0,0,0,0));
+		menuBar.setBorder(BorderFactory.createEmptyBorder(0, 6, 3, 20));
+		menuBar.setOpaque(false);
+		menuBar.setLayout(new FlowLayout(FlowLayout.RIGHT, 3, 0));
 		add(menuBar);
 
 		mnOptions = createMenu("Options");
@@ -59,7 +67,7 @@ public class GameMenuPanel extends JPanel {
 
 		chckbxmntmEnableLogSelection = new JCheckBoxMenuItem("Enable Log selection (disables key-shortcuts)");
 		chckbxmntmEnableLogSelection.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
-		chckbxmntmEnableLogSelection.setSelected(LogPanel.getLog().isEnabled());
+		chckbxmntmEnableLogSelection.setSelected(!LogPanel.getLog().isEnabled());
 		chckbxmntmEnableLogSelection.addActionListener(new ActionListener() {
 
 			@Override
@@ -104,7 +112,7 @@ public class GameMenuPanel extends JPanel {
 		mntmAddResources
 				.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_R, InputEvent.CTRL_MASK | InputEvent.SHIFT_MASK));
 		mntmAddResources.addActionListener(a -> {
-			GameInfo.getPlayerStats().getPlayerResources().addAll(1000);
+			GameInfo.getPlayerStats().getPlayerResources().addAll(100000);
 		});
 		mnDev.add(mntmAddResources);
 
@@ -146,6 +154,7 @@ public class GameMenuPanel extends JPanel {
 
 	private JMenu createMenu(String name) {
 		JMenu menu = new JMenu(name);
+		menu.setForeground(Color.BLACK);
 		menu.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		menu.addMouseListener(new MouseOverMenu(menu));
 		return menu;
@@ -174,7 +183,7 @@ public class GameMenuPanel extends JPanel {
 
 		@Override
 		public void mouseEntered(MouseEvent e) {
-			menu.setBackground(Color.LIGHT_GRAY);
+			menu.setBackground(Color.DARK_GRAY);
 		}
 
 		@Override
@@ -182,5 +191,5 @@ public class GameMenuPanel extends JPanel {
 			menu.setBackground(Color.LIGHT_GRAY);
 		}
 	}
-
+	
 }
