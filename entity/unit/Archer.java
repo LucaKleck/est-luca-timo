@@ -14,12 +14,12 @@ public class Archer extends Unit {
 
 	public Archer(Point2DNoFxReq pointXY, String name, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {
 		super(pointXY, name, BASE_MAX_HEALTH, currentHealth, level, controlable, BASE_DAMAGE, MOVEMENT_RANGE, abilities);
-		abilities.add(new RangedAttack(3, 2));
+		abilities.add(new RangedAttack(BASE_DAMAGE));
 	}
 	
 	public Archer(Point2DNoFxReq pointXY, String name, int level, boolean controlable, ArrayList<Ability> abilities) {
 		super(pointXY, name, BASE_MAX_HEALTH, BASE_MAX_HEALTH, level, controlable, BASE_DAMAGE, MOVEMENT_RANGE, abilities);
-		abilities.add(new RangedAttack(3, 2));
+		abilities.add(new RangedAttack(BASE_DAMAGE));
 	}
 
 }

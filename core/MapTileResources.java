@@ -3,7 +3,7 @@
 * @author Luca Kleck
 * @see MapTile
 */
-package map;
+package core;
 
 import java.util.Random;
 

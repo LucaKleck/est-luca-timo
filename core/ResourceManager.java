@@ -79,10 +79,11 @@ public class ResourceManager {
 	private static BufferedImage barracksImage;
 	
 	// SpellBook !!! WARNING: Some of the pngs are .PNG -> Runnable JAR can't find them if you write .png !!!
-	private static BufferedImage spellBook01_67; //Build (unused)
-	private static BufferedImage spellBook01_93; //Ability Placeholder
+	private static BufferedImage spellBook01_11; //Idle
 	private static BufferedImage spellBook01_22; //Move
 	private static BufferedImage spellBook01_46; //FireBall
+	private static BufferedImage spellBook01_67; //Build (unused)
+	private static BufferedImage spellBook01_93; //Ability Placeholder
 	
 	private static BufferedImage spellBook05_06; //MetalForge
 	private static BufferedImage spellBook05_20; //Barracks
@@ -95,6 +96,7 @@ public class ResourceManager {
 	private static BufferedImage spellBook05_77; //Quarry
 	private static BufferedImage spellBook05_95; //GoldMine
 	private static BufferedImage spellBook05_120; //Destroy Entity
+	
 	
 	private static BufferedImage sgi_09; //Archer
 	private static BufferedImage sgi_11; //MeleeAttack
@@ -667,6 +669,17 @@ public class ResourceManager {
 			}
 		}
 		return spellBook01_93;
+	}
+	
+	public static BufferedImage getSpellBook01_11() {
+		if(spellBook01_11 == null) {
+			try {
+				spellBook01_11 = ImageIO.read(Boot.class.getResource("/resources/spellbook/SpellBook01_11.png"));
+			} catch (IOException e) {
+				return new BufferedImage(0, 0, BufferedImage.TYPE_INT_ARGB);
+			}
+		}
+		return spellBook01_11;
 	}
 	
 	public static BufferedImage getSpellBook01_22() {

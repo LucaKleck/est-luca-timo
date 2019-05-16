@@ -2,7 +2,7 @@ package entity.building;
 
 import abilities.CollectResources;
 import core.GameInfo;
-import map.ObjectMap;
+import core.ObjectMap;
 
 public class BuildingRessources {
 

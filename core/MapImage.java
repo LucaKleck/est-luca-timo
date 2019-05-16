@@ -1,4 +1,4 @@
-package map;
+package core;
 
 import java.awt.AlphaComposite;
 import java.awt.Color;
@@ -17,10 +17,6 @@ import java.util.concurrent.locks.ReentrantLock;
 import javax.imageio.ImageIO;
 
 import abilities.Ability;
-import core.Boot;
-import core.Core;
-import core.GameInfo;
-import core.ResourceManager;
 import entity.Entity;
 import entity.building.Building;
 import entity.building.DefenseBuilding;

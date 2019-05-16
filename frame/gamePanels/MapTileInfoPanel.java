@@ -7,9 +7,9 @@ import java.awt.Graphics;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import core.MapTile;
 import core.ResourceManager;
 import frame.MainJFrame;
-import map.MapTile;
 import net.miginfocom.swing.MigLayout;
 
 public class MapTileInfoPanel extends JPanel {

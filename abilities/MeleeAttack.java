@@ -4,7 +4,7 @@ import entity.Entity;
 
 public class MeleeAttack extends Ability {
 
-	private static final int BASE_DAMAGE = 3;
+	private static final int BASE_DAMAGE = 4;
 	private static final int DEFAULT_MAX_RANGE = 1;
 	
 	public MeleeAttack() {

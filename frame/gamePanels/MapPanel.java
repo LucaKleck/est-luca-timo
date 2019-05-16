@@ -19,8 +19,8 @@ import javax.swing.Timer;
 
 import core.Core;
 import core.GameInfo;
-import map.MapImage;
-import map.ObjectMap;
+import core.MapImage;
+import core.ObjectMap;
 
 /**
  * Contains and draws the MapImage, takes care of the displacement

@@ -3,6 +3,7 @@ package entity.unit;
 import java.util.ArrayList;
 
 import abilities.Ability;
+import abilities.Idle;
 import abilities.Move;
 import core.Point2DNoFxReq;
 import entity.Entity;
@@ -30,6 +31,7 @@ public class Unit extends Entity {
 	public Unit(Point2DNoFxReq pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable,  int baseDamage,  int movementRange, ArrayList<Ability> abilities) {
 		super(pointXY, name, maxHealth, currentHealth, level, controlable, abilities);
 		move = new Move(movementRange);
+		abilities.add(new Idle());
 		abilities.add(move);
 		this.baseDamage = baseDamage;
 		this.movementRange = movementRange;

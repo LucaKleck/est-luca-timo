@@ -35,6 +35,7 @@ public class Entity {
 	private boolean controllable = false;
 	private PlayerResources playerResources;
 	private PlayerStats playerStats;
+	private boolean autoIdle = false;
 
 	public Entity(Point2DNoFxReq pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable,
 			ArrayList<Ability> abilities) {
@@ -249,6 +250,14 @@ public class Entity {
 
 		statusEffects.remove(statusEffect);
 
+	}
+
+	public boolean isAutoIdle() {
+		return autoIdle;
+	}
+
+	public void setAutoIdle(boolean autoIdle) {
+		this.autoIdle = autoIdle;
 	}
 
 }

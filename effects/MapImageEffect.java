@@ -3,8 +3,8 @@ package effects;
 import java.awt.image.BufferedImage;
 
 import abilities.Ability;
+import core.MapImage;
 import entity.Entity;
-import map.MapImage;
 
 public abstract class MapImageEffect extends BufferedImage {
 

@@ -2,14 +2,10 @@
  * ObjectMap.java - This keeps all the information of the map in itself, that means: unit array && mapTile array.
  * @author Luca Kleck
  */
-package map;
+package core;
 
 import java.util.ArrayList;
 
-import core.GameInfo;
-import core.MapCreator;
-import core.Point2DNoFxReq;
-import core.Selected;
 import entity.Entity;
 import entity.building.ProductionBuilding;
 

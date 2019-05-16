@@ -12,11 +12,11 @@ import abilities.Move;
 import abilities.RangedAttack;
 import abilities.SiegeAttack;
 import core.Core;
+import core.MapImage;
 import entity.Entity;
 import entity.unit.Builder;
 import entity.unit.Unit;
 import frame.gamePanels.MainGamePanel;
-import map.MapImage;
 
 public class AbilityEffect extends MapImageEffect {
 

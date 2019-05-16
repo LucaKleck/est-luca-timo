@@ -2,8 +2,6 @@ package core;
 
 import java.util.Random;
 
-import map.MapTile;
-
 /**
  * MapCreator.java - Contains all the methods used to create a new map
  * 

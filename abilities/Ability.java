@@ -4,32 +4,22 @@ import entity.Entity;
 
 public abstract class Ability {
 	// DAMAGE will be searched and replaced by the actual damage the unit will deal
-	// Dev Abilities
-	public static final String ABILITY_DEV_CREATE_UNIT = "devCreateUnit";
-	public static final String ABILITY_DESC_DEV_CREATE_UNIT = "devCreateUnit";
-
-	public static final String ABILITY_DEV_CREATE_BUILDER = "devCreateBuilder";
-	public static final String ABILITY_DESC_DEV_CREATE_BUILDER = "devCreateBuilder";
-
-	public static final String ABILITY_DEV_CREATE_BUILDING = "devCreateBuilding";
-	public static final String ABILITY_DESC_DEV_CREATE_BUILDING = "devCreateBuilding";
-
 	//Entity Abilities
 	public static final String ABILITY_DESTROY_ENTITY = "Destroy Entity";
 	public static final String ABILITY_DESC_DESTROY_ENTITY = "Destroy the selected entity";
 	
 	// Unit Abilities
 	public static final String ABILITY_FIRE_BALL = "Fireball";
-	public static final String ABILITY_DESC_FIRE_BALL = "Shoots a Fireball at the target, dealing DAMAGE damage to the target";
+	public static final String ABILITY_DESC_FIRE_BALL = "Shoots a Fireball at the target, dealing %d damage to the target";
 
 	public static final String ABILITY_MELEE_ATTACK = "Melee";
-	public static final String ABILITY_DESC_MELEE_ATTACK = "Slashes target for DAMAGE damage";
+	public static final String ABILITY_DESC_MELEE_ATTACK = "Slashes target for %d damage";
 
 	public static final String ABILITY_RANGED_ATTACK = "Ranged";
-	public static final String ABILITY_DESC_RANGED_ATTACK = "Fires an arrow on target for DAMAGE damage";
+	public static final String ABILITY_DESC_RANGED_ATTACK = "Fires an arrow on target for %d damage";
 	
 	public static final String ABILITY_SIEGE_ATTACK = "Siege";
-	public static final String ABILITY_DESC_SIEGE_ATTACK = "Deals extra damage to Buildings for DAMAGE damage";
+	public static final String ABILITY_DESC_SIEGE_ATTACK = "Deals extra damage to Buildings for %d damage";
 
 	public static final String ABILITY_MOVE = "Move";
 	public static final String ABILITY_DESC_MOVE = "Moves to targeted spot";
@@ -125,6 +115,9 @@ public abstract class Ability {
 	public static final String ABILITY_LEVEL_UP = "Level Up";
 	public static final String ABILITY_DESC_LEVEL_UP = "Levels the selected entity at the end of the round";
 	
+	public static final String ABILITY_IDLE = "Idle";
+	public static final String ABILITY_DESC_IDLE = "Idles";
+	
 	//Status Effect Abilities
 	public static final String ABILITY_HEAL = "Heal";
 	public static final String ABILITY_DESC_HEAL = "Heals the selected entity";
@@ -141,6 +134,7 @@ public abstract class Ability {
 	public static final String ABILITY_TYPE_LEVEL = "level";
 	public static final String ABILITY_TYPE_MOVEMENT = "movement";
 	public static final String ABILITY_TYPE_STATUS_EFFECT = "statuseffect";
+	public static final String ABILITY_TYPE_IDLE = "idle";
 
 	private String name;
 	private String description;

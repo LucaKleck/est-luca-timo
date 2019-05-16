@@ -13,10 +13,10 @@ public class RangedAttack extends Ability {
 		this.setDamage(BASE_DAMAGE);
 	}
 	
-	public RangedAttack(int maxRange) {
+	public RangedAttack(int damage) {
 		super(Ability.ABILITY_RANGED_ATTACK, Ability.ABILITY_DESC_RANGED_ATTACK, Ability.ABILITY_TYPE_DAMAGE);
-		super.maxRange = maxRange;
-		this.setDamage(BASE_DAMAGE);
+		super.maxRange = DEFAULT_MAX_RANGE;
+		this.setDamage(damage);
 	}
 	
 	public RangedAttack(int maxRange, int damage) {

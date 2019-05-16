@@ -1,29 +1,25 @@
 package frame.menuPanels;
 
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
-import javax.swing.JFormattedTextField;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JSeparator;
-import javax.swing.JSpinner;
-import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.text.NumberFormatter;
 
 import core.ControlInput;
 import core.Core;
 import core.FullscreenActionListener;
 import core.ResourceManager;
+import frame.MainJFrame;
+import frame.customPresets.CustomJCheckBox;
+import frame.customPresets.CustomJComboBox;
 import frame.customPresets.JButton_01;
 import frame.customPresets.JPanelCustomBg;
+import frame.customPresets.StatisticLabel;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -34,81 +30,49 @@ import net.miginfocom.swing.MigLayout;
  */
 public class OptionMenuPanel extends JPanelCustomBg {
 	private static final long serialVersionUID = 112L;
-
+	private static final CustomDimension[] RESOULUTION_DIMENSIONS = {new CustomDimension(1024, 768), new CustomDimension(1280, 720), new CustomDimension(1366, 768), new CustomDimension(1440, 900), new CustomDimension(1600, 900), new CustomDimension(1920, 1080), new CustomDimension(1920, 1440), new CustomDimension(2160, 1440), new CustomDimension(3840, 2160)};
+	private static String headlineStyle = MainJFrame.makeCssStyle("font-size: 1.2em");
+	
 	public OptionMenuPanel() {
 		super(ResourceManager.getBackground_05());
-		setLayout(new MigLayout("insets 0 0 0 0", "[33%][33%][33%]", "[100%,fill]"));
+		setLayout(new MigLayout("insets 0 0 0 0", "[33%][33%,fill][33%]", "[100%,fill]"));
 		
 		JPanelCustomBg container = new JPanelCustomBg(ResourceManager.getBackground_03(), true);
-		container.setLayout(new MigLayout("insets 10 10 10 10", "[]", "[]"));
+		container.setLayout(new MigLayout("insets 40 30 10 30, fillx", "[100%]", "[100%]"));
 		
 		add(container, "cell 1 0,grow");
-
-		JButton btnBack = new JButton_01("Back");
-		btnBack.setActionCommand("frame.menuPanels.MainMenuPanel");
-		btnBack.addActionListener(ControlInput.menuChanger);
 		
-		JLabel lblWindowWidth = new JLabel("Window Width");
-		lblWindowWidth.setForeground(Color.WHITE);
-		container.add(lblWindowWidth, "cell 2 0,alignx left");
+		JLabel optionsText = new StatisticLabel(MainJFrame.makeCssStyle("font-size: 1.7em")+"Options", true);
+		optionsText.setBorder(BorderFactory.createEmptyBorder(2, 0, 4, 0));
+		container.add(optionsText, "cell 0 0, ay top, ax center, spanx 2, flowy, newline, growx");
 		
-		JSpinner spnWidth = new JSpinner();
-		spnWidth.setMinimumSize(new Dimension(60, 20));
-		spnWidth.setModel(new SpinnerNumberModel(Core.getMainJFrame().getWidth(), 0, (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth(), (int) Toolkit.getDefaultToolkit().getScreenSize().getWidth()/10));
-		spnWidth.setEditor(new JSpinner.NumberEditor(spnWidth));
-		JFormattedTextField spnWidthTxt = ((JSpinner.NumberEditor) spnWidth.getEditor()).getTextField();
-		((NumberFormatter) spnWidthTxt.getFormatter()).setAllowsInvalid(false);
-		spnWidth.addChangeListener(new ChangeListener() {
-			
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				if( Double.parseDouble(spnWidth.getValue().toString()) >= Core.getMainJFrame().getMinimumSize().getWidth()) {
-					Core.saveSetting(Core.SETTING_DEFAULT_WIDTH, ""+Integer.parseInt(spnWidth.getValue().toString()) );
-					Core.getMainJFrame().setSize(Integer.parseInt(spnWidth.getValue().toString()), Core.getMainJFrame().getHeight());
-				} else {
-					spnWidth.setValue((int) Core.getMainJFrame().getMinimumSize().getWidth());
-				}
-			}
-		});
-		container.add(spnWidth, "cell 3 0,grow");
+		JLabel optionsGeneral = new StatisticLabel(headlineStyle+"General", true);
+		optionsGeneral.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+		container.add(optionsGeneral, "cell 0 0, gaptop 15px");
 		
-		JSeparator separator = new JSeparator();
-		separator.setOrientation(SwingConstants.VERTICAL);
-		container.add(separator, "cell 1 0 1 2");
-		
-		JLabel lblWindowHeight = new JLabel("Window Height");
-		lblWindowHeight.setForeground(Color.WHITE);
-		container.add(lblWindowHeight, "cell 2 1,alignx left");
-		
-		JSpinner spnHeight = new JSpinner();
-		spnHeight.setMinimumSize(new Dimension(60, 20));
-		spnHeight.setModel(new SpinnerNumberModel(Core.getMainJFrame().getHeight(), 0, (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight(), (int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()/10));
-		spnHeight.setEditor(new JSpinner.NumberEditor(spnHeight));
-		JFormattedTextField spnHeightTxt = ((JSpinner.NumberEditor) spnHeight.getEditor()).getTextField();
-		((NumberFormatter) spnHeightTxt.getFormatter()).setAllowsInvalid(false);
-		spnHeight.addChangeListener(new ChangeListener() {
-			
-			@Override
-			public void stateChanged(ChangeEvent e) {
-				if( Double.parseDouble(spnHeight.getValue().toString())  >= Core.getMainJFrame().getMinimumSize().getHeight()) {
-					Core.saveSetting(Core.SETTING_DEFAULT_HEIGHT, ""+Integer.parseInt(spnHeight.getValue().toString()) );
-					Core.getMainJFrame().setSize(Core.getMainJFrame().getWidth(), Integer.parseInt(spnHeight.getValue().toString()) );
-				} else {
-					spnHeight.setValue((int) Core.getMainJFrame().getMinimumSize().getHeight());
-				}
-			}
-		});
-		container.add(spnHeight, "cell 3 1,grow");
-		container.add(btnBack, "cell 0 4");
-		
-		JCheckBox chckbxFullscreen = new JCheckBox("Fullscreen");
-		chckbxFullscreen.setBackground(Color.LIGHT_GRAY);
+		JCheckBox chckbxFullscreen = new CustomJCheckBox("Fullscreen", true);
 		chckbxFullscreen.setSelected(Core.getMainJFrame().isUndecorated());
 		chckbxFullscreen.addActionListener(new FullscreenActionListener());
-		container.add(chckbxFullscreen, "cell 0 0,growx,aligny center");
+		container.add(chckbxFullscreen, "cell 0 0, growx");
 		
-		JCheckBox chckbxAskBeforeDeleting = new JCheckBox("Ask before deleting saves");
-		chckbxAskBeforeDeleting.setBackground(Color.LIGHT_GRAY);
+		JComboBox<CustomDimension> resoulutionBox = new CustomJComboBox<CustomDimension>(RESOULUTION_DIMENSIONS);
+		CustomDimension cd = new CustomDimension(Core.getMainJFrame().getWidth(), Core.getMainJFrame().getHeight(), true);
+		resoulutionBox.insertItemAt(cd, 0);
+		resoulutionBox.setSelectedItem(cd);
+		resoulutionBox.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Core.getMainJFrame().setSize((Dimension) resoulutionBox.getSelectedItem());
+			}
+		});
+		container.add(resoulutionBox, "cell 0 0, growx");
+		
+		JLabel optionsLoading = new StatisticLabel(headlineStyle+"Loading", true);
+		optionsLoading.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+		container.add(optionsLoading, "cell 0 0, gaptop 15px");
+		
+		JCheckBox chckbxAskBeforeDeleting = new CustomJCheckBox("Ask before deleting saves", true);
 		chckbxAskBeforeDeleting.setSelected(new Boolean(Core.loadSetting(Core.SETTING_ASK_SAVE_DELETE)));
 		chckbxAskBeforeDeleting.addActionListener(new ActionListener() {
 			
@@ -119,9 +83,36 @@ public class OptionMenuPanel extends JPanelCustomBg {
 				Core.saveSetting(Core.SETTING_ASK_SAVE_DELETE, b.toString());
 			}
 		});
-		container.add(chckbxAskBeforeDeleting, "cell 0 1,grow");
+		container.add(chckbxAskBeforeDeleting, "cell 0 0, growx");
+		
+		JButton btnBack = new JButton_01("Back");
+		btnBack.setActionCommand("frame.menuPanels.MainMenuPanel");
+		btnBack.addActionListener(ControlInput.menuChanger);
+		container.add(btnBack, "cell 1 1, ay bottom, ax right");
 
 
+	}
+	
+	private static class CustomDimension extends Dimension {
+		private static final long serialVersionUID = 776982080628486875L;
+		private boolean isCurrent = false;
+		
+		public CustomDimension(int width, int height) {
+			super(width, height);
+		}
+		
+		public CustomDimension(int width, int height, boolean isCurrent) {
+			super(width, height);
+			this.isCurrent = isCurrent;
+		}
+		
+		@Override
+			public String toString() {
+				if(isCurrent) {
+					return "Current resoulution: " + (int) getWidth()+"x"+(int) getHeight();
+				}
+				return (int) getWidth()+"x"+(int) getHeight();
+			}
 	}
 	
 }

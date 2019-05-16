@@ -17,8 +17,6 @@ import frame.gamePanels.EntityPanel;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.MainGamePanel;
 import frame.gamePanels.SelectionPanel;
-import map.MapTile;
-import map.ObjectMap;
 
 /**
  * Keeps track of the selected entities and handles the modes that define what

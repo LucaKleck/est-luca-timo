@@ -3,7 +3,7 @@
 * @author Luca Kleck
 * @see ObjectMap
 */
-package map;
+package core;
 
 import java.awt.Point;
 

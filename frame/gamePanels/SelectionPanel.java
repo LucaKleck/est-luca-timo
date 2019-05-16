@@ -24,6 +24,7 @@ import abilities.AddStatusEffect;
 import core.Core;
 import core.Event;
 import core.GameInfo;
+import core.MapImage;
 import core.ResourceManager;
 import effects.AbilityEffect;
 import entity.Entity;
@@ -32,7 +33,6 @@ import frame.customPresets.CustomProgressBar;
 import frame.customPresets.JButton_01;
 import frame.customPresets.JPanelCustomBg;
 import frame.customPresets.JScrollPaneBg;
-import map.MapImage;
 import net.miginfocom.swing.MigLayout;
 
 public class SelectionPanel extends JScrollPaneBg {
@@ -50,17 +50,14 @@ public class SelectionPanel extends JScrollPaneBg {
 		setDoubleBuffered(true);
 
 		JPanel headerPanel = new JPanelCustomBg(ResourceManager.getText_bg_02());
-		headerPanel.setForeground(Color.YELLOW);
 		setColumnHeaderView(headerPanel);
 
 		JLabel lblSelectMenu = new JLabel("Select Menu");
 		if (GameInfo.getObjectMap().getSelected().getSelectionMode() == 3
 				|| GameInfo.getObjectMap().getSelected().getSelectionMode() == 5) {
 			lblSelectMenu.setText("Select Target Menu");
-			// TODO remove currently selected entity from list
-
 		}
-		lblSelectMenu.setForeground(Color.LIGHT_GRAY);
+		lblSelectMenu.setForeground(Color.YELLOW);
 		lblSelectMenu.setFont(new Font("MS PGothic", Font.BOLD, 13));
 
 		JPanel viewportPanel = new JPanelCustomBg(new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB));
@@ -72,6 +69,7 @@ public class SelectionPanel extends JScrollPaneBg {
 		new SelectionPanelFilter().sortEntityList(selectedEntityList);
 
 		for (int i = 0; i < selectedEntityList.size(); i++) {
+			if(selectedEntityList.get(i).equals(GameInfo.getObjectMap().getSelected().getSelectedEntity())) continue;
 			selectedEntityElementList.add(createEntityPane(selectedEntityList.get(i)));
 		}
 		
