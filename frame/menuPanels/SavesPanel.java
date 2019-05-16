@@ -22,6 +22,7 @@ import core.XMLSaveAndLoad;
 import frame.customPresets.JButton_01;
 import frame.customPresets.JPanelCustomBg;
 import frame.customPresets.JScrollPaneBg;
+import frame.customPresets.CustomLable;
 import net.miginfocom.swing.MigLayout;
 
 public class SavesPanel extends JScrollPaneBg {
@@ -81,13 +82,13 @@ public class SavesPanel extends JScrollPaneBg {
 		JButton btnLoad;
 
 		public SavesPanelElement(File save, JPanel savesPanelContainer) {
-			super(ResourceManager.getBackground_03(), true);
+			super(ResourceManager.getBackground_05(), true, true);
 			setBorder(BorderFactory.createLineBorder(Color.black, 3, true));
 			MigLayout miglay = new MigLayout("insets 10 10 10 10, gap 2px 2px", "[135px]["+(savesPanelContainer.getWidth()-212)+",fill]", "[fill][fill][fill][fill]");
 			
 			this.setLayout(miglay);
 			
-			JLabel lblSave = new JLabel("Save: "+save.getName().substring(0, (save.getName().length()-4)) );
+			JLabel lblSave = new CustomLable("Save: "+save.getName().substring(0, (save.getName().length()-4)) );
 			add(lblSave, "cell 0 0 2 1");
 			
 			btnDelete = new JButton_01("Delete");

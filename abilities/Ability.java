@@ -5,7 +5,7 @@ import entity.Entity;
 public abstract class Ability {
 	// DAMAGE will be searched and replaced by the actual damage the unit will deal
 	//Entity Abilities
-	public static final String ABILITY_DESTROY_ENTITY = "Destroy Entity";
+	public static final String ABILITY_DESTROY_ENTITY = "Remove from existence";
 	public static final String ABILITY_DESC_DESTROY_ENTITY = "Destroy the selected entity";
 	
 	// Unit Abilities

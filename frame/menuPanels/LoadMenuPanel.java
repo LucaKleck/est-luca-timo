@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
@@ -37,10 +38,10 @@ public class LoadMenuPanel extends JPanelCustomBg implements ComponentListener, 
 	
 	public LoadMenuPanel() {
 		super(ResourceManager.getBackground_05());
-		setLayout(new MigLayout("insets 0 0 0 0", "[20%][60%][20%]", "[100%,fill]"));
+		setLayout(new MigLayout("insets 0 0 0 0", "[33%][33%][33%]", "[100%,fill]"));
 		
 		JPanelCustomBg container = new JPanelCustomBg(ResourceManager.getBackground_03(), true);
-		container.setLayout(new MigLayout("insets 40 25 40 25", "[100%]", "[100%,fill][fill][fill]"));
+		container.setLayout(new MigLayout("insets 30 30 30 30", "[100%]", "[100%,fill][fill][fill]"));
 		add(container, "cell 1 0,grow");
 		
 		JButton btnBack = new JButton_01("Back");
@@ -59,14 +60,15 @@ public class LoadMenuPanel extends JPanelCustomBg implements ComponentListener, 
 		filterTextField = new JTextField();
 		filterTextField.setColumns(1);
 		filterTextField.getDocument().addDocumentListener(this);
+		filterTextField.setBackground(new Color(182, 137, 100));
+		filterTextField.setForeground(Color.YELLOW);
+		filterTextField.setBorder(BorderFactory.createLineBorder(getBackground().darker().darker(), 4, true));
 		container.add(filterTextField, "cell 0 1,grow");
 		
 		SavesPanelContainer.add(new SavesPanel(SavesPanelContainer, filterTextField.getText()), "cell 0 0,grow");
 		
-		container.add(btnBack, "flowx,cell 0 2,alignx left,aligny center");
 		
 		JButton btnRefresh = new JButton_01("Refresh");
-		container.add(btnRefresh, "cell 0 2");
 		
 		btnRefresh.addActionListener(new ActionListener() {
 			
@@ -88,7 +90,9 @@ public class LoadMenuPanel extends JPanelCustomBg implements ComponentListener, 
 		});
 		chckbxAskBeforeDelete.setOpaque(false);
 		chckbxAskBeforeDelete.setSelected(new Boolean(Core.loadSetting(Core.SETTING_ASK_SAVE_DELETE)));
-		container.add(chckbxAskBeforeDelete, "cell 0 2");
+		container.add(chckbxAskBeforeDelete, "flowx,cell 0 2,alignx right,aligny center");
+		container.add(btnRefresh, "cell 0 2");
+		container.add(btnBack, "cell 0 2");
 	}
 	
 	@Override

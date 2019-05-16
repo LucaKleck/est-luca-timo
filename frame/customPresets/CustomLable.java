@@ -9,19 +9,19 @@ import javax.swing.SwingConstants;
 
 import core.ResourceManager;
 
-public class StatisticLabel extends JLabel {
+public class CustomLable extends JLabel {
 
 	private static final long serialVersionUID = 6270195112324466784L;
 	private boolean hasBg = false;
 	
-	public StatisticLabel(String name) {
+	public CustomLable(String name) {
 		super(name, SwingConstants.CENTER);
 		setBackground(new Color(0, 0, 0, 0));
 		setOpaque(false);
 		setForeground(Color.YELLOW);
 	}
 	
-	public StatisticLabel(String name, boolean hasBg) {
+	public CustomLable(String name, boolean hasBg) {
 		super(name, SwingConstants.CENTER);
 		this.hasBg = hasBg;
 		setHorizontalAlignment(SwingConstants.LEFT);

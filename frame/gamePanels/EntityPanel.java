@@ -9,7 +9,9 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 
 import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import abilities.Ability;
@@ -37,11 +39,13 @@ import entity.building.ResourceBuilding;
 import entity.unit.Unit;
 import frame.MainJFrame;
 import frame.customPresets.CustomJCheckBox;
+import frame.customPresets.CustomProgressBar;
 import frame.customPresets.JButtonCustomBg;
 import frame.customPresets.JButton_01;
 import frame.customPresets.JPanelCustomBg;
 import frame.customPresets.JScrollPaneBg;
-import frame.customPresets.StatisticLabel;
+import frame.customPresets.CustomLable;
+import frame.gamePanels.SelectionPanel.SelectionPaneElement;
 import net.miginfocom.swing.MigLayout;
 import statusEffects.StatusEffect;
 
@@ -49,17 +53,20 @@ public class EntityPanel extends JScrollPaneBg {
 	private static final long serialVersionUID = 1L;
 
 	private Entity entity;
-	private StatisticLabel lblNextEvent;
+	private CustomLable lblNextEvent;
 	// Just in Development
 	private String lblCanBeLeveledText = "";
 	private static final String LBL_LEVEL_UP_COST_BASE_TEXT = "<html>Leveling Costs: <br>";
 	private static final String LBL_LEVEL_UP_COST_MAX_LEVEL_REACHED_TEXT = "";
 	private static final String CELL_CONSTRAINT_STRING = ", gap 10, gapright 20";
 	private static final String BR = "<br>";
+	private static final String EVENTLESS = "Waiting for command";
+
 	private String lblLevelUpCostText;
 
 	private Font font = new Font("MS PGothic", Font.BOLD, 16);
-
+	private JLabel lblHealth = new JLabel(new ImageIcon(SelectionPaneElement.class.getResource("/resources/healthIcon.png")));
+	private CustomProgressBar healthStatus;
 	private JPanelCustomBg abilityPanel;
 
 	private int mx = 0;
@@ -71,20 +78,23 @@ public class EntityPanel extends JScrollPaneBg {
 		
 		Cost levelUpCost = null;
 		
-		JPanel jPanel = new JPanelCustomBg(new BufferedImage(9, 9, BufferedImage.TYPE_INT_ARGB));
-		getViewport().setView(jPanel);
+		JPanel contentPanel = new JPanelCustomBg(new BufferedImage(9, 9, BufferedImage.TYPE_INT_ARGB));
+		getViewport().setView(contentPanel);
 		
-		jPanel.setLayout(new MigLayout("insets 12 12 3 0, fillx", "[]", "[]"));
-		jPanel.setFont(font);
+		contentPanel.setLayout(new MigLayout("insets 12 12 3 0, fillx", "[]", "[]"));
+		contentPanel.setFont(font);
 
-		StatisticLabel lblEntityName = new StatisticLabel(entity.getName(), true);
-		jPanel.add(lblEntityName, "cell 0 0, newline, flowy, ay top, ax left, growx"+CELL_CONSTRAINT_STRING);
+		CustomLable lblEntityName = new CustomLable(entity.getName(), true);
+		contentPanel.add(lblEntityName, "cell 0 0, newline, flowy, ay top, ax left, growx"+CELL_CONSTRAINT_STRING);
 		
-		StatisticLabel lblLevel = new StatisticLabel("Level: " + this.entity.getLevel(), true);
-		StatisticLabel lblCanBeLeveled = new StatisticLabel(lblCanBeLeveledText, true);
+		healthStatus = new CustomProgressBar();
+		contentPanel.add(lblHealth, "cell 0 1, flowx, ay top, ax left, gap 0, gaptop 5, gapleft 10");
+		contentPanel.add(healthStatus, "cell 0 1, growx"+CELL_CONSTRAINT_STRING+", gapleft 5");
+		
+		CustomLable lblLevel = new CustomLable("Level: " + this.entity.getLevel(), true);
+		CustomLable lblCanBeLeveled = new CustomLable(lblCanBeLeveledText, true);
 		JButton btnLevelUp = new JButton_01("Level Up");
 		
-
 		if (entity.canBeLeveled()) {
 			lblCanBeLeveledText = "Can be Leveled!";
 			levelUpCost = GameInfo.getPlayerStats().getCostManager().getLevelUpCostManager().getLevelUpCost(entity);
@@ -101,12 +111,11 @@ public class EntityPanel extends JScrollPaneBg {
 		
 		btnLevelUp.addActionListener(e -> {
 				entity.setEvent(new Event(entity, entity, new LevelUp(), null));
-				lblNextEvent.setText("Event: " + "Level Up");
+				lblNextEvent.setText("Level Up");
 			});
 		
-		jPanel.add(lblLevel, "cell 0 1, growx, flowx, ay top, ax left"+CELL_CONSTRAINT_STRING+", gapright 0");
-		jPanel.add(lblCanBeLeveled, "cell 0 1, growx"+CELL_CONSTRAINT_STRING+", gapleft 5");
-		jPanel.add(btnLevelUp, "cell 0 2, growprio 1 1"+CELL_CONSTRAINT_STRING+", gapright 0");
+		contentPanel.add(lblLevel, "cell 0 2, growx, flowx, ay top, ax left"+CELL_CONSTRAINT_STRING+", gapright 0");
+		contentPanel.add(lblCanBeLeveled, "cell 0 2, growx"+CELL_CONSTRAINT_STRING+", gapleft 5");
 		
 		if(levelUpCost != null) {
 			lblLevelUpCostText = LBL_LEVEL_UP_COST_BASE_TEXT;
@@ -132,32 +141,39 @@ public class EntityPanel extends JScrollPaneBg {
 			lblLevelUpCostText = LBL_LEVEL_UP_COST_MAX_LEVEL_REACHED_TEXT;
 		}
 				
-		StatisticLabel lblCost = new StatisticLabel(lblLevelUpCostText, true);
+		CustomLable lblCost = new CustomLable(lblLevelUpCostText, true);
 		if (entity.canBeLeveled() == true) {
-			jPanel.add(lblCost, "cell 0 2, growx"+CELL_CONSTRAINT_STRING);
+			contentPanel.add(btnLevelUp, "cell 0 3, growprio 1 1"+CELL_CONSTRAINT_STRING+", gapright 0");
+			contentPanel.add(lblCost, "cell 0 3, growx"+CELL_CONSTRAINT_STRING);
 		}
-
+		
+		lblNextEvent = new CustomLable(EVENTLESS, true);
+		
 		if (this.entity.getEvent() != null) {
-			lblNextEvent = new StatisticLabel("Event: " + this.entity.getEvent().getAbility().getName(), true);
+			if(entity.getName().equals(Building.TOWN_CENTER) && entity.getEvent().getAbility().getName().matches(Ability.ABILITY_DESTROY_ENTITY)) {
+				lblNextEvent.setText("Thanos Snap");
+			} else {
+				lblNextEvent.setText(this.entity.getEvent().getAbility().getName());
+			}
 		} else {
-			lblNextEvent = new StatisticLabel("Event: " + "No Event", true);
+			lblNextEvent = new CustomLable(EVENTLESS, true);
 		}
-		jPanel.add(lblNextEvent, "cell 0 3, flowy, ay top, ax left, growx"+CELL_CONSTRAINT_STRING);
+		contentPanel.add(lblNextEvent, "cell 0 4, flowy, ay top, ax left, growx"+CELL_CONSTRAINT_STRING);
 
 		String statusEffects = BR;
 		for(StatusEffect statusEffect: this.entity.getStatusEffects()) {
 			statusEffects += statusEffect.getName() + BR;
 		}
 		
-		StatisticLabel lblStatusEffects = new StatisticLabel("<html>Status Effects: " + statusEffects, true);
+		CustomLable lblStatusEffects = new CustomLable("<html>Status Effects: " + statusEffects, true);
 		if(!statusEffects.isEmpty()) {
-			jPanel.add(lblStatusEffects, "cell 0 3, growx"+CELL_CONSTRAINT_STRING);
+			contentPanel.add(lblStatusEffects, "cell 0 4, growx"+CELL_CONSTRAINT_STRING);
 		}
 		
 		CustomJCheckBox boxAutoIdle = new CustomJCheckBox("Auto Idle", true);
 		boxAutoIdle.setSelected(entity.isAutoIdle());
 		boxAutoIdle.addActionListener(a -> boxAutoIdle.setSelected(!boxAutoIdle.isSelected()));
-		jPanel.add(lblStatusEffects, "cell 0 3, growx"+CELL_CONSTRAINT_STRING);
+		contentPanel.add(lblStatusEffects, "cell 0 4, growx"+CELL_CONSTRAINT_STRING);
 		
 		JButton btnCancleEvent =  new JButton_01("Cancle Event");
 		btnCancleEvent.addActionListener(a -> {
@@ -170,22 +186,22 @@ public class EntityPanel extends JScrollPaneBg {
 				mp.getMapPanel().getMapImage().update();
 			}
 		});
-		jPanel.add(btnCancleEvent, "cell 0 3"+CELL_CONSTRAINT_STRING);
+		contentPanel.add(btnCancleEvent, "cell 0 4"+CELL_CONSTRAINT_STRING);
 		
 		abilityPanel = new JPanelCustomBg(ResourceManager.getBackground_05());
 		abilityPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 5));
 		mx  = (InteractionPanel.getInteractionPanel().getWidth()-79);
 		abilityPanel.setLayout(new MigLayout("insets 4 4 4 4, ax left, fillx, nogrid", "["+mx+":"+mx+":"+mx+"]", "[]"));
 		if(!entity.getAbilities().isEmpty()) {
-			jPanel.add(abilityPanel, "cell 0 3"+CELL_CONSTRAINT_STRING);
+			contentPanel.add(abilityPanel, "cell 0 4"+CELL_CONSTRAINT_STRING);
 		}
 		
 		if(entity instanceof ResourceBuilding) {
-			StatisticLabel lblAmountOfResources = new StatisticLabel(BuildingRessources.toString((ResourceBuilding) entity), true);
-			jPanel.add(lblAmountOfResources, "cell 0 3, growx"+CELL_CONSTRAINT_STRING);
+			CustomLable lblAmountOfResources = new CustomLable(BuildingRessources.toString((ResourceBuilding) entity), true);
+			contentPanel.add(lblAmountOfResources, "cell 0 4, growx"+CELL_CONSTRAINT_STRING);
 			
-			StatisticLabel lblEfficiency = new StatisticLabel( ("Base Efficiency: "+((ResourceBuilding)entity).getEfficiency()), true);
-			jPanel.add(lblEfficiency, "cell 0 3, growx"+CELL_CONSTRAINT_STRING);
+			CustomLable lblEfficiency = new CustomLable( ("Base Efficiency: "+((ResourceBuilding)entity).getEfficiency()), true);
+			contentPanel.add(lblEfficiency, "cell 0 4, growx"+CELL_CONSTRAINT_STRING);
 		}
 		
 		updateUserInterface();
@@ -360,7 +376,8 @@ public class EntityPanel extends JScrollPaneBg {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					lblNextEvent.setText("Event: " + ability.getName());
+					updateEventText(ability.getName());
+					
 					if (ability.maxRange > 0) {
 						((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
 								.drawAbilityLayer(ability,
@@ -368,16 +385,27 @@ public class EntityPanel extends JScrollPaneBg {
 										GameInfo.getObjectMap().getSelected().getSelectedEntity().getYPos());
 						((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage()
 								.drawCombinedImage();
+					} else {
+						((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().clearAbilityLayer();
 					}
 					GameInfo.getObjectMap().getSelected().setSelectedAbility(ability);
+					
 					if(ability.maxRange <= 0) {
 						entity.setEvent(new Event(entity, entity, ability, null));
 					}
+					
 					if (ability instanceof CreateUnit) {
 						((EntityPanel) InteractionPanel.getCurrentPanel()).updateEventText(ability.getName());
 						GameInfo.getObjectMap().getSelected().clickedOnTile(0, 0, true);
 					}
-					((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).updateUI();
+					
+					if (entity.getEvent() != null) {
+						if(entity.getName().equals(Building.TOWN_CENTER) && entity.getEvent().getAbility().getName().matches(Ability.ABILITY_DESTROY_ENTITY)) {
+							updateEventText("Thanos Snap");
+						}
+					}
+					updateUserInterface();
+					MainGamePanel.refresh();
 				}
 			});
 			if (entity.getLevel() < ability.getAbilityMinimumLevel()) {
@@ -400,6 +428,10 @@ public class EntityPanel extends JScrollPaneBg {
 				abilityPanel.add(abilityBtn, "");	
 			}
 		}
+		
+		healthStatus.setMaximum(entity.getMaxHealth());
+		healthStatus.setValue(entity.getCurrentHealth());
+		healthStatus.setString(entity.getCurrentHealth()+ "/" + entity.getMaxHealth() );
 
 		for (Component component : getComponents()) {
 
@@ -410,9 +442,12 @@ public class EntityPanel extends JScrollPaneBg {
 
 	public void updateEventText(String eventText) {
 		if (eventText != null) {
-			lblNextEvent.setText("Event: " + eventText);
+			if(entity.getName().equals(Building.TOWN_CENTER) && eventText.matches(Ability.ABILITY_DESTROY_ENTITY)) {
+				eventText = "Thanos Snap";
+			}
+			lblNextEvent.setText(eventText);
 		} else {
-			lblNextEvent.setText("Event: " + "No Event");
+			lblNextEvent.setText(EVENTLESS);
 		}
 		InteractionPanel.getCurrentPanel().repaint();
 		InteractionPanel.getCurrentPanel().revalidate();

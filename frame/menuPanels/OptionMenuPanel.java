@@ -20,7 +20,7 @@ import frame.customPresets.CustomJCheckBox;
 import frame.customPresets.CustomJComboBox;
 import frame.customPresets.JButton_01;
 import frame.customPresets.JPanelCustomBg;
-import frame.customPresets.StatisticLabel;
+import frame.customPresets.CustomLable;
 import net.miginfocom.swing.MigLayout;
 
 /**
@@ -39,16 +39,16 @@ public class OptionMenuPanel extends JPanelCustomBg {
 		setLayout(new MigLayout("insets 0 0 0 0", "[33%][33%,fill][33%]", "[100%,fill]"));
 		
 		JPanelCustomBg container = new JPanelCustomBg(ResourceManager.getBackground_03(), true);
-		container.setLayout(new MigLayout("insets 40 30 10 30, fillx", "[100%]", "[100%]"));
+		container.setLayout(new MigLayout("insets 30 30 30 30, fillx", "[100%]", "[100%]"));
 		
 		add(container, "cell 1 0,grow");
 		
-		JLabel optionsText = new StatisticLabel(MainJFrame.makeCssStyle("font-size: 1.7em")+"Options", true);
+		JLabel optionsText = new CustomLable(MainJFrame.makeCssStyle("font-size: 1.7em")+"Options", true);
 		optionsText.setBorder(BorderFactory.createEmptyBorder(2, 0, 4, 0));
 		optionsText.setHorizontalAlignment(SwingConstants.CENTER);
 		container.add(optionsText, "cell 0 0, ay top, ax center, spanx 2, flowy, newline, growx");
 		
-		JLabel optionsGeneral = new StatisticLabel(headlineStyle+"General", true);
+		JLabel optionsGeneral = new CustomLable(headlineStyle+"General", true);
 		optionsGeneral.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 		container.add(optionsGeneral, "cell 0 0, gaptop 15px");
 		
@@ -70,7 +70,7 @@ public class OptionMenuPanel extends JPanelCustomBg {
 		});
 		container.add(resoulutionBox, "cell 0 0, growx");
 		
-		JLabel optionsLoading = new StatisticLabel(headlineStyle+"Loading", true);
+		JLabel optionsLoading = new CustomLable(headlineStyle+"Loading", true);
 		optionsLoading.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
 		container.add(optionsLoading, "cell 0 0, gaptop 15px");
 		
@@ -90,7 +90,7 @@ public class OptionMenuPanel extends JPanelCustomBg {
 		JButton btnBack = new JButton_01("Back");
 		btnBack.setActionCommand("frame.menuPanels.MainMenuPanel");
 		btnBack.addActionListener(ControlInput.menuChanger);
-		container.add(btnBack, "cell 1 1, ay bottom, ax right");
+		container.add(btnBack, "cell 0 1, ay bottom, ax right");
 
 
 	}

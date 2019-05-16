@@ -11,7 +11,7 @@ import core.GameInfo;
 import core.ResourceManager;
 import frame.customPresets.JButton_01;
 import frame.customPresets.JPanelCustomBg;
-import frame.customPresets.StatisticLabel;
+import frame.customPresets.CustomLable;
 import net.miginfocom.swing.MigLayout;
 
 public class EndScreenPanel extends JPanelCustomBg {
@@ -33,37 +33,37 @@ public class EndScreenPanel extends JPanelCustomBg {
 			endScreenTitle = "You lost! Better luck next time!";
 		}
 		
-		JLabel endScreenTitleLbl = new StatisticLabel(endScreenTitle);
+		JLabel endScreenTitleLbl = new CustomLable(endScreenTitle);
 		container.add(endScreenTitleLbl, "cell 1 1,grow");
 		
-		JLabel totalWoodLbl = new StatisticLabel("Total Wood: " + GameInfo.getPlayerStats().getTotalWoodCollected());
+		JLabel totalWoodLbl = new CustomLable("Total Wood: " + GameInfo.getPlayerStats().getTotalWoodCollected());
 		container.add(totalWoodLbl, "cell 1 2,grow");
 		
-		JLabel totalFoodLbl = new StatisticLabel("Total Food: " + GameInfo.getPlayerStats().getTotalFoodCollected());
+		JLabel totalFoodLbl = new CustomLable("Total Food: " + GameInfo.getPlayerStats().getTotalFoodCollected());
 		container.add(totalFoodLbl, "cell 1 3,grow");
 		
-		JLabel totalStoneLbl = new StatisticLabel("Total Stone: " + GameInfo.getPlayerStats().getTotalStoneCollected());
+		JLabel totalStoneLbl = new CustomLable("Total Stone: " + GameInfo.getPlayerStats().getTotalStoneCollected());
 		container.add(totalStoneLbl, "cell 1 4,grow");
 		
-		JLabel totalMetalLbl = new StatisticLabel("Total Metal: " + GameInfo.getPlayerStats().getTotalMetalCollected());
+		JLabel totalMetalLbl = new CustomLable("Total Metal: " + GameInfo.getPlayerStats().getTotalMetalCollected());
 		container.add(totalMetalLbl, "cell 1 5,grow");
 		
-		JLabel totalGoldLbl = new StatisticLabel("Total Gold: " + GameInfo.getPlayerStats().getTotalGoldCollected());
+		JLabel totalGoldLbl = new CustomLable("Total Gold: " + GameInfo.getPlayerStats().getTotalGoldCollected());
 		container.add(totalGoldLbl, "cell 1 6,grow");
 		
-		JLabel totalManaStoneLbl = new StatisticLabel("Total ManaStone: " + GameInfo.getPlayerStats().getTotalManaStoneCollected());
+		JLabel totalManaStoneLbl = new CustomLable("Total ManaStone: " + GameInfo.getPlayerStats().getTotalManaStoneCollected());
 		container.add(totalManaStoneLbl, "cell 1 7,grow");
 		
-		JLabel unitsKilled = new StatisticLabel("Units Killed: " + GameInfo.getPlayerStats().getUnitsKilled());
+		JLabel unitsKilled = new CustomLable("Units Killed: " + GameInfo.getPlayerStats().getUnitsKilled());
 		container.add(unitsKilled, "cell 1 8,grow");
 		
-		JLabel unitsCreated = new StatisticLabel("Units Created: " + GameInfo.getPlayerStats().getUnitsCreated());
+		JLabel unitsCreated = new CustomLable("Units Created: " + GameInfo.getPlayerStats().getUnitsCreated());
 		container.add(unitsCreated, "cell 1 9,grow");
 		
-		JLabel buildingsDestroyed = new StatisticLabel("Buildings Destroyed: " + GameInfo.getPlayerStats().getBuildingsDestroyed());
+		JLabel buildingsDestroyed = new CustomLable("Buildings Destroyed: " + GameInfo.getPlayerStats().getBuildingsDestroyed());
 		container.add(buildingsDestroyed, "cell 1 10,grow");
 		
-		JLabel buildingsBuilt = new StatisticLabel("Buildings Built: " + GameInfo.getPlayerStats().getBuildingsBuilt());
+		JLabel buildingsBuilt = new CustomLable("Buildings Built: " + GameInfo.getPlayerStats().getBuildingsBuilt());
 		container.add(buildingsBuilt, "cell 1 11,grow");
 		
 		JButton btnMainMenu = new JButton_01("Exit to Main Menu");

@@ -1,9 +1,11 @@
 package frame.menuPanels;
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -19,6 +21,7 @@ import core.XMLSaveAndLoad;
 import frame.MainJFrame;
 import frame.customPresets.JButton_01;
 import frame.customPresets.JPanelCustomBg;
+import frame.customPresets.CustomLable;
 import frame.gamePanels.LogPanel;
 import net.miginfocom.swing.MigLayout;
 
@@ -35,22 +38,25 @@ public class GameSettingsPanel extends JPanelCustomBg {
 
 	public GameSettingsPanel() {
 		super(ResourceManager.getBackground_05());
-		setLayout(new MigLayout("insets 0 0 0 0", "[20%][60%][20%]", "[100%,fill]"));
+		setLayout(new MigLayout("insets 0 0 0 0", "[33%][33%][33%]", "[100%,fill]"));
 		
 		JPanelCustomBg container = new JPanelCustomBg(ResourceManager.getBackground_03(), true);
-		container.setLayout(new MigLayout("insets 40 25 40 25", "[100%]", "[]"));
+		container.setLayout(new MigLayout("insets 30 30 30 30", "[100%]", "[100%]"));
 		
-		add(container, "cell 1 0,grow");
+		add(container, "cell 1 0,grow, ay top");
 
-		JLabel lblGameName = new JLabel(MainJFrame.htmlStyleDefault+"Game Name");
-		container.add(lblGameName, "cell 0 0");
+		JLabel lblGameName = new CustomLable(MainJFrame.makeCssStyle("font-size: 1.3em;")+"Game Name", true);
+		container.add(lblGameName, "cell 0 0, ay top, newline, flowy");
 
 		txtNewGame = new JTextField();
+		txtNewGame.setBackground(new Color(182, 137, 100));
+		txtNewGame.setForeground(Color.YELLOW);
+		txtNewGame.setBorder(BorderFactory.createLineBorder(getBackground().darker().darker(), 4, true));
 		txtNewGame.setToolTipText("Enter save name");
 		Random r = new Random();
 		txtNewGame.setText("New Game "+r.nextInt(25565));
 		
-		container.add(txtNewGame, "cell 0 1,growx");
+		container.add(txtNewGame, "cell 0 0,growx, ay top");
 		
 		txtNewGame.setColumns(1);
 		((AbstractDocument)txtNewGame.getDocument()).setDocumentFilter(new SaveNameTextDocumentFilter());
@@ -68,12 +74,12 @@ public class GameSettingsPanel extends JPanelCustomBg {
 			}
 
 		});
-		container.add(btnStartGame, "cell 0 2");
+		container.add(btnStartGame, "cell 0 0, ay top");
 		
 		JButton btnBack = new JButton_01("Back");
 		btnBack.setActionCommand("frame.menuPanels.MainMenuPanel");
 		btnBack.addActionListener(ControlInput.menuChanger);
-		container.add(btnBack, "cell 0 3");
+		container.add(btnBack, "cell 0 2, ax right, ay bottom");
 
 	}
 	private class SaveNameTextDocumentFilter extends DocumentFilter {

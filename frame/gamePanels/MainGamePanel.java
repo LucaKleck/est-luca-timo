@@ -11,6 +11,7 @@ import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
+import core.Core;
 import core.GameInfo;
 import core.NextRoundActionListener;
 import core.PlayerStats.PlayerResources;
@@ -33,7 +34,6 @@ public class MainGamePanel extends JLayeredPane {
 	private LogBackgroundPanel logBackgroundPanel;
 	private MapPanel mapPanel;
 	private InteractionPanel interactionPanel;
-	private InfoPanel infoPanel;
 	private JPanel resourcesPanel;
 	private GameMenuPanel menuPanel;
 	private JButton btnNextRound;
@@ -101,17 +101,15 @@ public class MainGamePanel extends JLayeredPane {
 		
 		// right side
 		setLayer(interactionPanel, 2);
-		uiPanel.add(interactionPanel, "cell 8 1 3 8,grow");
+		uiPanel.add(interactionPanel, "cell 8 1 3 9,grow");
 		
 		// bottom right
-		infoPanel = new InfoPanel();
-		uiPanel.add(infoPanel, "cell 8 9 3 2,grow");
 		
 		btnNextRound = new JButtonCustomBg(ResourceManager.getButton_04_bg(), true, "Next Round");
 		uiPanel.setLayer(btnNextRound, 3);
 		setLayer(btnNextRound, 3);
 		btnNextRound.addActionListener(new NextRoundActionListener());
-		uiPanel.add(btnNextRound, "cell 8 8, ay bottom, ax left, spanx 2, w 130px, h 34px, gapleft 10px");
+		uiPanel.add(btnNextRound, "cell 8 10 3,grow");
 
 		mapPanel = new MapPanel();
 		mapPanel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
@@ -139,10 +137,6 @@ public class MainGamePanel extends JLayeredPane {
 		return interactionPanel;
 	}
 
-	public synchronized InfoPanel getInfoPanel() {
-		return infoPanel;
-	}
-
 	public synchronized JPanel getResourcesPanel() {
 		return resourcesPanel;
 	}
@@ -159,8 +153,14 @@ public class MainGamePanel extends JLayeredPane {
 		if(GameInfo.getPlayerStats().getPlayerResources() != null) {
 			updatePlayerResources();
 		}
-		infoPanel.update();
 		eventlessSelectionQueue.updateList();
+	}
+	
+	public static void refresh() {
+		if ((Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel)) {
+			((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).updateUI();
+			((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
+		}
 	}
 
 	private void updatePlayerResources() {

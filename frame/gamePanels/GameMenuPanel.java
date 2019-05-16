@@ -47,7 +47,7 @@ public class GameMenuPanel extends JPanelCustomBg {
 		menuBar.setBackground(new Color(0,0,0,0));
 		menuBar.setBorder(BorderFactory.createEmptyBorder(0, 6, 3, 20));
 		menuBar.setOpaque(false);
-		menuBar.setLayout(new FlowLayout(FlowLayout.RIGHT, 3, 0));
+		menuBar.setLayout(new FlowLayout(FlowLayout.LEADING, 3, 0));
 		add(menuBar);
 
 		mnOptions = createMenu("Options");
