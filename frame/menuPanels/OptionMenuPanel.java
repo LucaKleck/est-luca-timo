@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 import core.ControlInput;
 import core.Core;
@@ -44,6 +45,7 @@ public class OptionMenuPanel extends JPanelCustomBg {
 		
 		JLabel optionsText = new StatisticLabel(MainJFrame.makeCssStyle("font-size: 1.7em")+"Options", true);
 		optionsText.setBorder(BorderFactory.createEmptyBorder(2, 0, 4, 0));
+		optionsText.setHorizontalAlignment(SwingConstants.CENTER);
 		container.add(optionsText, "cell 0 0, ay top, ax center, spanx 2, flowy, newline, growx");
 		
 		JLabel optionsGeneral = new StatisticLabel(headlineStyle+"General", true);

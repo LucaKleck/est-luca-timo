@@ -11,7 +11,6 @@ import java.awt.image.BufferedImage;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import abilities.Ability;
 import abilities.AddStatusEffect;
@@ -99,7 +98,6 @@ public class EntityPanel extends JScrollPaneBg {
 			}
 		}
 		lblCanBeLeveled.setText(lblCanBeLeveledText);
-		lblCanBeLeveled.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		btnLevelUp.addActionListener(e -> {
 				entity.setEvent(new Event(entity, entity, new LevelUp(), null));
@@ -107,8 +105,8 @@ public class EntityPanel extends JScrollPaneBg {
 			});
 		
 		jPanel.add(lblLevel, "cell 0 1, growx, flowx, ay top, ax left"+CELL_CONSTRAINT_STRING+", gapright 0");
-		jPanel.add(lblCanBeLeveled, "cell 0 1, growx"+CELL_CONSTRAINT_STRING+", gapright 0, gapleft 5");
-		jPanel.add(btnLevelUp, "cell 0 1, growprio 1 1"+CELL_CONSTRAINT_STRING+", gapleft 5");
+		jPanel.add(lblCanBeLeveled, "cell 0 1, growx"+CELL_CONSTRAINT_STRING+", gapleft 5");
+		jPanel.add(btnLevelUp, "cell 0 2, growprio 1 1"+CELL_CONSTRAINT_STRING+", gapright 0");
 		
 		if(levelUpCost != null) {
 			lblLevelUpCostText = LBL_LEVEL_UP_COST_BASE_TEXT;

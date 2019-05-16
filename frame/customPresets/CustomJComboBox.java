@@ -7,6 +7,7 @@ import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.plaf.basic.BasicComboPopup;
 import javax.swing.plaf.basic.ComboPopup;
@@ -39,6 +40,7 @@ public class CustomJComboBox<E> extends JComboBox<E> {
 			setBackground(bg);
 	        setForeground(Color.YELLOW);			
 	        setOpaque(false);
+	        setHorizontalAlignment(SwingConstants.CENTER);
 		}
 		
 		@Override
