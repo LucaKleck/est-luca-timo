@@ -118,7 +118,10 @@ public class EntityPanel extends JScrollPaneBg {
 		btnLevelUp.addActionListener(e -> {
 				entity.setEvent(new Event(entity, entity, new LevelUp(), null));
 				lblNextEvent.setText("Level Up");
+				((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().clearAbilityLayer();
+				MainGamePanel.refresh();
 				updateUserInterface();
+				((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getEventlessSelectionQueue().selectFirstInRow();
 			});
 		
 		contentPanel.add(lblLevel, "cell 0 2, growx, flowx, ay top, ax left"+CELL_CONSTRAINT_STRING+", gapright 0");
@@ -186,6 +189,7 @@ public class EntityPanel extends JScrollPaneBg {
 				btnCancleEvent.setVisible(false);
 				updateEventText(entity.getEvent().getAbility().getName());
 				((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().clearAbilityLayer();
+				((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getEventlessSelectionQueue().selectFirstInRow();
 			} else {
 				entity.setEvent(null);
 				abilityPanel.setVisible(true);
@@ -414,9 +418,6 @@ public class EntityPanel extends JScrollPaneBg {
 					}
 					GameInfo.getObjectMap().getSelected().setSelectedAbility(ability);
 					
-					if(ability.maxRange <= 0) {
-						entity.setEvent(new Event(entity, entity, ability, null));
-					}
 					
 					if (ability instanceof CreateUnit) {
 						((EntityPanel) InteractionPanel.getCurrentPanel()).updateEventText(ability.getName());
@@ -428,7 +429,12 @@ public class EntityPanel extends JScrollPaneBg {
 							updateEventText("Thanos Snap");
 						}
 					}
-					updateUserInterface();
+					if(ability.maxRange <= 0) {
+						entity.setEvent(new Event(entity, entity, ability, null));
+						((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getEventlessSelectionQueue().selectFirstInRow();
+					} else {
+						updateUserInterface();
+					}
 					MainGamePanel.refresh();
 				}
 			});
