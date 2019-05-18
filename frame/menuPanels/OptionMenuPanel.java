@@ -15,6 +15,7 @@ import core.ControlInput;
 import core.Core;
 import core.FullscreenActionListener;
 import core.ResourceManager;
+import core.actions.ToggleBooleanSettingAction;
 import frame.MainJFrame;
 import frame.customPresets.CustomJCheckBox;
 import frame.customPresets.CustomJComboBox;
@@ -66,9 +67,25 @@ public class OptionMenuPanel extends JPanelCustomBg {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Core.getMainJFrame().setSize((Dimension) resoulutionBox.getSelectedItem());
+				Core.saveSetting(Core.SETTING_DEFAULT_WIDTH, 	""+((Dimension) resoulutionBox.getSelectedItem()).width);
+				Core.saveSetting(Core.SETTING_DEFAULT_HEIGHT, 	""+((Dimension) resoulutionBox.getSelectedItem()).height);
 			}
 		});
 		container.add(resoulutionBox, "cell 0 0, growx");
+		
+		JLabel optionsGame = new CustomLable(headlineStyle+"Game", true);
+		optionsGame.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
+		container.add(optionsGame, "cell 0 0, gaptop 15px");
+		
+		JCheckBox chckbxQuickRounds = new CustomJCheckBox("Quick rounds", true);
+		chckbxQuickRounds.setSelected(new Boolean(Core.loadSetting(Core.SETTING_QUICK_ROUNDS)));
+		chckbxQuickRounds.addActionListener(new ToggleBooleanSettingAction(Core.SETTING_QUICK_ROUNDS));
+		container.add(chckbxQuickRounds, "cell 0 0, growx");
+		
+		JCheckBox chckbxAutoSelectNext = new CustomJCheckBox("Auto select next", true);
+		chckbxAutoSelectNext.setSelected(new Boolean(Core.loadSetting(Core.SETTING_AUTO_SELECT_NEXT)));
+		chckbxAutoSelectNext.addActionListener(new ToggleBooleanSettingAction(Core.SETTING_AUTO_SELECT_NEXT));
+		container.add(chckbxAutoSelectNext, "cell 0 0, growx");
 		
 		JLabel optionsLoading = new CustomLable(headlineStyle+"Loading", true);
 		optionsLoading.setBorder(BorderFactory.createEmptyBorder(0, 20, 0, 20));
@@ -76,16 +93,13 @@ public class OptionMenuPanel extends JPanelCustomBg {
 		
 		JCheckBox chckbxAskBeforeDeleting = new CustomJCheckBox("Ask before deleting saves", true);
 		chckbxAskBeforeDeleting.setSelected(new Boolean(Core.loadSetting(Core.SETTING_ASK_SAVE_DELETE)));
-		chckbxAskBeforeDeleting.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Boolean b = new Boolean(Core.loadSetting(Core.SETTING_ASK_SAVE_DELETE));
-				b = !b;
-				Core.saveSetting(Core.SETTING_ASK_SAVE_DELETE, b.toString());
-			}
-		});
+		chckbxAskBeforeDeleting.addActionListener(new ToggleBooleanSettingAction(Core.SETTING_ASK_SAVE_DELETE));
 		container.add(chckbxAskBeforeDeleting, "cell 0 0, growx");
+		
+		JCheckBox chckbxAutosave = new CustomJCheckBox("Autosave", true);
+		chckbxAutosave.setSelected(new Boolean(Core.loadSetting(Core.SETTING_AUTO_SAVE)));
+		chckbxAutosave.addActionListener(new ToggleBooleanSettingAction(Core.SETTING_AUTO_SAVE));
+		container.add(chckbxAutosave, "cell 0 0, growx");
 		
 		JButton btnBack = new JButton_01("Back");
 		btnBack.setActionCommand("frame.menuPanels.MainMenuPanel");

@@ -47,21 +47,26 @@ public class XMLSaveAndLoad {
 
 	private static final String X_POS = "xPos";
 	private static final String Y_POS = "yPos";
-	private static final String TYPE = "type";
+	
 	private static final String NAME = "name";
+	private static final String TYPE = "type";
+	
 	private static final String GOLD = "gold";
 	private static final String FOOD = "food";
 	private static final String WOOD = "wood";
 	private static final String STONE = "stone";
 	private static final String METAL = "metal";
 	private static final String MANA_STONE = "manaStone";
+	
 	private static final String IS_ROAD = "isRoad";
+	private static final String MAP_SIZE = "mapSize";
+	
 	private static final String ENTITY = "entity";
+	private static final String AUTO_IDLE = "autoIdle";
 	private static final String MAX_HEALTH = "maxHealth";
 	private static final String CURRENT_HEALTH = "currentHealth";
 	private static final String BASE_DAMAGE = "baseDamage";
 	private static final String MOVEMENT_RANGE = "movementRange";
-	private static final String MAP_SIZE = "mapSize";
 	
 	private static final String UNITS_KILLED = "unitsKilled";
 	private static final String BUILDINGS_DESTROYED = "buildingsDestroyed";
@@ -78,7 +83,7 @@ public class XMLSaveAndLoad {
 	private static final String ROUND_NUM = "roundNumber";
 	
 	private static final String LEVEL = "level";
-	private static final String CONTROLABLE = "controlable";
+	private static final String CONTROLABLE = "controllable";
 
 	public static String xmlFilePath;
 
@@ -175,45 +180,46 @@ public class XMLSaveAndLoad {
 				int maxHealth = Integer.parseInt(eElement.getElementsByTagName(MAX_HEALTH).item(0).getTextContent());
 				int level = Integer.parseInt(eElement.getElementsByTagName(LEVEL).item(0).getTextContent());
 				boolean controlable = new Boolean(eElement.getElementsByTagName(CONTROLABLE).item(0).getTextContent());
+				boolean autoIdle = new Boolean(getContentFromNamedElement(eElement, AUTO_IDLE));
 
-				e = new Entity(p, name, maxHealth, currentHealth, level, controlable, new ArrayList<>());
+				e = new Entity(p, name, maxHealth, currentHealth, level, controlable, new ArrayList<>(), autoIdle);
 
 				//Units
 				if (type.matches("Warrior")) {
-					e = new Warrior(p, name, currentHealth, level, controlable, new ArrayList<>());
+					e = new Warrior(p, name, currentHealth, level, controlable, new ArrayList<>(), autoIdle);
 				}
 				if (type.matches("Archer")) {
-					e = new Archer(p, name, currentHealth, level, controlable, new ArrayList<>());
+					e = new Archer(p, name, currentHealth, level, controlable, new ArrayList<>(), autoIdle);
 				}
 				if (type.matches("Builder")) {
-					e = new Builder(p, name, currentHealth, level, controlable, new ArrayList<>());
+					e = new Builder(p, name, currentHealth, level, controlable, new ArrayList<>(), autoIdle);
 				}
 				if (type.matches("Mage")) {
-					e = new Mage(p, name, currentHealth, level, controlable, new ArrayList<>());
+					e = new Mage(p, name, currentHealth, level, controlable, new ArrayList<>(), autoIdle);
 				}
 				if (type.matches("Cavalry")) {
-					e = new Cavalry(p, name, currentHealth, level, controlable, new ArrayList<>());
+					e = new Cavalry(p, name, currentHealth, level, controlable, new ArrayList<>(), autoIdle);
 				}
 				if (type.matches("CavalryArcher")) {
-					e = new CavalryArcher(p, name, currentHealth, level, controlable, new ArrayList<>());
+					e = new CavalryArcher(p, name, currentHealth, level, controlable, new ArrayList<>(), autoIdle);
 				}
 				if (type.matches("Dragon")) {
-					e = new Dragon(p, name, currentHealth, level, controlable, new ArrayList<>());
+					e = new Dragon(p, name, currentHealth, level, controlable, new ArrayList<>(), autoIdle);
 				}
 				if (type.matches("Hero")) {
-					e = new Hero(p, name, currentHealth, level, controlable, new ArrayList<>());
+					e = new Hero(p, name, currentHealth, level, controlable, new ArrayList<>(), autoIdle);
 				}
 				if (type.matches("Knight")) {
-					e = new Knight(p, name, currentHealth, level, controlable, new ArrayList<>());
+					e = new Knight(p, name, currentHealth, level, controlable, new ArrayList<>(), autoIdle);
 				}
 				if (type.matches("Priest")) {
-					e = new Priest(p, name, currentHealth, level, controlable, new ArrayList<>());
+					e = new Priest(p, name, currentHealth, level, controlable, new ArrayList<>(), autoIdle);
 				}
 				if (type.matches("Trebuchet")) {
-					e = new Trebuchet(p, name, currentHealth, level, controlable, new ArrayList<>());
+					e = new Trebuchet(p, name, currentHealth, level, controlable, new ArrayList<>(), autoIdle);
 				}
 				if (type.matches("Mangonel")) {
-					e = new Mangonel(p, name, currentHealth, level, controlable, new ArrayList<>());
+					e = new Mangonel(p, name, currentHealth, level, controlable, new ArrayList<>(), autoIdle);
 				}
 				//Buildings
 				if (type.matches("ProductionBuilding")) {
@@ -231,7 +237,11 @@ public class XMLSaveAndLoad {
 		}
 		return entityMap;
 	}
-
+	
+	public static String getContentFromNamedElement(Element e, String elementName) {
+		return e.getElementsByTagName(elementName).item(0).getTextContent();
+	}
+	
 	public static String saveGame(String path) {
 		String returnMessage = "Something isn't right, save system broken!";
 		try {
@@ -536,6 +546,11 @@ public class XMLSaveAndLoad {
 				controlable.appendChild(save.createTextNode(
 						new Boolean(GameInfo.getObjectMap().getEntityMap().get(i).isControllable()).toString()));
 				entity.appendChild(controlable);
+				
+				Element isAutoidle = save.createElement(AUTO_IDLE);
+				isAutoidle.appendChild(save.createTextNode(
+						new Boolean(GameInfo.getObjectMap().getEntityMap().get(i).isAutoIdle()).toString()));
+				entity.appendChild(isAutoidle);
 
 				// things every unit has
 				if (GameInfo.getObjectMap().getEntityMap().get(i) instanceof Unit) {

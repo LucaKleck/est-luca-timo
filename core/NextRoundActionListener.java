@@ -12,6 +12,7 @@ import javax.swing.JButton;
 
 import abilities.Ability;
 import abilities.CollectResources;
+import abilities.Idle;
 import abilities.Move;
 import effects.AbilityEffect;
 import entity.Entity;
@@ -174,7 +175,13 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 		collectedGold = 0;
 		collectedManaStone = 0;
 		collectedMetal = 0;
-
+		
+		for (Entity e : entityMap) {
+			if (e.isAutoIdle()) {
+				e.setEvent(new Event(e, e, new Idle(), null));
+			}
+		}
+		
 		GameInfo.getRoundInfo().increRoundNum();
 		// Update stuff
 		if (Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
@@ -182,7 +189,9 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 			((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().update();
 		}
 		
-		XMLSaveAndLoad.saveGame(Core.GAME_PATH_SAVES + File.separator + "autosave_" + GameInfo.getRoundInfo().getRoundNumber()%3 + ".xml");
+		if(new Boolean(Core.loadSetting(Core.SETTING_AUTO_SAVE)).booleanValue()) {
+			XMLSaveAndLoad.saveGame(Core.GAME_PATH_SAVES + File.separator + "autosave_" + GameInfo.getRoundInfo().getRoundNumber()%3 + ".xml");
+		}
 		j.setEnabled(true);
 	}
 

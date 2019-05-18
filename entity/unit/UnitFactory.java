@@ -77,43 +77,43 @@ public class UnitFactory {
 		
 		switch (type) {
 		case Unit.UNIT_ARCHER:
-			unit = new Archer(pointXY, "", level, controlable, abilities);
+			unit = new Archer(pointXY, "", level, controlable, abilities, false);
 			break;
 		case Unit.UNIT_BUILDER:
-			unit = new Builder(pointXY, "", level, controlable, abilities);
+			unit = new Builder(pointXY, "", level, controlable, abilities, false);
 			break;
 		case Unit.UNIT_MAGE:
-			unit = new Mage(pointXY, "", level, controlable, abilities);
+			unit = new Mage(pointXY, "", level, controlable, abilities, false);
 			break;
 		case Unit.UNIT_TREBUCHET:
-			unit = new Trebuchet(pointXY, "Trebuchet", level, controlable, abilities);
+			unit = new Trebuchet(pointXY, "Trebuchet", level, controlable, abilities, false);
 			break;
 		case Unit.UNIT_WARRIOR:
-			unit = new Warrior(pointXY, "", level, controlable, abilities);
+			unit = new Warrior(pointXY, "", level, controlable, abilities, false);
 			break;
 		case Unit.UNIT_BATTERING_RAM:
-			unit = new BatteringRam(pointXY, "BatteringRam", level, controlable, abilities);
+			unit = new BatteringRam(pointXY, "BatteringRam", level, controlable, abilities, false);
 			break;
 		case Unit.UNIT_CAVALRY:
-			unit = new Cavalry(pointXY, "", level, controlable, abilities);
+			unit = new Cavalry(pointXY, "", level, controlable, abilities, false);
 			break;
 		case Unit.UNIT_CAVALRY_ARCHER:
-			unit = new CavalryArcher(pointXY, "", level, controlable, abilities);
+			unit = new CavalryArcher(pointXY, "", level, controlable, abilities, false);
 			break;
 		case Unit.UNIT_DRAGON:
-			unit = new Dragon(pointXY, "", level, controlable, abilities);
+			unit = new Dragon(pointXY, "", level, controlable, abilities, false);
 			break;
 		case Unit.UNIT_HERO:
-			unit = new Hero(pointXY, "", level, controlable, abilities);
+			unit = new Hero(pointXY, "", level, controlable, abilities, false);
 			break;
 		case Unit.UNIT_KNIGHT:
-			unit = new Knight(pointXY, "", level, controlable, abilities);
+			unit = new Knight(pointXY, "", level, controlable, abilities, false);
 			break;
 		case Unit.UNIT_MANGONEL:
-			unit = new Mangonel(pointXY, "Mangonel", level, controlable, abilities);
+			unit = new Mangonel(pointXY, "Mangonel", level, controlable, abilities, false);
 			break;
 		case Unit.UNIT_PRIEST:
-			unit = new Priest(pointXY, "", level, controlable, abilities);
+			unit = new Priest(pointXY, "", level, controlable, abilities, false);
 			break;
 		default:
 			unit = null;

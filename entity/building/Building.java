@@ -29,7 +29,7 @@ public abstract class Building extends Entity {
 
 	public Building(Point2DNoFxReq pointXY, String name, int maxHealth, int currentHealth, int level,
 			boolean controlable, ArrayList<Ability> abilities) {
-		super(pointXY, name, maxHealth, currentHealth, level, controlable, abilities);
+		super(pointXY, name, maxHealth, currentHealth, level, controlable, abilities, false);
 		efficiency = (level + 1) * 12;
 	}
 

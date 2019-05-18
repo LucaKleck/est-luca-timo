@@ -5,7 +5,6 @@ import java.awt.Graphics;
 
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 
 import core.ResourceManager;
 
@@ -15,20 +14,21 @@ public class CustomLable extends JLabel {
 	private boolean hasBg = false;
 	
 	public CustomLable(String name) {
-		super(name, SwingConstants.CENTER);
+		super(name);
 		setBackground(new Color(0, 0, 0, 0));
 		setOpaque(false);
 		setForeground(Color.YELLOW);
 	}
 	
 	public CustomLable(String name, boolean hasBg) {
-		super(name, SwingConstants.CENTER);
+		this(name);
 		this.hasBg = hasBg;
-		setHorizontalAlignment(SwingConstants.LEFT);
 		setBorder(BorderFactory.createEmptyBorder(5, 5, 5, 5));
-		setBackground(new Color(0, 0, 0, 0));
-		setOpaque(false);
-		setForeground(Color.YELLOW);
+	}
+	
+	public CustomLable(String name, boolean hasBg, int hAlignment) {
+		this(name, hasBg);
+		setHorizontalAlignment(hAlignment);
 	}
 	
 	@Override

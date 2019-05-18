@@ -38,7 +38,7 @@ public class Entity {
 	private boolean autoIdle = false;
 
 	public Entity(Point2DNoFxReq pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable,
-			ArrayList<Ability> abilities) {
+			ArrayList<Ability> abilities, boolean autoIdle) {
 		entityCount++;
 		this.id = entityCount;
 		this.pointXY.setLocation(pointXY);
@@ -48,6 +48,7 @@ public class Entity {
 		this.level = level;
 		this.controllable = controlable;
 		this.abilities = abilities;
+		this.autoIdle = autoIdle;
 		
 		if(controlable == true) {
 			this.abilities.add(new Destroy());

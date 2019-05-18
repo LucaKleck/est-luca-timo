@@ -17,6 +17,7 @@ import java.util.concurrent.Executors;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+import abilities.Build;
 import core.Core;
 import core.GameInfo;
 import core.MapImage;
@@ -249,7 +250,7 @@ public class MapPanel extends JPanel implements MouseMotionListener, ActionListe
 		if(lastMousePoint == null) {
 			lastMousePoint = e.getPoint();
 		}
-		if(e.getPoint().x - lastMousePoint.x >= 5 || e.getPoint().x - lastMousePoint.x <= -5 && e.getPoint().y - lastMousePoint.y >= 5 || e.getPoint().y - lastMousePoint.y <= -5 && mouseMoved==false) {
+		if(e.getPoint().x - lastMousePoint.x >= 3 || e.getPoint().x - lastMousePoint.x <= -3 && e.getPoint().y - lastMousePoint.y >= 3 || e.getPoint().y - lastMousePoint.y <= -3 && mouseMoved==false) {
 			removeAll();
 			System.gc();
 			lastMousePoint = e.getPoint();
@@ -273,9 +274,15 @@ public class MapPanel extends JPanel implements MouseMotionListener, ActionListe
 				y = (float) (((lastMousePoint.getY() - displacementY) / displacementMultiplier) / factorY / mapImage.getMapTileSize());
 			}
 			if(ObjectMap.inBounds((int) x,(int) y)) {
-				JPanel mapTileInfoPanel = new MapTileInfoPanel(GameInfo.getObjectMap().getMap()[(int) x][(int) y]);
-				mapTileInfoPanel.setBounds(lastMousePoint.x, lastMousePoint.y, mapTileInfoPanel.getPreferredSize().width, mapTileInfoPanel.getPreferredSize().height);
-				add(mapTileInfoPanel);
+				if(GameInfo.getObjectMap().getSelected().getSelectedAbility() instanceof Build) {
+					JPanel mapTileInfoPanel = new MapTileInfoPanel(GameInfo.getObjectMap().getMap()[(int) x][(int) y], ((Build) GameInfo.getObjectMap().getSelected().getSelectedAbility()).getBuildingType());
+					mapTileInfoPanel.setBounds(lastMousePoint.x, lastMousePoint.y, mapTileInfoPanel.getPreferredSize().width, mapTileInfoPanel.getPreferredSize().height);
+					add(mapTileInfoPanel);
+				} else {
+					JPanel mapTileInfoPanel = new MapTileInfoPanel(GameInfo.getObjectMap().getMap()[(int) x][(int) y]);
+					mapTileInfoPanel.setBounds(lastMousePoint.x, lastMousePoint.y, mapTileInfoPanel.getPreferredSize().width, mapTileInfoPanel.getPreferredSize().height);
+					add(mapTileInfoPanel);
+				}
 			}
 			mouseMoved=false;
 		}
@@ -305,8 +312,8 @@ public class MapPanel extends JPanel implements MouseMotionListener, ActionListe
 			if (origin != null) {
 				int deltaX = origin.x - e.getX();
 				int deltaY = origin.y - e.getY();
-				if(deltaX >= 3 || deltaX <= 3) {
-					if(deltaY >= 3 || deltaY <= -3) {
+				if(deltaX >= 2 || deltaX <= 2) {
+					if(deltaY >= 2 || deltaY <= -2) {
 						moved = true;
 						origin = new Point(e.getPoint());
 						addDisplacementX(-deltaX);

@@ -56,6 +56,7 @@ public class Core {
 	public static final String SETTING_RTX = "RTX";
 	public static final String SETTING_DEV = "dev";
 	public static final String SETTING_AUTO_SELECT_NEXT = "autoSelectNext";
+	public static final String SETTING_AUTO_SAVE = "autosave";
 	public static final String SETTING_QUICK_ROUNDS = "quickRounds";
 
 	public static final String TRUE = "true";
@@ -126,6 +127,10 @@ public class Core {
 			Element askSaveDelete = settingsDoc.createElement(SETTING_ASK_SAVE_DELETE);
 			askSaveDelete.setTextContent(TRUE);
 			settingsRoot.appendChild(askSaveDelete);
+			
+			Element autosave = settingsDoc.createElement(SETTING_AUTO_SAVE);
+			autosave.setTextContent(TRUE);
+			settingsRoot.appendChild(autosave);
 			
 			// Log
 			Element showLog = settingsDoc.createElement(SETTING_SHOW_LOG);
@@ -201,6 +206,7 @@ public class Core {
 			
 			if(node == null) {
 				node = createSettings().getElementsByTagName(settingName).item(0);
+				System.err.println("Load of settings failed, resetting.");
 			}
 			
 			try {

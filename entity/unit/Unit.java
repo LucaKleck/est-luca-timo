@@ -28,8 +28,8 @@ public class Unit extends Entity {
 	private int movementRange;
 	private Ability move;
 
-	public Unit(Point2DNoFxReq pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable,  int baseDamage,  int movementRange, ArrayList<Ability> abilities) {
-		super(pointXY, name, maxHealth, currentHealth, level, controlable, abilities);
+	public Unit(Point2DNoFxReq pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable,  int baseDamage,  int movementRange, ArrayList<Ability> abilities, boolean autoIdle) {
+		super(pointXY, name, maxHealth, currentHealth, level, controlable, abilities, autoIdle);
 		move = new Move(movementRange);
 		abilities.add(new Idle());
 		abilities.add(move);

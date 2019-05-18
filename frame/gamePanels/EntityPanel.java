@@ -13,6 +13,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import abilities.Ability;
 import abilities.AddStatusEffect;
@@ -35,7 +36,9 @@ import cost.Cost;
 import entity.Entity;
 import entity.building.Building;
 import entity.building.BuildingRessources;
+import entity.building.ProductionBuilding;
 import entity.building.ResourceBuilding;
+import entity.unit.Builder;
 import entity.unit.Unit;
 import frame.MainJFrame;
 import frame.customPresets.CustomJCheckBox;
@@ -84,7 +87,8 @@ public class EntityPanel extends JScrollPaneBg {
 		contentPanel.setLayout(new MigLayout("insets 12 12 3 0, fillx", "[]", "[]"));
 		contentPanel.setFont(font);
 
-		CustomLable lblEntityName = new CustomLable(entity.getName(), true);
+		CustomLable lblEntityName = new CustomLable(MainJFrame.makeCssStyle("font-size: 1.4em")+entity.getName(), true);
+		lblEntityName.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPanel.add(lblEntityName, "cell 0 0, newline, flowy, ay top, ax left, growx"+CELL_CONSTRAINT_STRING);
 		
 		healthStatus = new CustomProgressBar();
@@ -94,6 +98,8 @@ public class EntityPanel extends JScrollPaneBg {
 		CustomLable lblLevel = new CustomLable("Level: " + this.entity.getLevel(), true);
 		CustomLable lblCanBeLeveled = new CustomLable(lblCanBeLeveledText, true);
 		JButton btnLevelUp = new JButton_01("Level Up");
+		JButton btnCancleEvent =  new JButton_01("Cancle Event");
+		CustomJCheckBox boxAutoIdle = new CustomJCheckBox("Auto Idle", true);
 		
 		if (entity.canBeLeveled()) {
 			lblCanBeLeveledText = "Can be Leveled!";
@@ -112,6 +118,7 @@ public class EntityPanel extends JScrollPaneBg {
 		btnLevelUp.addActionListener(e -> {
 				entity.setEvent(new Event(entity, entity, new LevelUp(), null));
 				lblNextEvent.setText("Level Up");
+				updateUserInterface();
 			});
 		
 		contentPanel.add(lblLevel, "cell 0 2, growx, flowx, ay top, ax left"+CELL_CONSTRAINT_STRING+", gapright 0");
@@ -144,8 +151,8 @@ public class EntityPanel extends JScrollPaneBg {
 		CustomLable lblCost = new CustomLable(lblLevelUpCostText, true);
 		if (entity.canBeLeveled() == true) {
 			contentPanel.add(btnLevelUp, "cell 0 3, growprio 1 1"+CELL_CONSTRAINT_STRING+", gapright 0");
-			contentPanel.add(lblCost, "cell 0 3, growx"+CELL_CONSTRAINT_STRING);
 		}
+		contentPanel.add(lblCost, "cell 0 3, growx"+CELL_CONSTRAINT_STRING);
 		
 		lblNextEvent = new CustomLable(EVENTLESS, true);
 		
@@ -170,21 +177,33 @@ public class EntityPanel extends JScrollPaneBg {
 			contentPanel.add(lblStatusEffects, "cell 0 4, growx"+CELL_CONSTRAINT_STRING);
 		}
 		
-		CustomJCheckBox boxAutoIdle = new CustomJCheckBox("Auto Idle", true);
 		boxAutoIdle.setSelected(entity.isAutoIdle());
-		boxAutoIdle.addActionListener(a -> boxAutoIdle.setSelected(!boxAutoIdle.isSelected()));
-		contentPanel.add(lblStatusEffects, "cell 0 4, growx"+CELL_CONSTRAINT_STRING);
+		boxAutoIdle.addActionListener(a -> {
+			entity.setAutoIdle(!entity.isAutoIdle());
+			if(entity.isAutoIdle()) {
+				entity.setEvent(new Event(entity, entity, new Idle(), null));
+				abilityPanel.setVisible(false);
+				btnCancleEvent.setVisible(false);
+				updateEventText(entity.getEvent().getAbility().getName());
+				((MainGamePanel) Core.getMainJFrame().getCurrentComponent()).getMapPanel().getMapImage().clearAbilityLayer();
+			} else {
+				entity.setEvent(null);
+				abilityPanel.setVisible(true);
+				btnCancleEvent.setVisible(true);
+				updateEventText(null);
+			}
+			updateUserInterface();
+			MainGamePanel.refresh();
+		});
 		
-		JButton btnCancleEvent =  new JButton_01("Cancle Event");
+		if(entity instanceof Unit) {
+			contentPanel.add(boxAutoIdle, "cell 0 4, growx"+CELL_CONSTRAINT_STRING);
+		}
+		
 		btnCancleEvent.addActionListener(a -> {
 			entity.setEvent(null);
 			updateUserInterface();
 			updateEventText(null);
-			if (Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {
-				MainGamePanel mp = (MainGamePanel) Core.getMainJFrame().getCurrentComponent();
-				mp.updateUI();
-				mp.getMapPanel().getMapImage().update();
-			}
 		});
 		contentPanel.add(btnCancleEvent, "cell 0 4"+CELL_CONSTRAINT_STRING);
 		
@@ -202,6 +221,11 @@ public class EntityPanel extends JScrollPaneBg {
 			
 			CustomLable lblEfficiency = new CustomLable( ("Base Efficiency: "+((ResourceBuilding)entity).getEfficiency()), true);
 			contentPanel.add(lblEfficiency, "cell 0 4, growx"+CELL_CONSTRAINT_STRING);
+		}
+		
+		if(entity.isAutoIdle()) {
+			abilityPanel.setVisible(false);
+			btnCancleEvent.setVisible(false);
 		}
 		
 		updateUserInterface();
@@ -420,6 +444,17 @@ public class EntityPanel extends JScrollPaneBg {
 				if(((CreateUnit)ability).unitCanBeCreated() == false) {
 					abilityBtn.setEnabled(false);
 				}
+				if(entity instanceof ProductionBuilding && entity.getName().matches(ProductionBuilding.TOWN_CENTER) && ((CreateUnit) ability).getUnitType().matches(Unit.UNIT_BUILDER) ) {
+					int builderCount = 0;
+					for(Entity u : GameInfo.getObjectMap().getEntityMap()) {
+						if(u instanceof Builder && u.isControllable()) {
+							builderCount++;
+						}
+					}
+					if(builderCount > entity.getLevel()) {
+						abilityBtn.setEnabled(false);
+					}
+				}
 			}
 			int mw = (mx-15)/abilityBtn.getPreferredSize().width;
 			if(i%mw == 0) {
@@ -434,10 +469,9 @@ public class EntityPanel extends JScrollPaneBg {
 		healthStatus.setString(entity.getCurrentHealth()+ "/" + entity.getMaxHealth() );
 
 		for (Component component : getComponents()) {
-
 			component.setFont(font);
-
 		}
+		MainGamePanel.refresh();
 	}
 
 	public void updateEventText(String eventText) {

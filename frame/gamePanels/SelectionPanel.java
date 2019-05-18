@@ -26,6 +26,7 @@ import core.Event;
 import core.GameInfo;
 import core.MapImage;
 import core.ResourceManager;
+import core.SelectionPanelFilter;
 import effects.AbilityEffect;
 import entity.Entity;
 import entity.unit.Warrior;

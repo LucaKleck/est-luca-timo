@@ -66,43 +66,43 @@ public class CreateUnit extends Ability {
 		Point2DNoFxReq pointXY = new Point2DNoFxReq(point.x + random.nextFloat(), point.y + random.nextFloat());
 		
 		if(unitType.equals(Unit.UNIT_BUILDER)) {
-			GameInfo.getObjectMap().getEntityMap().add(new Builder(pointXY, "Builder", 0, controlable, new ArrayList<>()));
+			GameInfo.getObjectMap().getEntityMap().add(new Builder(pointXY, "Builder", 0, controlable, new ArrayList<>(), false));
 		}
 		if(unitType.equals(Unit.UNIT_WARRIOR)) {
-			GameInfo.getObjectMap().getEntityMap().add(new Warrior(pointXY, "Warrior", 0, controlable, new ArrayList<>()));
+			GameInfo.getObjectMap().getEntityMap().add(new Warrior(pointXY, "Warrior", 0, controlable, new ArrayList<>(), false));
 		}
 		if(unitType.equals(Unit.UNIT_MAGE)) {
-			GameInfo.getObjectMap().getEntityMap().add(new Mage(pointXY, "Mage", 0, controlable, new ArrayList<>()));
+			GameInfo.getObjectMap().getEntityMap().add(new Mage(pointXY, "Mage", 0, controlable, new ArrayList<>(), false));
 		}
 		if(unitType.equals(Unit.UNIT_ARCHER)) {
-			GameInfo.getObjectMap().getEntityMap().add(new Archer(pointXY, "Archer", 0, controlable, new ArrayList<>()));
+			GameInfo.getObjectMap().getEntityMap().add(new Archer(pointXY, "Archer", 0, controlable, new ArrayList<>(), false));
 		}
 		if(unitType.equals(Unit.UNIT_TREBUCHET)) {
-			GameInfo.getObjectMap().getEntityMap().add(new Trebuchet(pointXY, "Trebuchet", 0, controlable, new ArrayList<>()));
+			GameInfo.getObjectMap().getEntityMap().add(new Trebuchet(pointXY, "Trebuchet", 0, controlable, new ArrayList<>(), false));
 		}
 		if(unitType.equals(Unit.UNIT_BATTERING_RAM)) {
-			GameInfo.getObjectMap().getEntityMap().add(new BatteringRam(pointXY, "Battering Ram", 0, controlable, new ArrayList<>()));
+			GameInfo.getObjectMap().getEntityMap().add(new BatteringRam(pointXY, "Battering Ram", 0, controlable, new ArrayList<>(), false));
 		}
 		if(unitType.equals(Unit.UNIT_CAVALRY)) {
-			GameInfo.getObjectMap().getEntityMap().add(new Cavalry(pointXY, "Cavalry", 0, controlable, new ArrayList<>()));
+			GameInfo.getObjectMap().getEntityMap().add(new Cavalry(pointXY, "Cavalry", 0, controlable, new ArrayList<>(), false));
 		}
 		if(unitType.equals(Unit.UNIT_CAVALRY_ARCHER)) {
-			GameInfo.getObjectMap().getEntityMap().add(new CavalryArcher(pointXY, "Cavalry Archer", 0, controlable, new ArrayList<>()));
+			GameInfo.getObjectMap().getEntityMap().add(new CavalryArcher(pointXY, "Cavalry Archer", 0, controlable, new ArrayList<>(), false));
 		}
 		if(unitType.equals(Unit.UNIT_DRAGON)) {
-			GameInfo.getObjectMap().getEntityMap().add(new Dragon(pointXY, "Dragon", 0, controlable, new ArrayList<>()));
+			GameInfo.getObjectMap().getEntityMap().add(new Dragon(pointXY, "Dragon", 0, controlable, new ArrayList<>(), false));
 		}
 		if(unitType.equals(Unit.UNIT_HERO)) {
-			GameInfo.getObjectMap().getEntityMap().add(new Hero(pointXY, "Hero", 0, controlable, new ArrayList<>()));
+			GameInfo.getObjectMap().getEntityMap().add(new Hero(pointXY, "Hero", 0, controlable, new ArrayList<>(), false));
 		}
 		if(unitType.equals(Unit.UNIT_KNIGHT)) {
-			GameInfo.getObjectMap().getEntityMap().add(new Knight(pointXY, "Knight", 0, controlable, new ArrayList<>()));
+			GameInfo.getObjectMap().getEntityMap().add(new Knight(pointXY, "Knight", 0, controlable, new ArrayList<>(), false));
 		}
 		if(unitType.equals(Unit.UNIT_MANGONEL)) {
-			GameInfo.getObjectMap().getEntityMap().add(new Mangonel(pointXY, "Mangonel", 0, controlable, new ArrayList<>()));
+			GameInfo.getObjectMap().getEntityMap().add(new Mangonel(pointXY, "Mangonel", 0, controlable, new ArrayList<>(), false));
 		}
 		if(unitType.equals(Unit.UNIT_PRIEST)) {
-			GameInfo.getObjectMap().getEntityMap().add(new Priest(pointXY, "Priest", 0, controlable, new ArrayList<>()));
+			GameInfo.getObjectMap().getEntityMap().add(new Priest(pointXY, "Priest", 0, controlable, new ArrayList<>(), false));
 		}
 		
 		GameInfo.getPlayerStats().addUnitsCreated(1);
