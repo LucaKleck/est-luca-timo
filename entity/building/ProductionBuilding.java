@@ -2,10 +2,10 @@ package entity.building;
 
 import java.util.ArrayList;
 
-import abilities.Ability;
-import abilities.CreateUnit;
 import core.Point2DNoFxReq;
 import entity.unit.Unit;
+import events.abilities.Ability;
+import events.abilities.CreateUnit;
 
 public class ProductionBuilding extends Building {
 	

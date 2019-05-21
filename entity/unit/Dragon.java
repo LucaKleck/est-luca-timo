@@ -2,9 +2,9 @@ package entity.unit;
 
 import java.util.ArrayList;
 
-import abilities.Ability;
-import abilities.FireBall;
 import core.Point2DNoFxReq;
+import events.abilities.Ability;
+import events.abilities.FireBall;
 
 public class Dragon extends Unit {
 

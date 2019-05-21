@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JViewport;
 
-import core.ResourceManager;
+import frame.graphics.ResourceManager;
 
 public class JViewportCustomBg extends JViewport {
 	private static final long serialVersionUID = 9101930974609155487L;

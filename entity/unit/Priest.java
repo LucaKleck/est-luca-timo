@@ -2,11 +2,11 @@ package entity.unit;
 
 import java.util.ArrayList;
 
-import abilities.Ability;
-import abilities.AddStatusEffect;
-import abilities.MeleeAttack;
 import core.Point2DNoFxReq;
-import statusEffects.StatusEffect;
+import events.abilities.Ability;
+import events.abilities.AddStatusEffect;
+import events.abilities.MeleeAttack;
+import events.statusEffects.StatusEffect;
 
 public class Priest extends Unit {
 

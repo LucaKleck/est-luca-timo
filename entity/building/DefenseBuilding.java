@@ -2,10 +2,10 @@ package entity.building;
 
 import java.util.ArrayList;
 
-import abilities.Ability;
-import abilities.FireBall;
-import abilities.RangedAttack;
 import core.Point2DNoFxReq;
+import events.abilities.Ability;
+import events.abilities.FireBall;
+import events.abilities.RangedAttack;
 
 public class DefenseBuilding extends Building {
 	

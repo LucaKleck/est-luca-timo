@@ -11,7 +11,7 @@ import javax.swing.LookAndFeel;
 import javax.swing.UIManager;
 import javax.swing.plaf.basic.BasicScrollBarUI;
 
-import core.ResourceManager;
+import frame.graphics.ResourceManager;
 
 public class CustomScrollBarUI extends BasicScrollBarUI {
 		@Override

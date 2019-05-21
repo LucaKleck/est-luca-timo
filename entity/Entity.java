@@ -2,10 +2,7 @@ package entity;
 
 import java.util.ArrayList;
 
-import abilities.Ability;
-import abilities.Destroy;
 import core.Core;
-import core.Event;
 import core.GameInfo;
 import core.PlayerStats;
 import core.PlayerStats.PlayerResources;
@@ -15,8 +12,11 @@ import cost.Cost;
 import entity.building.Building;
 import entity.building.ProductionBuilding;
 import entity.unit.Unit;
+import events.Event;
+import events.abilities.Ability;
+import events.abilities.Destroy;
+import events.statusEffects.StatusEffect;
 import frame.menuPanels.EndScreenPanel;
-import statusEffects.StatusEffect;
 
 public class Entity {
 	private static int entityCount;

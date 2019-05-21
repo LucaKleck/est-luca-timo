@@ -3,15 +3,15 @@ package entity;
 import java.util.ArrayList;
 import java.util.Random;
 
-import abilities.Ability;
-import abilities.Build;
-import abilities.Move;
-import core.Event;
 import core.GameInfo;
 import core.Point2DNoFxReq;
 import entity.building.Building;
 import entity.unit.Builder;
 import entity.unit.Unit;
+import events.Event;
+import events.abilities.Ability;
+import events.abilities.Build;
+import events.abilities.Move;
 
 public class EntityFilter {
 

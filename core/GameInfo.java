@@ -1,5 +1,7 @@
 package core;
 
+import map.ObjectMap;
+
 /**
  * @author Luca Kleck
  *

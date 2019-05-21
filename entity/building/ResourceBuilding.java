@@ -2,9 +2,9 @@ package entity.building;
 
 import java.util.ArrayList;
 
-import abilities.Ability;
-import abilities.CollectResources;
 import core.Point2DNoFxReq;
+import events.abilities.Ability;
+import events.abilities.CollectResources;
 
 public class ResourceBuilding extends Building {
 	

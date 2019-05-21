@@ -2,10 +2,10 @@ package entity.unit;
 
 import java.util.ArrayList;
 
-import abilities.Ability;
-import abilities.MeleeAttack;
-import abilities.RangedAttack;
 import core.Point2DNoFxReq;
+import events.abilities.Ability;
+import events.abilities.MeleeAttack;
+import events.abilities.RangedAttack;
 
 public class Hero extends Unit {
 

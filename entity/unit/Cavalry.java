@@ -2,9 +2,9 @@ package entity.unit;
 
 import java.util.ArrayList;
 
-import abilities.Ability;
-import abilities.MeleeAttack;
 import core.Point2DNoFxReq;
+import events.abilities.Ability;
+import events.abilities.MeleeAttack;
 
 public class Cavalry extends Unit {
 

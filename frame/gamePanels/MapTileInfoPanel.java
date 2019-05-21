@@ -9,12 +9,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import core.MapTile;
-import core.ResourceManager;
 import entity.building.Building;
 import entity.building.BuildingRessources;
 import frame.MainJFrame;
 import frame.customPresets.CustomLable;
+import frame.graphics.ResourceManager;
+import map.MapTile;
 import net.miginfocom.swing.MigLayout;
 
 public class MapTileInfoPanel extends JPanel {

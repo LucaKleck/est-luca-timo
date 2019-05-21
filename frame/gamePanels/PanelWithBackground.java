@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-import core.ResourceManager;
+import frame.graphics.ResourceManager;
 
 /**
  * @author Luca Kleck

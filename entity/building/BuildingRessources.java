@@ -1,8 +1,8 @@
 package entity.building;
 
-import abilities.CollectResources;
 import core.GameInfo;
-import core.ObjectMap;
+import events.abilities.CollectResources;
+import map.ObjectMap;
 
 public class BuildingRessources {
 

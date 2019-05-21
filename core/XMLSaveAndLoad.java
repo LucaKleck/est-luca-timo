@@ -42,6 +42,9 @@ import entity.unit.Trebuchet;
 import entity.unit.Unit;
 import entity.unit.Warrior;
 import frame.gamePanels.LogPanel;
+import map.MapTile;
+import map.MapTileResources;
+import map.ObjectMap;
 
 public class XMLSaveAndLoad {
 

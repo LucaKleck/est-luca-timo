@@ -19,13 +19,13 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
-import core.ControlInput;
 import core.Core;
-import core.FullscreenActionListener;
 import core.GameInfo;
-import core.ResourceManager;
 import core.XMLSaveAndLoad;
+import core.actions.ControlInput;
+import core.actions.FullscreenActionListener;
 import frame.customPresets.JPanelCustomBg;
+import frame.graphics.ResourceManager;
 
 public class GameMenuPanel extends JPanelCustomBg {
 	private static final long serialVersionUID = 122L;

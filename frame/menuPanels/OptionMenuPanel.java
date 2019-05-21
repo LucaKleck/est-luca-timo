@@ -11,16 +11,16 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
-import core.ControlInput;
 import core.Core;
-import core.FullscreenActionListener;
-import core.ResourceManager;
+import core.actions.ControlInput;
+import core.actions.FullscreenActionListener;
 import core.actions.ToggleBooleanSettingAction;
 import frame.MainJFrame;
 import frame.customPresets.CustomJCheckBox;
 import frame.customPresets.CustomJComboBox;
 import frame.customPresets.JButton_01;
 import frame.customPresets.JPanelCustomBg;
+import frame.graphics.ResourceManager;
 import frame.customPresets.CustomLable;
 import net.miginfocom.swing.MigLayout;
 

@@ -13,14 +13,14 @@ import javax.swing.JPanel;
 
 import core.Core;
 import core.GameInfo;
-import core.NextRoundActionListener;
 import core.PlayerStats.PlayerResources;
-import core.ResourceManager;
+import core.actions.NextRoundActionListener;
 import cost.AvailableResources;
 import frame.MainJFrame;
 import frame.customPresets.JButtonCustomBg;
 import frame.customPresets.JButton_01;
 import frame.customPresets.JPanelCustomBg;
+import frame.graphics.ResourceManager;
 import net.miginfocom.swing.MigLayout;
 
 /**

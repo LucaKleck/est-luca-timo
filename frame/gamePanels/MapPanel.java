@@ -17,11 +17,11 @@ import java.util.concurrent.Executors;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import abilities.Build;
 import core.Core;
 import core.GameInfo;
-import core.MapImage;
-import core.ObjectMap;
+import events.abilities.Build;
+import frame.graphics.MapImage;
+import map.ObjectMap;
 
 /**
  * Contains and draws the MapImage, takes care of the displacement

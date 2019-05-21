@@ -12,9 +12,9 @@ import java.awt.event.ComponentListener;
 import javax.swing.JFrame;
 import javax.swing.Timer;
 
-import core.ControlInput;
 import core.Core;
 import core.GameInfo;
+import core.actions.ControlInput;
 import frame.gamePanels.InteractionPanel;
 import frame.gamePanels.MainGamePanel;
 import frame.gamePanels.SelectionPanel;

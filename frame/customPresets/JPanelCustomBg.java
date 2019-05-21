@@ -6,7 +6,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
 
-import core.ResourceManager;
+import frame.graphics.ResourceManager;
 
 public class JPanelCustomBg extends JPanel {
 	private static final long serialVersionUID = 8407021853349418385L;

@@ -2,11 +2,11 @@ package entity.unit;
 
 import java.util.ArrayList;
 
-import abilities.Ability;
-import abilities.Idle;
-import abilities.Move;
 import core.Point2DNoFxReq;
 import entity.Entity;
+import events.abilities.Ability;
+import events.abilities.Idle;
+import events.abilities.Move;
 
 public class Unit extends Entity {
 	

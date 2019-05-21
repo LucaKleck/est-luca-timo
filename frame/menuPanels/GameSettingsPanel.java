@@ -14,15 +14,15 @@ import javax.swing.text.AttributeSet;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DocumentFilter;
 
-import core.ControlInput;
 import core.GameInfo;
-import core.ResourceManager;
 import core.XMLSaveAndLoad;
+import core.actions.ControlInput;
 import frame.MainJFrame;
 import frame.customPresets.JButton_01;
 import frame.customPresets.JPanelCustomBg;
 import frame.customPresets.CustomLable;
 import frame.gamePanels.LogPanel;
+import frame.graphics.ResourceManager;
 import net.miginfocom.swing.MigLayout;
 
 /**

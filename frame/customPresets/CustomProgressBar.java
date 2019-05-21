@@ -8,8 +8,8 @@ import javax.swing.JComponent;
 import javax.swing.JProgressBar;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 
-import core.ResourceManager;
 import entity.Entity;
+import frame.graphics.ResourceManager;
 
 public class CustomProgressBar extends JProgressBar {
 	private static final long serialVersionUID = 6329206797198034182L;

@@ -12,7 +12,7 @@ import javax.swing.plaf.basic.BasicComboBoxUI;
 import javax.swing.plaf.basic.BasicComboPopup;
 import javax.swing.plaf.basic.ComboPopup;
 
-import core.ResourceManager;
+import frame.graphics.ResourceManager;
 
 public class CustomJComboBox<E> extends JComboBox<E> {
 	private static final long serialVersionUID = 7437563077534672953L;

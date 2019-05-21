@@ -14,10 +14,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import abilities.Ability;
 import core.Boot;
 import core.GameInfo;
 import core.Point2DNoFxReq;
+import events.abilities.Ability;
 
 public class UnitFactory {
 

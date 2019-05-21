@@ -2,9 +2,9 @@ package entity.building;
 
 import java.util.ArrayList;
 
-import abilities.Ability;
 import core.Point2DNoFxReq;
 import entity.Entity;
+import events.abilities.Ability;
 
 public abstract class Building extends Entity {
 

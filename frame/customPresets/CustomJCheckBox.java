@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 import javax.swing.JCheckBox;
 
-import core.ResourceManager;
+import frame.graphics.ResourceManager;
 
 public class CustomJCheckBox extends JCheckBox {
 	private static final long serialVersionUID = 3954271410930209173L;

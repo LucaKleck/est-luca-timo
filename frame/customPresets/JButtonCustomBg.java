@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 import javax.swing.JButton;
 
-import core.ResourceManager;
+import frame.graphics.ResourceManager;
 
 public class JButtonCustomBg extends JButton {
 	private static final long serialVersionUID = 8300127069468952763L;

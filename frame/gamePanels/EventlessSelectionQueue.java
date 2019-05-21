@@ -14,11 +14,11 @@ import javax.swing.JPanel;
 
 import core.Core;
 import core.GameInfo;
-import core.ResourceManager;
 import entity.Entity;
 import entity.building.Building;
 import frame.customPresets.JPanelCustomBg;
 import frame.customPresets.MouseHoverListener;
+import frame.graphics.ResourceManager;
 
 public class EventlessSelectionQueue extends JPanelCustomBg {
 	private static final long serialVersionUID = 3364851222909630455L;

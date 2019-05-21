@@ -15,13 +15,13 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.ScrollPaneConstants;
 
-import core.ControlInput;
 import core.Core;
-import core.ResourceManager;
 import core.XMLSaveAndLoad;
+import core.actions.ControlInput;
 import frame.customPresets.JButton_01;
 import frame.customPresets.JPanelCustomBg;
 import frame.customPresets.JScrollPaneBg;
+import frame.graphics.ResourceManager;
 import frame.customPresets.CustomLable;
 import net.miginfocom.swing.MigLayout;
 

@@ -6,7 +6,7 @@ import java.awt.Graphics;
 import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 
-import core.ResourceManager;
+import frame.graphics.ResourceManager;
 
 public class CustomLable extends JLabel {
 

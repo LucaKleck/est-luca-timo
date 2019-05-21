@@ -15,12 +15,12 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import core.ControlInput;
 import core.Core;
-import core.ResourceManager;
+import core.actions.ControlInput;
 import frame.MainJFrame;
 import frame.customPresets.JButton_01;
 import frame.customPresets.JPanelCustomBg;
+import frame.graphics.ResourceManager;
 import net.miginfocom.swing.MigLayout;
 
 /**

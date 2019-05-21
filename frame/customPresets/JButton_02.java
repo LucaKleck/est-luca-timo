@@ -6,7 +6,7 @@ import java.awt.Graphics;
 
 import javax.swing.JButton;
 
-import core.ResourceManager;
+import frame.graphics.ResourceManager;
 
 public class JButton_02 extends JButton {
 	private static final long serialVersionUID = -7928816224518625719L;

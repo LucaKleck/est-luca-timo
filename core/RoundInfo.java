@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import entity.building.Building;
+import events.Event;
 
 public class RoundInfo {
 	private int round;

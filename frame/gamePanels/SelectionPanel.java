@@ -19,21 +19,21 @@ import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 import javax.swing.Timer;
 
-import abilities.Ability;
-import abilities.AddStatusEffect;
 import core.Core;
-import core.Event;
 import core.GameInfo;
-import core.MapImage;
-import core.ResourceManager;
 import core.SelectionPanelFilter;
-import effects.AbilityEffect;
 import entity.Entity;
 import entity.unit.Warrior;
+import events.Event;
+import events.abilities.Ability;
+import events.abilities.AddStatusEffect;
 import frame.customPresets.CustomProgressBar;
 import frame.customPresets.JButton_01;
 import frame.customPresets.JPanelCustomBg;
 import frame.customPresets.JScrollPaneBg;
+import frame.graphics.MapImage;
+import frame.graphics.ResourceManager;
+import frame.graphics.effects.AbilityEffect;
 import net.miginfocom.swing.MigLayout;
 
 public class SelectionPanel extends JScrollPaneBg {
