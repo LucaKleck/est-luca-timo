@@ -52,7 +52,7 @@ public class CostManager {
 		availableResources.setAvailableGold(playerResources.getGold());
 		availableResources.setAvailableManaStone(playerResources.getManaStone());
 		
-		for(Event event: GameInfo.getRoundInfo().getEventList()) {
+		for(Event event: GameInfo.getRoundInfo().getEventHandler().getEventList()) {
 			if(event.getAbility() instanceof LevelUp) {
 				Cost entityLevelUpCost;
 				entityLevelUpCost = playerStats.getCostManager().getLevelUpCostManager().getLevelUpCost(event.getTarget());

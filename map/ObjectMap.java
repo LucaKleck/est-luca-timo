@@ -11,6 +11,7 @@ import core.Point2DNoFxReq;
 import core.Selected;
 import entity.Entity;
 import entity.building.ProductionBuilding;
+import entity.unit.Builder;
 
 public class ObjectMap {
 
@@ -20,6 +21,7 @@ public class ObjectMap {
 	private static final int PORTAL_POINT_X = 45;
 	private static final int PORTAL_POINT_Y = 45;
 	private static final Point2DNoFxReq PORTAL_POINT = new Point2DNoFxReq(PORTAL_POINT_X, PORTAL_POINT_Y); ;
+	private ProductionBuilding townHallBuilding;
 
 	public ObjectMap() {
 		map = MapCreator.createMap();
@@ -30,8 +32,8 @@ public class ObjectMap {
 	
 	private void setInitalState() {
 		
-		
-		entityMap.add(new ProductionBuilding(new Point2DNoFxReq(3, 3), ProductionBuilding.TOWN_CENTER, 20, 20, 0, true, new ArrayList<>()));
+		townHallBuilding = new ProductionBuilding(new Point2DNoFxReq(3, 3), ProductionBuilding.TOWN_CENTER, 20, 20, 0, true, new ArrayList<>());
+		entityMap.add(townHallBuilding);
 		entityMap.add(new ProductionBuilding(PORTAL_POINT, ProductionBuilding.PORTAL, 150, 150, 0, false, new ArrayList<>()));
 		
 		/*
@@ -73,6 +75,12 @@ public class ObjectMap {
 	public ObjectMap(MapTile[][] map, ArrayList<Entity> entityMap) {
 		this.map = map;
 		this.entityMap = entityMap;
+		for(Entity e : entityMap) {
+			if(e.getName().matches(ProductionBuilding.TOWN_CENTER)) {
+				townHallBuilding = (ProductionBuilding) e;
+				break;
+			}
+		}
 		// TODO change it so that this is loaded from the actual position
 		selected = new Selected();
 	}
@@ -99,9 +107,22 @@ public class ObjectMap {
 		return selectedEntityList;
 	}
 	
-	
 	public Point2DNoFxReq getPortalPoint() {
 		return PORTAL_POINT;
+	}
+	
+	public ProductionBuilding getTownHall() {
+		return townHallBuilding;
+	}
+	
+	public int getBuilderAmount() {
+		int builderCount = 0;
+		for(Entity u : GameInfo.getObjectMap().getEntityMap()) {
+			if(u instanceof Builder && u.isControllable()) {
+				builderCount++;
+			}
+		}
+		return builderCount;
 	}
 	
 	public void remakeMap() {

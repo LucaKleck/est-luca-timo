@@ -370,10 +370,10 @@ public class MapImage {
 		g.setComposite(AlphaComposite.Clear);
 		g.fillRect(0, 0, imageWidth, imageHeight);
 		g.setComposite(AlphaComposite.SrcOver);
-		for (int i = 0; i < GameInfo.getRoundInfo().getEventList().size(); i++) {
+		for (int i = 0; i < GameInfo.getRoundInfo().getEventHandler().getEventList().size(); i++) {
 			// draw each effect
-			if (GameInfo.getRoundInfo().getEventList().get(i).getEffect() != null) {
-				g.drawImage(GameInfo.getRoundInfo().getEventList().get(i).getEffect(), 0, 0, imageWidth, imageHeight,
+			if (GameInfo.getRoundInfo().getEventHandler().getEventList().get(i).getEffect() != null) {
+				g.drawImage(GameInfo.getRoundInfo().getEventHandler().getEventList().get(i).getEffect(), 0, 0, imageWidth, imageHeight,
 						null);
 			}
 		}

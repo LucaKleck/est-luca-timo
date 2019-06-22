@@ -200,7 +200,7 @@ public class NextRoundActionListener implements ActionListener, Runnable {
 	}
 
 	private void goThroughEventList() {
-		for (Iterator<Event> iterator = GameInfo.getRoundInfo().getEventList().iterator(); iterator.hasNext();) {
+		for (Iterator<Event> iterator = GameInfo.getRoundInfo().getEventHandler().getEventList().iterator(); iterator.hasNext();) {
 			Event e = iterator.next();
 			if (e.getAbility() instanceof CollectResources == false) {
 				if (Core.getMainJFrame().getCurrentComponent() instanceof MainGamePanel) {

@@ -8,7 +8,6 @@ import events.abilities.CollectResources;
 
 public class ResourceBuilding extends Building {
 	
-	public static final String EXPLAINED = "Buildings get their resources in a radius of 1 (9 fields total). Every Map-tile has a % of Resources, that gets multiplied by the efficiency of your Building";
 	private BuildingRessources ressources;
 	
 	public ResourceBuilding(Point2DNoFxReq pointXY, String name, int maxHealth, int currentHealth, int level, boolean controlable, ArrayList<Ability> abilities) {

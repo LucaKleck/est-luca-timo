@@ -139,7 +139,7 @@ public class EntityFilter {
 				}
 			}
 		}		
-		for (Event event : GameInfo.getRoundInfo().getEventList()) {
+		for (Event event : GameInfo.getRoundInfo().getEventHandler().getEventList()) {
 
 			if (event.getAbility() instanceof Build) {
 
@@ -161,7 +161,7 @@ public class EntityFilter {
 				return false;
 			}
 		}
-		for (Event event : GameInfo.getRoundInfo().getEventList()) {
+		for (Event event : GameInfo.getRoundInfo().getEventHandler().getEventList()) {
 
 			if (event.getAbility() instanceof Build) {
 

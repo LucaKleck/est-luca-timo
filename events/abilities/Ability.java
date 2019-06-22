@@ -67,7 +67,7 @@ public abstract class Ability {
 
 	// Building Abilities
 	public static final String ABILITY_COLLECT_RESOURCES = "Collect resources";
-	public static final String ABILITY_DESC_COLLECT_RESOURCES = "Collects resources at the end of the round";
+	public static final String ABILITY_DESC_COLLECT_RESOURCES = "<html>Buildings get their resources in a radius of 1 (9 fields total). <br> Every map-tile has a % of resources, that gets multiplied by the efficiency of your building";
 
 	public static final String ABILITY_CREATE_UNIT = "Create Unit";
 	public static final String ABILITY_DESC_CREATE_UNIT = "Creates new Unit at the end of the round";

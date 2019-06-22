@@ -10,6 +10,8 @@ public abstract class Building extends Entity {
 
 	private int efficiency;
 	// Resource Buildings
+	private static final int BASE_EFFICIENCY = 12;
+	
 	public static final String WOOD_GETTER = "Lumberjack";
 	public static final String FOOD_GETTER = "Farm";
 	public static final String GOLD_GETTER = "Goldmine";
@@ -30,7 +32,17 @@ public abstract class Building extends Entity {
 	public Building(Point2DNoFxReq pointXY, String name, int maxHealth, int currentHealth, int level,
 			boolean controlable, ArrayList<Ability> abilities) {
 		super(pointXY, name, maxHealth, currentHealth, level, controlable, abilities, false);
-		efficiency = (level + 1) * 12;
+		switch (name) {
+		case WOOD_GETTER:
+			efficiency = (level + 1) * 6;
+			break;
+		case FOOD_GETTER:
+			efficiency = (level + 1) * 6;
+			break;
+		default:
+			efficiency = (level + 1) * BASE_EFFICIENCY;
+			break;
+		}
 	}
 
 	public int getEfficiency() {

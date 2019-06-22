@@ -46,7 +46,7 @@ public class Build extends Ability {
 				}
 			}
 		}
-		for (Event event : GameInfo.getRoundInfo().getEventList()) {
+		for (Event event : GameInfo.getRoundInfo().getEventHandler().getEventList()) {
 
 			if (event.getAbility() instanceof Build) {
 

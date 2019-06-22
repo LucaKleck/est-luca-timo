@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -42,12 +43,13 @@ public class MainGamePanel extends JLayeredPane {
 	private EventlessSelectionQueue eventlessSelectionQueue;
 	
 	// Lables
-	JLabel lblFood = new JLabel("Food", new ImageIcon(ResourceManager.getFood()) , JLabel.LEADING);
-	JLabel lblWood = new JLabel("wood", new ImageIcon(ResourceManager.getWood()) , JLabel.LEADING);
-	JLabel lblStone = new JLabel("Stone", new ImageIcon(ResourceManager.getStone()) , JLabel.LEADING);
-	JLabel lblMetal = new JLabel("Metal", new ImageIcon(ResourceManager.getMetal()) , JLabel.LEADING);
-	JLabel lblGold = new JLabel("Gold", new ImageIcon(ResourceManager.getGold()) , JLabel.LEADING);
-	JLabel lblManaStone = new JLabel("ManaStone", new ImageIcon(ResourceManager.getManaStone()) , JLabel.LEADING);
+	JLabel lblFood = new JLabel("", new ImageIcon(ResourceManager.getFood()) , JLabel.LEADING);
+	JLabel lblWood = new JLabel("", new ImageIcon(ResourceManager.getWood()) , JLabel.LEADING);
+	JLabel lblStone = new JLabel("", new ImageIcon(ResourceManager.getStone()) , JLabel.LEADING);
+	JLabel lblMetal = new JLabel("", new ImageIcon(ResourceManager.getMetal()) , JLabel.LEADING);
+	JLabel lblGold = new JLabel("", new ImageIcon(ResourceManager.getGold()) , JLabel.LEADING);
+	JLabel lblManaStone = new JLabel("", new ImageIcon(ResourceManager.getManaStone()) , JLabel.LEADING);
+	JLabel lblWorkers = new JLabel("", new ImageIcon(ResourceManager.getBuilderImage().getScaledInstance(16, 16, Image.SCALE_SMOOTH)) , JLabel.LEADING);
 	
 	public MainGamePanel() { // x // y
 		// Contains the map and the UI. has 2x cells, 1 of them is just for enabling overlaying the panels
@@ -71,6 +73,7 @@ public class MainGamePanel extends JLayeredPane {
 		resourcesPanel.add(lblMetal);
 		resourcesPanel.add(lblGold);
 		resourcesPanel.add(lblManaStone);
+		resourcesPanel.add(lblWorkers);
 		setLayer(resourcesPanel, 1);
 		
 		uiPanel.add(resourcesPanel, "cell 1 1,alignx left, gapleft 4, gaptop 4, newline, flowy");
@@ -172,6 +175,7 @@ public class MainGamePanel extends JLayeredPane {
 		lblMetal.setText(playerResources.getMetal()+" ("+availableResources.getAvailableMetal()+")");
 		lblGold.setText(playerResources.getGold()+" ("+availableResources.getAvailableGold()+" )");
 		lblManaStone.setText(playerResources.getManaStone()+" ("+availableResources.getAvailableManaStone()+")");
+		lblWorkers.setText( GameInfo.getObjectMap().getBuilderAmount()+"/"+ (GameInfo.getObjectMap().getTownHall().getLevel()+1) ); 
 		resourcesPanel.revalidate();
 	}
 	

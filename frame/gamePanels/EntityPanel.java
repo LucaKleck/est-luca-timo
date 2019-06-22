@@ -23,7 +23,6 @@ import entity.building.Building;
 import entity.building.BuildingRessources;
 import entity.building.ProductionBuilding;
 import entity.building.ResourceBuilding;
-import entity.unit.Builder;
 import entity.unit.Unit;
 import events.Event;
 import events.abilities.Ability;
@@ -42,12 +41,12 @@ import events.abilities.SiegeAttack;
 import events.statusEffects.StatusEffect;
 import frame.MainJFrame;
 import frame.customPresets.CustomJCheckBox;
+import frame.customPresets.CustomLable;
 import frame.customPresets.CustomProgressBar;
 import frame.customPresets.JButtonCustomBg;
 import frame.customPresets.JButton_01;
 import frame.customPresets.JPanelCustomBg;
 import frame.customPresets.JScrollPaneBg;
-import frame.customPresets.CustomLable;
 import frame.gamePanels.SelectionPanel.SelectionPaneElement;
 import frame.graphics.ResourceManager;
 import net.miginfocom.swing.MigLayout;
@@ -220,10 +219,11 @@ public class EntityPanel extends JScrollPaneBg {
 		}
 		
 		if(entity instanceof ResourceBuilding) {
-			CustomLable lblAmountOfResources = new CustomLable(BuildingRessources.toString((ResourceBuilding) entity), true);
-			contentPanel.add(lblAmountOfResources, "cell 0 4, growx"+CELL_CONSTRAINT_STRING);
+			CustomLable lblEfficiency = new CustomLable( ("<html>"+
+					BuildingRessources.toString((ResourceBuilding) entity)+"<br>"+
+					"Base Efficiency: "+((ResourceBuilding)entity).getEfficiency()+
+					"<br>Total efficiency: "+((ResourceBuilding)entity).getRessources().getCollectableRessources()), true);
 			
-			CustomLable lblEfficiency = new CustomLable( ("Base Efficiency: "+((ResourceBuilding)entity).getEfficiency()), true);
 			contentPanel.add(lblEfficiency, "cell 0 4, growx"+CELL_CONSTRAINT_STRING);
 		}
 		
@@ -451,13 +451,7 @@ public class EntityPanel extends JScrollPaneBg {
 					abilityBtn.setEnabled(false);
 				}
 				if(entity instanceof ProductionBuilding && entity.getName().matches(ProductionBuilding.TOWN_CENTER) && ((CreateUnit) ability).getUnitType().matches(Unit.UNIT_BUILDER) ) {
-					int builderCount = 0;
-					for(Entity u : GameInfo.getObjectMap().getEntityMap()) {
-						if(u instanceof Builder && u.isControllable()) {
-							builderCount++;
-						}
-					}
-					if(builderCount > entity.getLevel()) {
+					if(GameInfo.getObjectMap().getBuilderAmount() > entity.getLevel()) {
 						abilityBtn.setEnabled(false);
 					}
 				}

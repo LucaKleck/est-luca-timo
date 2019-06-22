@@ -21,7 +21,7 @@ public class Event implements Runnable {
 		this.target = target;
 		this.ability = ability;
 		this.effect = effect;
-		GameInfo.getRoundInfo().getEventList().add(this);
+		GameInfo.getRoundInfo().getEventHandler().addEvent(this);
 	}
 
 	public Entity getSource() {

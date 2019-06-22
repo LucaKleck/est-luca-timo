@@ -5,25 +5,27 @@ import java.util.LinkedList;
 
 import entity.building.Building;
 import events.Event;
+import events.EventHandler;
 
 public class RoundInfo {
 	private int round;
-	private LinkedList<Event> eventList = new LinkedList<>();
-	private ArrayList<Building> newBuildings = new ArrayList<>();
+	private EventHandler eventHandler;
+	private ArrayList<Building> newBuildings = new ArrayList<Building>();
 	
 	public RoundInfo(int round) {
 		this.round = round;
+		eventHandler = new EventHandler( new LinkedList<Event>() );
 	}
 	
-	public RoundInfo(LinkedList<Event> eventList, int round) {
-		this.eventList = eventList;
-		this.round = round;
+	public RoundInfo(EventHandler eventHandler, int round) {
+		this(round);
+		this.eventHandler = eventHandler;
 	}
 	
-	public synchronized LinkedList<Event> getEventList() {
-		return eventList;
+	public synchronized EventHandler getEventHandler() {
+		return eventHandler;
 	}
-
+	
 	public synchronized ArrayList<Building> getNewBuildings() {
 		return newBuildings;
 	}

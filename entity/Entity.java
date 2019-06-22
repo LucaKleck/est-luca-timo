@@ -213,7 +213,7 @@ public class Entity {
 
 	public void setEvent(Event event) {
 		if (this.event != null) {
-			GameInfo.getRoundInfo().getEventList().remove(this.event);
+			GameInfo.getRoundInfo().getEventHandler().getEventList().remove(this.event);
 			this.event = null;
 			System.gc();
 		}
